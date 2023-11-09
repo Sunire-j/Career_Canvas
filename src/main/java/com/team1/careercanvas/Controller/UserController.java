@@ -13,4 +13,8 @@ public class UserController {
     public String findpw(){
         return "users/findpw";
     }
+    @GetMapping("/login")
+    public String login(){
+        return "users/login";
+    }
 }
