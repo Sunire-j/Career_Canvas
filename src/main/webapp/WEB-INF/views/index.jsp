@@ -13,6 +13,7 @@
 <div class="container">
     <p>임시 페이지</p>
     <a href="/findid">아이디 찾기</a>
+    <a href="/findpw">비밀번호 찾기</a>
 </div>
 
 </body>

@@ -284,8 +284,8 @@
     <hr/>
 </header>
 <div class="container">
-    <h3 style="text-align: center; margin-top: 150px">아이디를 잊으셨나요?</h3>
-    <form method="post" id="findidForm" name="findidForm">
+    <h3 style="text-align: center; margin-top: 150px">비밀번호를 잊으셨나요?</h3>
+    <form method="post" id="findpwForm" name="findpwForm">
         <%--가입 유형 선택--%>
         <div style="display: flex; height: 40px; font-weight: bold; margin: 50px auto 0;width: 40%">
             <input type="radio" name="iscompany" value="0" checked/>
@@ -294,10 +294,12 @@
             <p style="margin-left: 10px; line-height: 40px">기업회원</p>
         </div>
         <div style="width: 40%; margin: 10px auto 0;">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="가입당시 이메일" name="email">
+            <label for="id" class="form-label">아이디:</label>
+            <input type="email" class="form-control" id="id" placeholder="아이디" name="id">
+            <label for="email" class="form-label mt-3">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="이메일" name="email">
             <div class="mt-3" style="display: flex; justify-content: space-between">
-                <button type="submit" class="btn btn-primary">아이디 찾기</button>
+                <button type="submit" class="btn btn-primary">비밀번호 찾기</button>
                 <input type="button" class="btn btn-secondary" value="돌아가기" onclick="history.back()"/>
             </div>
 

@@ -9,4 +9,8 @@ public class UserController {
     public String findid(){
         return "users/findid";
     }
+    @GetMapping("/findpw")
+    public String findpw(){
+        return "users/findpw";
+    }
 }
