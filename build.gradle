@@ -33,6 +33,9 @@ dependencies {
 	implementation 'javax.servlet:jstl:1.2'
 	implementation 'org.json:json:20231013'
 	implementation 'net.morimekta.utils:android-util:3.0.1'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
 }
 
 tasks.named('test') {

@@ -234,18 +234,6 @@
         }
     </style>
     <script>
-        $(function () {
-            $('input[type="radio"]').change(function () {
-                if ($(this).val() == '1') {
-                    if (!$('.for-company').length) {
-                        $('<div class="for-company mt-3"><label for="companyno" class="form-label">사업자등록번호:</label>' +
-                            '<input type="text" class="form-control" id="companyno" placeholder="사업자등록번호를 입력해주세요." name="companyno"></div>').insertAfter('#pw');
-                    }
-                } else {
-                    $('.for-company').remove();
-                }
-            });
-        });
     </script>
 </head>
 <body>
@@ -284,31 +272,16 @@
     <hr/>
 </header>
 <div class="container">
-    <h3 style="text-align: center; margin-top: 150px">Career Canvas 로그인</h3>
-    <form method="post" action="${pageContext.servletContext.contextPath}/loginOk" id="findidForm" name="findidForm">
-        <%--가입 유형 선택--%>
-        <div style="display: flex; height: 40px; font-weight: bold; margin: 50px auto 0;width: 40%">
-            <input type="radio" name="iscompany" value="0" checked/>
-            <p style="margin-left: 10px; line-height: 40px">개인회원</p>
-            <input type="radio" name="iscompany" value="1" style="margin-left: 20px"/>
-            <p style="margin-left: 10px; line-height: 40px">기업회원</p>
-        </div>
-        <div style="width: 40%; margin: 10px auto 0;">
-            <label for="id" class="form-label">아이디:</label>
-            <input type="text" class="form-control" id="id" placeholder="아이디를 입력해주세요." name="id">
-            <label for="pw" class="form-label mt-3">비밀번호:</label>
-            <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해주세요." name="pw">
-            <div class="mt-3" style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="display: flex;   align-items: center;">
-                    <a href="/findid"><p style="color: red; font-size: 14px">계정정보 찾기</p></a>&nbsp;<p style="font-size: 14px">|</p>&nbsp;
-                    <a href="#"><p style="font-size: 14px">회원가입</p></a>
-                </div>
-                <input type="submit" class="btn btn-primary" value="로그인"/>
-            </div>
-        </div>
-    </form>
+    <h3 style="text-align: center; margin-top: 150px">회원가입을 축하합니다!</h3>
+    <h5 style="text-align: center; margin-top: 50px">가입 ID : hell***ld</h5>
+    <h5 style="text-align:center" class="mt-3">가입 E-mail : helloworld@gmail.com</h5>
+    <h6 style="text-align: center; color: red" class="mt-5">email 인증 후 로그인이 가능합니다. email을 확인해주세요</h6>
+    <div class="mt-4" style="display: flex; width: 25%; margin: 0 auto; justify-content: space-between">
+        <%--281행 수정필요(링크)--%>
+        <input type="button" class="btn btn-success" value="홈으로" onclick="location.href='/'"/>
+        <input type="button" class="btn btn-primary" value="로그인" onclick="location.href='${pageContext.servletContext.contextPath}/login'"/>
+    </div>
 </div>
-
 </body>
 </html>
 

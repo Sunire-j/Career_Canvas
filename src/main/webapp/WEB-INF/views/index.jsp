@@ -12,9 +12,14 @@
 <body>
 <div class="container">
     <p>임시 페이지</p>
-    <a href="/findid">아이디 찾기</a>
-    <a href="/findpw">비밀번호 찾기</a>
-    <a href="/login">로그인</a>
+    <a href="${pageContext.servletContext.contextPath}/findid">아이디 찾기</a>
+    <a href="${pageContext.servletContext.contextPath}/findpw">비밀번호 찾기</a>
+    <a href="${pageContext.servletContext.contextPath}/login">로그인</a>
+
+    <hr/>
+    <p>이 영역은 원래 get으로 접근 못하는 영역임.</p><br/>
+    <p>완성 후 삭제되어야 함</p>
+    <a href="${pageContext.servletContext.contextPath}/signup_end">회원가입 종료</a>
 </div>
 
 </body>
