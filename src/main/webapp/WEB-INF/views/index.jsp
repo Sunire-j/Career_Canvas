@@ -11,10 +11,18 @@
 </head>
 <body>
 <div class="container">
+    <p>로그인 여부 : ${LogStatus}
+    <c:if test="${LogStatus=='Y'}">
+        로그인 아이디 : ${LogId}
+        <a href="${pageContext.servletContext.contextPath}/logout">로그아웃</a>
+    </c:if>
+    </p>
+    <hr>
     <p>임시 페이지</p>
     <a href="${pageContext.servletContext.contextPath}/findid">아이디 찾기</a>
     <a href="${pageContext.servletContext.contextPath}/findpw">비밀번호 찾기</a>
     <a href="${pageContext.servletContext.contextPath}/login">로그인</a>
+    <a href="${pageContext.servletContext.contextPath}/myteam/main">마이팀-메인 페이지</a>
 
     <hr/>
     <p>이 영역은 원래 get으로 접근 못하는 영역임.</p><br/>

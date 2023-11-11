@@ -1,0 +1,95 @@
+.container{
+    width: 1200px;
+    margin : 0 auto;
+
+}
+body{
+    margin: 0;
+}
+p{
+    margin: 0;
+}
+.signupTitle{
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.signupFrm_wrapper{
+    width: 480px;
+    margin: 0 auto;   
+}
+.signupFrm{
+    margin: 0 auto;
+    text-align: center;
+}
+
+ul,li{
+    list-style: none;
+    margin: 0 auto;
+    height: 63px;
+}
+/* 회원가입 위치 */
+.userId,.userNickName,.userEmail{
+    display: flex;
+}
+
+.userId .input-group {
+    display: flex;
+}
+.btn-outline-secondary{
+    height: 36px;
+}
+.input-group>div{
+    height: 75px;
+}
+.form-control{
+    width: 100%;
+    margin-top: 12px;
+}
+.userEmail{
+
+}
+.invalid-feedback{
+    height: 21px;
+    text-align: right;
+}
+
+.btn-outline-secondary,
+.btn-success{
+    width: 75px;
+    margin-top: 12px;
+    margin-left: 10px;
+    font-size: 12px;
+}
+.check{
+    width: 60px;
+    font-size: 12px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.signupBtn{
+    margin-top: 18px;
+    width: 300px;
+}
+
+.reset{
+    width: 100px;
+    float: left;
+}
+.signup{
+    width: 100px;
+    float: right;
+    
+}
+
+.btn-secondary{
+    height: 35px;
+    margin: 0 auto;
+}
+
+.btn-primary{
+    height: 35px;
+    margin: 0 auto;
+}

@@ -1,0 +1,261 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="../header_footer/header.jspf" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/users/signup.css">
+    <script src="https://kit.fontawesome.com/f5234bf2d4.js" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            $('input[name="userId"]').on('input', function () {
+                var $this = $(this);
+                if (this.checkValidity()) {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                    $.ajax({
+                        url: "${pageContext.servletContext.contextPath}/checkId",
+                        type: 'post',
+                        data: {
+                            id: $(this).val()
+                        },
+                        success: function (result) {
+                            console.log(result);
+                            if (result == 0) {
+                                console.log("here0");
+                                $(this).removeClass('is-invalid').addClass('is-valid');
+                                //사용가능한 아이디입니다 표기
+                            } else {
+                                console.log("here1");
+                                $this.removeClass('is-valid').addClass('is-invalid');
+                                $this.siblings('.invalid-feedback').hide();
+                                $this.siblings('[data-feedback="duplicate"]').show();
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                        }
+                    });
+                } else {
+                    $(this).removeClass('is-valid').addClass('is-invalid');
+                    $(this).siblings('.invalid-feedback').hide();
+                    if (this.validity.valueMissing) {
+                        $(this).siblings('.invalid-feedback:not([data-feedback])').show();
+                    } else if (this.validity.patternMismatch) {
+                        $(this).siblings('[data-feedback="patternMismatch"]').show();
+                    }
+                }
+            });
+
+            $('input[name="userPwd"]').on('input', function () {
+                if (this.checkValidity()) {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                } else {
+                    $(this).removeClass('is-valid').addClass('is-invalid');
+                    $(this).siblings('.invalid-feedback').hide();
+                    if (this.validity.valueMissing) {
+                        $(this).siblings('.invalid-feedback:not([data-feedback])').show();
+                    } else if (this.validity.patternMismatch) {
+                        $(this).siblings('[data-feedback="patternMismatch"]').show();
+                    }
+                }
+            });
+
+            $('#userPwd, #userPwdCheck').on('input', function () {
+                var password = $('#userPwd').val();
+                var confirmPassword = $('#userPwdCheck').val();
+
+                if (confirmPassword) {
+                    if (password !== confirmPassword) {
+                        $('#userPwdCheck').removeClass('is-valid').addClass('is-invalid');
+                        $('#userPwdCheck').siblings('.invalid-feedback:not([data-feedback])').hide();
+                        $('#userPwdCheck').siblings('[data-feedback="passwordMismatch"]').show();
+                    } else {
+                        $('#userPwdCheck').removeClass('is-invalid').addClass('is-valid');
+                        $('#userPwdCheck').siblings('.invalid-feedback').hide();
+                    }
+                } else {
+                    $('#userPwdCheck').removeClass('is-valid').addClass('is-invalid');
+                    $('#userPwdCheck').siblings('.invalid-feedback:not([data-feedback])').show();
+                }
+            });
+
+            $('input[name="userNickName"]').on('input', function () {
+                var $this = $(this);
+                if (this.checkValidity()) {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                    //ajax
+                    $.ajax({
+                        url: "${pageContext.servletContext.contextPath}/checkName",
+                        type: 'post',
+                        data: {
+                            name: $(this).val()
+                        },
+                        success: function (result) {
+                            if (result == 0) {
+                                $(this).removeClass('is-invalid').addClass('is-valid');
+                            } else {
+                                $this.removeClass('is-valid').addClass('is-invalid');
+                                $this.siblings('.invalid-feedback').hide();
+                                $this.siblings('[data-feedback="duplicate"]').show();
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                        }
+                    });
+                } else {
+                    $(this).removeClass('is-valid').addClass('is-invalid');
+                    $(this).siblings('.invalid-feedback').hide();
+                    if (this.validity.valueMissing) {
+                        $(this).siblings('.invalid-feedback:not([data-feedback])').show();
+                    } else if (this.validity.patternMismatch) {
+                        $(this).siblings('[data-feedback="patternMismatch"]').show();
+                    }
+                }
+            });
+
+            $('input[name="userEmail"]').on('input', function () {
+                var $this = $(this);
+                var $feedbacks = $this.parent().siblings('.invalid-feedback');
+                var $button = $this.siblings('input[type="button"]');
+
+                if (this.checkValidity()) {
+                    $this.removeClass('is-invalid').addClass('is-valid');
+                    $feedbacks.hide();
+                    $button.prop('disabled', true);
+                    $.ajax({
+                        url: "${pageContext.servletContext.contextPath}/checkemail",
+                        type: 'post',
+                        data: {
+                            email: $this.val()
+                        },
+                        success: function (result) {
+                            if (result == 0) {
+                                $this.removeClass('is-invalid').addClass('is-valid');
+                                $button.prop('disabled', false);
+                            } else {
+                                $this.removeClass('is-valid').addClass('is-invalid');
+                                $feedbacks.filter('[data-feedback="duplicate"]').show();
+
+                                //
+                                $this.removeClass('is-valid').addClass('is-invalid');
+                                $this.siblings('.invalid-feedback').hide();
+                                $this.siblings('[data-feedback="duplicate"]').show();
+                            }
+                        }
+                    });
+                } else {
+                    $this.removeClass('is-valid').addClass('is-invalid');
+                    $feedbacks.hide();
+                    $button.prop('disabled', true);
+                    if (this.validity.valueMissing) {
+                        $feedbacks.filter(':not([data-feedback])').show();
+                    } else if (this.validity.patternMismatch) {
+                        $feedbacks.filter('[data-feedback="patternMismatch"]').show();
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <main style="margin-top: 100px" class="container">
+        <div class="signupFrm_wrapper">
+            <p class="signupTitle">일반 회원가입</p>
+            <hr>
+            <form action="#" class="signupFrm needs-validation" novalidate>
+                <ul style="padding: 0">
+                    <li>
+                        <div>
+                            <input type="text" name="userId" class="form-control" placeholder="아이디"
+                                   pattern="^[a-zA-Z0-9_\-\.]{5,50}$" required/>
+                            <div class="invalid-feedback">아이디를 입력해주세요.</div>
+                            <div class="invalid-feedback" data-feedback="patternMismatch">5~50자리, 영문, 숫자, _, -,
+                                .만 사용해주세요.
+                            </div>
+                            <div class="invalid-feedback" data-feedback="duplicate">중복된 아이디입니다.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input type="password" id="userPwd" name="userPwd" class="form-control"
+                                   placeholder="비밀번호"
+                                   pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$" required/>
+                            <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+                            <div class="invalid-feedback" data-feedback="patternMismatch">8~20자, 영문, 숫자, 특문을 모두
+                                이용해주세요.
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input type="password" id="userPwdCheck" name="userPwdCheck" class="form-control"
+                                   placeholder="비밀번호 확인"
+                                   required/>
+                            <div class="invalid-feedback" data-feedback="passwordMismatch">비밀번호를 확인해주세요.</div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input type="text" name="userNickName" class="form-control" placeholder="닉네임"
+                                   pattern="^[a-zA-Z0-9가-힣]{2,12}$" required/>
+                            <div class="invalid-feedback">닉네임을 입력해주세요.</div>
+                            <div class="invalid-feedback" data-feedback="patternMismatch">2~12자리, 한글, 영문, 숫자만
+                                사용해주세요.
+                            </div>
+                            <div class="invalid-feedback" data-feedback="duplicate">중복된 닉네임입니다.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="input-group">
+                                <input type="text" class="form-control userEmail" name="userEmail"
+                                       pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required placeholder="이메일">
+                                <input type="button" class="btn btn-success" value="메일인증"/>
+                            </div>
+                            <div class="invalid-feedback">이메일을 입력해주세요.</div>
+                            <div class="invalid-feedback" data-feedback="patternMismatch">이메일 형식에 맞지 않습니다.
+                            </div>
+                            <div class="invalid-feedback" data-feedback="duplicate">중복된 이메일입니다.</div>
+                        </div>
+                    </li>
+                    <%----%>
+
+
+                    <%----%>
+                    <li>
+                        <div class="input-group">
+                            <div>
+                                <input type="text" name="userEmailcheck" class="form-control is-invalid" placeholder="인증번호"
+                                       required/>
+                                <div class="invalid-feedback">이메일을 입력해주세요.</div>
+                            </div>
+                            <input type="button" name="userEmailCheckbtn" class="btn btn-outline-secondary" value="확인"/>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="text" name="userCell" class="form-control" placeholder="전화번호"/>
+                    </li>
+                    <li>
+                        <div class="signupBtn">
+                            <input type="reset" class="btn btn-secondary reset" value="다시작성"/>
+                            <input type="submit" class="btn btn-primary signup" value="회원가입"/>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
+

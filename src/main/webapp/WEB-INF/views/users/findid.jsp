@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="../header_footer/header.jspf"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -250,39 +251,7 @@
 </head>
 <body>
 <!-- Header -->
-<header class="container">
-    <!-- Title -->
-    <div class="title">
-        <a class="logo" href="main.html">CAREER CANVAS</a>
-        <i class="fa-solid fa-bars hamberger"></i>
-    </div>
-    <!-- Nav -->
-    <nav class="nav_wrapper">
-        <ul class="navBar">
-            <li><a href="#">파티</a></li>
-            <li><a href="popol.html">포트폴리오</a></li>
-            <li><a href="#">기업과제</a></li>
-            <li><a href="#">커뮤니티</a></li>
-        </ul>
-        <ul class="infoGroup">
-            <!-- 로그인세션 확인 후 로그인 숨기고 닉네임,사용자아이콘 표시 -->
-            <!-- 아이콘 클릭 시 드롭다운 메뉴로 프로필,마이페이지,로그아웃 나오게 -->
-            <li><a href="#">로그인</a></li>
-            <li><a href="#">아이콘자리</a></li>
-            <li class="userNickname">
-                닉네임자리 ▼
-                <div style="background-color: white">
-                    <ul class="userInfo">
-                        <li>프로필</li>
-                        <li>마이페이지</li>
-                        <li>로그아웃</li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-    </nav>
-    <hr/>
-</header>
+
 <div class="container">
     <h3 style="text-align: center; margin-top: 150px">아이디를 잊으셨나요?</h3>
     <form method="post" id="findidForm" name="findidForm">

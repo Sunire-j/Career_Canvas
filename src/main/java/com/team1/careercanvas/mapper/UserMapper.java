@@ -4,5 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    String loginSelect(String userid);
+    int LoginCheck(String userid, String userpwd);
+    int idCheck(String input);
+    int namecheck(String input);
+    int emailcheck(String input);
 }

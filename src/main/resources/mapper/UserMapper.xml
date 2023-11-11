@@ -2,8 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team1.careercanvas.mapper.UserMapper">
 
-    <select id="loginSelect" resultType="String">
-        select username from user where userid=#{param1}
+    <select id="LoginCheck" resultType="Integer">
+        select count(userid) from user where userid=#{param1} and userpwd=#{param2}
+    </select>
+
+    <select id="idCheck" resultType="Integer">
+        select count(userid) from user where userid=#{param1};
+    </select>
+
+    <select id="namecheck" resultType="Integer">
+        select count(username) from user where username=#{param1};
+    </select>
+
+    <select id="emailcheck" resultType="Integer">
+        select count(useremail) from user where useremail=#{param1};
     </select>
 
 </mapper>
