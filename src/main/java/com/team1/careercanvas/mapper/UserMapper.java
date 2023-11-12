@@ -1,10 +1,10 @@
 package com.team1.careercanvas.mapper;
 
+import com.team1.careercanvas.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    int LoginCheck(String userid, String userpwd);
 
     int idCheck(String input);
 
@@ -12,5 +12,7 @@ public interface UserMapper {
 
     int emailcheck(String input);
 
-    void signupPersonal(String userid, String userpwd, String username, String useremail, String usertel);
+    void signupPersonal(String userid, String userpwd, String username, String useremail, String usertel, String salt);
+
+    UserVO getUser(String userid);
 }

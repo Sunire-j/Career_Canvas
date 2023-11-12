@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestController {
     @GetMapping("signup_end")
     public String signup_end(){
-        return "users/signup_end";
+        return "personal_end";
     }
 }
 

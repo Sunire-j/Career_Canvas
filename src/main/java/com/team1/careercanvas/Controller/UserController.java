@@ -1,6 +1,7 @@
 package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.util.securePassword;
 import com.team1.careercanvas.vo.UserVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+
+import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
 @Controller
 public class UserController {
@@ -90,10 +93,11 @@ public class UserController {
                                  HttpSession session){
         try{
             //비밀번호 암호화 해야함 아직 고려 x
-            mapper.signupPersonal(userid,userpwd,username,useremail,usertel);
+            String[] securearr = encryptWithSalt(userpwd);
+            mapper.signupPersonal(userid,securearr[0],username,useremail,usertel,securearr[1]);
             session.setAttribute("tempID", userid);
             session.setAttribute("tempmail", useremail);
-            return "축하합니다 페이지";
+            return "/users/personal_end";
         }catch(Exception e){
             return "404 page";
         }
@@ -104,10 +108,15 @@ public class UserController {
         //아직 관리자로그인 고려안함
         try{
             if(vo.getUsertype()==0){//개인로그인
-                int result = mapper.LoginCheck(vo.getUserid(), vo.getUserpwd());
-                if(result==0){
+                // 해당 유저의 salt와 암호화된 비밀번호를 가져옴
+                UserVO userInDB = mapper.getUser(vo.getUserid());
+
+                // 입력한 비밀번호를 암호화
+                String encryptedInputPwd = securePassword.encryptWithSalt(vo.getUserpwd(), userInDB.getUsersalt())[0];
+
+                if(!userInDB.getUserpwd().equals(encryptedInputPwd)){
                     return "can't login page";
-                }else if(result==1){
+                }else{
                     session.setAttribute("LogStatus", "Y");
                     session.setAttribute("LogId",vo.getUserid());
                     session.setAttribute("usertype", vo.getUsertype());
@@ -120,7 +129,5 @@ public class UserController {
             e.printStackTrace();
             return "can't login page";//
         }
-
-        return "";
     }
 }
