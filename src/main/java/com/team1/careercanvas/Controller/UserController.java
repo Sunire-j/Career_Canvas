@@ -63,7 +63,7 @@ public class UserController {
         if(session.getAttribute("LogStatus")=="Y"){
             return "잘못된 접근입니다 페이지";
         }
-        return "users/signup-start";
+        return "users/signup-biz";
     }
 
     @PostMapping("checkId")
@@ -92,13 +92,49 @@ public class UserController {
                                  @RequestParam("usertel")String usertel,
                                  HttpSession session){
         try{
-            //비밀번호 암호화 해야함 아직 고려 x
             String[] securearr = encryptWithSalt(userpwd);
-            mapper.signupPersonal(userid,securearr[0],username,useremail,usertel,securearr[1]);
-            session.setAttribute("tempID", userid);
+            mapper.signupPersonal(userid,securearr[0],username,useremail,usertel,0,securearr[1]);
+
+            int length = userid.length();
+            String firstPart = userid.substring(0, 2);
+            String lastPart = userid.substring(length - 2, length);
+
+            StringBuilder asterisks = new StringBuilder();
+            for (int i = 0; i < length - 4; i++) {
+                asterisks.append("*");
+            }
+
+            String result = firstPart.concat(String.valueOf(asterisks)).concat(lastPart);
+            session.setAttribute("tempID", result);
             session.setAttribute("tempmail", useremail);
             return "/users/personal_end";
         }catch(Exception e){
+            return "404 page";
+        }
+    }
+
+    @PostMapping("/signup/bizstart")
+    public String signUpBiz(@RequestParam("userId")String userid,
+                                 @RequestParam("userPwd")String userpwd,
+                                 @RequestParam("userNickName")String username,
+                                 @RequestParam("userEmail")String useremail,
+                                 @RequestParam("usertel")String usertel,
+                                 @RequestParam("companyno") String companyno,
+                                 HttpSession session){
+        try{
+            String[] securearr = encryptWithSalt(userpwd);
+            mapper.signupPersonal(userid,securearr[0],username,useremail,usertel,1,securearr[1]);
+            mapper.signupBiz(userid, companyno);
+
+            session.setAttribute("tempusername",username);
+            session.setAttribute("tempcompanyno",companyno);
+            //여기까지 임시가입은 끝남
+            //증빙 보내기 위한 홈페이지로 이동해야함.
+            System.out.println(username+"임시가입 완료");
+
+            return "/users/personal_end";
+        }catch(Exception e){
+            e.printStackTrace();
             return "404 page";
         }
     }
@@ -108,10 +144,8 @@ public class UserController {
         //아직 관리자로그인 고려안함
         try{
             if(vo.getUsertype()==0){//개인로그인
-                // 해당 유저의 salt와 암호화된 비밀번호를 가져옴
                 UserVO userInDB = mapper.getUser(vo.getUserid());
 
-                // 입력한 비밀번호를 암호화
                 String encryptedInputPwd = securePassword.encryptWithSalt(vo.getUserpwd(), userInDB.getUsersalt())[0];
 
                 if(!userInDB.getUserpwd().equals(encryptedInputPwd)){

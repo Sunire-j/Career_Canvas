@@ -12,7 +12,8 @@ public interface UserMapper {
 
     int emailcheck(String input);
 
-    void signupPersonal(String userid, String userpwd, String username, String useremail, String usertel, String salt);
+    void signupPersonal(String userid, String userpwd, String username, String useremail, String usertel, int usertype, String salt);
+    void signupBiz(String userid, String companyno);
 
     UserVO getUser(String userid);
 }

@@ -16,8 +16,14 @@
 
     <insert id="signupPersonal">
         insert into user(userid, userpwd, username,useremail, usertel, usertype, usersalt)
-        values(#{param1}, #{param2},#{param3},#{param4},#{param5}, 0, #{param6});
+        values(#{param1}, #{param2},#{param3},#{param4},#{param5}, #{param6}, #{param7});
     </insert>
+
+    <insert id="signupBiz">
+        insert into company(user_userid, companyno)
+        values(#{param1}, #{param2});
+    </insert>
+
 
     <select id="getUser" resultType="com.team1.careercanvas.vo.UserVO">
         select userpwd, usersalt from user where userid=#{param1};
