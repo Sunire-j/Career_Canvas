@@ -24,6 +24,10 @@
         values(#{param1}, #{param2});
     </insert>
 
+    <update id="InsertAuthImg">
+        update company set authimg = #{param1} where companyno = #{param2}
+    </update>
+
 
     <select id="getUser" resultType="com.team1.careercanvas.vo.UserVO">
         select userpwd, usersalt from user where userid=#{param1};

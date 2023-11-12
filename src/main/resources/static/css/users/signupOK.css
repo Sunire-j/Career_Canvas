@@ -1,0 +1,114 @@
+body{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+p{
+    margin: 0;
+}
+ul{
+    margin: 0;
+}
+.container{
+    width: 1200px;
+    margin : 0 auto;
+    text-align: center;
+    align-items: center;
+}
+.signupOKcompany{
+    margin-top: 150px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+.pstyle1{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 18px;
+}
+.pstyle2{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+#file-upload{
+    margin-top: 30px;
+}
+.btngroup{
+    width: 400px;
+    margin: 0 auto;
+    margin-top:50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.reset, .signup{
+    width: 100px;
+    height: 40px;
+}
+/* 파일 긁어 온 곳 */
+.file-upload label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+.file-upload input[type="file"] {  /* 파일 필드 숨기기 */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.file-upload label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #000;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #d3d3d3;
+    cursor: pointer;
+    border: 1px solid #808080;
+    border-bottom-color: #939393;
+    border-radius: .25em;
+}
+
+.img_file {
+    display: flex;
+    margin: 0 auto;
+    height: 300px;
+    width: 210px;
+    overflow: hidden;
+    display: none; /* 초기에는 숨김 */
+    justify-content: center;
+    align-items: center;
+}
+
+.img_file img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}

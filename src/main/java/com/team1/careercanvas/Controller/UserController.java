@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
@@ -128,15 +133,46 @@ public class UserController {
 
             session.setAttribute("tempusername",username);
             session.setAttribute("tempcompanyno",companyno);
-            //여기까지 임시가입은 끝남
-            //증빙 보내기 위한 홈페이지로 이동해야함.
-            System.out.println(username+"임시가입 완료");
 
-            return "/users/personal_end";
+            return "/users/signup-biz-upload";
         }catch(Exception e){
             e.printStackTrace();
             return "404 page";
         }
+    }
+
+    @PostMapping("/signup/bizupload")
+    public String bizupload(@RequestParam("ex_file")MultipartFile file,
+                            @RequestParam("companyno") String companyno){
+
+        if (file.isEmpty()) {
+            System.out.println("파일없음");
+            return "404";
+        }
+
+        String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String newFileName = companyno + extension;
+        String projectDir = new File("").getAbsolutePath();
+        File directory = new File(projectDir + "/upload/companyauth");
+        if (!directory.exists()) {
+            directory.mkdirs(); // 디렉토리 생성
+        }
+
+        Path path = Paths.get(directory.getAbsolutePath(), newFileName); // 절대 경로를 사용
+
+        try {
+            file.transferTo(new File(path.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("파일저장실패");
+            return "404";
+        }
+
+        String imgsrc = "/companyauth/" + newFileName;
+
+        mapper.InsertAuthImg(imgsrc, companyno);
+        //이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
+        return "users/biz-end";
     }
 
     @PostMapping("/loginOk")
