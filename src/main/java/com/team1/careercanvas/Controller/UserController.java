@@ -81,6 +81,24 @@ public class UserController {
         return mapper.emailcheck(input);
     }
 
+    @PostMapping("/signup/personalstart")
+    public String signUpPersonal(@RequestParam("userId")String userid,
+                                 @RequestParam("userPwd")String userpwd,
+                                 @RequestParam("userNickName")String username,
+                                 @RequestParam("userEmail")String useremail,
+                                 @RequestParam("usertel")String usertel,
+                                 HttpSession session){
+        try{
+            //비밀번호 암호화 해야함 아직 고려 x
+            mapper.signupPersonal(userid,userpwd,username,useremail,usertel);
+            session.setAttribute("tempID", userid);
+            session.setAttribute("tempmail", useremail);
+            return "축하합니다 페이지";
+        }catch(Exception e){
+            return "404 page";
+        }
+    }
+
     @PostMapping("/loginOk")
     public String loginOk(HttpSession session, UserVO vo){
         //아직 관리자로그인 고려안함

@@ -18,4 +18,9 @@
         select count(useremail) from user where useremail=#{param1};
     </select>
 
+    <insert id="signupPersonal">
+        insert into user(userid, userpwd, username,useremail, usertel, usertype, usersalt)
+        values(#{param1}, #{param2},#{param3},#{param4},#{param5}, 0, "")
+    </insert>
+
 </mapper>

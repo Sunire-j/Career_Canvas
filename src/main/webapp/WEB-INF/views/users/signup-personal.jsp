@@ -14,7 +14,7 @@
 
     <script>
         $(function () {
-            $('input[name="userId"]').on('input', function () {
+            $('input[name="userId"]').on('input blur', function () {
                 var $this = $(this);
                 if (this.checkValidity()) {
                     $(this).removeClass('is-invalid').addClass('is-valid');
@@ -52,7 +52,7 @@
                 }
             });
 
-            $('input[name="userPwd"]').on('input', function () {
+            $('input[name="userPwd"]').on('input blur', function () {
                 if (this.checkValidity()) {
                     $(this).removeClass('is-invalid').addClass('is-valid');
                 } else {
@@ -66,7 +66,7 @@
                 }
             });
 
-            $('#userPwd, #userPwdCheck').on('input', function () {
+            $('#userPwd, #userPwdCheck').on('input blur', function () {
                 var password = $('#userPwd').val();
                 var confirmPassword = $('#userPwdCheck').val();
 
@@ -85,7 +85,7 @@
                 }
             });
 
-            $('input[name="userNickName"]').on('input', function () {
+            $('input[name="userNickName"]').on('input blur', function () {
                 var $this = $(this);
                 if (this.checkValidity()) {
                     $(this).removeClass('is-invalid').addClass('is-valid');
@@ -120,7 +120,7 @@
                 }
             });
 
-            $('input[name="userEmail"]').on('input', function () {
+            $('input[name="userEmail"]').on('input blur', function () {
                 var $this = $(this);
                 var $feedbacks = $this.parent().siblings('.invalid-feedback');
                 var $button = $this.siblings('input[type="button"]');
@@ -161,6 +161,96 @@
                     }
                 }
             });
+            $("#authbtn").on('click', function(){
+               $.ajax({
+                  url:'${pageContext.servletContext.contextPath}/emailsend',
+                  data :{
+                      email:$("#useremail").val()
+                  },
+                   type:'post',
+                   success:function(result){
+                      if(result==0){
+                          $("#useremail").prop('disabled',true);
+                          $("#authbtn").val("발송됨");
+                          $("#authbtn").prop('disabled',true);
+                          $("#emailauth").prop('disabled',false);
+                          $("#emailauthbtn").prop('disabled',false);
+                          $("#emailauthbtn").val("확인");
+                          //시간 지나게 해주기
+                          //인증번호 입력칸, 확인버튼 disabled 풀
+                      }
+                   },
+                   error:function(error){
+                      console.log(error);
+                   }
+               });
+            });
+
+            $("#emailauthbtn").on('click',function(){
+                $.ajax({
+                   url:'${pageContext.servletContext.contextPath}/email/verify',
+                    data:{
+                       emailauth:$("#emailauth").val()
+                    },
+                    type:'post',
+                    success:function(result){
+                       if(result==0){//맞음
+                           $("#emailauth").prop('disabled',true);
+                           $("#emailauthbtn").val("인증됨");
+                           $("#emailauthbtn").prop('disabled',true);
+                           $("#userEmailcopy").val($("#useremail").val());
+                       }else if(result==2){//틀림
+                           $("#emailauthbtn").val("값오류");
+                           $("#emailauth").val("");
+                       }else{//이메일부터 다시쳐야함
+                           $("#emailauthbtn").val("만료됨");
+                           $("#useremail").prop('disabled',false);
+                           $("#authbtn").val("메일인증");
+                           $("#authbtn").prop('disabled',false);
+                           $("#emailauth").prop('disabled',true);
+                           $("#emailauthbtn").prop('disabled',true);
+                       }
+                    },
+                    error:function(error){
+                       console.log(error.responseText);
+                    }
+                });
+            });
+
+            $('input[name="usertel"]').on('input blur', function () {
+                if (this.checkValidity()) {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                } else {
+                    $(this).removeClass('is-valid').addClass('is-invalid');
+                    $(this).siblings('.invalid-feedback').hide();
+                    if (this.validity.valueMissing) {
+                        $(this).siblings('.invalid-feedback:not([data-feedback])').show();
+                    } else if (this.validity.patternMismatch) {
+                        $(this).siblings('[data-feedback="patternMismatch"]').show();
+                    }
+                }
+            });
+            $('.signupFrm input').on('change', function() {
+                // 모든 필수 입력 항목이 is-valid 클래스를 가지고 있는지 확인
+                let isValid = $("input[name='userId']").hasClass('is-valid') &&
+                    $("input[name='userPwd']").hasClass('is-valid') &&
+                    $("input[name='userPwdCheck']").hasClass('is-valid') &&
+                    $("input[name='userNickName']").hasClass('is-valid') &&
+                    $("input[name='usertel']").hasClass('is-valid');
+
+                // 특정 입력 항목들이 disabled 상태인지 확인
+                let isDisabled = $("#useremail").prop('disabled') &&
+                    $("#authbtn").prop('disabled') &&
+                    $("#emailauth").prop('disabled') &&
+                    $("#emailauthbtn").prop('disabled');
+
+                // 모든 조건이 만족하면 submit 버튼 활성화, 아니면 비활성화
+                if(isValid && isDisabled) {
+                    $(".signup").prop('disabled', false);
+                } else {
+                    $(".signup").prop('disabled', true);
+                }
+            });
         });
     </script>
 </head>
@@ -170,7 +260,7 @@
         <div class="signupFrm_wrapper">
             <p class="signupTitle">일반 회원가입</p>
             <hr>
-            <form action="#" class="signupFrm needs-validation" novalidate>
+            <form action="${pageContext.servletContext.contextPath}/signup/personalstart" method="post" class="signupFrm needs-validation" novalidate>
                 <ul style="padding: 0">
                     <li>
                         <div>
@@ -217,9 +307,11 @@
                     <li>
                         <div>
                             <div class="input-group">
-                                <input type="text" class="form-control userEmail" name="userEmail"
-                                       pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required placeholder="이메일">
-                                <input type="button" class="btn btn-success" value="메일인증"/>
+                                <input type="hidden" id="userEmailcopy" name="userEmail"/>
+                                <input type="text" class="form-control userEmail" name="userEmail" id="useremail"
+                                       pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" required
+                                       placeholder="이메일">
+                                <input type="button" class="btn btn-success" id="authbtn" value="메일인증"/>
                             </div>
                             <div class="invalid-feedback">이메일을 입력해주세요.</div>
                             <div class="invalid-feedback" data-feedback="patternMismatch">이메일 형식에 맞지 않습니다.
@@ -227,27 +319,26 @@
                             <div class="invalid-feedback" data-feedback="duplicate">중복된 이메일입니다.</div>
                         </div>
                     </li>
-                    <%----%>
-
-
-                    <%----%>
                     <li>
-                        <div class="input-group">
-                            <div>
-                                <input type="text" name="userEmailcheck" class="form-control is-invalid" placeholder="인증번호"
-                                       required/>
-                                <div class="invalid-feedback">이메일을 입력해주세요.</div>
+                        <div>
+                            <div class="input-group">
+                                <input type="text" class="form-control userEmailcheck" id="emailauth" required
+                                       placeholder="인증번호" disabled>
+                                <input type="button" class="btn btn-success" id="emailauthbtn" value="확인" disabled/>
                             </div>
-                            <input type="button" name="userEmailCheckbtn" class="btn btn-outline-secondary" value="확인"/>
+                            <div class="invalid-feedback">이메일인증을 완료해주세요.</div>
                         </div>
                     </li>
                     <li>
-                        <input type="text" name="userCell" class="form-control" placeholder="전화번호"/>
+                        <input type="text" name="usertel" class="form-control" pattern="01[016789]-([0-9]{3}|[0-9]{4})-[0-9]{4}" placeholder="전화번호" required/>
+                        <div class="invalid-feedback">휴대전화번호를 입력해주세요.</div>
+                        <div class="invalid-feedback" data-feedback="patternMismatch">전화번호 형식에 맞지 않습니다.
+                        </div>
                     </li>
                     <li>
                         <div class="signupBtn">
-                            <input type="reset" class="btn btn-secondary reset" value="다시작성"/>
-                            <input type="submit" class="btn btn-primary signup" value="회원가입"/>
+                            <input type="button" class="btn btn-secondary reset" onclick="location.reload()" value="다시작성"/>
+                            <input type="submit" class="btn btn-primary signup" value="회원가입" disabled/>
                         </div>
                     </li>
                 </ul>
