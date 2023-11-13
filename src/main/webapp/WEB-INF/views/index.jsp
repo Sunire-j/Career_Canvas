@@ -14,6 +14,7 @@
     <p>로그인 여부 : ${LogStatus}
     <c:if test="${LogStatus=='Y'}">
         로그인 아이디 : ${LogId}
+        유저 타입 : ${usertype}
         <a href="${pageContext.servletContext.contextPath}/logout">로그아웃</a>
     </c:if>
     </p>

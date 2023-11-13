@@ -13,11 +13,13 @@
         $(function () {
             $('input[type="radio"]').change(function () {
                 if ($(this).val() == '1') {
+                    console.log("기업회원 들어옴");
                     if (!$('.for-company').length) {
                         $('<div class="for-company mt-3"><label for="companyno" class="form-label">사업자등록번호:</label>' +
-                            '<input type="text" class="form-control" id="companyno" placeholder="사업자등록번호를 입력해주세요." name="companyno"></div>').insertAfter('#pw');
+                            '<input type="text" class="form-control" id="companyno" placeholder="사업자등록번호( - 포함 )" name="companyno"></div>').insertAfter('#pw');
                     }
                 } else {
+                    console.log("일반회원 들어옴");
                     $('.for-company').remove();
                 }
             });
@@ -38,11 +40,14 @@
         <div style="width: 40%; margin: 10px auto 0;">
             <label for="userid" class="form-label">아이디:</label>
             <input type="text" class="form-control" id="userid" placeholder="아이디를 입력해주세요." name="userid">
-            <label for="userpwd" class="form-label mt-3">비밀번호:</label>
-            <input type="password" class="form-control" id="userpwd" placeholder="비밀번호를 입력해주세요." name="userpwd">
+            <label for="pw" class="form-label mt-3">비밀번호:</label>
+            <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해주세요." name="userpwd">
             <div class="mt-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex;   align-items: center;">
-                    <a href="/findid"><p style="color: red; font-size: 14px">계정정보 찾기</p></a>&nbsp;<p style="font-size: 14px">|</p>&nbsp;
+                    <a href="${pageContext.servletContext.contextPath}/findid"><p style="color: red; font-size: 14px">아이디</p></a>
+                    <p style="font-size: 14px">/</p>
+                    <a href="${pageContext.servletContext.contextPath}/findpw"><p style="color: red; font-size: 14px">비밀번호찾기</p></a>
+                    &nbsp;<p style="font-size: 14px">|</p>&nbsp;
                     <a href="${pageContext.servletContext.contextPath}/signup"><p style="font-size: 14px">회원가입</p></a>
                 </div>
                 <input type="submit" class="btn btn-primary" value="로그인"/>

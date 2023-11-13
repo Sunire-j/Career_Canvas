@@ -3,34 +3,71 @@
 <mapper namespace="com.team1.careercanvas.mapper.UserMapper">
 
     <select id="idCheck" resultType="Integer">
-        select count(userid) from user where userid=#{param1};
+        select count(userid)
+        from user
+        where userid = #{param1};
     </select>
 
     <select id="namecheck" resultType="Integer">
-        select count(username) from user where username=#{param1};
+        select count(username)
+        from user
+        where username = #{param1};
     </select>
 
     <select id="emailcheck" resultType="Integer">
-        select count(useremail) from user where useremail=#{param1};
+        select count(useremail)
+        from user
+        where useremail = #{param1};
     </select>
 
     <insert id="signupPersonal">
-        insert into user(userid, userpwd, username,useremail, usertel, usertype, usersalt)
-        values(#{param1}, #{param2},#{param3},#{param4},#{param5}, #{param6}, #{param7});
+        insert into user(userid, userpwd, username, useremail, usertel, usertype, usersalt)
+        values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7});
     </insert>
 
     <insert id="signupBiz">
         insert into company(user_userid, companyno)
-        values(#{param1}, #{param2});
+        values (#{param1}, #{param2});
     </insert>
 
     <update id="InsertAuthImg">
-        update company set authimg = #{param1} where companyno = #{param2}
+        update company
+        set authimg = #{param1}
+        where companyno = #{param2}
     </update>
 
 
     <select id="getUser" resultType="com.team1.careercanvas.vo.UserVO">
-        select userpwd, usersalt from user where userid=#{param1};
+        select userpwd, usersalt, usertype
+        from user
+        where userid = #{param1};
+    </select>
+
+    <select id="getBizNo" resultType="String">
+        select companyno
+        from company
+        where user_userid = #{param1};
+    </select>
+
+    <select id="getAccept" resultType="Integer">
+        select isaccept
+        from company
+        where user_userid = #{param1};
+    </select>
+
+    <select id="getUserId" resultType="String">
+        select userid
+        from user
+        where useremail = #{param1} and usertype = #{param2};
+    </select>
+
+    <select id="getUserIdForBiz" resultType="String">
+        select user.userid
+        from user
+                 join company on user.userid = company.user_userid
+        where company.companyno = #{param2}
+          and user.useremail = #{param1}
+        and user.usertype = #{param3}
     </select>
 
 </mapper>

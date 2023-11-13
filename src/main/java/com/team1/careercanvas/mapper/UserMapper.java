@@ -17,4 +17,11 @@ public interface UserMapper {
 
     UserVO getUser(String userid);
     void InsertAuthImg(String imgsrc, String companyno);
+
+    String getBizNo(String userid);
+
+    int getAccept(String userid);
+
+    String getUserId(String useremail, int usertype);
+    String getUserIdForBiz(String useremail, String companyno, int usertype);
 }
