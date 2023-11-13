@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.SecureRandom;
 import java.time.Duration;
@@ -38,39 +39,76 @@ public class EmailController {
     }
 
     @PostMapping("/findidStart")
-    public String findIdStart(@RequestParam("userEmail")String useremail,
-                              @RequestParam("usertype")int usertype,
-                              @RequestParam(value = "companyno", required = false)String companyno,
-                              HttpSession session){
-
-        System.out.println(companyno);
-        System.out.println(usertype);
-        if(usertype==0){
+    public String findIdStart(@RequestParam("userEmail") String useremail,
+                              @RequestParam("usertype") int usertype,
+                              @RequestParam(value = "companyno", required = false) String companyno,
+                              HttpSession session) {
+        if (usertype == 0) {
             //유저아이디를 가져와야함.
             String userid = mapper.getUserId(useremail, usertype);
             //메일을 보내야함.
-            if(userid!=null){
-                emailService.sendMail(useremail, "커리어캔버스 아이디 찾기", "가입된 아이디 = "+userid);
+            if (userid != null) {
+                emailService.sendMail(useremail, "커리어캔버스 아이디 찾기", "가입된 아이디 = " + userid);
                 session.setAttribute("msg", "작성하신 메일 주소로 아이디를 발송했습니다.");
-            }else{
+            } else {
                 session.setAttribute("msg", "가입 된 정보가 없습니다.");
             }
 
             return "alert_page";//여기에 메일 보냈다는 홈페이지로 이동.
 
-        }else{
+        } else {
             //유저 아이디를 가져와야함
-            if(companyno!=null){
-                String userid = mapper.getUserIdForBiz(useremail,companyno, usertype);
-                System.out.println(userid);
+            if (companyno != null) {
+                String userid = mapper.getUserIdForBiz(useremail, companyno, usertype);
 
-                if(userid!=null){
-                    emailService.sendMail(useremail, "커리어캔버스 아이디 찾기", "가입된 아이디 = "+userid);
+                if (userid != null) {
+                    emailService.sendMail(useremail, "커리어캔버스 아이디 찾기", "가입된 아이디 = " + userid);
                     session.setAttribute("msg", "작성하신 메일 주소로 아이디를 발송했습니다.");
-                }else {
+                } else {
                     session.setAttribute("msg", "가입 된 정보가 없습니다.");
                 }
-            }else{
+            } else {
+                session.setAttribute("msg", "가입 된 정보가 없습니다.");
+            }
+            return "alert_page";
+        }
+    }
+
+    @PostMapping("/findpwStart")
+    public String findpwStart(@RequestParam("userEmail") String useremail,
+                              @RequestParam("usertype") int usertype,
+                              @RequestParam(value = "companyno", required = false) String companyno,
+                              @RequestParam("userid") String userid,
+                              HttpSession session,
+                              HttpServletRequest request) {
+        if(session != null || !session.isNew()){
+            session.invalidate();
+            session = request.getSession(true);
+        }
+        if (usertype == 0) {
+            String add = mapper.getUserPwd(userid, useremail, usertype);
+
+            if (add != null) {
+                String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/changepwd?id=" + add;
+                emailService.sendMail(useremail, "커리어캔버스 비밀번호 재설정","비밀번호 재설정 : "+url);
+                session.setAttribute("msg","작성하신 메일 주소로 비밀번호 재설정 링크를 발송했습니다.");
+                mapper.deleteUserPwd(userid);
+            } else {
+                session.setAttribute("msg", "가입 된 정보가 없습니다.");
+            }
+            return "alert_page";
+        } else {
+            if (companyno != null) {
+                String add = mapper.getUserPwdForBiz(userid, useremail, usertype, companyno);
+                if (add != null) {
+                    String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/changepwd?id=" + add;
+                    emailService.sendMail(useremail, "커리어캔버스 비밀번호 재설정","비밀번호 재설정 : "+url);
+                    session.setAttribute("msg","작성하신 메일 주소로 비밀번호 재설정 링크를 발송했습니다.");
+                    mapper.deleteUserPwd(userid);
+                } else {
+                    session.setAttribute("msg", "가입 된 정보가 없습니다.");
+                }
+            } else {
                 session.setAttribute("msg", "가입 된 정보가 없습니다.");
             }
             return "alert_page";
@@ -79,7 +117,7 @@ public class EmailController {
 
     @PostMapping("/email/verify")
     @ResponseBody
-    public int verifyAuthCode( @RequestParam("emailauth") String authCode, HttpSession session) {
+    public int verifyAuthCode(@RequestParam("emailauth") String authCode, HttpSession session) {
         String sessionAuthCode = (String) session.getAttribute("authCode");
         LocalDateTime sessionAuthCodeTime = (LocalDateTime) session.getAttribute("authCodeTime");
 

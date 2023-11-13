@@ -70,4 +70,32 @@
         and user.usertype = #{param3}
     </select>
 
+    <select id="getUserPwd" resultType="String">
+        select userpwd
+        from user
+        where userid = #{param1} and useremail = #{param2} and usertype = #{param3};
+    </select>
+
+    <select id="getUserPwdForBiz" resultType="String">
+        select user.userpwd
+        from user
+                 join company on user.userid = company.user_userid
+        where company.companyno = #{param4}
+          and user.useremail = #{param2}
+          and user.usertype = #{param3}
+        and user.userid=#{param1}
+    </select>
+
+    <select id="getUserIdByPwd" resultType="String">
+        select userid from user where userpwd = #{param1};
+    </select>
+
+    <update id="deleteUserPwd">
+        update user set usersalt='dontbreakmysalt' where userid = #{param1};
+    </update>
+
+    <update id="changePwd">
+        update user set usersalt = #{param3}, userpwd = #{param2} where userid=#{param1};
+    </update>
+
 </mapper>

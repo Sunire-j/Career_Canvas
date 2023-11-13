@@ -23,11 +23,14 @@ p{
     text-align: center;
 }
 
-ul,li{
+ul, li{
     list-style: none;
     margin: 0 auto;
+}
+li{
     height: 63px;
 }
+
 /* 회원가입 위치 */
 .userId,.userNickName,.userEmail{
     display: flex;

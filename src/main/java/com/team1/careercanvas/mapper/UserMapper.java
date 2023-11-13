@@ -24,4 +24,12 @@ public interface UserMapper {
 
     String getUserId(String useremail, int usertype);
     String getUserIdForBiz(String useremail, String companyno, int usertype);
+
+    String getUserPwd(String userid, String useremail, int usertype);
+    String getUserPwdForBiz(String userid, String useremail, int usertype, String companyno);
+
+    String getUserIdByPwd(String originpwd);
+    void deleteUserPwd(String userid);
+
+    void changePwd(String userid, String pwd, String salt);
 }

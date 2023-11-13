@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
@@ -105,6 +108,40 @@ public class UserController {
     @ResponseBody
     public int checkemail(@RequestParam("email") String input) {
         return mapper.emailcheck(input);
+    }
+
+    @GetMapping("/changepwd")
+    public String pwdchange(@RequestParam("id") String originpwd,
+                            HttpSession session,
+                            HttpServletRequest request){
+        if(session != null || !session.isNew()){
+            session.invalidate();
+            session = request.getSession(true);
+        }
+
+        String userid = mapper.getUserIdByPwd(originpwd);
+        UserVO saltcheck = mapper.getUser(userid);
+        if(!saltcheck.getUsersalt().equals("dontbreakmysalt")){
+            session.setAttribute("msg","잘못된 접근입니다!");
+            return "alert_page";
+        }
+        if(userid==null){
+            session.setAttribute("msg","잘못된 접근입니다!");
+            return "alert_page";
+        }else{
+            session.setAttribute("userid", userid);
+            return "users/changepwd_byemail";
+        }
+    }
+    @PostMapping("startchangepwd")
+    public String startchangepwd(@RequestParam("userPwd")String newpassword,
+                                 HttpSession session) throws NoSuchAlgorithmException {
+        String userid = (String) session.getAttribute("userid");
+        String[] secureValue = encryptWithSalt(newpassword);
+        String encryptedpwd = secureValue[0];
+        String salt = secureValue[1];
+        mapper.changePwd(userid, encryptedpwd,salt);
+        return "redirect:/login";
     }
 
     @PostMapping("/signup/personalstart")
@@ -203,38 +240,50 @@ public class UserController {
         try {
             if (usertype == 0 || usertype == 2) {//개인로그인, 관리자로그인
                 UserVO userInDB = mapper.getUser(userid);
+                System.out.println(userInDB.getUsersalt());
 
-                String encryptedInputPwd = securePassword.encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
+                if(!Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")){
 
-                if (!userInDB.getUserpwd().equals(encryptedInputPwd)) {
-                    session.setAttribute("msg", "일치하는 정보가 없습니다.");
+                    String encryptedInputPwd = securePassword.encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
+
+                    if (!userInDB.getUserpwd().equals(encryptedInputPwd)) {
+                        session.setAttribute("msg", "일치하는 정보가 없습니다.");
+                        return "alert_page";
+                    } else {
+                        session.setAttribute("LogStatus", "Y");
+                        session.setAttribute("LogId", userid);
+                        session.setAttribute("usertype", userInDB.getUsertype());
+                        return "redirect:/";
+                    }
+                }else{
+                    session.setAttribute("msg", "비밀번호 변경 후 진행해주세요. 메일함을 확인해주세요.");
                     return "alert_page";
-                } else {
-                    session.setAttribute("LogStatus", "Y");
-                    session.setAttribute("LogId", userid);
-                    session.setAttribute("usertype", userInDB.getUsertype());
-                    return "redirect:/";
                 }
+
             } else {//기업로그인
                 UserVO userInDB = mapper.getUser(userid);
-                String companynoInDB = mapper.getBizNo(userid);
-                int isaccept = mapper.getAccept(userid);
+                if(Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")){
+                    String companynoInDB = mapper.getBizNo(userid);
+                    int isaccept = mapper.getAccept(userid);
 
-                String encryptedInputPwd = securePassword.encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
+                    String encryptedInputPwd = securePassword.encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
 
-                if (!userInDB.getUserpwd().equals(encryptedInputPwd) || !companynoInDB.equals(companyno)) {
-                    session.setAttribute("msg", "일치하는 정보가 없습니다.");
+                    if (!userInDB.getUserpwd().equals(encryptedInputPwd) || !companynoInDB.equals(companyno)) {
+                        session.setAttribute("msg", "일치하는 정보가 없습니다.");
+                        return "alert_page";
+                    } else if (isaccept != 0) {
+                        session.setAttribute("msg", "승인 대기중입니다.");
+                        return "alert_page";
+                    } else {
+                        session.setAttribute("LogStatus", "Y");
+                        session.setAttribute("LogId", userid);
+                        session.setAttribute("usertype", usertype);
+                        return "redirect:/";
+                    }
+                }else{
+                    session.setAttribute("msg", "비밀번호 변경 후 진행해주세요.\n메일함을 확인해주세요.");
                     return "alert_page";
-                } else if (isaccept != 0) {
-                    session.setAttribute("msg", "승인 대기중입니다.");
-                    return "alert_page";
-                } else {
-                    session.setAttribute("LogStatus", "Y");
-                    session.setAttribute("LogId", userid);
-                    session.setAttribute("usertype", usertype);
-                    return "redirect:/";
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
