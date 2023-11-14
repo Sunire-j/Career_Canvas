@@ -106,8 +106,8 @@
 	</select>
 	
 	<update id="updateMypageWithoutPwd"> 
-		update user set username=#{param1}, useremail=#{param2}, usertel=#{param3}, comment=#{param4} 
-		where userid=#{param5}; 
+		update user set username=#{param1}, usertel=#{param2}, comment=#{param3}
+		where userid=#{param4};
 	</update>
 	
 	

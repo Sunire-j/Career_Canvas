@@ -25,6 +25,7 @@ public class securePassword {
         String encryptedPwd = sb.toString();
 
         String saltString = Base64.getEncoder().encodeToString(salt);
+        System.out.println("saltString = "+saltString);
 
         return new String[]{encryptedPwd, saltString};
     }
