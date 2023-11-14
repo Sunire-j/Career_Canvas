@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${usertype!=2}">
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,27 +153,50 @@
                 <li><a href="#">파티</a></li>
                 <li><a href="popol.html">포트폴리오</a></li>
                 <li><a href="#">기업과제</a></li>
-                <li><a href="#">커뮤니티</a></li>
+                <li><a href="${pageContext.servletContext.contextPath}/board">커뮤니티</a></li>
+                <c:if test="${usertype==2}">
+                <li><a href="/admin">관리자 페이지</a></li>
+                </c:if>
             </ul>
             <ul class="infoGroup">
-                <li><a href="#">로그인</a></li>
-                <li><a href="#">아이콘자리</a></li>
-                <li class="userNickname">
-                    닉네임자리 ▼
-                    <div style="background-color: white">
-                        <ul class="userInfo">
-                            <li>프로필</li>
-                            <li>마이페이지</li>
-                            <li>로그아웃</li>
-                        </ul>
-                    </div>
-                </li>
+                <c:if test="${LogStatus=='Y'}">
+                    <li><a href="#">아이콘자리</a></li>
+                    <li class="userNickname">
+                        ${Logusername} ▼
+                        <div style="background-color: white">
+                            <ul class="userInfo">
+                                <li><a>프로필</a></li>
+                                <li><a>마이페이지</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/logout">로그아웃</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </c:if>
+                <c:if test="${LogStatus!='Y'}">
+                <li><a href="${pageContext.servletContext.contextPath}/login">로그인</a></li>
+                </c:if>
             </ul>
         </nav>
         <hr/>
     </header>
 
+    <script>
+        const toggleBtn = document.querySelector('.hamberger');
+        const menu = document.querySelector('.nav_wrapper');
+        const userNickname = document.querySelector('.userNickname');
+        const userInfo = document.querySelector('.userInfo');
+        const ajaxMenu = document.querySelector('.menuClick');
+
+
+
+        toggleBtn.addEventListener('click',() => {
+            menu.classList.toggle('active');    // on/off
+        });
+
+        userNickname.addEventListener('click', () => {
+            userInfo.classList.toggle('active');
+        });
+    </script>
 
 </body>
 </html>
-</c:if>

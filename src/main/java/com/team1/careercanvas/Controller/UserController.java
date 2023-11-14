@@ -240,6 +240,10 @@ public class UserController {
         try {
             if (usertype == 0 || usertype == 2) {//개인로그인, 관리자로그인
                 UserVO userInDB = mapper.getUser(userid);
+                if(userInDB.getUsertype()==1){
+                    session.setAttribute("msg", "일치하는 정보가 없습니다.");
+                    return "alert_page";
+                }
                 System.out.println(userInDB.getUsersalt());
 
                 if(!Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")){
@@ -253,7 +257,8 @@ public class UserController {
                         session.setAttribute("LogStatus", "Y");
                         session.setAttribute("LogId", userid);
                         session.setAttribute("usertype", userInDB.getUsertype());
-                        return "redirect:/";
+                        session.setAttribute("Logusername", userInDB.getUsername());
+                        return "index";
                     }
                 }else{
                     session.setAttribute("msg", "비밀번호 변경 후 진행해주세요. 메일함을 확인해주세요.");
@@ -262,7 +267,7 @@ public class UserController {
 
             } else {//기업로그인
                 UserVO userInDB = mapper.getUser(userid);
-                if(Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")){
+                if(!Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")){
                     String companynoInDB = mapper.getBizNo(userid);
                     int isaccept = mapper.getAccept(userid);
 
@@ -281,7 +286,7 @@ public class UserController {
                         return "redirect:/";
                     }
                 }else{
-                    session.setAttribute("msg", "비밀번호 변경 후 진행해주세요.\n메일함을 확인해주세요.");
+                    session.setAttribute("msg", "비밀번호 변경 후 진행해주세요.메일함을 확인해주세요.");
                     return "alert_page";
                 }
             }
