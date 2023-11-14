@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<style>
-		body {
+		.container{
 			max-width: 1200px;
 			margin: 0 auto;
 		}
@@ -25,17 +25,6 @@
 
 		.button-container {
 			margin-top: 20px;
-		}
-
-		.button {
-			display: inline-block;
-			margin: 0 10px;
-			padding: 5px 10px;
-			color: #000;
-			text-decoration: none;
-			border: 1px solid #ddd;
-			border-radius: 5px;
-			transition: background-color 0.3s, color 0.3s;
 		}
 
 		.board-container {
@@ -61,17 +50,6 @@
 			display: inline-block;
 		}
 
-		.write-button {
-			display: inline-block;
-			margin: 5px;
-			padding: 5px 10px;
-			color: #fff;
-			font-size: 12px;
-			border: 1px solid #ddd;
-			text-decoration: none;
-			background-color: #3f4eb1;
-		}
-
 		.search-container {
 			background-color: #f2f2f2;
 		}
@@ -84,10 +62,6 @@
 			border: 1px solid #ddd;
 		}
 
-		.search-button {
-			background-color: #4CAF50;
-			color: white;
-		}
 
 		.pagination-container {
 			display: flex;
@@ -119,13 +93,33 @@
 	</style>
 </head>
 <body>
-<header> </header>
 <div class="container">
 	<div class="button-container">
-		<a href="javascript:void(0);" class="btn btn-primary">전체</a>
-		<a href="javascript:void(0);" class="btn btn-outline-primary">IT/프로그래밍</a>
-		<a href="javascript:void(0);" class="btn btn-outline-primary">디자인</a>
-		<a href="javascript:void(0);" class="btn btn-outline-primary">영상/음향</a>
+		<a class="btn btn-warning">
+			<span>자유게시판</span>
+		</a>
+		<a class="btn btn-outline-warning">
+			<span>질문게시판</span>
+		</a>
+		<a class="btn btn-outline-warning">
+			<span>팁게시판</span>
+		</a>
+
+	</div>
+	<div class="button-container">
+		<a class="btn btn-warning">
+			<span>전체</span>
+		</a>
+		<a class="btn btn-outline-warning">
+			<span>IT/프로그래밍</span>
+		</a>
+		<a class="btn btn-outline-warning">
+			<span>디자인</span>
+		</a>
+		<a class="btn btn-outline-warning">
+			<span>영상음향</span>
+		</a>
+
 	</div>
 	<hr />
 	<h2>전체 게시판</h2>
@@ -253,10 +247,16 @@
 				<a href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a>
 				<a href="#">4</a>
 			</div>
-			<a href="${pageContext.servletContext.contextPath}/board/write" class="write-button">글쓰기</a>
+			<c:if test="${LogStatus=='Y'}">
+			<a href="${pageContext.servletContext.contextPath}/board/write" class="btn btn-primary">글쓰기</a>
+			</c:if>
+			<c:if test="${LogStatus==null || LogStatus=='N'}">
+				<a></a>
+			</c:if>
 		</div>
 	</div>
 </div>
 <footer> </footer>
 </body>
 </html>
+<%@include file="../header_footer/footer.jspf" %>

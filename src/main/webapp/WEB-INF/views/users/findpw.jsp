@@ -367,3 +367,4 @@
 </body>
 </html>
 
+<%@include file="../header_footer/footer.jspf" %>

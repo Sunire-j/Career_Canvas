@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestController {
     @GetMapping("signup_end")
     public String signup_end(){
+        //mav
+        //db에 업데이트문 보냄
         return "personal_end";
     }
 }

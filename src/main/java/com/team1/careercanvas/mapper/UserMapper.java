@@ -1,11 +1,7 @@
 package com.team1.careercanvas.mapper;
 
 import com.team1.careercanvas.vo.UserVO;
-
-import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.servlet.ModelAndView;
 
 @Mapper
 public interface UserMapper {
@@ -39,5 +35,5 @@ public interface UserMapper {
     
 //    권혁준 작업
     UserVO getUserInfo (String LogId);
-    void updateMypageWithoutPwd(String nickName, String email, String tel, String comment, String userid);
+    void updateMypageWithoutPwd(String nickName, String tel, String comment, String userid);
 }
