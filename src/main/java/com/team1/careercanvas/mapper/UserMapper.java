@@ -32,4 +32,5 @@ public interface UserMapper {
     void deleteUserPwd(String userid);
 
     void changePwd(String userid, String pwd, String salt);
+
 }
