@@ -149,7 +149,7 @@
         </div>
         <!-- Nav -->
         <nav class="nav_wrapper">
-            <ul class="navBar">
+            <ul style="padding-left: 0px !important" class="navBar">
                 <li><a href="#">파티</a></li>
                 <li><a href="popol.html">포트폴리오</a></li>
                 <li><a href="#">기업과제</a></li>

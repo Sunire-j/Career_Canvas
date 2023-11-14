@@ -1,0 +1,153 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<style>
+    .footer-section {
+        width: 100%;
+        background-color: #ddd;
+        height: 350px;
+        margin: 0;
+        margin-top: 60px;
+    }
+
+    .footer-first-area,
+    .footer-second-area {
+        margin: 0 auto;
+        width: 1080px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .footer-second-area {
+        margin-top: 30px;
+    }
+
+    .footer-second-area {
+    }
+
+    .footer-first-first {
+        width: 252px;
+        height: 190px;
+    }
+
+    .footer-first-second > .footer-content,
+    .footer-first-third > .footer-content,
+    .footer-first-4th > .footer-content {
+        margin: 0 auto;
+    }
+
+    .footer-title {
+        color: rgb(17, 23, 75);
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 30px;
+    }
+
+    .footer-section ul,
+    .footer-section li {
+        margin: 0;
+    }
+
+    .footer-section li {
+        margin-bottom: 12px;
+    }
+
+    .footer-content {
+        color: rgb(68, 73, 111);
+        font-size: 16px;
+    }
+
+    .footer-social-section {
+        margin-top: 20px;
+    }
+
+    .footer__social {
+        font-size: 1.25rem;
+    }
+
+    .footer-first-area {
+        padding-top: 60px;
+    }
+
+    .footer__social,
+    .footer__social:hover,
+    .footer__social:link,
+    .footer__social:visited,
+    .footer__social:active,
+    .something,
+    .something:hover,
+    .something:link,
+    .something:visited,
+    .something:active{
+        color: rgb(70, 77, 134);
+    }
+    ul{
+        padding: 0 !important;
+    }
+
+</style>
+<footer class="footer-section">
+    <div class="footer-first-area">
+        <div class="footer-first-first">
+            <div class="footer-title">Career Canvas</div>
+            <div class="footer-content">사용자들이 어쩌고 저쩌고 암튼 우리는 좋은 페이지임</div>
+            <div class="footer-social-section">
+                <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+                    <i class="ri-facebook-box-fill"></i>
+                </a>
+                <a href="https://twitter.com/" target="_blank" class="footer__social">
+                    <i class="ri-twitter-fill"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" class="footer__social">
+                    <i class="ri-instagram-fill"></i>
+                </a>
+                <a href="https://www.youtube.com/" target="_blank" class="footer__social">
+                    <i class="ri-youtube-fill"></i>
+                </a>
+            </div>
+        </div>
+        <div class="footer-first-second">
+            <div class="footer-title">About</div>
+            <div class="footer-content">
+                <ul>
+                    <li><a href="#" class="something">소개</a></li>
+                    <li><a href="#" class="something">커뮤니티</a></li>
+                    <li><a href="#" class="something">미니 홈</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-first-third">
+            <div class="footer-title">Company</div>
+            <div class="footer-content">
+                <ul>
+                    <li><a href="https://www.multicampus.com/kr/index.html" class="something">멀티캠퍼스</a></li>
+                    <li><a href="https://www.hrd.go.kr/hrdp/ma/pmmao/newIndexRenewal.do" class="something">HRD</a></li>
+                    <li><a href="index.html" class="something">2조</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-first-4th">
+            <div class="footer-title">Support</div>
+            <div class="footer-content">
+                <ul>
+                    <li><a href="https://www.naver.com" class="something">자주 묻는 질문</a></li>
+                    <li><a href="https://www.daum.net" class="something">지원 센터</a></li>
+                    <li><a href="https://www.nate.com" class="something">문의하기</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-second-area">
+        <div class="footer-second-left">
+            © 2023 Multi-Campus Semi-Project Team 2. All rigths reserved.
+        </div>
+        <div class="footer-second-right" style="display: flex">
+            <div class="footer-TermsNAgreements"><a href="https://youtu.be/9PfIi4nXJ6E?si=VoHRlilst2YOdQiP"
+                                                    style="font-size: 14px;" class="something">Terms &
+                Agreements</a></div>
+            <div class="footer-PrivacyPolicy" style="margin-left: 30px"><a
+                    href="https://youtu.be/Eb-JAjWSxkI?si=g6xiT8-0tVViOcT2" style="font-size: 14px;" class="something">Privacy
+                Policy</a></div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
