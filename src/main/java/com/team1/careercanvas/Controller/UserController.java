@@ -1,25 +1,32 @@
 package com.team1.careercanvas.Controller;
 
-import com.team1.careercanvas.mapper.UserMapper;
-import com.team1.careercanvas.util.securePassword;
-import com.team1.careercanvas.vo.UserVO;
+import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.tools.DocumentationTool.Location;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
-
-import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
+import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.util.securePassword;
+import com.team1.careercanvas.vo.UserVO;
 
 @Controller
 public class UserController {
@@ -294,6 +301,68 @@ public class UserController {
             e.printStackTrace();
             return "404pages";//
         }
+    }
+    
+    
+//    권혁준 작업
+    
+    @GetMapping("mypage")
+    public ModelAndView mypage(HttpSession session, String LogId) {
+    	ModelAndView mav = new ModelAndView();
+    	String logId = (String)session.getAttribute("LogId");
+    	String logStatus = (String)session.getAttribute("logStatus");
+
+//    	로그인 안되었을때 리다이렉트
+    	if(logStatus != "Y" && logId == null) {
+    		mav.setViewName("redirect:/");
+    		return mav;
+    	}
+    	
+//    	로그인 되었을때
+    	UserVO result = mapper.getUserInfo(logId);
+    	mav.addObject("uVO",result);
+    	mav.setViewName("users/mypage"); 
+    	System.out.println(logStatus);
+    	System.out.println(result);
+    	return mav;
+    }
+    
+    @GetMapping("mypage_edit")
+    public ModelAndView mypageEdit(HttpSession session, String LogId) {
+    	ModelAndView mav = new ModelAndView();
+    	String logId = (String)session.getAttribute("LogId");
+    	String logStatus = (String)session.getAttribute("logStatus");
+    	
+    	if(logStatus != "Y" && logId == null) {
+    		mav.setViewName("redirect:/");
+    		return mav;
+    	}
+    	
+    	UserVO result = mapper.getUserInfo(logId);
+    	mav.addObject("uVO",result);
+    	mav.setViewName("users/mypage_edit");
+    	System.out.println(result);
+    	return mav;
+    }
+    
+    @PostMapping("mypageEditOk")
+    public String mypageEditOk(
+    		@RequestParam("password") String pwd, 
+    		@RequestParam("nickName") String nickName,
+    		@RequestParam("e-mail") String email,
+    		@RequestParam("tel") String tel,
+    		@RequestParam("comment") String comment,
+    		HttpSession session) {
+    	
+    		String userid = (String)session.getAttribute("LogId");
+    		if(pwd == null || pwd == "") {
+	    		mapper.updateMypageWithoutPwd(nickName, email, tel, comment, userid);
+	    		session.setAttribute("Logusername", nickName);
+	    		return "redirect:/mypage";
+    		}else {
+    			System.out.println("비밀번호 변경 시도함");
+    			return "redirect:/mypage";
+    		}
     }
 
 

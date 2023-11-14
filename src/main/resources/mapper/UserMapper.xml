@@ -97,5 +97,18 @@
     <update id="changePwd">
         update user set usersalt = #{param3}, userpwd = #{param2} where userid=#{param1};
     </update>
-
+    
+    <!-- 권혁준 작업  -->
+	<select id="getUserInfo" resultType="com.team1.careercanvas.vo.UserVO">
+		select userid, userpwd, username, useremail, usertel, comment
+		from user
+		where userid=#{param1};
+	</select>
+	
+	<update id="updateMypageWithoutPwd"> 
+		update user set username=#{param1}, useremail=#{param2}, usertel=#{param3}, comment=#{param4} 
+		where userid=#{param5}; 
+	</update>
+	
+	
 </mapper>
