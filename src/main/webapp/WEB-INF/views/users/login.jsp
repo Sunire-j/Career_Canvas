@@ -13,13 +13,11 @@
         $(function () {
             $('input[type="radio"]').change(function () {
                 if ($(this).val() == '1') {
-                    console.log("기업회원 들어옴");
                     if (!$('.for-company').length) {
                         $('<div class="for-company mt-3"><label for="companyno" class="form-label">사업자등록번호:</label>' +
                             '<input type="text" class="form-control" id="companyno" placeholder="사업자등록번호( - 포함 )" name="companyno"></div>').insertAfter('#pw');
                     }
                 } else {
-                    console.log("일반회원 들어옴");
                     $('.for-company').remove();
                 }
             });

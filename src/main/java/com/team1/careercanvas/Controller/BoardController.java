@@ -18,17 +18,49 @@ public class BoardController {
     }
 
 
-    @GetMapping("/board")
-    public String board(){
+    @GetMapping("/board/free")
+    public String boardFree(HttpSession session){
+        session.setAttribute("boardcat", "free");
+        return "board/boardList";
+    }
+    @GetMapping("/board/ask")
+    public String boardAsk(HttpSession session){
+        session.setAttribute("boardcat", "ask");
+        return "board/boardList";
+    }
+    @GetMapping("/board/tip")
+    public String boardTip(HttpSession session){
+        session.setAttribute("boardcat", "tip");
         return "board/boardList";
     }
 
-    @GetMapping("/board/write")
-    public String boardwrite(HttpSession session){
+    @GetMapping("/board/free/write")
+    public String boardfreewrite(HttpSession session){
         if(session.getAttribute("LogStatus")==null || session.getAttribute("LogStatus").equals("N")){
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
         }
+        session.setAttribute("boardcat", 0);
+        return "board/boardWrite";
+    }
+
+    @GetMapping("/board/ask/write")
+    public String boardaskwrite(HttpSession session){
+        if(session.getAttribute("LogStatus")==null || session.getAttribute("LogStatus").equals("N")){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            return "alert_page";
+        }
+        session.setAttribute("boardcat", 1);
+        return "board/boardWrite";
+    }
+
+    @GetMapping("/board/tip/write")
+    public String boardtipwrite(HttpSession session){
+        if(session.getAttribute("LogStatus")==null || session.getAttribute("LogStatus").equals("N")){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            return "alert_page";
+        }
+        session.setAttribute("boardcat", 2);
         return "board/boardWrite";
     }
 
@@ -38,6 +70,13 @@ public class BoardController {
         vo.setUserid((String) session.getAttribute("LogId"));
         mapper.InsertNewPost(vo);
         System.out.println("완료");
-        return "";
+        if(vo.getBoardcategory()==0){
+            return "redirect:/board/free";
+        }else if(vo.getBoardcategory()==1){
+            return "redirect:/board/ask";
+        }else if(vo.getBoardcategory()==2){
+            return "redirect:/board/tip";
+        }
+        return "404pages";
     }
 }

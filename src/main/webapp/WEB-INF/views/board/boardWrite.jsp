@@ -11,8 +11,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/translations/ko.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/super-build/ckeditor.js"></script>
     <style>
         .content {
             max-width: 1000px;
@@ -35,7 +34,7 @@
         #botContainer {
             display: flex;
             justify-content: space-between;
-            height: 30px;
+            height: 38px;
             margin-top: 50px;
         }
 
@@ -48,20 +47,99 @@
         $(function(){
 
             let editor;
-
-            ClassicEditor
-                .create(document.querySelector('#editor'), {
-                    language: "ko"
-                })
-                .then(newEditor => {
-                    editor = newEditor;
-                    editor.model.document.on('change:data', () => {
-                        document.querySelector('#content').value = editor.getData();
-                    });
-                })
-                .catch(error => {
-                    console.error(error);
+            CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+                    toolbar: {
+                        items: [
+                            'bold', 'italic', '|',
+                            'fontSize', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                            'alignment', '|',
+                            'insertImage', 'mediaEmbed', '|',
+                            'horizontalLine','|',
+                        ],
+                        shouldNotGroupWhenFull: true
+                    },
+                    list: {
+                        properties: {
+                            styles: true,
+                            startIndex: true,
+                            reversed: true
+                        }
+                    },
+                    placeholder: '내용을 입력해주세요.',
+                    fontFamily: {
+                        options: [
+                            'default',
+                            'Arial, Helvetica, sans-serif',
+                            'Courier New, Courier, monospace',
+                            'Georgia, serif',
+                            'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                            'Tahoma, Geneva, sans-serif',
+                            'Times New Roman, Times, serif',
+                            'Trebuchet MS, Helvetica, sans-serif',
+                            'Verdana, Geneva, sans-serif'
+                        ],
+                        supportAllValues: true
+                    },
+                    fontSize: {
+                        options: [10, 12, 14, 'default', 18, 20, 22],
+                        supportAllValues: true
+                    },
+                    htmlSupport: {
+                        allow: [
+                            {
+                                name: /.*/,
+                                attributes: true,
+                                classes: true,
+                                styles: true
+                            }
+                        ]
+                    },
+                    link: {
+                        decorators: {
+                            addTargetToExternalLinks: true,
+                            defaultProtocol: 'https://',
+                            toggleDownloadable: {
+                                mode: 'manual',
+                                label: 'Downloadable',
+                                attributes: {
+                                    download: 'file'
+                                }
+                            }
+                        }
+                    },
+                    removePlugins: [
+                        'CKBox',
+                        'CKFinder',
+                        'EasyImage',
+                        'RealTimeCollaborativeComments',
+                        'RealTimeCollaborativeTrackChanges',
+                        'RealTimeCollaborativeRevisionHistory',
+                        'PresenceList',
+                        'Comments',
+                        'TrackChanges',
+                        'TrackChangesData',
+                        'RevisionHistory',
+                        'Pagination',
+                        'WProofreader',
+                        'MathType',
+                        'SlashCommand',
+                        'Template',
+                        'DocumentOutline',
+                        'FormatPainter',
+                        'TableOfContents',
+                        'PasteFromOfficeEnhanced'
+                    ]
+                }
+            ).then(neweditor => {
+                editor=neweditor;
+                editor.model.document.on('change:data',()=>{
+                    document.querySelector('#content').value=editor.getData();
                 });
+            })
+                .catch(err => {
+                    console.error(err.stack);
+                });
+            //
 
             $('.button-container input[type="radio"]').change(function(){
                 $('.button-container label').removeClass('btn-warning').addClass('btn-outline-warning');
@@ -99,15 +177,33 @@
                 }
 
             });
+
+            $('.hashtag').on('change blur',function(){
+                if($(this).hasClass('is-invalid')){
+                    $(".submitbtn").prop('disabled',true);
+                }else{
+                    $(".submitbtn").prop('disabled',false);
+                }
+            })
         });
     </script>
 </head>
 <body>
 <div class="content">
-    <h3 style="margin-bottom: 30px">자유게시판 작성</h3> <!-- 이 부분은 세션에 게시판종류 넣어서 처리할 예정 -->
-    <form method="post" action="${pageContext.servletContext.contextPath}/board/writeOk" class="needs-validation" novalidate>
+    <h3 style="margin-bottom: 30px">
+        <c:if test="${boardcat==0}" >
+            자유
+        </c:if>
+        <c:if test="${boardcat==1}" >
+            질문
+        </c:if>
+        <c:if test="${boardcat==2}" >
+            노하우
+        </c:if>
+            게시판 작성</h3> <!-- 이 부분은 세션에 게시판종류 넣어서 처리할 예정 -->
+    <form method="post" action="${pageContext.servletContext.contextPath}/board/writeOk" class="needs-validation writeform" novalidate>
         <input type="hidden" id="content" name="postcontent">
-        <input type="hidden" name="boardcategory" value="0"> <!-- 게시판 종류(0,1,2)등으로 처리 예정 -->
+        <input type="hidden" name="boardcategory" value="${boardcat}"> <!-- 게시판 종류(0,1,2)등으로 처리 예정 -->
         <input type="text" style="width: 40%" class="form-control" name="posttitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
         <div class="invalid-feedback">
             제목을 입력해 주세요. (30자 이내)
@@ -136,11 +232,11 @@
 
     <div id="botContainer">
         <div style="width: 50%" class="botContainer2">
-        <input type="text" class="form-control" name="hashtag" id="hashtag" pattern="(#[\w가-힣]+ )*(#[\w가-힣]+ )?#[\w가-힣]+" placeholder="#태그는 공백으로 구분해 주세요. (예 : #샤롯데 #오페라의유령)"/>
+        <input type="text" class="form-control hashtag" name="hashtag" id="hashtag" pattern="(#[\w가-힣]+ )*(#[\w가-힣]+ )?#[\w가-힣]+" placeholder="#태그는 공백으로 구분해 주세요. (예 : #샤롯데 #오페라의유령)"/>
         <div class="invalid-feedback" data-feedback="patternMismatch">해쉬태그 형식에 맞지 않습니다.
         </div>
         </div>
-        <input type="submit" value="글등록"/>
+        <input type="submit"  class="btn btn-primary submitbtn" value="글등록" />
     </div>
     </form>
 </div>
