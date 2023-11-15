@@ -153,7 +153,7 @@
                 <li><a href="#">파티</a></li>
                 <li><a href="popol.html">포트폴리오</a></li>
                 <li><a href="#">기업과제</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/board">커뮤니티</a></li>
+                <li><a href="${pageContext.servletContext.contextPath}/board/free">커뮤니티</a></li>
                 <c:if test="${usertype==2}">
                 <li><a href="/admin">관리자 페이지</a></li>
                 </c:if>

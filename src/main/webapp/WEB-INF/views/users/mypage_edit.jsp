@@ -223,15 +223,13 @@
             margin-left: 10px;
         }
 
-        .nickName,
-        .e-mail,
+        .nickName
         .tel,
         .password,
         .interest,
         .pofol,
         .passwordCheck,
-        .profileImg,
-        .e-mailCheck {
+        .profileImg{
             display: flex;
             justify-content: space-between;
             padding-bottom: 20px;
@@ -326,12 +324,7 @@
         <div class="interest">
             <span>관심분야</span>
             <div>
-                <input
-                        class="form-control"
-                        type="text"
-                        name="interest"
-                        id="interest"
-                        value="웹/개발, 사진/음향"
+                <input class="form-control" type="text" name="interest" id="interest" value="웹/개발, 사진/음향"
                 />
             </div>
         </div>
