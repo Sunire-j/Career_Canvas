@@ -23,7 +23,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-
+	
     <style>
       /* All */
 
@@ -269,11 +269,11 @@
       <!-- ajax -->
       <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
-          <a href="#"><li class="myPofol menu">나의 포트폴리오</li></a>
-          <a href="#"><li class="submitTask menu">제출한 과제</li></a>
-          <a href="#"><li class="myPost menu">나의 게시글</li></a>
-          <a href="#"><li class="myComment menu">나의 댓글</li></a>
-          <a href="#"><li class="myNote menu">쪽지함</li></a>
+          <li class="myPofol menu" id="myPofol menu"><a href="mypage/myPofol">나의 포트폴리오</a></li>
+          <li class="submitTask menu" id="submitTask"><a href="mypage/submitTask">제출한 과제</a></li>
+          <li class="myPost menu" id="myPost menu"><a href="mypage/myPost">나의 게시글</a></li>
+          <li class="myComment menu" id="myComment menu"><a href="mypage/myComment">나의 댓글</a></li>
+          <li class="myNote menu" id="myNote menu"><a href="#">쪽지함</a></li>
         </ul>
       </div>
       <!-- ajax View -->
