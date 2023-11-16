@@ -1,8 +1,19 @@
 package com.team1.careercanvas.Controller;
 
-import com.team1.careercanvas.mapper.UserMapper;
-import com.team1.careercanvas.util.securePassword;
-import com.team1.careercanvas.vo.UserVO;
+import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,24 +22,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
-
-import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
+import com.team1.careercanvas.mapper.PofolMapper;
+import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.util.securePassword;
+import com.team1.careercanvas.vo.PofolVO;
+import com.team1.careercanvas.vo.UserVO;
 
 @Controller
 public class UserController {
 
     private final UserMapper mapper;
+    private final PofolMapper pofolmapper;
 
-    public UserController(UserMapper mapper) {
+    public UserController(UserMapper mapper, PofolMapper pofolmapper) {
         this.mapper = mapper;
+		this.pofolmapper = pofolmapper;
     }
 
     @GetMapping("/findpw")
@@ -364,10 +372,18 @@ public class UserController {
             String salt = secureValue[1];
             mapper.changePwd(userid, encryptedpwd, salt);
         }
-
         return "redirect:/mypage";
-
     }
-
+    
+    @GetMapping("mypage/myPofol")
+    public ModelAndView myPofol(HttpSession session) {
+    	ModelAndView mav = new ModelAndView();
+    	List<PofolVO> list = new ArrayList<PofolVO>();
+    	
+    	list = pofolmapper.getPofol((String)session.getAttribute("LogId"));
+    	mav.setViewName("mypage");
+    	return mav;
+    }
+    
 
 }
