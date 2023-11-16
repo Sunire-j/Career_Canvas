@@ -16,7 +16,6 @@
 
         h2 {
             float: left;
-            margin: 0 auto;
         }
 
         .container {
@@ -107,6 +106,7 @@
                 $(".ask").addClass("btn-outline-primary").removeClass("btn-primary");
                 $(".free").addClass("btn-outline-primary").removeClass("btn-primary");
             }
+            $("")
         })
     </script>
 </head>
@@ -139,34 +139,39 @@
         </a>
 
     </div>
-    <h2>전체 게시판</h2>
+    <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
+        <h2>전체 게시판</h2>
+        <select class="form-select" style="width: fit-content" name="postSort">
+            <option value="date">최신순</option>
+            <option value="comment">댓글순</option>
+            <option value="like">추천순</option>
+        </select>
+    </div>
+
     <br> <br>
     <div class="board-container">
         <div class="board-header">
             <div class="header-row">
-                <div id="num" style="width: 10%" class="list">번호</div>
-                <div id="title"
-                     style="width: 50%; text-align: left; padding: 0 20px;"
-                     class="list">제목
+                <div id="num" style="width: 7%" class="list">번호</div>
+                <div id="title" style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목
                 </div>
-                <div id="user" style="width: 10%" class="list">작성자</div>
-                <div id="view" style="width: 10%" class="list">조회수</div>
-                <div id="comment" style="width: 16%" class="list">댓글</div>
-                <div id="like" style="width: 10%" class="list"></div>
+                <div id="user" style="width: 12%" class="list">작성자</div>
+                <div id="view" style="width: 7%" class="list">조회수</div>
+                <div id="comment" style="width: 7%" class="list">댓글</div>
+                <div id="like" style="width: 7%" class="list">좋아요</div>
+                <div id="date" style="width: 10%" class="list">게시일</div>
             </div>
         </div>
         <hr>
         <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title list"
-                 style="width: 35%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
+            <div  style="width: 7%" class="list">1</div>
+            <div style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목
             </div>
-            <div class="user list" style="width: 10%">작성자 1</div>
-            <div class="view list" style="width: 10%">100</div>
-            <div class="comment list" style="width: 10%">5</div>
-            <div class="like list" style="width: 10%">3</div>
-            <div class="date list" style="width: 10%">23-11-10</div>
+            <div style="width: 12%" class="list">작성자</div>
+            <div style="width: 7%" class="list">30</div>
+            <div style="width: 7%" class="list">2</div>
+            <div style="width: 7%" class="list">5</div>
+            <div style="width: 10%" class="list">23-11-10</div>
         </div>
         <hr>
         <div class="board-row">
@@ -269,14 +274,20 @@
         </div>
         <hr>
         <div class="search-container">
-            <input type="text" class="search-box form-control" placeholder="검색어를 입력하세요">
-            <button class="btn btn-success">검색</button>
+            <form action="${pageContext.request.contextPath}/board/${boardcat}" class="d-flex" method="get">
+                <select class="form-select" style="width: fit-content" name="searchKey">
+                    <option value="all">전체</option>
+                    <option value="title">제목</option>
+                    <option value="author">작성자</option>
+                </select>
+                <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요">
+                <input type="submit" class="btn btn-success"  value="검색">
+            </form>
         </div>
         <div class="pagination-container">
             <div></div>
             <div class="pagination">
-                <a href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a>
-                <a href="#">4</a>
+                <!-- here -->
             </div>
             <c:if test="${LogStatus=='Y'}">
                 <a href="${pageContext.servletContext.contextPath}/board/${boardcat}/write"
