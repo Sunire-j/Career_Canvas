@@ -209,9 +209,6 @@ file="../header_footer/header.jspf"%>
       .ajaxMenu_wrapper {
         margin-top: 50px;
       }
-      .ajaxView_wrapper {
-        margin: 0 auto;
-      }
       .ajaxView {
         float: left;
       }
@@ -222,12 +219,22 @@ file="../header_footer/header.jspf"%>
         display: flex;
       }
       .ajaxView_wrapper {
-        width: 75%;
+        width: 64%;
+        margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
       }
       .userInterest span {
         margin-right: 5px;
+      }
+      .table th,
+      .table tr {
+        width: 15%;
+        text-align: center;
+      }
+      .table th:nth-child(5n + 3),
+      .table tr:nth-child(5n + 3) {
+        width: 40%;
       }
     </style>
   </head>
@@ -246,7 +253,7 @@ file="../header_footer/header.jspf"%>
               <a href="${pageContext.servletContext.contextPath}/mypage">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
-              <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+              <a href="mypage_edit">
                 <input
                   type="button"
                   class="btn btn-outline-primary"
@@ -273,7 +280,7 @@ file="../header_footer/header.jspf"%>
       <!-- ajax -->
       <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
-          <li class="myPofol menu" id="myPofol menu">
+          <li class="myPofol menu" id="myPofol">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPofol"
               >나의 포트폴리오</a
             >
@@ -284,46 +291,54 @@ file="../header_footer/header.jspf"%>
               >제출한 과제</a
             >
           </li>
-          <li class="myPost menu" id="myPost menu">
+          <li class="myPost menu" id="myPost">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
               >나의 게시글</a
             >
           </li>
-          <li class="myComment menu" id="myComment menu">
+          <li class="myComment menu" id="myCommen">
             <a href="${pageContext.servletContext.contextPath}/mypage/myComment"
               >나의 댓글</a
             >
           </li>
-          <li class="myNote menu" id="myNote menu">
+          <li class="mySendMsg" id="mySendMsg">
             <a href="${pageContext.servletContext.contextPath}/mypage/myMsg"
               >쪽지함</a
             >
           </li>
         </ul>
       </div>
-      <form class="input-group mb-3" style="width: 60%; margin: 20px auto">
-        <input
-          type="text"
-          class="form-control"
-          name="searchText"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      <!-- ajax View -->
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
-        <c:forEach var="pVO" items="${list}">
-          <div class="ajaxContent">
-            <a
-              href="#"
-              style="border: solid 1px #ddd; width: 220px; height: 170px"
-              ><img src="/img/bbb.png" alt=""
-            /></a>
-            <div>
-              <a href="#"><p>${pVO.portfoliotitle}</p></a>
+        <div class="container mt-3" style="text-align: center">
+          <button class="btn btn-outline-primary sendMsg">보낸 쪽지함</button>
+          <button class="btn btn-outline-primary receiveMsg">
+            받은 쪽지함
+          </button>
+        </div>
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th>받는사람</th>
+              <th>내용</th>
+              <th>날짜</th>
+              <th>안읽은 쪽지</th>
+            </tr>
+          </thead>
+          <tbody>
+            <div class="ajaxContent">
+              <c:forEach var="mVO" items="${mVO}">
+                <tr>
+                  <td>${mVO.user_userid}</td>
+                  <td>${mVO.content}</td>
+                  <td>${mVO.date}</td>
+                  <td>${mVO.ischeck}</td>
+                </tr>
+              </c:forEach>
             </div>
-          </div>
-        </c:forEach>
+          </tbody>
+        </table>
       </div>
     </main>
   </body>

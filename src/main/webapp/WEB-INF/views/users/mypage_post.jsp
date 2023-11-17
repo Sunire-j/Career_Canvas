@@ -209,9 +209,6 @@ file="../header_footer/header.jspf"%>
       .ajaxMenu_wrapper {
         margin-top: 50px;
       }
-      .ajaxView_wrapper {
-        margin: 0 auto;
-      }
       .ajaxView {
         float: left;
       }
@@ -222,12 +219,23 @@ file="../header_footer/header.jspf"%>
         display: flex;
       }
       .ajaxView_wrapper {
-        width: 75%;
+        margin: 0 auto;
+        width: 64%;
         display: flex;
         flex-wrap: wrap;
+        text-align: center;
       }
       .userInterest span {
         margin-right: 5px;
+      }
+      .table th,
+      .table tr {
+        width: 15%;
+        text-align: center;
+      }
+      .table th:nth-child(5n + 3),
+      .table tr:nth-child(5n + 3) {
+        width: 40%;
       }
     </style>
   </head>
@@ -246,7 +254,7 @@ file="../header_footer/header.jspf"%>
               <a href="${pageContext.servletContext.contextPath}/mypage">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
-              <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+              <a href="mypage_edit">
                 <input
                   type="button"
                   class="btn btn-outline-primary"
@@ -301,29 +309,42 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <form class="input-group mb-3" style="width: 60%; margin: 20px auto">
-        <input
-          type="text"
-          class="form-control"
-          name="searchText"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
-        <c:forEach var="pVO" items="${list}">
-          <div class="ajaxContent">
-            <a
-              href="#"
-              style="border: solid 1px #ddd; width: 220px; height: 170px"
-              ><img src="/img/bbb.png" alt=""
-            /></a>
-            <div>
-              <a href="#"><p>${pVO.portfoliotitle}</p></a>
-            </div>
-          </div>
-        </c:forEach>
+        <div class="container mt-3">
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th>번호</th>
+                <th>카테고리</th>
+                <th>제목</th>
+                <th>작성일시</th>
+                <th>조회수</th>
+              </tr>
+            </thead>
+            <tbody>
+              <div class="ajaxContent">
+                <c:forEach var="bVO" items="${bVO}">
+                  <tr>
+                    <td>${bVO.postid}</td>
+                    <c:if test="${bVO.boardcategory eq 1}">
+                      <td>자유게시판</td>
+                    </c:if>
+                    <c:if test="${bVO.boardcategory eq 2}">
+                      <td>질문게시판</td>
+                    </c:if>
+                    <c:if test="${bVO.boardcategory eq 3}">
+                      <td>노하우게시판</td>
+                    </c:if>
+                    <td>${bVO.posttitle}</td>
+                    <td>${bVO.date}</td>
+                    <td>${bVO.views}</td>
+                  </tr>
+                </c:forEach>
+              </div>
+            </tbody>
+          </table>
+        </div>
       </div>
     </main>
   </body>
