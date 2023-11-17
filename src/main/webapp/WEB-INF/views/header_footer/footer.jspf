@@ -120,7 +120,7 @@
                 <ul>
                     <li><a href="https://www.multicampus.com/kr/index.html" class="something">멀티캠퍼스</a></li>
                     <li><a href="https://www.hrd.go.kr/hrdp/ma/pmmao/newIndexRenewal.do" class="something">HRD</a></li>
-                    <li><a href="index.html" class="something">2조</a></li>
+                    <li><a href="${pageContext.servletContext.contextPath}/" class="something">1조</a></li>
                 </ul>
             </div>
         </div>

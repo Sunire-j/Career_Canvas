@@ -223,13 +223,13 @@
             margin-left: 10px;
         }
 
-        .nickName
+        .nickName,
         .tel,
         .password,
         .interest,
         .pofol,
         .passwordCheck,
-        .profileImg{
+        .profileImg {
             display: flex;
             justify-content: space-between;
             padding-bottom: 20px;
@@ -276,7 +276,8 @@
         <div class="nickName">
             <span>닉네임</span>
             <div>
-                <input class="form-control" type="text" name="nickName" id="nickName" pattern="^[a-zA-Z0-9가-힣]{2,12}$" required value="${uVO.username }"
+                <input class="form-control" type="text" name="nickName" id="nickName" pattern="^[a-zA-Z0-9가-힣]{2,12}$"
+                       required value="${uVO.username }"
                 />
             </div>
         </div>
@@ -284,7 +285,8 @@
         <div class="password">
             <span>비밀번호</span>
             <div>
-                <input class="form-control" type="password" name="password" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$" value="" id="password"
+                <input class="form-control" type="password" name="password"
+                       pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$" value="" id="password"
                 />
             </div>
         </div>
@@ -356,29 +358,29 @@
         </div>
 
         <input
-               type="submit"
-               class="btn btn-outline-primary"
-               value="수정 완료"
-               style="width: 100%; margin-top: 30px; height: 40px"
+                type="submit"
+                class="btn btn-outline-primary"
+                value="수정 완료"
+                style="width: 100%; margin-top: 30px; height: 40px"
         />
     </form>
 </main>
 <script>
 
-	function frmCheck() {
-		return false;
-		let password = $('#password').val();
-		let passwordCheck = $('#passwordCheck').val();
-		
-		if(passwordCheck){
-			if (password != passwordCheck){
-				alert('비밀번호를 확인하세요');
-				return false;
-			}
-			return true;
-		}
-	}
-	
+    function frmCheck() {
+        return false;
+        let password = $('#password').val();
+        let passwordCheck = $('#passwordCheck').val();
+
+        if (passwordCheck) {
+            if (password != passwordCheck) {
+                alert('비밀번호를 확인하세요');
+                return false;
+            }
+            return true;
+        }
+    }
+
     const toggleBtn = document.querySelector(".hamberger");
     const menu = document.querySelector(".nav_wrapper");
     const userNickname = document.querySelector(".userNickname");
@@ -392,8 +394,6 @@
     userNickname.addEventListener("click", () => {
         userInfo.classList.toggle("dropdown");
     });
-
-
 
 
 </script>

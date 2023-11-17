@@ -14,7 +14,7 @@ public class BoardVO {
     private int boardcategory;
     private int category;
     private String hashtag;
-    private String userid;
+    private String user_userid;
     private String date;
     private int views;
 }

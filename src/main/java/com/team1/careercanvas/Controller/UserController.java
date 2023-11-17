@@ -1,7 +1,20 @@
 package com.team1.careercanvas.Controller;
 
-import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
+import com.team1.careercanvas.mapper.PofolMapper;
+import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.util.securePassword;
+import com.team1.careercanvas.vo.PofolVO;
+import com.team1.careercanvas.vo.UserVO;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -11,22 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.team1.careercanvas.mapper.PofolMapper;
-import com.team1.careercanvas.mapper.UserMapper;
-import com.team1.careercanvas.util.securePassword;
-import com.team1.careercanvas.vo.PofolVO;
-import com.team1.careercanvas.vo.UserVO;
+import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
 @Controller
 public class UserController {
@@ -127,6 +125,8 @@ public class UserController {
             session.invalidate();
             session = request.getSession(true);
         }
+
+        List<Integer> list = new ArrayList<Integer>();
 
         String userid = mapper.getUserIdByPwd(originpwd);
         UserVO saltcheck = mapper.getUser(userid);

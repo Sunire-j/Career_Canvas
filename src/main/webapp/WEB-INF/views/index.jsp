@@ -29,7 +29,6 @@
     <hr/>
     <p>이 영역은 원래 get으로 접근 못하는 영역임.</p><br/>
     <p>완성 후 삭제되어야 함</p>
-    <a href="${pageContext.servletContext.contextPath}/signup_end">회원가입 종료</a>
 </div>
 
 </body>
