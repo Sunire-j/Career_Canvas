@@ -327,13 +327,13 @@ file="../header_footer/header.jspf"%>
                 <c:forEach var="bVO" items="${bVO}">
                   <tr>
                     <td>${bVO.postid}</td>
-                    <c:if test="${bVO.boardcategory eq 1}">
+                    <c:if test="${bVO.boardcategory eq 0}">
                       <td>자유게시판</td>
                     </c:if>
-                    <c:if test="${bVO.boardcategory eq 2}">
+                    <c:if test="${bVO.boardcategory eq 1}">
                       <td>질문게시판</td>
                     </c:if>
-                    <c:if test="${bVO.boardcategory eq 3}">
+                    <c:if test="${bVO.boardcategory eq 2}">
                       <td>노하우게시판</td>
                     </c:if>
                     <td>${bVO.posttitle}</td>
