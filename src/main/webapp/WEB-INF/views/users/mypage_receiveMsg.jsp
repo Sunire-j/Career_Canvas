@@ -302,9 +302,7 @@ file="../header_footer/header.jspf"%>
             >
           </li>
           <li class="mySendMsg" id="mySendMsg">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myMsg"
-              >쪽지함</a
-            >
+            <a href="#">쪽지함</a>
           </li>
         </ul>
       </div>
@@ -312,15 +310,23 @@ file="../header_footer/header.jspf"%>
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">
-          <button class="btn btn-outline-primary sendMsg">보낸 쪽지함</button>
-          <button class="btn btn-outline-primary receiveMsg">
+          <button
+            class="btn btn-outline-primary sendMsg"
+            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'"
+          >
+            보낸 쪽지함
+          </button>
+          <button
+            class="btn btn-outline-primary receiveMsg"
+            onclick="location.href='#'"
+          >
             받은 쪽지함
           </button>
         </div>
         <table class="table">
           <thead class="table-dark">
             <tr>
-              <th>받는사람</th>
+              <th>보낸사람</th>
               <th>내용</th>
               <th>날짜</th>
               <th>안읽은 쪽지</th>
@@ -330,7 +336,7 @@ file="../header_footer/header.jspf"%>
             <div class="ajaxContent">
               <c:forEach var="mVO" items="${mVO}">
                 <tr>
-                  <td>${mVO.user_userid}</td>
+                  <td>${mVO.user_userid1}</td>
                   <td>${mVO.content}</td>
                   <td>${mVO.date}</td>
                   <td>${mVO.ischeck}</td>
