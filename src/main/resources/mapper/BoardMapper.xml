@@ -5,4 +5,45 @@
         insert into post (posttitle, postcontent, boardcategory, category, hashtag, user_userid)
         VALUES (#{posttitle}, #{postcontent}, #{boardcategory}, #{category}, #{hashtag}, #{userid})
     </insert>
+
+    <select id="getPost" resultType="com.team1.careercanvas.vo.BoardVO">
+        select * from post
+                 where boardcategory=#{boardcategory}
+        <where>
+            <if test="searchKey == 'all'">
+                AND (posttitle=#{searchWord} OR user_userid=#{searchWord} or postcontent=#{searchWord})
+            </if>
+            <if test="searchKey == 'title'">
+                AND posttitle=#{searchWord}
+            </if>
+            <if test="searchKey == 'author'">
+                AND user_userid=#{searchWord}
+            </if>
+            <if test="searchKey == 'content'">
+                AND postcontent=#{searchWord}
+            </if>
+
+        </where>
+
+    </select>
+
+    <select id="getPostWithCat" resultType="com.team1.careercanvas.vo.BoardVO">
+        select * from post where boardcategory=#{boardcategory}
+        and category=#{category}
+        <where>
+            <if test="searchKey == 'all'">
+                AND (posttitle=#{searchWord} OR user_userid=#{searchWord} or postcontent=#{searchWord})
+            </if>
+            <if test="searchKey == 'title'">
+                AND posttitle=#{searchWord}
+            </if>
+            <if test="searchKey == 'author'">
+                AND user_userid=#{searchWord}
+            </if>
+            <if test="searchKey == 'content'">
+                AND postcontent=#{searchWord}
+            </if>
+
+        </where>
+    </select>
 </mapper>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class BoardController {
@@ -23,26 +24,36 @@ public class BoardController {
 
     @GetMapping("/board/free")
     public ModelAndView boardFree(HttpSession session,
-                                  @RequestParam(required = false, defaultValue = "0") Integer category,
-                                  @RequestParam(required = false,defaultValue = "1") int page,
-                                  @RequestParam(required = false)String searchKey,
-                                  @RequestParam(required = false)String searchWord,
-                                  @RequestParam(required = false, defaultValue = "none")String postSort) {
+                                  @RequestParam(required = false, defaultValue = "0") int category,
+                                  @RequestParam(required = false,defaultValue = "1") int page,//했음
+                                  @RequestParam(required = false)String searchKey,//했음
+                                  @RequestParam(required = false)String searchWord,//했음
+                                  @RequestParam(required = false, defaultValue = "1")int postSort) {//했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setNowPage(page);
+        pvo.setPostSort(postSort);
+        pvo.setBoardcategory(0);
         if(searchWord!=null || searchWord!=""){
             pvo.setSearchKey(searchKey);
             pvo.setSearchWord(searchWord);
         }
-        System.out.println(pvo);
+        List<BoardVO> bvo;
         if (category != 0 && category != 1 && category != 2 && category != 3) {
             mav.setViewName("404pages");
             return mav;
+        }else if(category==0){//카테고리가 없으면
+
+            bvo= mapper.getPost(pvo);
+        }else{//있으면
+            pvo.setCategory(category);
+            bvo=mapper.getPostWithCat(pvo);
         }
+        pvo.setTotalRecord(bvo.size());
         session.setAttribute("boardcat", "free");
-        //List<BoardVO> resultList = mapper.SelectPost("free", filter);//<-여기서부터 시작해야함
         mav.addObject("pVO",pvo);
+        mav.addObject("bVO",bvo);
+        System.out.println(bvo);
         mav.setViewName("board/boardList");
         return mav;
     }
@@ -92,7 +103,7 @@ public class BoardController {
     @PostMapping("/board/writeOk")
     public String boardwriteOk(HttpSession session,
                                BoardVO vo) {
-        vo.setUserid((String) session.getAttribute("LogId"));
+        vo.setUser_userid((String) session.getAttribute("LogId"));
         mapper.InsertNewPost(vo);
         System.out.println("완료");
         if (vo.getBoardcategory() == 0) {

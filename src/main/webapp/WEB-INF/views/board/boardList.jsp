@@ -92,6 +92,7 @@
     </style>
 
     <script>
+        var selectedValue;
         $(function () {
             if (${boardcat=="free"}) {
                 $(".free").addClass("btn-primary").removeClass("btn-outline-primary");
@@ -106,7 +107,22 @@
                 $(".ask").addClass("btn-outline-primary").removeClass("btn-primary");
                 $(".free").addClass("btn-outline-primary").removeClass("btn-primary");
             }
-            $("")
+            $('#category-select').val(${pVO.category});
+            $('#category-select').change(function() {
+                selectedValue = $(this).val();
+                if (selectedValue == 0) {
+                    window.location.href = "${pageContext.servletContext.contextPath}/board/${boardcat}";
+                } else {
+                    window.location.href = "${pageContext.servletContext.contextPath}/board/${boardcat}?category=" + selectedValue;
+                }
+            });
+            $("#postSort").change(function(){
+                var sortvalue = $(this).val();
+                    window.location.href="${pageContext.servletContext.contextPath}/board/${boardcat}?category=${pVO.category}&postSort="+sortvalue+"&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
+
+
+
+            });
         })
     </script>
 </head>
@@ -122,33 +138,21 @@
         <button class="btn btn-outline-primary tip"
                 onclick="location.href='${pageContext.servletContext.contextPath}/board/tip'">노하우 게시판
         </button>
-
-    </div>
-    <div class="button-container">
-        <a class="btn btn-warning">
-            <span>전체</span>
-        </a>
-        <a class="btn btn-outline-warning">
-            <span>IT/프로그래밍</span>
-        </a>
-        <a class="btn btn-outline-warning">
-            <span>디자인</span>
-        </a>
-        <a class="btn btn-outline-warning">
-            <span>영상음향</span>
-        </a>
-
     </div>
     <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
         <h2>전체 게시판</h2>
-        <select class="form-select" style="width: fit-content" name="postSort">
-            <option value="date">최신순</option>
-            <option value="comment">댓글순</option>
-            <option value="like">추천순</option>
+        <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+            <option value="1">최신순</option>
+            <option value="2">댓글순</option>
+            <option value="3">추천순</option>
         </select>
     </div>
-
-    <br> <br>
+    <select class="form-select" id="category-select" style="width: fit-content; margin-top: 50px" name="category">
+        <option value="0">카테고리</option>
+        <option value="1">IT/프로그래밍</option>
+        <option value="2">디자인</option>
+        <option value="3">영상음향</option>
+    </select>
     <div class="board-container">
         <div class="board-header">
             <div class="header-row">
@@ -163,125 +167,32 @@
             </div>
         </div>
         <hr>
-        <div class="board-row">
-            <div  style="width: 7%" class="list">1</div>
-            <div style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목
+        <c:forEach items="${bVO}" var="bvo">
+            <div class="board-row">
+                <div  style="width: 7%" class="list">${bvo.postid}</div>
+                <div style="width: 50%; text-align: left; padding: 0 20px;" class="list">${bvo.posttitle}
+                </div>
+                <div style="width: 12%" class="list">${bvo.user_userid}</div>
+                <div style="width: 7%" class="list">${bvo.views}</div>
+                <div style="width: 7%" class="list">댓글수X</div>
+                <div style="width: 7%" class="list">좋아요X</div>
+                <div style="width: 10%" class="list">${bvo.date}</div>
             </div>
-            <div style="width: 12%" class="list">작성자</div>
-            <div style="width: 7%" class="list">30</div>
-            <div style="width: 7%" class="list">2</div>
-            <div style="width: 7%" class="list">5</div>
-            <div style="width: 10%" class="list">23-11-10</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
-        <div class="board-row">
-            <div class="num" style="width: 10%" class="list">1</div>
-            <div class="title"
-                 style="width: 42%; text-align: left; padding: 0 20px" class="list">게시물
-                제목 1
-            </div>
-            <div class="user" style="width: 16%" class="list">작성자 1</div>
-            <div class="view" style="width: 16%" class="list">100</div>
-            <div class="comment" style="width: 16%" class="list">5</div>
-        </div>
-        <hr>
+            <hr>
+        </c:forEach>
+
+
         <div class="search-container">
             <form action="${pageContext.request.contextPath}/board/${boardcat}" class="d-flex" method="get">
                 <select class="form-select" style="width: fit-content" name="searchKey">
                     <option value="all">전체</option>
                     <option value="title">제목</option>
                     <option value="author">작성자</option>
+                    <option value="content">글내용</option>
                 </select>
                 <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요">
                 <input type="submit" class="btn btn-success"  value="검색">
+                <input type="hidden" name="category" value="${pVO.category}"/>
             </form>
         </div>
         <div class="pagination-container">
