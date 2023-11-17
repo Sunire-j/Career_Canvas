@@ -22,4 +22,12 @@ public interface BoardMapper {
     List<BoardVO> getmyPost(String userid);
 
     List<CommentVO> getmyComment(String userid);
+
+//    정인식 작업 ( 글내용보기 )
+    BoardVO SelectBoardView(int postid);
+    void ViewsCount(int postid);
+
+    void LikeCount(int postid, String userid);
+    int CheckValid(int postid, String userid);
+    int GetLikeAmount(int postid);
 }

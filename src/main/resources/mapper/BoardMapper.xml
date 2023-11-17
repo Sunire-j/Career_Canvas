@@ -3,7 +3,20 @@
 <mapper namespace="com.team1.careercanvas.mapper.BoardMapper">
     <insert id="InsertNewPost">
         insert into post (posttitle, postcontent, boardcategory, category, hashtag, user_userid)
-        VALUES (#{posttitle}, #{postcontent}, #{boardcategory}, #{category}, #{hashtag}, #{userid})
+        VALUES (#{posttitle}, #{postcontent}, #{boardcategory}, #{category}, #{hashtag}, #{user_userid})
+    </insert>
+
+<!--  정인식 작업 ( 글 내용 보기 )  -->
+    <select id="SelectBoardView" resultType="com.team1.careercanvas.vo.BoardVO">
+        select * from post where postid=#{param1}
+    </select>
+    <update id="ViewsCount">
+        update post set views=post.views+1 where postid=${param1}
+    </update>
+
+    <insert id="LikeCount">
+        insert into postlike(user_userid, post_postid)
+        VALUES (#{param2}, #{param1})
     </insert>
 
     <select id="getPost" resultType="com.team1.careercanvas.vo.BoardVO">
@@ -56,5 +69,13 @@
         select * 
         from comment
         where user_userid = #{param1};
+    </select>
+
+    <select id="CheckValid" resultType="Integer">
+        select count(user_userid) from postlike where user_userid=#{param2} and post_postid=#{param1}
+    </select>
+
+    <select id="GetLikeAmount" resultType="Integer">
+        select count(user_userid) from postlike where post_postid=#{param1}
     </select>
 </mapper>
