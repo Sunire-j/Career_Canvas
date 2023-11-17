@@ -43,7 +43,6 @@ public class BoardController {
             mav.setViewName("404pages");
             return mav;
         }else if(category==0){//카테고리가 없으면
-
             bvo= mapper.getPost(pvo);
         }else{//있으면
             pvo.setCategory(category);

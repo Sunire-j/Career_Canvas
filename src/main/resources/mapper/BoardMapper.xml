@@ -22,7 +22,6 @@
             <if test="searchKey == 'content'">
                 AND postcontent=#{searchWord}
             </if>
-
         </where>
 
     </select>
@@ -43,7 +42,6 @@
             <if test="searchKey == 'content'">
                 AND postcontent=#{searchWord}
             </if>
-
         </where>
     </select>
 

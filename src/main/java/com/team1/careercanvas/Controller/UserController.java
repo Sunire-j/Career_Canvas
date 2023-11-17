@@ -1,10 +1,9 @@
 package com.team1.careercanvas.Controller;
 
+import com.team1.careercanvas.mapper.BoardMapper;
 import com.team1.careercanvas.mapper.PofolMapper;
 import com.team1.careercanvas.mapper.UserMapper;
-import com.team1.careercanvas.util.securePassword;
-import com.team1.careercanvas.vo.PofolVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,26 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.team1.careercanvas.mapper.BoardMapper;
-import com.team1.careercanvas.mapper.PofolMapper;
-import com.team1.careercanvas.mapper.UserMapper;
-import com.team1.careercanvas.util.securePassword;
-import com.team1.careercanvas.vo.BoardVO;
-import com.team1.careercanvas.vo.CommentVO;
-import com.team1.careercanvas.vo.MessageVO;
-import com.team1.careercanvas.vo.PofolVO;
-import com.team1.careercanvas.vo.UserVO;
+import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
 @Controller
 public class UserController {
@@ -278,7 +258,7 @@ public class UserController {
 
                 if (!Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")) {
 
-                    String encryptedInputPwd = securePassword.encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
+                    String encryptedInputPwd = encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
 
                     if (!userInDB.getUserpwd().equals(encryptedInputPwd)) {
                         session.setAttribute("msg", "일치하는 정보가 없습니다.");
@@ -301,7 +281,7 @@ public class UserController {
                     String companynoInDB = mapper.getBizNo(userid);
                     int isaccept = mapper.getAccept(userid);
 
-                    String encryptedInputPwd = securePassword.encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
+                    String encryptedInputPwd = encryptWithSalt(userpwd, userInDB.getUsersalt())[0];
 
                     if (!userInDB.getUserpwd().equals(encryptedInputPwd) || !companynoInDB.equals(companyno)) {
                         session.setAttribute("msg", "일치하는 정보가 없습니다.");
