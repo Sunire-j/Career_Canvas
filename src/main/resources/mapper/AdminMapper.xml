@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1.careercanvas.mapper.AdminMapper">
+    <select id="getUserProfile" resultType="com.team1.careercanvas.vo.UserVO">
+        select userid, date_format(date, '%y-%m-%d') date from user where usertype=0 limit 10 offset 0
+    </select>
+
+    <select id="getBoardList" resultType="com.team1.careercanvas.vo.BoardVO">
+        select * from post
+    </select>
+
+    <select id="getReportList">
+        select reportid, user_userid, reason,
+    </select>
+</mapper>
