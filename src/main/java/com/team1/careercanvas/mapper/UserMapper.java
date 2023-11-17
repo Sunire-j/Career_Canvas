@@ -49,4 +49,6 @@ public interface UserMapper {
     void updateMypageWithoutPwd(String nickName, String tel, String comment, String userid);
 
     List<MessageVO> getSendMsg(String LogId);
+
+    List<MessageVO> getReceiveMsg(String LogId);
 }

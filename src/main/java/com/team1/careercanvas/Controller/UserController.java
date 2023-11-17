@@ -432,7 +432,7 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("mypage/myMsg")
+    @GetMapping("mypage/mySendMsg")
     public ModelAndView sendMsg(HttpSession session) {
 
         ModelAndView mav = new ModelAndView();
@@ -444,13 +444,33 @@ public class UserController {
 
         List<MessageVO> mVO = new ArrayList<MessageVO>();
         mVO = mapper.getSendMsg((String) session.getAttribute("LogId"));
-
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
 
         mav.addObject("mVO", mVO);
         mav.addObject("uVO", uVO);
 
-        mav.setViewName("/users/mypage_msg");
+        mav.setViewName("/users/mypage_sendMsg");
+        return mav;
+    }
+
+    @GetMapping("mypage/myReceiveMsg")
+    public ModelAndView receiveMsg(HttpSession session) {
+
+        ModelAndView mav = new ModelAndView();
+        if (!session.getAttribute("LogStatus").equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        List<MessageVO> mVO = new ArrayList<MessageVO>();
+        mVO = mapper.getReceiveMsg((String) session.getAttribute("LogId"));
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+
+        mav.addObject("mVO", mVO);
+        mav.addObject("uVO", uVO);
+
+        mav.setViewName("/users/mypage_receiveMsg");
         return mav;
     }
 

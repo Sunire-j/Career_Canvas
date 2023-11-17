@@ -5,6 +5,7 @@
         select portfoliotitle, imgsrc
         from portpolio
         where user_userid = #{param1}
+
     </select>
-	
+
 </mapper>

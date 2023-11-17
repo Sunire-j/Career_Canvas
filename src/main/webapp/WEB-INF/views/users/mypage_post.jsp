@@ -303,7 +303,7 @@ file="../header_footer/header.jspf"%>
             >
           </li>
           <li class="myNote menu" id="myNote menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myMsg"
+            <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
               >쪽지함</a
             >
           </li>
