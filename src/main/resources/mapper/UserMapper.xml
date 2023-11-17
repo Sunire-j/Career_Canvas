@@ -109,6 +109,11 @@
 		update user set username=#{param1}, usertel=#{param2}, comment=#{param3}
 		where userid=#{param4};
 	</update>
-	
+
+    <select id="getSendMsg" resultType="com.team1.careercanvas.vo.MessageVO">
+        select * from message
+        
+    </select>
+
 	
 </mapper>

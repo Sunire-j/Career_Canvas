@@ -46,4 +46,17 @@
 
         </where>
     </select>
+
+    <!-- 권혁준 작업 -->
+    <select id="getmyPost" resultType="com.team1.careercanvas.vo.BoardVO">
+        select * 
+        from post
+        where user_userid = #{param1};
+    </select>
+
+    <select id="getmyComment" resultType="com.team1.careercanvas.vo.CommentVO">
+        select * 
+        from comment
+        where user_userid = #{param1};
+    </select>
 </mapper>

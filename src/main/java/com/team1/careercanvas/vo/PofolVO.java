@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PofolVO {
 	private int portfolioid;
 	private String user_userid;
@@ -13,5 +15,6 @@ public class PofolVO {
 	private int ispublic;
 	private String category;
 	private int view;
+	private String imgsrc;
 
 }

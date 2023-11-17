@@ -24,17 +24,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.team1.careercanvas.mapper.BoardMapper;
+import com.team1.careercanvas.mapper.PofolMapper;
+import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.util.securePassword;
+import com.team1.careercanvas.vo.BoardVO;
+import com.team1.careercanvas.vo.CommentVO;
+import com.team1.careercanvas.vo.MessageVO;
+import com.team1.careercanvas.vo.PofolVO;
+import com.team1.careercanvas.vo.UserVO;
 
 @Controller
 public class UserController {
 
     private final UserMapper mapper;
     private final PofolMapper pofolmapper;
+    private final BoardMapper boardmapper;
 
-    public UserController(UserMapper mapper, PofolMapper pofolmapper) {
+    public UserController(UserMapper mapper, PofolMapper pofolmapper, BoardMapper boardmapper) {
         this.mapper = mapper;
-		this.pofolmapper = pofolmapper;
+        this.pofolmapper = pofolmapper;
+        this.boardmapper = boardmapper;
     }
 
     @GetMapping("/findpw")
@@ -61,7 +82,6 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
-
 
     @GetMapping("/signup")
     public String signup(HttpSession session) {
@@ -119,8 +139,8 @@ public class UserController {
 
     @GetMapping("/changepwd")
     public String pwdchange(@RequestParam("id") String originpwd,
-                            HttpSession session,
-                            HttpServletRequest request) {
+            HttpSession session,
+            HttpServletRequest request) {
         if (session != null || !session.isNew()) {
             session.invalidate();
             session = request.getSession(true);
@@ -145,7 +165,7 @@ public class UserController {
 
     @PostMapping("startchangepwd")
     public String startchangepwd(@RequestParam("userPwd") String newpassword,
-                                 HttpSession session) throws NoSuchAlgorithmException {
+            HttpSession session) throws NoSuchAlgorithmException {
         String userid = (String) session.getAttribute("userid");
         String[] secureValue = encryptWithSalt(newpassword);
         String encryptedpwd = secureValue[0];
@@ -156,11 +176,11 @@ public class UserController {
 
     @PostMapping("/signup/personalstart")
     public String signUpPersonal(@RequestParam("userId") String userid,
-                                 @RequestParam("userPwd") String userpwd,
-                                 @RequestParam("userNickName") String username,
-                                 @RequestParam("userEmail") String useremail,
-                                 @RequestParam("usertel") String usertel,
-                                 HttpSession session) {
+            @RequestParam("userPwd") String userpwd,
+            @RequestParam("userNickName") String username,
+            @RequestParam("userEmail") String useremail,
+            @RequestParam("usertel") String usertel,
+            HttpSession session) {
         try {
             String[] securearr = encryptWithSalt(userpwd);
             mapper.signupPersonal(userid, securearr[0], username, useremail, usertel, 0, securearr[1]);
@@ -185,12 +205,12 @@ public class UserController {
 
     @PostMapping("/signup/bizstart")
     public String signUpBiz(@RequestParam("userId") String userid,
-                            @RequestParam("userPwd") String userpwd,
-                            @RequestParam("userNickName") String username,
-                            @RequestParam("userEmail") String useremail,
-                            @RequestParam("usertel") String usertel,
-                            @RequestParam("companyno") String companyno,
-                            HttpSession session) {
+            @RequestParam("userPwd") String userpwd,
+            @RequestParam("userNickName") String username,
+            @RequestParam("userEmail") String useremail,
+            @RequestParam("usertel") String usertel,
+            @RequestParam("companyno") String companyno,
+            HttpSession session) {
         try {
             String[] securearr = encryptWithSalt(userpwd);
             mapper.signupPersonal(userid, securearr[0], username, useremail, usertel, 1, securearr[1]);
@@ -208,7 +228,7 @@ public class UserController {
 
     @PostMapping("/signup/bizupload")
     public String bizupload(@RequestParam("ex_file") MultipartFile file,
-                            @RequestParam("companyno") String companyno) {
+            @RequestParam("companyno") String companyno) {
 
         if (file.isEmpty()) {
             System.out.println("파일없음");
@@ -236,19 +256,19 @@ public class UserController {
         String imgsrc = "/companyauth/" + newFileName;
 
         mapper.InsertAuthImg(imgsrc, companyno);
-        //이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
+        // 이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
         return "users/biz-end";
     }
 
     @PostMapping("/loginOk")
     public String loginOk(HttpSession session, UserVO vo,
-                          @RequestParam("usertype") int usertype,
-                          @RequestParam("userid") String userid,
-                          @RequestParam("userpwd") String userpwd,
-                          @RequestParam(value = "companyno", required = false) String companyno) {//vo쓰면 안됨.
-        //아직 관리자로그인 고려안함
+            @RequestParam("usertype") int usertype,
+            @RequestParam("userid") String userid,
+            @RequestParam("userpwd") String userpwd,
+            @RequestParam(value = "companyno", required = false) String companyno) {// vo쓰면 안됨.
+        // 아직 관리자로그인 고려안함
         try {
-            if (usertype == 0 || usertype == 2) {//개인로그인, 관리자로그인
+            if (usertype == 0 || usertype == 2) {// 개인로그인, 관리자로그인
                 UserVO userInDB = mapper.getUser(userid);
                 if (userInDB.getUsertype() == 1) {
                     session.setAttribute("msg", "일치하는 정보가 없습니다.");
@@ -275,7 +295,7 @@ public class UserController {
                     return "alert_page";
                 }
 
-            } else {//기업로그인
+            } else {// 기업로그인
                 UserVO userInDB = mapper.getUser(userid);
                 if (!Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")) {
                     String companynoInDB = mapper.getBizNo(userid);
@@ -306,30 +326,8 @@ public class UserController {
         }
     }
 
-
-//    권혁준 작업
-
-    @GetMapping("mypage")
-    public ModelAndView mypage(HttpSession session, String LogId) {
-        ModelAndView mav = new ModelAndView();
-        String logId = (String) session.getAttribute("LogId");
-        String logStatus = (String) session.getAttribute("logStatus");
-
-//    	로그인 안되었을때 리다이렉트
-        if (logStatus != "Y" && logId == null) {
-            mav.setViewName("redirect:/");
-            return mav;
-        }
-
-//    	로그인 되었을때
-        UserVO result = mapper.getUserInfo(logId);
-        mav.addObject("uVO", result);
-        mav.setViewName("users/mypage");
-        System.out.println(logStatus);
-        System.out.println(result);
-        return mav;
-    }
-
+    // 권혁준 작업
+    // 완료
     @GetMapping("mypage_edit")
     public ModelAndView mypageEdit(HttpSession session, String LogId) {
         ModelAndView mav = new ModelAndView();
@@ -347,6 +345,7 @@ public class UserController {
         return mav;
     }
 
+    // 완료
     @PostMapping("mypageEditOk")
     public String mypageEditOk(
             @RequestParam("password") String pwd,
@@ -364,26 +363,115 @@ public class UserController {
         mapper.updateMypageWithoutPwd(nickName, tel, comment, userid);
         session.setAttribute("Logusername", nickName);
 
-        if(pwd!=null && !Objects.equals(pwd, "")){
-            //비밀번호도 변경해야함
-            //프론트에서 유효성 검사가 끝났다는 가정하에 시작
+        if (pwd != null && !Objects.equals(pwd, "")) {
+            // 비밀번호도 변경해야함
+            // 프론트에서 유효성 검사가 끝났다는 가정하에 시작
             String[] secureValue = encryptWithSalt(pwd);
             String encryptedpwd = secureValue[0];
             String salt = secureValue[1];
             mapper.changePwd(userid, encryptedpwd, salt);
         }
-        return "redirect:/mypage";
+        return "redirect:/mypage/myPofol";
     }
-    
+
+    // 권혁준 작업
+    // 완료
     @GetMapping("mypage/myPofol")
     public ModelAndView myPofol(HttpSession session) {
-    	ModelAndView mav = new ModelAndView();
-    	List<PofolVO> list = new ArrayList<PofolVO>();
-    	
-    	list = pofolmapper.getPofol((String)session.getAttribute("LogId"));
-    	mav.setViewName("mypage");
-    	return mav;
+        ModelAndView mav = new ModelAndView();
+
+        if (!session.getAttribute("LogStatus").equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        System.out.println("로그아이디" + session.getAttribute("LogId"));
+        List<PofolVO> list = new ArrayList<PofolVO>();
+        list = pofolmapper.getPofol((String) session.getAttribute("LogId"));
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("uVO", uVO);
+        mav.addObject("list", list);
+        mav.setViewName("users/mypage");
+        return mav;
     }
-    
+
+    // @GetMapping("mypage/submitTask")
+    // public ModelAndView submitTask(HttpSession session) {
+    // ModelAndView mav = new ModelAndView();
+    // System.out.println(session.getAttribute("LogStatus"));
+    // if (!session.getAttribute("LogStatus").equals("Y")) {
+    // session.setAttribute("msg", "잘못된 접근입니다.");
+    // mav.setViewName("alert_page");
+    // return mav;
+    // }
+    // System.out.println("로그아이디" + session.getAttribute("LogId"));
+    // List list = new ArrayList();
+    // list = pofolmapper.getPofol((String) session.getAttribute("LogId"));
+    // mav.addObject("list", list);
+    // mav.setViewName("users/mypage");
+    // System.out.println("!!!!" + list);
+    // return mav;
+    // }
+
+    // 완료
+    @GetMapping("mypage/myPost")
+    public ModelAndView myPost(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        if (!session.getAttribute("LogStatus").equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        System.out.println("로그아이디" + session.getAttribute("LogId"));
+        List<BoardVO> bVO = new ArrayList<BoardVO>();
+        bVO = boardmapper.getmyPost((String) session.getAttribute("LogId"));
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("bVO", bVO);
+        mav.addObject("uVO", uVO);
+        mav.setViewName("users/mypage_post");
+        System.out.println("!!!!" + bVO);
+        return mav;
+    }
+
+    // 완료
+    @GetMapping("mypage/myComment")
+    public ModelAndView myComment(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        if (!session.getAttribute("LogStatus").equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        List<CommentVO> cVO = new ArrayList<CommentVO>();
+        cVO = boardmapper.getmyComment((String) session.getAttribute("LogId"));
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("cVO", cVO);
+        mav.addObject("uVO", uVO);
+        mav.setViewName("users/mypage_comment");
+        return mav;
+    }
+
+    @GetMapping("mypage/myMsg")
+    public ModelAndView sendMsg(HttpSession session) {
+
+        ModelAndView mav = new ModelAndView();
+        if (!session.getAttribute("LogStatus").equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        List<MessageVO> mVO = new ArrayList<MessageVO>();
+        mVO = mapper.getSendMsg((String) session.getAttribute("LogId"));
+
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+
+        mav.addObject("mVO", mVO);
+        mav.addObject("uVO", uVO);
+
+        mav.setViewName("/users/mypage_msg");
+        return mav;
+    }
 
 }
