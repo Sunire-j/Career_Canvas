@@ -195,28 +195,59 @@
                 <input type="hidden" name="category" value="${pVO.category}"/>
             </form>
         </div>
-        <div class="pagination-container">
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
             <div class="pagination" style="display: flex">
                 <div class="paging">
                     <c:if test="${pVO.page > 1}">
-                        <button onclick="location.href='?page=1'">첫 페이지</button>
-                        <button onclick="location.href='?page=${pVO.page - 1}'">이전 페이지</button>
+                        <button  class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                        <c:if test="${pVO.category !=''}">
+                                +'&category=${pVO.category}'
+                        </c:if>
+                        <c:if test="${pVO.searchWord!=''}">
+                                +'&searchKey=${pVO.searchKey}'
+                                +'&searchWord=${pVO.searchWord}'
+                        </c:if>
+                        <c:if test="${pVO.postSort!=''}">
+                                +'&postSort=${pVO.postSort}'
+                        </c:if>
+                                "><</button>
                     </c:if>
                     <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                         <c:if test="${i <= pVO.totalPage}">
                             <c:choose>
                                 <c:when test="${i != pVO.page}">
-                                    <button onclick="location.href='?page=${i}'">${i}</button>
+                                    <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                    <c:if test="${pVO.category !=''}">
+                                            +'&category=${pVO.category}'
+                                    </c:if>
+                                    <c:if test="${pVO.searchWord!=''}">
+                                            +'&searchKey=${pVO.searchKey}'
+                                            +'&searchWord=${pVO.searchWord}'
+                                    </c:if>
+                                    <c:if test="${pVO.postSort!=''}">
+                                            +'&postSort=${pVO.postSort}'
+                                    </c:if>
+                                            ">${i}</button>
                                 </c:when>
                                 <c:otherwise>
-                                    <strong>${i}</strong>
+                                    <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
                     </c:forEach>
                     <c:if test="${pVO.page < pVO.totalPage}">
-                        <button onclick="location.href='?page=${pVO.page + 1}'">다음 페이지</button>
-                        <button onclick="location.href='?page=${pVO.totalPage}'">마지막 페이지</button>
+                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+                        <c:if test="${pVO.category !=''}">
+                                +'&category=${pVO.category}'
+                        </c:if>
+                        <c:if test="${pVO.searchWord!=''}">
+                                +'&searchKey=${pVO.searchKey}'
+                                +'&searchWord=${pVO.searchWord}'
+                        </c:if>
+                        <c:if test="${pVO.postSort!=''}">
+                                +'&postSort=${pVO.postSort}'
+                        </c:if>
+                                ">></button>
                     </c:if>
                 </div>
             </div>
