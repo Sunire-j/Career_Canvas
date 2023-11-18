@@ -22,10 +22,10 @@ public class PagingVO {
     private int postSort;
     private int boardcategory;
 
-    public void setNowPage(int nowPage){
-        this.page = nowPage;
-        offsetPoint = (nowPage-1)*onePageRecord;
-        startPage = (nowPage-1) / onePageCount*onePageCount+1;
+    public void setPage(int page){
+        this.page = page;
+        offsetPoint = (page-1)*onePageRecord;
+        startPage = (page-1) / onePageCount*onePageCount+1;
     }
     public void setTotalRecord(int totalRecord){
         this.totalRecord = totalRecord;

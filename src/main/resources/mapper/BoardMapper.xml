@@ -6,12 +6,131 @@
         VALUES (#{posttitle}, #{postcontent}, #{boardcategory}, #{category}, #{hashtag}, #{user_userid})
     </insert>
 
-<!--  정인식 작업 ( 글 내용 보기 )  -->
+    <select id="getPost" resultType="com.team1.careercanvas.vo.BoardVO">
+        SELECT post.postid, post.posttitle, post.user_userid, post.date, post.views, COUNT(postlike.user_userid) AS likeAmount
+        FROM post
+        LEFT JOIN postlike ON post.postid = postlike.post_postid
+        <where>
+            boardcategory=#{boardcategory}
+            <if test="searchKey == 'all'">
+                AND (post.posttitle LIKE CONCAT('%', #{searchWord}, '%') OR
+        post.user_userid LIKE CONCAT('%', #{searchWord}, '%') or
+        post.postcontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </if>
+            <if test="searchKey == 'title'">
+                AND post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                AND post.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                AND post.postcontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+        group by post.postid
+        <choose>
+            <when test="postSort==1">
+                order by date desc
+            </when>
+            <when test="postSort==2">
+                order by views desc, date desc
+            </when>
+            <when test="postSort==3">
+                order by likeAmount desc, date desc
+            </when>
+        </choose>
+        limit #{onePageRecord} offset #{offsetPoint}
+
+    </select>
+
+    <select id="getPostAmount" resultType="Integer">
+        SELECT count(postid)
+        FROM post
+        <where>
+            boardcategory=#{boardcategory}
+            <if test="searchKey == 'all'">
+                AND (post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
+        OR post.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+        or post.postcontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </if>
+            <if test="searchKey == 'title'">
+                AND post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                AND post.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                AND post.postcontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getPostAmountWithCat" resultType="Integer">
+        select count(postid) from post
+        <where>
+            boardcategory=#{boardcategory} and category=#{category}
+            <if test="searchKey == 'all'">
+                AND (post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
+                             OR post.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+                             or post.postcontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </if>
+            <if test="searchKey == 'title'">
+                AND post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                AND post.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                AND post.postcontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getPostWithCat" resultType="com.team1.careercanvas.vo.BoardVO">
+        select * from post
+        <where>
+            boardcategory=#{boardcategory} and category=#{category}
+            <if test="searchKey == 'all'">
+                AND (post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
+                 OR post.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+                 or post.postcontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </if>
+            <if test="searchKey == 'title'">
+                AND post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                AND post.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                AND post.postcontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+        group by post.postid
+        <choose>
+            <when test="postSort==1">
+                order by date desc
+            </when>
+            <when test="postSort==2">
+                order by views desc, date desc
+            </when>
+            <when test="postSort==3">
+                order by likeAmount desc, date desc
+            </when>
+        </choose>
+
+        limit #{onePageRecord} offset #{offsetPoint}
+    </select>
+
+    <!--  정인식 작업 ( 글 내용 보기 )  -->
     <select id="SelectBoardView" resultType="com.team1.careercanvas.vo.BoardVO">
-        select * from post where postid=#{param1}
+        select *
+        from post
+        where postid = #{param1}
     </select>
     <update id="ViewsCount">
-        update post set views=post.views+1 where postid=${param1}
+        update post
+        set views=post.views + 1
+        where postid = ${param1}
     </update>
 
     <insert id="LikeCount">
@@ -19,63 +138,29 @@
         VALUES (#{param2}, #{param1})
     </insert>
 
-    <select id="getPost" resultType="com.team1.careercanvas.vo.BoardVO">
-        select * from post
-                 where boardcategory=#{boardcategory}
-        <where>
-            <if test="searchKey == 'all'">
-                AND (posttitle=#{searchWord} OR user_userid=#{searchWord} or postcontent=#{searchWord})
-            </if>
-            <if test="searchKey == 'title'">
-                AND posttitle=#{searchWord}
-            </if>
-            <if test="searchKey == 'author'">
-                AND user_userid=#{searchWord}
-            </if>
-            <if test="searchKey == 'content'">
-                AND postcontent=#{searchWord}
-            </if>
-        </where>
-
-    </select>
-
-    <select id="getPostWithCat" resultType="com.team1.careercanvas.vo.BoardVO">
-        select * from post where boardcategory=#{boardcategory}
-        and category=#{category}
-        <where>
-            <if test="searchKey == 'all'">
-                AND (posttitle=#{searchWord} OR user_userid=#{searchWord} or postcontent=#{searchWord})
-            </if>
-            <if test="searchKey == 'title'">
-                AND posttitle=#{searchWord}
-            </if>
-            <if test="searchKey == 'author'">
-                AND user_userid=#{searchWord}
-            </if>
-            <if test="searchKey == 'content'">
-                AND postcontent=#{searchWord}
-            </if>
-        </where>
-    </select>
-
     <!-- 권혁준 작업 -->
     <select id="getmyPost" resultType="com.team1.careercanvas.vo.BoardVO">
-        select * 
+        select *
         from post
         where user_userid = #{param1};
     </select>
 
     <select id="getmyComment" resultType="com.team1.careercanvas.vo.CommentVO">
-        select * 
+        select *
         from comment
         where user_userid = #{param1};
     </select>
 
     <select id="CheckValid" resultType="Integer">
-        select count(user_userid) from postlike where user_userid=#{param2} and post_postid=#{param1}
+        select count(user_userid)
+        from postlike
+        where user_userid = #{param2}
+          and post_postid = #{param1}
     </select>
 
     <select id="GetLikeAmount" resultType="Integer">
-        select count(user_userid) from postlike where post_postid=#{param1}
+        select count(user_userid)
+        from postlike
+        where post_postid = #{param1}
     </select>
 </mapper>
