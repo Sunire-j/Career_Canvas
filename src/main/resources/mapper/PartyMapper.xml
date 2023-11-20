@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1.careercanvas.mapper.PartyMapper">
+    <select id="getmyParty" resultType="com.team1.careercanvas.vo.PartyVO">
+        select p.partyid as partyid, p.partyname as partyname, p.partycomment as partycomment, p.user_userid as user_userid
+        from party p
+        left join partymember m on p.partyid = m.party_partyid
+        where m.user_userid = #{param1};
+    </select>
+</mapper>
