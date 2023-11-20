@@ -1,6 +1,7 @@
 package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.BoardMapper;
+import com.team1.careercanvas.mapper.CommentMapper;
 import com.team1.careercanvas.vo.BoardVO;
 import com.team1.careercanvas.vo.PagingVO;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ public class BoardController {
 
     private final BoardMapper mapper;
 
-    public BoardController(BoardMapper mapper) {
+    public BoardController(BoardMapper mapper, CommentMapper commentMapper) {
         this.mapper = mapper;
     }
 
@@ -79,11 +80,12 @@ public class BoardController {
             return mav;
         }else if(category==0){//카테고리가 없으면
             bvo= mapper.getPost(pvo);
+            pvo.setTotalRecord(mapper.getPostAmount(pvo));
         }else{//있으면
             pvo.setCategory(category);
             bvo=mapper.getPostWithCat(pvo);
+            pvo.setTotalRecord(mapper.getPostAmountWithCat(pvo));
         }
-        pvo.setTotalRecord(bvo.size());
 
         session.setAttribute("boardcat", "ask");
         mav.addObject("pVO",pvo);
@@ -115,11 +117,12 @@ public class BoardController {
             return mav;
         }else if(category==0){//카테고리가 없으면
             bvo= mapper.getPost(pvo);
+            pvo.setTotalRecord(mapper.getPostAmount(pvo));
         }else{//있으면
             pvo.setCategory(category);
             bvo=mapper.getPostWithCat(pvo);
+            pvo.setTotalRecord(mapper.getPostAmountWithCat(pvo));
         }
-        pvo.setTotalRecord(bvo.size());
         session.setAttribute("boardcat", "tip");
         mav.addObject("pVO",pvo);
         mav.addObject("bVO",bvo);
@@ -173,6 +176,9 @@ public class BoardController {
         }
         return "404pages";
     }
+
+    //댓글 불러오기
+
 
     // 정인식 작업 ( 글 내용보기 )
     @GetMapping("/board/view")

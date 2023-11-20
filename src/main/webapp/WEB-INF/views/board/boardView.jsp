@@ -179,59 +179,65 @@
                     ${bvo.postcontent}
                 </div>
                 <div class="content_recommend">
-                    <a href="${pageContext.servletContext.contextPath}/board/like?no=${bvo.postid}" class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a>
+                    <a style="color: white" href="${pageContext.servletContext.contextPath}/board/like?no=${bvo.postid}" class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a>
                 </div>
             </div>
-            <form>
+            <form method="post" action="${pageContext.servletContext.contextPath}/commentWrite">
                 <div class="comment_write">
+                    <input type="hidden" name="post_postid" value="${bvo.postid}">
+                    <input type="hidden" name="depth" value="0">
                     <textarea class="comment_content" placeholder="욕설, 비방, 비아냥, 음란, 사행성, 스팸, 광고 댓글은 필터링 또는 삭제됩니다." style="resize: none;"></textarea>
                     <button type="button" class="btn btn-secondary comment_write_ok"> 댓글 등록</button>
                 </div>
             </form>
             <div class="comment_list">
-                <ul>
-                    <li>
-                        <div class="comment_list_content">
-                            <img src="profile.PNG" class="list_img"/>
-                            <div class="comment_writer">
-                                홍**
-                            </div>
-                            <div class="comment_date">
-                                ( 23.11.10 )
-                            </div>
-                            <div class="reply_content">
-                                <div class="reply">
-                                    저랑 ㄱㄱ
-                                </div>
-                                <div class="reply_btn">
-                                    <button type="button" class="btn btn-secondary btn-sm comment_del">삭제</button>
-                                    <button type="button" class="btn btn-secondary btn-sm comment_reply">답글</button>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="comment_list_content">
-                            <img src="profile.PNG" class="list_img"/>
-                            <div class="comment_writer">
-                                홍**
-                            </div>
-                            <div class="comment_date">
-                                ( 23.11.10 )
-                            </div>
-                            <div class="reply_content">
-                                <div class="reply">
-                                    출근이나 해 ㅋㅋ
-                                </div>
-                                <div class="reply_btn">
-                                    <button type="button"  class="btn btn-secondary btn-sm comment_del">삭제</button>
-                                    <button type="button"  class="btn btn-secondary btn-sm comment_reply">답글</button>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                <ul class="comment_list_real">
                 </ul>
             </div>
+
+            <script>
+                function commentList(){
+                    var no = ${bvo.postid};
+                    $.ajax({
+                       url : "${pageContext.servletContext.contextPath}/board/commentLoad",
+                       data:{
+                           no:no
+                       },
+                        type:'post',
+                        success:function(result){//리절트는 commentvo 리스트에 담겨서
+                           $(".comment_list_real").empty();
+                           for(var i = 0; i<result.length; i++){
+                               var comment = result[i];
+                               var marginLeft = comment.depth ==1?'70px' : '10px';
+
+                               var htmltag = '<li style="margin-left: '+marginLeft+'"><div class="comment_list_content"><img src = ${pageContext.servletContext.contextPath}/upload'+comment.profileimg+' class="list_img"><a href ="${pageContext.servletContext.contextPath}/profileInfo?uid='+comment.user_userid+'" "class="comment_writer">';
+                               htmltag +=comment.username+'</a> &nbsp<div class="comment_date">'+comment.date+'</div><div class="reply_content"><div class="reply">'+comment.commentcontent;
+                               htmltag+='</div><div class="reply_btn">';
+
+                               console.log(comment.depth);
+                               if(comment.depth==0){
+                                   htmltag+='<button type="button" style="margin-right: 10px"  class="btn btn-outline-secondary btn-sm comment_reply">답글</button>';
+                               }
+                               if('${LogId}'==comment.user_userid){
+                                   htmltag+='<button type="button"  class="btn btn-outline-danger btn-sm comment_del">삭제</button>';
+                               }
+                               if(comment.isdelete==1){
+                                   htmltag = '<li><div class="comment_list_content"><img src = "#" class="list_img"><div class="comment_writer">';
+                                   htmltag +=comment.user_userid+'</div><div class="comment_date">'+comment.date+'</div><div class="reply_content"><div class="reply">'+comment.commentcontent;
+                                   htmltag+='</div><div class="reply_btn">';
+                               }
+                               htmltag+='</div></li>';
+                               var commentBlock = $(htmltag);
+                               $(".comment_list_real").append(commentBlock);
+                           }
+                        }
+                    });
+                }
+
+                $(function(){
+                   commentList();
+                });
+            </script>
         </section>
     </article>
 <footer> </footer>

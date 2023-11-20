@@ -94,6 +94,7 @@
     <script>
         var selectedValue;
         $(function () {
+            $("#category-select").val(${pVO.postSort}).prop("selected", true);
             if (${boardcat=="free"}) {
                 $(".free").addClass("btn-primary").removeClass("btn-outline-primary");
                 $(".ask").addClass("btn-outline-primary").removeClass("btn-primary");
@@ -119,10 +120,8 @@
             $("#postSort").change(function () {
                 var sortvalue = $(this).val();
                 window.location.href = "${pageContext.servletContext.contextPath}/board/${boardcat}?category=${pVO.category}&postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
-
-
             });
-        })
+        });
     </script>
 </head>
 <body>
@@ -199,7 +198,7 @@
             <div class="pagination" style="display: flex">
                 <div class="paging">
                     <c:if test="${pVO.page > 1}">
-                        <button  class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
                         <c:if test="${pVO.category !=''}">
                                 +'&category=${pVO.category}'
                         </c:if>
@@ -210,7 +209,8 @@
                         <c:if test="${pVO.postSort!=''}">
                                 +'&postSort=${pVO.postSort}'
                         </c:if>
-                                "><</button>
+                                "><
+                        </button>
                     </c:if>
                     <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                         <c:if test="${i <= pVO.totalPage}">
@@ -247,7 +247,8 @@
                         <c:if test="${pVO.postSort!=''}">
                                 +'&postSort=${pVO.postSort}'
                         </c:if>
-                                ">></button>
+                                ">>
+                        </button>
                     </c:if>
                 </div>
             </div>
