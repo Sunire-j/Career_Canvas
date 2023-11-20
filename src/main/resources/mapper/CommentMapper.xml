@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1.careercanvas.mapper.CommentMapper">
+    <select id="replySelect" resultType="com.team1.careercanvas.vo.CommentVO">
+        SELECT c.commentid      AS 'commentid',
+               c.post_postid    AS 'post_postid',
+               c.commentcontent AS 'commentcontent',
+               c.target_parent  AS 'target_parent',
+               c.isdelete       AS 'isdelete',
+               c.date           AS 'date',
+               c.depth          AS 'depth',
+               u.userid         AS 'user_userid',
+               u.username       AS 'username',
+               u.profileimg     AS 'profileimg'
+        FROM comment AS c
+                 JOIN
+             user AS u ON c.user_userid = u.userid
+        where c.post_postid = #{param1}
+    </select>
+</mapper>

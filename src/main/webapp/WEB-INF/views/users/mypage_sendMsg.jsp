@@ -280,7 +280,7 @@ file="../header_footer/header.jspf"%>
       <!-- ajax -->
       <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
-          <li class="myPofol menu" id="myPofol menu">
+          <li class="myPofol menu" id="myPofol">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPofol"
               >나의 포트폴리오</a
             >
@@ -291,60 +291,55 @@ file="../header_footer/header.jspf"%>
               >제출한 과제</a
             >
           </li>
-          <li class="myPost menu" id="myPost menu">
+          <li class="myPost menu" id="myPost">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
               >나의 게시글</a
             >
           </li>
-          <li class="myComment menu" id="myComment menu">
+          <li class="myComment menu" id="myCommen">
             <a href="${pageContext.servletContext.contextPath}/mypage/myComment"
               >나의 댓글</a
             >
           </li>
-          <li class="myNote menu" id="myNote menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
-              >쪽지함</a
-            >
+          <li class="mySendMsg" id="mySendMsg">
+            <a href="#">쪽지함</a>
           </li>
         </ul>
       </div>
       <!-- ajax View -->
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
-        <div class="container mt-3">
-          <table class="table">
-            <thead class="table-dark">
-              <tr>
-                <th>번호</th>
-                <th>카테고리</th>
-                <th>내용</th>
-                <th>날짜</th>
-                <th>신고</th>
-              </tr>
-            </thead>
-            <tbody>
-              <div class="ajaxContent">
-                <c:forEach var="cVO" items="${cVO}">
-                  <tr>
-                    <td>${cVO.commentid}</td>
-                    <c:if test="${cVO.post_postid eq 1}">
-                      <td>자유게시판</td>
-                    </c:if>
-                    <c:if test="${cVO.post_postid eq 2}">
-                      <td>질문게시판</td>
-                    </c:if>
-                    <c:if test="${cVO.post_postid eq 3}">
-                      <td>노하우게시판</td>
-                    </c:if>
-                    <td>${cVO.commentcontent}</td>
-                    <td>${cVO.date}</td>
-                    <td>5</td>
-                  </tr>
-                </c:forEach>
-              </div>
-            </tbody>
-          </table>
+        <div class="container mt-3" style="text-align: center">
+          <button class="btn btn-outline-primary sendMsg">보낸 쪽지함</button>
+          <button
+            class="btn btn-outline-primary receiveMsg"
+            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myReceiveMsg'"
+          >
+            받은 쪽지함
+          </button>
         </div>
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th>받는사람</th>
+              <th>내용</th>
+              <th>날짜</th>
+              <th>안읽은 쪽지</th>
+            </tr>
+          </thead>
+          <tbody>
+            <div class="ajaxContent">
+              <c:forEach var="mVO" items="${mVO}">
+                <tr>
+                  <td>${mVO.user_userid1}</td>
+                  <td>${mVO.content}</td>
+                  <td>${mVO.date}</td>
+                  <td>${mVO.ischeck}</td>
+                </tr>
+              </c:forEach>
+            </div>
+          </tbody>
+        </table>
       </div>
     </main>
   </body>

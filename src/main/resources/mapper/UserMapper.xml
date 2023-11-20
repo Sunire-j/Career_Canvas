@@ -111,8 +111,15 @@
 	</update>
 
     <select id="getSendMsg" resultType="com.team1.careercanvas.vo.MessageVO">
-        select * from message
-        
+        select * 
+        from message
+        where user_userid = #{param1};
+    </select>
+
+    <select id="getReceiveMsg" resultType="com.team1.careercanvas.vo.MessageVO">
+        select * 
+        from message
+        where user_userid1 = #{param1};
     </select>
 
 	

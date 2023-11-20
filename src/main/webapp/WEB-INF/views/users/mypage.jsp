@@ -295,13 +295,18 @@ file="../header_footer/header.jspf"%>
             >
           </li>
           <li class="myNote menu" id="myNote menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myMsg"
+            <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
               >쪽지함</a
             >
           </li>
         </ul>
       </div>
-      <form class="input-group mb-3" style="width: 60%; margin: 20px auto">
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/myPofol"
+        method="GET"
+      >
         <input
           type="text"
           class="form-control"

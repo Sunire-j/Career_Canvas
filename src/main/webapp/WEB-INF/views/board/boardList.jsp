@@ -94,6 +94,7 @@
     <script>
         var selectedValue;
         $(function () {
+            $("#category-select").val(${pVO.postSort}).prop("selected", true);
             if (${boardcat=="free"}) {
                 $(".free").addClass("btn-primary").removeClass("btn-outline-primary");
                 $(".ask").addClass("btn-outline-primary").removeClass("btn-primary");
@@ -108,7 +109,7 @@
                 $(".free").addClass("btn-outline-primary").removeClass("btn-primary");
             }
             $('#category-select').val(${pVO.category});
-            $('#category-select').change(function() {
+            $('#category-select').change(function () {
                 selectedValue = $(this).val();
                 if (selectedValue == 0) {
                     window.location.href = "${pageContext.servletContext.contextPath}/board/${boardcat}";
@@ -116,14 +117,11 @@
                     window.location.href = "${pageContext.servletContext.contextPath}/board/${boardcat}?category=" + selectedValue;
                 }
             });
-            $("#postSort").change(function(){
+            $("#postSort").change(function () {
                 var sortvalue = $(this).val();
-                    window.location.href="${pageContext.servletContext.contextPath}/board/${boardcat}?category=${pVO.category}&postSort="+sortvalue+"&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
-
-
-
+                window.location.href = "${pageContext.servletContext.contextPath}/board/${boardcat}?category=${pVO.category}&postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
             });
-        })
+        });
     </script>
 </head>
 <body>
@@ -169,13 +167,14 @@
         <hr>
         <c:forEach items="${bVO}" var="bvo">
             <div class="board-row">
-                <div  style="width: 7%" class="list">${bvo.postid}</div>
-                <div style="width: 50%; text-align: left; padding: 0 20px;" class="list">${bvo.posttitle}
+                <div style="width: 7%" class="list">${bvo.postid}</div>
+                <div style="width: 50%; text-align: left; padding: 0 20px;" class="list"><a
+                        href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">${bvo.posttitle}</a>
                 </div>
                 <div style="width: 12%" class="list">${bvo.user_userid}</div>
                 <div style="width: 7%" class="list">${bvo.views}</div>
                 <div style="width: 7%" class="list">댓글수X</div>
-                <div style="width: 7%" class="list">좋아요X</div>
+                <div style="width: 7%" class="list">${bvo.likeAmount}</div>
                 <div style="width: 10%" class="list">${bvo.date}</div>
             </div>
             <hr>
@@ -191,26 +190,71 @@
                     <option value="content">글내용</option>
                 </select>
                 <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요">
-                <input type="submit" class="btn btn-success"  value="검색">
+                <input type="submit" class="btn btn-success" value="검색">
                 <input type="hidden" name="category" value="${pVO.category}"/>
             </form>
         </div>
-        <div class="pagination-container">
-            <div></div>
-            <div class="pagination">
-                <!-- here -->
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+            <div class="pagination" style="display: flex">
+                <div class="paging">
+                    <c:if test="${pVO.page > 1}">
+                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                        <c:if test="${pVO.category !=''}">
+                                +'&category=${pVO.category}'
+                        </c:if>
+                        <c:if test="${pVO.searchWord!=''}">
+                                +'&searchKey=${pVO.searchKey}'
+                                +'&searchWord=${pVO.searchWord}'
+                        </c:if>
+                        <c:if test="${pVO.postSort!=''}">
+                                +'&postSort=${pVO.postSort}'
+                        </c:if>
+                                "><
+                        </button>
+                    </c:if>
+                    <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                        <c:if test="${i <= pVO.totalPage}">
+                            <c:choose>
+                                <c:when test="${i != pVO.page}">
+                                    <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                    <c:if test="${pVO.category !=''}">
+                                            +'&category=${pVO.category}'
+                                    </c:if>
+                                    <c:if test="${pVO.searchWord!=''}">
+                                            +'&searchKey=${pVO.searchKey}'
+                                            +'&searchWord=${pVO.searchWord}'
+                                    </c:if>
+                                    <c:if test="${pVO.postSort!=''}">
+                                            +'&postSort=${pVO.postSort}'
+                                    </c:if>
+                                            ">${i}</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${pVO.page < pVO.totalPage}">
+                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+                        <c:if test="${pVO.category !=''}">
+                                +'&category=${pVO.category}'
+                        </c:if>
+                        <c:if test="${pVO.searchWord!=''}">
+                                +'&searchKey=${pVO.searchKey}'
+                                +'&searchWord=${pVO.searchWord}'
+                        </c:if>
+                        <c:if test="${pVO.postSort!=''}">
+                                +'&postSort=${pVO.postSort}'
+                        </c:if>
+                                ">>
+                        </button>
+                    </c:if>
+                </div>
             </div>
-            <c:if test="${LogStatus=='Y'}">
-                <a href="${pageContext.servletContext.contextPath}/board/${boardcat}/write"
-                   class="btn btn-primary">글쓰기</a>
-            </c:if>
-            <c:if test="${LogStatus==null || LogStatus=='N'}">
-                <a></a>
-            </c:if>
         </div>
     </div>
 </div>
-<footer></footer>
 </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>

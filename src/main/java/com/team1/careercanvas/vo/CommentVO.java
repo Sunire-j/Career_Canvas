@@ -15,4 +15,7 @@ public class CommentVO {
     private int target_parent;
     private int isdelete;
     private String date;
+    private int depth;
+    private String profileimg;
+    private String username;
 }
