@@ -8,4 +8,15 @@
 
     </select>
 
+	
+	<!-- 김효준 작업 -->
+	<select id="getPofolInfo" resultType="com.team1.careercanvas.vo.PofolVO">
+		select * from portpolio
+		where user_userid=#{param1};
+	</select>
+
+	<select id="getpofolamount" resultType="Integer">
+		select count(portfolioid) from portpolio
+		where user_userid = #{param1};
+	</select>
 </mapper>

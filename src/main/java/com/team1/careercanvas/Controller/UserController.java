@@ -40,7 +40,8 @@ public class UserController {
 
     @GetMapping("/findpw")
     public String findpw(HttpSession session) {
-        if (session.getAttribute("LogStatus") == "Y") {
+        if (session.getAttribute("LogStatus") == "Y"
+        		) {
             session.setAttribute("msg", "잘못된 접근입니다.");
 
             return "alert_page";

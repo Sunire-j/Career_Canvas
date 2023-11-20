@@ -9,5 +9,8 @@ import com.team1.careercanvas.vo.PofolVO;
 @Mapper
 public interface PofolMapper {
 	List<PofolVO> getPofol(String userid);
+	//김효준작업 
+	int getpofolamount(String userid);
 
+	List<PofolVO> getPofolInfo(String userid);
 }
