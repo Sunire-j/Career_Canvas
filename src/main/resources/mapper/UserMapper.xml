@@ -125,5 +125,20 @@
 	<!-- 김효준작업 -->
 
 
+    <select id="getSubmitSubjectSolo" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
+        select a.applyid as applyid, s.subjecttitle as subjecttitle, a.applyimg as applyimg
+        from subjectapply a
+        left join subject s on a.subject_subjectid = s.subjectid
+        where a.user_userid = #{param1}
+        </if>
+        
+    </select>
+
+    <select id="getSubmitSubjectTeam" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
+        select a.applyid as applyid, s.subjecttitle as subjecttitle, a.applyimg as applyimg
+        from subjectapply a
+        left join subject s on a.subject_subjectid = s.subjectid
+        where a.user_userid = #{param1}
+    </select>
 	
 </mapper>
