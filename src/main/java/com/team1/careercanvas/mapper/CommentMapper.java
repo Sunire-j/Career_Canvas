@@ -9,4 +9,6 @@ import java.util.List;
 public interface CommentMapper {
 
     List<CommentVO> replySelect(int no);
+    int replyInsert(CommentVO vo);
+    void replyInsertTP(CommentVO vo);
 }

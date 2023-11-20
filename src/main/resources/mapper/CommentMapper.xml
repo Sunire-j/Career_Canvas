@@ -16,5 +16,22 @@
                  JOIN
              user AS u ON c.user_userid = u.userid
         where c.post_postid = #{param1}
+        order by target_parent asc, commentid asc;
     </select>
+
+    <insert id="replyInsert" parameterType="com.team1.careercanvas.vo.CommentVO">
+        insert into comment(post_postid, commentcontent, user_userid, depth
+        <if test="target_parent != null">, target_parent</if>)
+        values(#{post_postid}, #{commentcontent}, #{user_userid}, #{depth}
+        <if test="target_parent != null">, #{target_parent}</if>);
+            <selectKey keyProperty="commentid" order="AFTER" resultType="int">
+                SELECT LAST_INSERT_ID()
+            </selectKey>
+    </insert>
+
+    <update id="replyInsertTP">
+        update comment
+        set target_parent = #{commentid}
+        where commentid = #{commentid}
+    </update>
 </mapper>
