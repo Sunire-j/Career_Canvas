@@ -100,7 +100,7 @@
     
     <!-- 권혁준 작업  -->
 	<select id="getUserInfo" resultType="com.team1.careercanvas.vo.UserVO">
-		select userid, userpwd, username, useremail, usertel, comment
+		select userid, userpwd, username, useremail, usertel, comment , profileimg
 		from user
 		where userid=#{param1};
 	</select>
@@ -121,6 +121,9 @@
         from message
         where user_userid1 = #{param1};
     </select>
+	
+	<!-- 김효준작업 -->
+
 
 	
 </mapper>
