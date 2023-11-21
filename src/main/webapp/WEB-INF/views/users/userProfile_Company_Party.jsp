@@ -308,8 +308,12 @@
             </div>
             <div class="portfolio">
                 <div class="portfolio_category">
-                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
-                    <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject?uid=${uVO.userid}'">기업과제</button>
+                    <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
+                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject?uid=${uVO.userid}'">기업과제</button>
+                </div>
+                <div>
+                    <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
+                    <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
                 </div>
                 <div class="portfolio_content">
                     <ul class="content">

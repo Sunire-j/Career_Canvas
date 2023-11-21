@@ -38,7 +38,7 @@
 
 
     <select id="getUser" resultType="com.team1.careercanvas.vo.UserVO">
-        select userpwd, usersalt, usertype,username
+        select userpwd, usersalt, usertype,username, profileimg
         from user
         where userid = #{param1};
     </select>

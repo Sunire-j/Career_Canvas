@@ -215,7 +215,6 @@
         <script>
             function commentList() {
                 var no = ${bvo.postid};
-                console.log(no+"!!!!!!!!!!!!!!!");
                 $.ajax({
                     url: "${pageContext.servletContext.contextPath}/commentLoad",
                     data: {
@@ -227,15 +226,10 @@
                         for (var i = 0; i < result.length; i++) {
                             var comment = result[i];
                             var marginLeft = comment.depth == 1 ? '70px' : '10px';
-
-                            console.log(comment.user_userid);
-
                             var htmltag = '<li style="margin-left: ' + marginLeft + '"><div class="comment_list_content"><img src = ${pageContext.servletContext.contextPath}/upload' + comment.profileimg + ' class="list_img"><a href ="${pageContext.servletContext.contextPath}/profile/portfolio?uid=' + comment.user_userid + '" "class="comment_writer">';
                             htmltag += comment.username + '</a> &nbsp<div class="comment_date">' + comment.date + '</div><div class="reply_content"><div class="reply">' + comment.commentcontent;
                             htmltag += '</div><div class="reply_btn">';
                             htmltag+='<input type="hidden" id="commentidForReply" value="'+comment.commentid+'"/>'
-
-                            console.log(comment.depth);
                             if (comment.depth == 0) {
                                 htmltag += '<div type="button" style="margin-right: 10px" id="replyreply"  class="btn btn-outline-secondary btn-sm comment_reply">답글</div>';
                             }

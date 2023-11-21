@@ -8,8 +8,4 @@
     <select id="getBoardList" resultType="com.team1.careercanvas.vo.BoardVO">
         select * from post
     </select>
-
-    <select id="getReportList">
-        select reportid, user_userid, reason,
-    </select>
 </mapper>
