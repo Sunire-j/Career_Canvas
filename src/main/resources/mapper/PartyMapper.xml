@@ -6,6 +6,7 @@
         from party p
         left join partymember m on p.partyid = m.party_partyid
         where m.user_userid = #{param1};
+    </select>
     <select id="SelectPartyList" resultType="com.team1.careercanvas.vo.PartyVO">
         select * from party
         where user_userid=#{param1};

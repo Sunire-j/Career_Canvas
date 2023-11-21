@@ -24,16 +24,6 @@ public class AdminController {
         return "admin/admin_company";
     }
 
-    @GetMapping("/admin/report")
-    public String report() {
-        return "admin/report_board";
-    }
-
-    @GetMapping("/admin/delete")
-    public String assignment() {
-        return "admin/delete_assignment";
-    }
-
     @GetMapping("/admin/member")
     public ModelAndView member() {
         ModelAndView mav = new ModelAndView();
