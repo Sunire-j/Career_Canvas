@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 public class PagingVO {
     private int onePageRecord = 20;
     private int onePageCount = 5;
-    //위는 상수, 아래는 변수
+    // 위는 상수, 아래는 변수
     private int page = 1;
     private int totalRecord;
     private int totalPage;
-    private int offsetPoint = (page-1) *onePageRecord;
+    private int offsetPoint = (page - 1) * onePageRecord;
     private int startPage = 1;
     private String searchKey;
     private String searchWord;
@@ -22,15 +22,15 @@ public class PagingVO {
     private int postSort;
     private int boardcategory;
 
-    public void setPage(int page){
+    public void setPage(int page) {
         this.page = page;
-        offsetPoint = (page-1)*onePageRecord;
-        startPage = (page-1) / onePageCount*onePageCount+1;
-    }
-    public void setTotalRecord(int totalRecord){
-        this.totalRecord = totalRecord;
-        this.setTotalPage((int)Math.ceil(totalRecord/(double)onePageRecord));
+        offsetPoint = (page - 1) * onePageRecord;
+        startPage = (page - 1) / onePageCount * onePageCount + 1;
     }
 
+    public void setTotalRecord(int totalRecord) {
+        this.totalRecord = totalRecord;
+        this.setTotalPage((int) Math.ceil(totalRecord / (double) onePageRecord));
+    }
 
 }

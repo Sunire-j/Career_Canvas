@@ -305,7 +305,21 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <!-- ajax View -->
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchText"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
+
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">
@@ -322,6 +336,14 @@ file="../header_footer/header.jspf"%>
             팀
           </button>
         </div>
+      </div>
+      <div class="submitSubjectTeam" style="width: 61%; margin: 0 auto">
+        <c:forEach var="sVO" items="${sVO}">
+          <img
+            src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
+          />
+          <p>${sVO.subjecttitle}</p>
+        </c:forEach>
       </div>
     </main>
   </body>

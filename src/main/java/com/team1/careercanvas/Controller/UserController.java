@@ -41,8 +41,7 @@ public class UserController {
 
     @GetMapping("/findpw")
     public String findpw(HttpSession session) {
-        if (session.getAttribute("LogStatus") == "Y"
-        		) {
+        if (session.getAttribute("LogStatus") == "Y") {
             session.setAttribute("msg", "잘못된 접근입니다.");
 
             return "alert_page";
@@ -362,24 +361,37 @@ public class UserController {
     // 완료
     @GetMapping("mypage/myPofol")
     public ModelAndView myPofol(HttpSession session,
-            @RequestParam(required = false, defaultValue = "") String searchText) {
+            @RequestParam(required = false, defaultValue = "") String searchText,
+            @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+        PagingVO pVO = new PagingVO();
+
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             mav.setViewName("alert_page");
             return mav;
         }
 
-        System.out.println("로그아이디" + session.getAttribute("LogId"));
+        if (searchText != null || searchText != "") {
+            pVO.setSearchWord(searchText);
+        }
+        pVO.setTotalRecord(mapper.getPofolAmount((String) session.getAttribute("LogId")));
+        System.out.println(pVO);
         List<PofolVO> list = new ArrayList<PofolVO>();
 
         list = pofolmapper.getPofol((String) session.getAttribute("LogId"), searchText);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         mav.addObject("searchText");
+        mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("list", list);
         mav.setViewName("users/mypage");
         return mav;
+    }
+
+    @GetMapping("mypage/myPofol/write")
+    public String pofolWrite() {
+        return "users/mypage_pofolWrite";
     }
 
     // 완료
@@ -487,7 +499,7 @@ public class UserController {
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
-        System.out.println(sVO);
+        System.out.println(sVO.size());
         mav.setViewName("/users/mypage_submitSubjectTeam");
         return mav;
     }
