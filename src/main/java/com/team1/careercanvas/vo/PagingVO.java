@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PagingVO {
-    private int onePageRecord = 10;
+    private int onePageRecord = 20;
     private int onePageCount = 5;
     //위는 상수, 아래는 변수
     private int page = 1;
