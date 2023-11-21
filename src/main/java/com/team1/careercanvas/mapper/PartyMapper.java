@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface PartyMapper {
-    List<PartyVO> getmyParty(String userid);
+    List<PartyVO> SelectPartyList(String logId);
 }
