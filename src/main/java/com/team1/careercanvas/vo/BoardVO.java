@@ -18,4 +18,5 @@ public class BoardVO {
     private String date;
     private int views;
     private int likeAmount;
+    private int commentAmount;
 }
