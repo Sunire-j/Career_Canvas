@@ -4,6 +4,7 @@
            uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include
         file="../header_footer/header.jspf" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -436,8 +437,7 @@
             </div>
             <label class="btn btn-outline-primary changeimgbtn">
                 변경
-                <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" style="display:none;"
-                       onchange="uploadImage()">
+                <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" style="display:none;" onchange="uploadImage()">
             </label>
         </div>
         <!--<i class="fas fa-user fa-3x tmpimg"></i>-->
