@@ -65,7 +65,7 @@
 <div style="display:flex;">
     <div id="sideBar">
         <div style="text-align: center;">
-            <h2>관리자 OOO</h2>
+            <h2>관리자 ${name}</h2>
             <a href="" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
@@ -97,62 +97,24 @@
                 <th>작성자ID</th>
                 <th>게시글 확인</th>
                 <th>처분</th>
-                <th>승인</th>
             </tr>
+            <c:forEach var="rvo" items="${rVO}">
             <tr>
-                <td>1</td>
-                <td>asdgsdfg</td>
-                <td>포트폴리오</td>
-                <td>포폴 개그지같네;</td>
-                <td>qwe123</td>
+                <td>${rvo.reportid}</td>
+                <td>${rvo.user_userid}</td>
+                <td>${rvo.reporttype}</td>
+                <td>${rvo.title}</td>
+                <td>${rvo.userid}</td>
                 <td>
-                    <button type="button" class="btn btn-info" onclick="">이동</button>
+                    <button type="button" class="btn btn-info" onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}'">이동</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">탈퇴</button>
                     <button type="button" class="btn btn-danger">삭제</button>
                     <button type="button" class="btn btn-success">기각</button>
                 </td>
-                <td>
-                    <button type="button" class="btn btn-info">승인</button>
-                </td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>asdgsdfg</td>
-                <td>포트폴리오</td>
-                <td>포폴 개그지같네;</td>
-                <td>qwe123</td>
-                <td>
-                    <button type="button" class="btn btn-info" onclick="">이동</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger">탈퇴</button>
-                    <button type="button" class="btn btn-danger">삭제</button>
-                    <button type="button" class="btn btn-success">기각</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-info">승인</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>asdgsdfg</td>
-                <td>포트폴리오</td>
-                <td>포폴 개그지같네;</td>
-                <td>qwe123</td>
-                <td>
-                    <button type="button" class="btn btn-info" onclick="">이동</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger">탈퇴</button>
-                    <button type="button" class="btn btn-danger">삭제</button>
-                    <button type="button" class="btn btn-success">기각</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-info">승인</button>
-                </td>
-            </tr>
+            </c:forEach>
         </table>
         <div class="pagination-container">
             <div class="pagination">

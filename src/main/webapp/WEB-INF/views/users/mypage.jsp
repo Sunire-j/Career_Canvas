@@ -240,7 +240,7 @@ file="../header_footer/header.jspf"%>
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="/img/bbb.png" alt="" />
+          <img src="#" alt="" />
           <div>
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage">
