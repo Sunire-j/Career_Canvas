@@ -302,21 +302,7 @@ file="../header_footer/header.jspf"%>
         </ul>
       </div>
 
-      <!-- search -->
-      <form
-        class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/myPofol"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchText"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <c:forEach var="pVO" items="${list}">
@@ -332,6 +318,54 @@ file="../header_footer/header.jspf"%>
           </div>
         </c:forEach>
       </div>
+      <!-- 페이징 -->
+      <div class="paging" style="width: 50%; margin: 0 auto; text-align: center;">
+        <c:forEach var ="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+          <c:if test="${i <= pVO.totalPage}">
+            <c:choose>
+            <c:when test="${i != pVO.page}">
+              <button class="btn btn-outline-primary" onclick="location.href='?page=${i}'
+              <c:if test="${pVO.searchText != ''}">
+                +'&searchText=${pVO.searchText}'
+</c:if>
+              ">${i}</button>
+            </c:when>
+            <c:otherwise>
+              <strong class="btn btn-outline-primary" style="font-weight:  bold;">${i}</strong>
+            </c:otherwise>
+          </c:choose>
+          </c:if>
+        </c:forEach>
+        <c:if test="${pVO.page < pVO.totalPage}">
+                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+
+                        <c:if test="${pVO.searchWord!=''}">
+                                +'&searchWord=${pVO.searchWord}'
+                        </c:if>
+                                ">>
+                        </button>
+                    </c:if>
+                    <!-- 글쓰기 -->
+                    <input type="button" value="글쓰기"onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'">
+      </div>
+      
+      
+
+      <!-- search -->
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/myPofol"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchText"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
     </main>
   </body>
 </html>

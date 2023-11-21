@@ -1,6 +1,7 @@
 package com.team1.careercanvas.mapper;
 
 import com.team1.careercanvas.vo.MessageVO;
+import com.team1.careercanvas.vo.PagingVO;
 import com.team1.careercanvas.vo.SubmitSubjectVO;
 import com.team1.careercanvas.vo.UserVO;
 
@@ -56,5 +57,7 @@ public interface UserMapper {
     List<SubmitSubjectVO> getSubmitSubjectSolo(String LogId);
 
     List<SubmitSubjectVO> getSubmitSubjectTeam(String LogId);
+
+    int getPofolAmount(String LogId);
 
 }
