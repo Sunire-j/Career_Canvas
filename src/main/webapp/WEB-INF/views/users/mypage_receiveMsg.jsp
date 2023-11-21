@@ -287,7 +287,7 @@ file="../header_footer/header.jspf"%>
           </li>
           <li class="submitTask menu" id="submitTask">
             <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitTask"
+              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
               >제출한 과제</a
             >
           </li>

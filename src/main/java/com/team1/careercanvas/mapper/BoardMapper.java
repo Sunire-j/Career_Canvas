@@ -19,9 +19,9 @@ public interface BoardMapper {
     int getPostAmountWithCat(PagingVO pvo);
 
     // 권혁준 작업
-    List<BoardVO> getmyPost(String userId);
+    List<BoardVO> getmyPost(String userId, String searchText);
 
-    List<CommentVO> getmyComment(String userid);
+    List<CommentVO> getmyComment(String userid, String searchText);
 
     // 정인식 작업 ( 글내용보기 )
     BoardVO SelectBoardView(int postid);
