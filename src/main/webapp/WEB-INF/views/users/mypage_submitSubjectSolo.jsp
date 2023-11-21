@@ -286,10 +286,7 @@ file="../header_footer/header.jspf"%>
             >
           </li>
           <li class="submitTask menu" id="submitTask">
-            <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-              >제출한 과제</a
-            >
+            <a href="#">제출한 과제</a>
           </li>
           <li class="myPost menu" id="myPost">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
@@ -302,49 +299,51 @@ file="../header_footer/header.jspf"%>
             >
           </li>
           <li class="mySendMsg" id="mySendMsg">
-            <a href="#">쪽지함</a>
+            <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+              >쪽지함</a
+            >
           </li>
         </ul>
       </div>
-      <!-- ajax View -->
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchText"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
+
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">
           <button
             class="btn btn-outline-primary sendMsg"
-            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'"
+            onclick="location.href='#'"
           >
-            보낸 쪽지함
+            개인
           </button>
           <button
             class="btn btn-outline-primary receiveMsg"
-            onclick="location.href='#'"
+            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/submitSubjectTeam'"
           >
-            받은 쪽지함
+            팀
           </button>
         </div>
-        <table class="table">
-          <thead class="table-dark">
-            <tr>
-              <th>보낸사람</th>
-              <th>내용</th>
-              <th>날짜</th>
-              <th>안읽은 쪽지</th>
-            </tr>
-          </thead>
-          <tbody>
-            <div class="ajaxContent">
-              <c:forEach var="mVO" items="${mVO}">
-                <tr>
-                  <td>${mVO.user_userid1}</td>
-                  <td>${mVO.content}</td>
-                  <td>${mVO.date}</td>
-                  <td>${mVO.ischeck}</td>
-                </tr>
-              </c:forEach>
-            </div>
-          </tbody>
-        </table>
+      </div>
+      <div class="submitSubjectSolo" style="width: 61%; margin: 0 auto">
+        <c:forEach var="sVO" items="${sVO}">
+          <img
+            src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
+          />
+          <p>${sVO.subjecttitle}</p>
+        </c:forEach>
       </div>
     </main>
   </body>

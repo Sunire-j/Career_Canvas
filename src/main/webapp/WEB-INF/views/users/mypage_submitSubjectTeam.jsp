@@ -286,10 +286,7 @@ file="../header_footer/header.jspf"%>
             >
           </li>
           <li class="submitTask menu" id="submitTask">
-            <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-              >제출한 과제</a
-            >
+            <a href="#">제출한 과제</a>
           </li>
           <li class="myPost menu" id="myPost">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
@@ -302,7 +299,9 @@ file="../header_footer/header.jspf"%>
             >
           </li>
           <li class="mySendMsg" id="mySendMsg">
-            <a href="#">쪽지함</a>
+            <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+              >쪽지함</a
+            >
           </li>
         </ul>
       </div>
@@ -312,39 +311,17 @@ file="../header_footer/header.jspf"%>
         <div class="container mt-3" style="text-align: center">
           <button
             class="btn btn-outline-primary sendMsg"
-            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'"
+            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo'"
           >
-            보낸 쪽지함
+            개인
           </button>
           <button
             class="btn btn-outline-primary receiveMsg"
             onclick="location.href='#'"
           >
-            받은 쪽지함
+            팀
           </button>
         </div>
-        <table class="table">
-          <thead class="table-dark">
-            <tr>
-              <th>보낸사람</th>
-              <th>내용</th>
-              <th>날짜</th>
-              <th>안읽은 쪽지</th>
-            </tr>
-          </thead>
-          <tbody>
-            <div class="ajaxContent">
-              <c:forEach var="mVO" items="${mVO}">
-                <tr>
-                  <td>${mVO.user_userid1}</td>
-                  <td>${mVO.content}</td>
-                  <td>${mVO.date}</td>
-                  <td>${mVO.ischeck}</td>
-                </tr>
-              </c:forEach>
-            </div>
-          </tbody>
-        </table>
       </div>
     </main>
   </body>

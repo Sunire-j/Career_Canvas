@@ -1,6 +1,7 @@
 package com.team1.careercanvas.mapper;
 
 import com.team1.careercanvas.vo.MessageVO;
+import com.team1.careercanvas.vo.SubmitSubjectVO;
 import com.team1.careercanvas.vo.UserVO;
 
 import java.util.List;
@@ -51,4 +52,9 @@ public interface UserMapper {
     List<MessageVO> getSendMsg(String LogId);
 
     List<MessageVO> getReceiveMsg(String LogId);
+
+    List<SubmitSubjectVO> getSubmitSubjectSolo(String LogId);
+
+    List<SubmitSubjectVO> getSubmitSubjectTeam(String LogId);
+
 }

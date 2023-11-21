@@ -280,7 +280,7 @@ file="../header_footer/header.jspf"%>
           </li>
           <li class="submitTask menu" id="submitTask">
             <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitTask"
+              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
               >제출한 과제</a
             >
           </li>
@@ -301,6 +301,8 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
+
+      <!-- search -->
       <form
         class="input-group mb-3"
         style="width: 60%; margin: 20px auto"

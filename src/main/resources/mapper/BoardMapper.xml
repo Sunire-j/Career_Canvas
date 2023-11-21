@@ -143,13 +143,25 @@
     <select id="getmyPost" resultType="com.team1.careercanvas.vo.BoardVO">
         select *
         from post
-        where user_userid = #{param1};
+        <if test="#{param2} == ''">
+            where user_userid = #{param1};
+        </if>
+        <if test="#{param2} != ''">
+            where user_userid = #{param1}
+            and posttitle like concat('%',#{param2},'%');
+        </if>
     </select>
 
     <select id="getmyComment" resultType="com.team1.careercanvas.vo.CommentVO">
         select *
         from comment
-        where user_userid = #{param1};
+        <if test="#{param2} == ''">
+            where user_userid = #{param1};
+        </if>
+        <if test="#{param2} != ''">
+            where user_userid = #{param1}
+            and commentcontent like concat('%',#{param2},'%');
+        </if>
     </select>
 
     <select id="CheckValid" resultType="Integer">

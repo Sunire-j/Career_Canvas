@@ -25,7 +25,6 @@ public class BoardController {
         this.mapper = mapper;
     }
 
-
     @GetMapping("/board/free")
     public ModelAndView boardFree(HttpSession session,
                                   @RequestParam(required = false, defaultValue = "0") int category,
@@ -46,10 +45,10 @@ public class BoardController {
         if (category != 0 && category != 1 && category != 2 && category != 3) {
             mav.setViewName("404pages");
             return mav;
-        } else if (category == 0) {//카테고리가 없으면
+        } else if (category == 0) {// 카테고리가 없으면
             bvo = mapper.getPost(pvo);
             pvo.setTotalRecord(mapper.getPostAmount(pvo));
-        } else {//있으면
+        } else {// 있으면
             pvo.setCategory(category);
             bvo = mapper.getPostWithCat(pvo);
             pvo.setTotalRecord(mapper.getPostAmountWithCat(pvo));
@@ -98,10 +97,10 @@ public class BoardController {
         if (category != 0 && category != 1 && category != 2 && category != 3) {
             mav.setViewName("404pages");
             return mav;
-        } else if (category == 0) {//카테고리가 없으면
+        } else if (category == 0) {// 카테고리가 없으면
             bvo = mapper.getPost(pvo);
             pvo.setTotalRecord(mapper.getPostAmount(pvo));
-        } else {//있으면
+        } else {// 있으면
             pvo.setCategory(category);
             bvo = mapper.getPostWithCat(pvo);
             pvo.setTotalRecord(mapper.getPostAmountWithCat(pvo));
@@ -215,7 +214,7 @@ public class BoardController {
 
     @PostMapping("/board/writeOk")
     public String boardwriteOk(HttpSession session,
-                               BoardVO vo) {
+            BoardVO vo) {
         vo.setUser_userid((String) session.getAttribute("LogId"));
         mapper.InsertNewPost(vo);
         System.out.println("완료");
@@ -228,36 +227,33 @@ public class BoardController {
         }
         return "404pages";
     }
-
     // 정인식 작업 ( 글 내용보기 )
     @GetMapping("/board/view")
-    public ModelAndView boardView(@RequestParam("no") int postid){
+    public ModelAndView boardView(@RequestParam("no") int postid) {
         ModelAndView mav = new ModelAndView();
         mapper.ViewsCount(postid); // 조회수 증가
         BoardVO vo = mapper.SelectBoardView(postid);
         int like = mapper.GetLikeAmount(postid);
-        mav.addObject("bvo",vo);
+        mav.addObject("bvo", vo);
         mav.addObject("postlike", like);
         mav.setViewName("board/boardView");
         return mav;
     }
     // 정인식 작업 ( 글 내용 추천 수 )
     @GetMapping("/board/like")
-    public String postlike(@RequestParam("no") int postid, HttpSession session){
-        if(session.getAttribute("LogStatus") == null || !session.getAttribute("LogStatus").equals("Y")){
+    public String postlike(@RequestParam("no") int postid, HttpSession session) {
+        if (session.getAttribute("LogStatus") == null || !session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "로그인 후 추천이 가능합니다.");
             return "alert_page";
         }
-        int result=mapper.CheckValid(postid, (String) session.getAttribute("LogId"));
-        if(result==1){
+        int result = mapper.CheckValid(postid, (String) session.getAttribute("LogId"));
+        if (result == 1) {
             session.setAttribute("msg", "추천은 한번만 가능합니다.");
             return "alert_page";
         }
         mapper.LikeCount(postid, (String) session.getAttribute("LogId"));
 
-        return "redirect:/board/view?no="+postid;
+        return "redirect:/board/view?no=" + postid;
     }
-
-    // 정인식 작업 ( 글 내용보기 )
 
 }

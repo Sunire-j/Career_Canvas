@@ -22,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
@@ -360,45 +361,31 @@ public class UserController {
     // 권혁준 작업
     // 완료
     @GetMapping("mypage/myPofol")
-    public ModelAndView myPofol(HttpSession session) {
+    public ModelAndView myPofol(HttpSession session,
+            @RequestParam(required = false, defaultValue = "") String searchText) {
         ModelAndView mav = new ModelAndView();
-
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             mav.setViewName("alert_page");
             return mav;
         }
+
         System.out.println("로그아이디" + session.getAttribute("LogId"));
         List<PofolVO> list = new ArrayList<PofolVO>();
-        list = pofolmapper.getPofol((String) session.getAttribute("LogId"));
+
+        list = pofolmapper.getPofol((String) session.getAttribute("LogId"), searchText);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("searchText");
         mav.addObject("uVO", uVO);
         mav.addObject("list", list);
         mav.setViewName("users/mypage");
         return mav;
     }
 
-    // @GetMapping("mypage/submitTask")
-    // public ModelAndView submitTask(HttpSession session) {
-    // ModelAndView mav = new ModelAndView();
-    // System.out.println(session.getAttribute("LogStatus"));
-    // if (!session.getAttribute("LogStatus").equals("Y")) {
-    // session.setAttribute("msg", "잘못된 접근입니다.");
-    // mav.setViewName("alert_page");
-    // return mav;
-    // }
-    // System.out.println("로그아이디" + session.getAttribute("LogId"));
-    // List list = new ArrayList();
-    // list = pofolmapper.getPofol((String) session.getAttribute("LogId"));
-    // mav.addObject("list", list);
-    // mav.setViewName("users/mypage");
-    // System.out.println("!!!!" + list);
-    // return mav;
-    // }
-
     // 완료
     @GetMapping("mypage/myPost")
-    public ModelAndView myPost(HttpSession session) {
+    public ModelAndView myPost(HttpSession session,
+            @RequestParam(required = false, defaultValue = "") String searchText) {
         ModelAndView mav = new ModelAndView();
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
@@ -407,7 +394,7 @@ public class UserController {
         }
         System.out.println("로그아이디" + session.getAttribute("LogId"));
         List<BoardVO> bVO = new ArrayList<BoardVO>();
-        bVO = boardmapper.getmyPost((String) session.getAttribute("LogId"));
+        bVO = boardmapper.getmyPost((String) session.getAttribute("LogId"), searchText);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         mav.addObject("bVO", bVO);
         mav.addObject("uVO", uVO);
@@ -418,7 +405,9 @@ public class UserController {
 
     // 완료
     @GetMapping("mypage/myComment")
-    public ModelAndView myComment(HttpSession session) {
+
+    public ModelAndView myComment(HttpSession session,
+            @RequestParam(required = false, defaultValue = "") String searchText) {
         ModelAndView mav = new ModelAndView();
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
@@ -427,7 +416,7 @@ public class UserController {
         }
 
         List<CommentVO> cVO = new ArrayList<CommentVO>();
-        cVO = boardmapper.getmyComment((String) session.getAttribute("LogId"));
+        cVO = boardmapper.getmyComment((String) session.getAttribute("LogId"), searchText);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         mav.addObject("cVO", cVO);
         mav.addObject("uVO", uVO);
@@ -477,4 +466,29 @@ public class UserController {
         return mav;
     }
 
+    @GetMapping("mypage/submitSubjectSolo")
+    public ModelAndView submitSubjectSolo(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
+        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectSolo((String) session.getAttribute("LogId"));
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("uVO", uVO);
+        mav.addObject("sVO", sVO);
+        System.out.println(sVO);
+        mav.setViewName("/users/mypage_submitSubjectSolo");
+        return mav;
+    }
+
+    @GetMapping("mypage/submitSubjectTeam")
+    public ModelAndView submitSubjectTeam(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
+        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam((String) session.getAttribute("LogId"));
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("uVO", uVO);
+        mav.addObject("sVO", sVO);
+        System.out.println(sVO);
+        mav.setViewName("/users/mypage_submitSubjectTeam");
+        return mav;
+    }
 }
