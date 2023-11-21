@@ -259,32 +259,5 @@ public class BoardController {
     }
 
     // 정인식 작업 ( 글 내용보기 )
-    @GetMapping("/board/view")
-    public ModelAndView boardView(@RequestParam("no") int postid) {
-        ModelAndView mav = new ModelAndView();
-        mapper.ViewsCount(postid); // 조회수 증가
-        BoardVO vo = mapper.SelectBoardView(postid);
-        int like = mapper.GetLikeAmount(postid);
-        mav.addObject("bvo", vo);
-        mav.addObject("postlike", like);
-        mav.setViewName("board/boardView");
-        return mav;
-    }
 
-    // 정인식 작업 ( 글 내용 추천 수 )
-    @GetMapping("/board/like")
-    public String postlike(@RequestParam("no") int postid, HttpSession session) {
-        if (session.getAttribute("LogStatus") == null || !session.getAttribute("LogStatus").equals("Y")) {
-            session.setAttribute("msg", "로그인 후 추천이 가능합니다.");
-            return "alert_page";
-        }
-        int result = mapper.CheckValid(postid, (String) session.getAttribute("LogId"));
-        if (result == 1) {
-            session.setAttribute("msg", "추천은 한번만 가능합니다.");
-            return "alert_page";
-        }
-        mapper.LikeCount(postid, (String) session.getAttribute("LogId"));
-
-        return "redirect:/board/view?no=" + postid;
-    }
 }
