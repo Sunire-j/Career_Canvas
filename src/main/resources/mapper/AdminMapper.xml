@@ -8,4 +8,15 @@
     <select id="getBoardList" resultType="com.team1.careercanvas.vo.BoardVO">
         select * from post
     </select>
+
+    <select id="getReportList" resultType="com.team1.careercanvas.vo.ReportVO">
+        select reportid, user_userid, reason, reporttype, title, userid, targetid from report
+    </select>
+
+    <select id="getAdminName" resultType="String">
+        select username from user where userid=#{param1}
+    </select>
+
+    <select id="getDeleteList">
+    </select>
 </mapper>
