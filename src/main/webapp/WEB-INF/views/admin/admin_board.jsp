@@ -9,11 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.getElementById("#move").onclick = function () {
-
-        };
-    </script>
     <style>
         #sideBar {
             width: 250px;
@@ -65,7 +60,7 @@
 <div style="display:flex;">
     <div id="sideBar">
         <div style="text-align: center;">
-            <h2>관리자 OOO</h2>
+            <h2>관리자 ${name}</h2>
             <a href="" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
@@ -99,11 +94,11 @@
             <c:forEach var="bvo" items="${bVO}">
                 <tr>
                     <td>${bvo.postid}</td>
+                    <td>${bvo.category}</td>
                     <td>${bvo.posttitle}</td>
-                    <td>${bvo.postcontent}</td>
                     <td>
                         대기중
-                        <button type="button" class="btn btn-info" id="move">이동</button>
+                        <button type="button" class="btn btn-info" onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}'">이동</button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger">강제삭제</button>
