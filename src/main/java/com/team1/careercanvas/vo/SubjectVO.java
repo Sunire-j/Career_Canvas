@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor
 public class SubjectVO {
-    private int num;
+    private int subjectid;
+    private String subjecttitle;
+    private String subjectcontent;
+    private String date;
+    private String user_userid;
+    private String imgsrc;
 }
