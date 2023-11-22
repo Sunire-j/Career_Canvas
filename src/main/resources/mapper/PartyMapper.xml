@@ -11,4 +11,9 @@
         select * from party
         where user_userid=#{param1};
     </select>
+
+    <select id="myteamSelect" resultType="com.team1.careercanvas.vo.PartyVO">
+        select * from party
+        where partyid=#{param1};
+    </select>
 </mapper>

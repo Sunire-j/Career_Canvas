@@ -5,6 +5,7 @@ import com.team1.careercanvas.mapper.PartyMapper;
 import com.team1.careercanvas.vo.PartyVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -34,5 +35,12 @@ public class PartyController {
         mav.addObject("pvo",vo);
         mav.setViewName("myteam/myteam_main");
         return mav;
+    }
+    // 정인식 작업 ( 파티 정보 출력 )
+    @GetMapping("/myteamView")
+    public PartyVO myteamView(int no){
+        PartyVO myteamView = mapper.myteamSelect(no);
+
+        return myteamView;
     }
 }
