@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface PartyMapper {
     List<PartyVO> SelectPartyList(String logId);
+    PartyVO myteamSelect(int no);
 }
