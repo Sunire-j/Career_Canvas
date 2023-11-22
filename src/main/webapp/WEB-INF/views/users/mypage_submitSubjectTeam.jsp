@@ -209,9 +209,6 @@ file="../header_footer/header.jspf"%>
       .ajaxMenu_wrapper {
         margin-top: 50px;
       }
-      .ajaxView_wrapper {
-        margin: 0 auto;
-      }
       .ajaxView {
         float: left;
       }
@@ -222,12 +219,22 @@ file="../header_footer/header.jspf"%>
         display: flex;
       }
       .ajaxView_wrapper {
-        width: 75%;
+        width: 64%;
+        margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
       }
       .userInterest span {
         margin-right: 5px;
+      }
+      .table th,
+      .table tr {
+        width: 15%;
+        text-align: center;
+      }
+      .table th:nth-child(5n + 3),
+      .table tr:nth-child(5n + 3) {
+        width: 40%;
       }
     </style>
   </head>
@@ -240,13 +247,13 @@ file="../header_footer/header.jspf"%>
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="#" alt="" />
+          <img src="/img/bbb.png" alt="" />
           <div>
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
-              <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+              <a href="mypage_edit">
                 <input
                   type="button"
                   class="btn btn-outline-primary"
@@ -273,89 +280,35 @@ file="../header_footer/header.jspf"%>
       <!-- ajax -->
       <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
-          <li class="myPofol menu" id="myPofol menu">
+          <li class="myPofol menu" id="myPofol">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPofol"
               >나의 포트폴리오</a
             >
           </li>
           <li class="submitTask menu" id="submitTask">
-            <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-              >제출한 과제</a
-            >
+            <a href="#">제출한 과제</a>
           </li>
-          <li class="myPost menu" id="myPost menu">
+          <li class="myPost menu" id="myPost">
             <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
               >나의 게시글</a
             >
           </li>
-          <li class="myComment menu" id="myComment menu">
+          <li class="myComment menu" id="myCommen">
             <a href="${pageContext.servletContext.contextPath}/mypage/myComment"
               >나의 댓글</a
             >
           </li>
-          <li class="myNote menu" id="myNote menu">
+          <li class="mySendMsg" id="mySendMsg">
             <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
               >쪽지함</a
             >
           </li>
         </ul>
       </div>
-
-      
-      <!-- ajax View -->
-      <div class="ajaxView_wrapper">
-        <c:forEach var="pVO" items="${list}">
-          <div class="ajaxContent">
-            <a
-              href="#"
-              style="border: solid 1px #ddd; width: 220px; height: 170px"
-              ><img src="/img/bbb.png" alt=""
-            /></a>
-            <div>
-              <a href="#"><p>${pVO.portfoliotitle}</p></a>
-            </div>
-          </div>
-        </c:forEach>
-      </div>
-      <!-- 페이징 -->
-      <div class="paging" style="width: 50%; margin: 0 auto; text-align: center;">
-        <c:forEach var ="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
-          <c:if test="${i <= pVO.totalPage}">
-            <c:choose>
-            <c:when test="${i != pVO.page}">
-              <button class="btn btn-outline-primary" onclick="location.href='?page=${i}'
-              <c:if test="${pVO.searchText != ''}">
-                +'&searchText=${pVO.searchText}'
-</c:if>
-              ">${i}</button>
-            </c:when>
-            <c:otherwise>
-              <strong class="btn btn-outline-primary" style="font-weight:  bold;">${i}</strong>
-            </c:otherwise>
-          </c:choose>
-          </c:if>
-        </c:forEach>
-        <c:if test="${pVO.page < pVO.totalPage}">
-                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
-
-                        <c:if test="${pVO.searchWord!=''}">
-                                +'&searchWord=${pVO.searchWord}'
-                        </c:if>
-                                ">>
-                        </button>
-                    </c:if>
-                    <!-- 글쓰기 -->
-                    <input type="button" value="글쓰기"onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'">
-      </div>
-      
-      
-
-      <!-- search -->
       <form
         class="input-group mb-3"
         style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/myPofol"
+        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
         method="GET"
       >
         <input
@@ -366,6 +319,32 @@ file="../header_footer/header.jspf"%>
         />
         <button class="btn btn-success" type="submit">Go</button>
       </form>
+
+      <!-- ajax View -->
+      <div class="ajaxView_wrapper">
+        <div class="container mt-3" style="text-align: center">
+          <button
+            class="btn btn-outline-primary sendMsg"
+            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo'"
+          >
+            개인
+          </button>
+          <button
+            class="btn btn-outline-primary receiveMsg"
+            onclick="location.href='#'"
+          >
+            팀
+          </button>
+        </div>
+      </div>
+      <div class="submitSubjectTeam" style="width: 61%; margin: 0 auto">
+        <c:forEach var="sVO" items="${sVO}">
+          <img
+            src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
+          />
+          <p>${sVO.subjecttitle}</p>
+        </c:forEach>
+      </div>
     </main>
   </body>
 </html>

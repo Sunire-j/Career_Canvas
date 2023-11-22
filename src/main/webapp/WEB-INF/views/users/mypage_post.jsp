@@ -288,7 +288,7 @@ file="../header_footer/header.jspf"%>
           </li>
           <li class="submitTask menu" id="submitTask">
             <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitTask"
+              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
               >제출한 과제</a
             >
           </li>
@@ -309,6 +309,20 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/myPost"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchText"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3">

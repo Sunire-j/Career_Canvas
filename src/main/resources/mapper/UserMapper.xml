@@ -121,9 +121,27 @@
         from message
         where user_userid1 = #{param1};
     </select>
-	
-	<!-- 김효준작업 -->
 
-
+    <select id="getSubmitSubjectSolo" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
+        select a.applyid as applyid, s.subjecttitle as subjecttitle, a.applyimg as applyimg
+        from subjectapply a
+        left join subject s on a.subject_subjectid = s.subjectid
+        where a.user_userid = #{param1}
+        and a.isteam = 1;
+    </select>
+    
+    <select id="getSubmitSubjectTeam" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
+        SELECT sa.applyid as applyid, sa.applyimg as applyimg, s.subjecttitle as subjecttitle
+        FROM subjectcontributor sc
+        JOIN subjectapply sa ON sc.subjectapply_applyid = sa.applyid
+        JOIN subject s ON sa.subject_subjectid = s.subjectid
+        WHERE sc.user_userid = #{param1}
+        and sa.isteam = 0;
+    </select>
 	
+    <select id="getPofolAmount" resultType="Integer">
+        select count(user_userid)
+        from portpolio
+        where user_userid = #{param1}
+    </select>
 </mapper>
