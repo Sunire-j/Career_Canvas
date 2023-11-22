@@ -192,13 +192,23 @@
     <script>
         $(function(){
             $(".party_list_btn").click(function() {
+                var no = ${vo.partyid};
+                var partyInfo=$(
+                    "<p class='party_name'>"+vo.partyname+"</p>"+
+                    "<div class='objective'>파티 목표</div>"+
+                    "<div class='salutation_content'>"+partygoal+"</div></div>"+
+                    "<div class='salutation'><div class='salutation_name'>파티 소개</div>"+
+                    "<div class='salutation_content'>"+partycomment+"</div></div>"
+                );
                 $.ajax({
-                    url: "myteam/view",
+                    url: "${pageContext.servletContext.contextPath}/myteamView",
                     type: "GET",
-                    data: ,
-                    dataType: "text",
+                    data: {
+                        no:no
+                    },
                     success: function (result) {
                         console.log(result);
+                        $(".teamView").append(partyInfo);
                     }, error: function (error) {
                         console.log(error.responseText);
                     }
@@ -244,7 +254,7 @@
 </main>
 
 <article>
-    <section>
+    <section class="teamView">
         <p class="party_name">Career Canvas</p>
 
         <div class="objective">
