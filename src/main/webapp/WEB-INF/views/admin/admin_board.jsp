@@ -76,7 +76,7 @@
         <h3>통계</h3>
         <a href=""> 유저 현황 </a>
         <a href=""> 게시판 현황 </a>
-        <a href="" style="position: absolute; bottom: 90px;">메인 페이지 이동</a>
+        <a href="${pageContext.servletContext.contextPath}/" style="position: absolute; bottom: 90px;">메인 페이지 이동</a>
         <p style="position: absolute; bottom: 50px;">당일 접속 유저 : 500명</p>
         <p style="position: absolute; bottom: 20px;">누적 접속 유저 : 50만명ㅋ</p>
     </div>
@@ -98,7 +98,7 @@
                     <td>${bvo.posttitle}</td>
                     <td>
                         대기중
-                        <button type="button" class="btn btn-info" onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}'">이동</button>
+                        <button type="button" class="btn btn-info" onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}')">이동</button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger">강제삭제</button>

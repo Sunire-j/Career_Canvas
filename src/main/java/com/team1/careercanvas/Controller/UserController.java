@@ -22,7 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
@@ -216,6 +215,7 @@ public class UserController {
             return "404pages";
         }
 
+        //파일저장시작
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         String newFileName = companyno + extension;
         String projectDir = new File("").getAbsolutePath();
@@ -233,10 +233,13 @@ public class UserController {
             System.out.println("파일저장실패");
             return "404pages";
         }
+        //파일저장 끝
 
+        //db에 경로넣기
         String imgsrc = "/companyauth/" + newFileName;
 
         mapper.InsertAuthImg(imgsrc, companyno);
+        //db에 경로넣기 끝
         // 이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
         return "users/biz-end";
     }

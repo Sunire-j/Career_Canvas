@@ -193,9 +193,11 @@
             <div class="content_text">
                 ${bvo.postcontent}
             </div>
-            <div class="content_recommend">
+            <div class="content_recommend" style="width: 100%; display : flex; justify-content: space-between; align-items: center">
+                <div></div>
                 <a style="color: white" href="${pageContext.servletContext.contextPath}/board/like?no=${bvo.postid}"
                    class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a>
+                <a style="height: fit-content" class=" btn btn-outline-danger btn-sm">신고</a>
             </div>
         </div>
         <div>

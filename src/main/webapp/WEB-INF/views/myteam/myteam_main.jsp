@@ -61,10 +61,6 @@
             overflow: auto;
         }
 
-        li {
-            float: left;
-        }
-
         /* 파티 목록 리스트 */
         .party_list li{
             margin-right: 20px;
@@ -188,6 +184,9 @@
         .memo_content{
             min-height: 160px
         }
+        .memo_item{
+            float: left;
+        }
     </style>
     <script>
         $(function(){
@@ -230,7 +229,7 @@
     <ul class="party_list">
         <c:forEach items="${pvo}" var="pvo">
             <a href="#" class="party_list_btn"><!-- 파티 프로필 링크 달아야 함 -->
-                <li>
+                <li style="float: left">
                     <img src="profile.PNG" class="member_img">
                     <div class="party_list_name">
                         ${pvo.partyname}
@@ -238,7 +237,7 @@
                 </li>
             </a>
         </c:forEach>
-        <li>
+        <li style="float: left">
             <button class="new_party_btn">
                 <i class="fa-regular fa-square-plus fa-4x"></i><br/>
                 <span style="font-weight: bold;">파티생성</span>
@@ -279,19 +278,19 @@
             </div>
             <div class="salutation_content">
                 <ul class="member_list">
-                    <li>
+                    <li style="float: left">
                         <img src="profile.PNG" class="member_img">
                         <div class="member_name">
                             김**
                         </div>
                     </li>
-                    <li>
+                    <li style="float: left">
                         <img src="profile.PNG" class="member_img">
                         <div class="member_name">
                             박**
                         </div>
                     </li>
-                    <li>
+                    <li style="float: left">
                         <img src="profile.PNG" class="member_img">
                         <div class="member_name">
                             최**
