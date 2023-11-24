@@ -9,6 +9,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function () {
+            $(".forevent").on('click', "#deletion", function () {
+                var del_target = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/delete/user?userid=" + del_target;
+            });
+
+            $(".forevent").on('click', "#changeUsername", function () {
+                var change_target = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/change/user?username=" + change_target;
+            });
+        });
+    </script>
     <style>
         #sideBar {
             width: 250px;
@@ -60,8 +73,9 @@
 <div style="display:flex;">
     <div id="sideBar">
         <div style="text-align: center;">
-            <h2>관리자 OOO</h2>
-            <a href="" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
+            <h4>관리자 ${name}</h4>
+            <a href="${pageContext.servletContext.contextPath}/"
+               style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
         <h3>회원관리</h3>
@@ -85,32 +99,33 @@
         <h1 style="padding: 15px;">회원관리-일반회원관리</h1>
         <table class="table table-hover">
             <tr>
-                <th>회원번호</th>
                 <th>회원ID</th>
+                <th>회원 닉네임</th>
                 <th>가입일자</th>
                 <th>누적 신고횟수</th>
                 <th>처분</th>
             </tr>
             <c:forEach var="uvo" items="${uVO}">
-                <tr>
-                    <td>1</td>
+                <tr class="forevent">
                     <td>${uvo.userid}</td>
+                    <td>${uvo.username}</td>
                     <td>${uvo.date}</td>
                     <td>0회</td>
                     <td>
-                        <button type="button" class="btn btn-danger">강제탈퇴</button>
+                        <button type="button" class="btn btn-danger btn-sm deletion" id="deletion" title="${uvo.userid}">강제탈퇴</button>
+                        <button type="button" class="btn btn-danger btn-sm" id="changeUsername" title="${uvo.userid}">닉네임 변경</button>
                     </td>
                 </tr>
             </c:forEach>
         </table>
-            <div class="pagination-container">
-                <div class="pagination">
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                </div>
+        <div class="pagination-container">
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
             </div>
+        </div>
     </div>
 </div>
 </body>

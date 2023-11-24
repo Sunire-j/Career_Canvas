@@ -59,8 +59,8 @@
 <div style="display:flex;">
     <div id="sideBar">
         <div style="text-align: center;">
-            <h2>관리자 OOO</h2>
-            <a href="" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
+            <h4>관리자 ${name}</h4>
+            <a href="${pageContext.servletContext.contextPath}/" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr />
         <h3>회원관리</h3>

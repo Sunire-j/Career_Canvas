@@ -21,17 +21,19 @@ public class BoardController {
 
     private final BoardMapper mapper;
 
+
     public BoardController(BoardMapper mapper, CommentMapper commentMapper) {
         this.mapper = mapper;
     }
 
+
     @GetMapping("/board/free")
     public ModelAndView boardFree(HttpSession session,
                                   @RequestParam(required = false, defaultValue = "0") int category,
-                                  @RequestParam(required = false, defaultValue = "1") int page, // 했음
-                                  @RequestParam(required = false) String searchKey, // 했음
-                                  @RequestParam(required = false) String searchWord, // 했음
-                                  @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
+                                  @RequestParam(required = false, defaultValue = "1") int page,//했음
+                                  @RequestParam(required = false) String searchKey,//했음
+                                  @RequestParam(required = false) String searchWord,//했음
+                                  @RequestParam(required = false, defaultValue = "1") int postSort) {//했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
@@ -45,15 +47,15 @@ public class BoardController {
         if (category != 0 && category != 1 && category != 2 && category != 3) {
             mav.setViewName("404pages");
             return mav;
-        } else if (category == 0) {// 카테고리가 없으면
+        } else if (category == 0) {//카테고리가 없으면
             bvo = mapper.getPost(pvo);
             pvo.setTotalRecord(mapper.getPostAmount(pvo));
-        } else {// 있으면
+        } else {//있으면
             pvo.setCategory(category);
             bvo = mapper.getPostWithCat(pvo);
             pvo.setTotalRecord(mapper.getPostAmountWithCat(pvo));
         }
-        // 날짜포맷변경 시작
+        //날짜포맷변경 시작
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         for (BoardVO vo : bvo) {
@@ -68,7 +70,7 @@ public class BoardController {
                 vo.setDate(writeDate.format(DateTimeFormatter.ofPattern("HH:mm")));
             }
         }
-        // 날짜포맷변경 끝
+        //날짜포맷변경 끝
 
         session.setAttribute("boardcat", "free");
         mav.addObject("pVO", pvo);
@@ -80,10 +82,10 @@ public class BoardController {
     @GetMapping("/board/ask")
     public ModelAndView boardAsk(HttpSession session,
                                  @RequestParam(required = false, defaultValue = "0") int category,
-                                 @RequestParam(required = false, defaultValue = "1") int page, // 했음
-                                 @RequestParam(required = false) String searchKey, // 했음
-                                 @RequestParam(required = false) String searchWord, // 했음
-                                 @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
+                                 @RequestParam(required = false, defaultValue = "1") int page,//했음
+                                 @RequestParam(required = false) String searchKey,//했음
+                                 @RequestParam(required = false) String searchWord,//했음
+                                 @RequestParam(required = false, defaultValue = "1") int postSort) {//했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
@@ -97,15 +99,15 @@ public class BoardController {
         if (category != 0 && category != 1 && category != 2 && category != 3) {
             mav.setViewName("404pages");
             return mav;
-        } else if (category == 0) {// 카테고리가 없으면
+        } else if (category == 0) {//카테고리가 없으면
             bvo = mapper.getPost(pvo);
             pvo.setTotalRecord(mapper.getPostAmount(pvo));
-        } else {// 있으면
+        } else {//있으면
             pvo.setCategory(category);
             bvo = mapper.getPostWithCat(pvo);
             pvo.setTotalRecord(mapper.getPostAmountWithCat(pvo));
         }
-        // 날짜포맷변경 시작
+        //날짜포맷변경 시작
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         for (BoardVO vo : bvo) {
@@ -120,7 +122,7 @@ public class BoardController {
                 vo.setDate(writeDate.format(DateTimeFormatter.ofPattern("HH:mm")));
             }
         }
-        // 날짜포맷변경 끝
+        //날짜포맷변경 끝
         session.setAttribute("boardcat", "ask");
         mav.addObject("pVO", pvo);
         mav.addObject("bVO", bvo);
@@ -132,10 +134,10 @@ public class BoardController {
     @GetMapping("/board/tip")
     public ModelAndView boardTip(HttpSession session,
                                  @RequestParam(required = false, defaultValue = "0") int category,
-                                 @RequestParam(required = false, defaultValue = "1") int page, // 했음
-                                 @RequestParam(required = false) String searchKey, // 했음
-                                 @RequestParam(required = false) String searchWord, // 했음
-                                 @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
+                                 @RequestParam(required = false, defaultValue = "1") int page,//했음
+                                 @RequestParam(required = false) String searchKey,//했음
+                                 @RequestParam(required = false) String searchWord,//했음
+                                 @RequestParam(required = false, defaultValue = "1") int postSort) {//했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
@@ -149,16 +151,16 @@ public class BoardController {
         if (category != 0 && category != 1 && category != 2 && category != 3) {
             mav.setViewName("404pages");
             return mav;
-        } else if (category == 0) {// 카테고리가 없으면
+        } else if (category == 0) {//카테고리가 없으면
             bvo = mapper.getPost(pvo);
             pvo.setTotalRecord(mapper.getPostAmount(pvo));
-        } else {// 있으면
+        } else {//있으면
             pvo.setCategory(category);
             bvo = mapper.getPostWithCat(pvo);
             pvo.setTotalRecord(mapper.getPostAmountWithCat(pvo));
         }
 
-        // 날짜포맷변경 시작
+        //날짜포맷변경 시작
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         for (BoardVO vo : bvo) {
@@ -173,7 +175,7 @@ public class BoardController {
                 vo.setDate(writeDate.format(DateTimeFormatter.ofPattern("HH:mm")));
             }
         }
-        // 날짜포맷변경 끝
+        //날짜포맷변경 끝
         session.setAttribute("boardcat", "tip");
         mav.addObject("pVO", pvo);
         mav.addObject("bVO", bvo);
@@ -213,8 +215,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/writeOk")
-    public String boardwriteOk(HttpSession session,
-                               BoardVO vo) {
+    public String boardwriteOk(HttpSession session, BoardVO vo) {
         vo.setUser_userid((String) session.getAttribute("LogId"));
         mapper.InsertNewPost(vo);
         System.out.println("완료");
@@ -271,5 +272,4 @@ public class BoardController {
 
         return "redirect:/board/view?no=" + postid;
     }
-
 }
