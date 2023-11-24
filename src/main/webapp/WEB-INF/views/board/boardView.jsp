@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
     <style>
+
         ul {
             list-style-type: none;
             margin: 0;
@@ -22,6 +23,9 @@
             width: 1200px;
             margin: 0 auto;
             margin-top: 30PX;
+            border: 1px #73351F solid;
+            background: #D9D9D9;
+            padding: 40px;
         }
 
         .board_category {
@@ -40,17 +44,29 @@
         }
 
         /* 게시물 정보( 작성자, 날짜, 조회수, 추천수) */
+        .board_main{
+            border-bottom: 3px solid #73351F;
+            border-top: 3px solid #73351F;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+        }
         .board_info {
             display: flex;
+            background:  #D9C8A9;
+            align-items: center;
+            height: 30px;
         }
 
         .board_writer {
+            display: flex;
             padding-right: 10px;
             border-right: 1px solid darkgray;
+            text-align: center;
         }
 
         .board_date {
             padding-left: 10px;
+
         }
 
         .board_info > div:nth-child(n+3) {
@@ -70,9 +86,7 @@
 
         /* 게시글 내용 */
         .board_content {
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
+            margin-top: 10px;
         }
 
         .content_text {
@@ -88,35 +102,41 @@
 
         /* 댓글쓰기 */
         .comment_write {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
-            padding-bottom: 20px;
             border-bottom: 1px solid #ddd;
         }
 
         .comment_content {
             border: 1px solid #ddd;
-            border-radius: 15px;
             width: 90%;
+            height: 100px;
             min-height: 100px;
-            padding: 10px;
-            margin-right: 10px;
+            margin-left: 3px;
+            margin-bottom: 3px;
+            margin-top: 3px;
         }
 
         .comment_write_ok {
             width: 10%;
-            border-radius: 15px;
+            height: 100px;
         }
 
         /* 댓글 리스트 */
+        .comment_main{
+
+        }
+        .comment_list{
+            background:  #A69668;
+
+        }
         .comment_list li {
             float: none;
         }
-
         .comment_list_content {
-            padding-top: 20px;
+            padding-top: 10px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
+            border: 0.5px #73351F solid;
         }
 
         .list_img {
@@ -132,7 +152,10 @@
         .comment_writer {
             padding: 0 5px;
         }
-
+        .reply_content{
+            background: #D9D9D9;
+            margin-bottom: 15px;
+        }
         .reply_content > div {
             display: inline-block;
         }
@@ -143,9 +166,14 @@
             height: 50px;
         }
 
-        .comment_del, .comment_reply {
-            margin-top: 15px;
+
+        /* IE9 이하를 위한 css */
+        input::placeholder{
+            display: flex;
+            text-align: center;
+            align-items: center;
         }
+
     </style>
 </head>
 <body>
@@ -164,10 +192,11 @@
             게시판
 
         </div>
+
         <div class="board_title">
             ${bvo.posttitle}
         </div>
-
+    <div class="board_main">
         <div class="board_info">
             <div class="board_writer">
                 ${bvo.user_userid}
@@ -188,7 +217,6 @@
                 ${postlike}
             </div>
         </div>
-
         <div class="board_content">
             <div class="content_text">
                 ${bvo.postcontent}
@@ -213,14 +241,20 @@
                 <input type="hidden" id="postid" name="post_postid" value="${bvo.postid}">
                 <textarea class="comment_content" placeholder="욕설, 비방, 비아냥, 음란, 사행성, 스팸, 광고 댓글은 필터링 또는 삭제됩니다."
                           style="resize: none;"></textarea>
-                <button type="button" class="btn btn-secondary comment_write_ok"> 댓글 등록</button>
+                <button type="button" class="btn btn-secondary comment_write_ok" style="border-radius: 0%; margin: 3px 3px 3px 0px; padding: 0px;"> 댓글 등록</button>
+            </div>
+            <div style="height: 30px; margin: 0px; background: #D9C8A9;">
             </div>
         </div>
+    </div>
+
         <h4 style="margin-left: 30px; margin-top: 30px">댓글</h4>
+    <div class="comment_main">
         <div class="comment_list">
             <ul class="comment_list_real">
             </ul>
         </div>
+    </div>
 
         <script>
             function commentList() {
