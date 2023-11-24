@@ -173,6 +173,12 @@
         </if>
     </select>
 
+    <select id="getmyCommentCount" resultType="Integer">
+        select count(commentid)
+        from comment
+        where user_userid = #{LogId};
+    </select>
+
     <select id="CheckValid" resultType="Integer">
         select count(user_userid)
         from postlike

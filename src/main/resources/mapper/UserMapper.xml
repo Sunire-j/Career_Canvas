@@ -113,21 +113,43 @@
     <select id="getSendMsg" resultType="com.team1.careercanvas.vo.MessageVO">
         select * 
         from message
-        where user_userid = #{param1};
+        where user_userid = #{param1}
+        <if test="#{param2 != ''}">
+            and content like concat ('%', #{param2}, '%');
+        </if>
     </select>
 
     <select id="getReceiveMsg" resultType="com.team1.careercanvas.vo.MessageVO">
         select * 
         from message
-        where user_userid1 = #{param1};
+        where user_userid1 = #{param1}
+        <if test="#{param2 != ''}">
+            and content like concat ('%', #{param2}, '%');
+        </if>
     </select>
 
     <select id="getSubmitSubjectSolo" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
-        select a.applyid as applyid, s.subjecttitle as subjecttitle, a.applyimg as applyimg
-        from subjectapply a
-        left join subject s on a.subject_subjectid = s.subjectid
-        where a.user_userid = #{param1}
-        and a.isteam = 1;
+        <![CDATA[
+            select a.applyid as applyid, s.subjecttitle as subjecttitle, a.applyimg as applyimg
+            from subjectapply a
+            left join subject s on a.subject_subjectid = s.subjectid
+            where a.user_userid = #{param1}
+            and a.isteam = 1
+        ]]>
+        <if test="param2 != null and param2 != ''">
+            <![CDATA[and s.subjecttitle like concat('%', #{param2}, '%')]]>
+        </if>
+    </select>
+
+    <select id="getSubjectSoloAmount" resultType="Integer">
+        select count(sa.subject_subjectid)
+        from subjectapply sa
+        join subject s on sa.subject_subjectid = s.subjectid
+        where sa.user_userid = #{param1} and isteam=1
+        <if test="#{param2 != null and param2 != ''}">
+            and s.subjecttitle like concat('%', #{param2}, '%');
+        </if>
+
     </select>
     
     <select id="getSubmitSubjectTeam" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
@@ -144,4 +166,10 @@
         from portpolio
         where user_userid = #{param1}
     </select>
+
+    <insert id="pofolWrite">
+        insert into portpolio (user_userid, portfoliotitle, portfoliocontent, ispublic, category)
+        values (#{param1}, #{param2}, #{param3},0, #{param4});
+    </insert>
+
 </mapper>
