@@ -305,6 +305,7 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
+      <!-- 검색창 -->
       <form
         class="input-group mb-3"
         style="width: 60%; margin: 20px auto"
@@ -314,7 +315,7 @@ file="../header_footer/header.jspf"%>
         <input
           type="text"
           class="form-control"
-          name="searchText"
+          name="searchWord"
           placeholder="Search"
         />
         <button class="btn btn-success" type="submit">Go</button>

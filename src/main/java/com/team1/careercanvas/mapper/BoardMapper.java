@@ -18,6 +18,7 @@ public interface BoardMapper {
     List<BoardVO> getPostWithCat(PagingVO pvo);
 
     int getPostAmount(PagingVO pvo);
+
     int getPostAmountWithCat(PagingVO pvo);
 
     int reportPost(int target_id, String target_userid, String target_title, String userid);
@@ -26,6 +27,8 @@ public interface BoardMapper {
     List<BoardVO> getmyPost(String userId, String searchText);
 
     List<CommentVO> getmyComment(String userid, String searchText);
+
+    int getmyCommentCount(String LogId);
 
     // 정인식 작업 ( 글내용보기 )
     BoardVO SelectBoardView(int postid);

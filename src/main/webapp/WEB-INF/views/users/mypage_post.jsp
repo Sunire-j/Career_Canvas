@@ -254,7 +254,7 @@ file="../header_footer/header.jspf"%>
               <a href="${pageContext.servletContext.contextPath}/mypage">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
-              <a href="mypage_edit">
+              <a href="${pageContext.servletContext.contextPath}/mypage_edit">
                 <input
                   type="button"
                   class="btn btn-outline-primary"
@@ -318,7 +318,7 @@ file="../header_footer/header.jspf"%>
         <input
           type="text"
           class="form-control"
-          name="searchText"
+          name="searchWord"
           placeholder="Search"
         />
         <button class="btn btn-success" type="submit">Go</button>
