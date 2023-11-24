@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <title>게시판 목록</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/users/boardList.css">
     <style>
         .container {
             max-width: 1000px;
@@ -20,16 +21,6 @@
 
         .container {
             text-align: center;
-        }
-
-        .button-container {
-            margin-top: 20px;
-        }
-
-        .board-container {
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 20px;
         }
 
         .board-header {
@@ -47,10 +38,13 @@
 
         .search-container, .search-button {
             display: inline-block;
+            width: 500px;
+            height: 40px;
         }
 
         .search-container {
             background-color: #f2f2f2;
+
         }
 
         .search-box {
@@ -96,17 +90,17 @@
         $(function () {
             $("#category-select").val(${pVO.postSort}).prop("selected", true);
             if (${boardcat=="free"}) {
-                $(".free").addClass("btn-primary").removeClass("btn-outline-primary");
-                $(".ask").addClass("btn-outline-primary").removeClass("btn-primary");
-                $(".tip").addClass("btn-outline-primary").removeClass("btn-primary");
+                $(".free").addClass("btn-secondary").removeClass("btn-outline-secondary");
+                $(".ask").addClass("btn-outline-secondary").removeClass("btn-secondary");
+                $(".tip").addClass("btn-outline-secondary").removeClass("btn-secondary");
             } else if (${boardcat=="ask"}) {
-                $(".ask").addClass("btn-primary").removeClass("btn-outline-primary");
-                $(".free").addClass("btn-outline-primary").removeClass("btn-primary");
-                $(".tip").addClass("btn-outline-primary").removeClass("btn-primary");
+                $(".ask").addClass("btn-secondary").removeClass("btn-outline-secondary");
+                $(".free").addClass("btn-outline-secondary").removeClass("btn-secondary");
+                $(".tip").addClass("btn-outline-secondary").removeClass("btn-secondary");
             } else if (${boardcat=="tip"}) {
-                $(".tip").addClass("btn-primary").removeClass("btn-outline-primary");
-                $(".ask").addClass("btn-outline-primary").removeClass("btn-primary");
-                $(".free").addClass("btn-outline-primary").removeClass("btn-primary");
+                $(".tip").addClass("btn-secondary").removeClass("btn-outline-secondary");
+                $(".ask").addClass("btn-outline-secondary").removeClass("btn-secondary");
+                $(".free").addClass("btn-outline-secondary").removeClass("btn-secondary");
             }
             $('#category-select').val(${pVO.category});
             $('#category-select').change(function () {
@@ -124,68 +118,77 @@
         });
     </script>
 </head>
-<body>
 <div class="container">
-    <div class="button-container">
-        <button class="btn btn-outline-primary free"
-                onclick="location.href='${pageContext.servletContext.contextPath}/board/free'">자유 게시판
-        </button>
-        <button class="btn btn-outline-primary ask"
-                onclick="location.href='${pageContext.servletContext.contextPath}/board/ask'">질문 게시판
-        </button>
-        <button class="btn btn-outline-primary tip"
-                onclick="location.href='${pageContext.servletContext.contextPath}/board/tip'">노하우 게시판
-        </button>
-    </div>
-    <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
-        <h2>
-            <c:if test="${boardcat=='free'}">
-                자유
-            </c:if>
-            <c:if test="${boardcat=='tip'}">
-                노하우
-            </c:if>
-            <c:if test="${boardcat=='ask'}">
-                질문
-            </c:if>
-            게시판</h2>
-        <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
-            <option value="1"
-                    <c:if test="${pVO.postSort==1}">
+    <div class="container-top">
+        <div class="container-head">
+            <div class="button-container">
+                <button class="btn btn-outline-secondary free" style="margin-right: 20px"
+                        onclick="location.href='${pageContext.servletContext.contextPath}/board/free'">자유 게시판
+                </button>
+                <button class="btn btn-outline-secondary ask" style="margin-right: 20px"
+                        onclick="location.href='${pageContext.servletContext.contextPath}/board/ask'">질문 게시판
+                </button>
+                <button class="btn btn-outline-secondary tip"
+                        onclick="location.href='${pageContext.servletContext.contextPath}/board/tip'">노하우 게시판
+                </button>
+            </div>
+        </div>
+        <div class="d-flex" style=" margin-top: 10px">
+            <div style="display: flex; text-align: center; align-items: center; margin: 0 auto">
+            <h2 class="main-title">
+                <c:if test="${boardcat=='free'}">
+                    자유
+                </c:if>
+                <c:if test="${boardcat=='tip'}">
+                    노하우
+                </c:if>
+                <c:if test="${boardcat=='ask'}">
+                    질문
+                </c:if>
+                게시판</h2>
+            </div>
+        </div >
+            <div style="display: flex; justify-content: space-between; padding: 20px">
+                <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+                    <option value="1"
+                            <c:if test="${pVO.postSort==1}">
+                                selected
+                            </c:if>
+                    >최신순
+                    </option>
+                    <option value="2" <c:if test="${pVO.postSort==2}">
                         selected
-                    </c:if>
-            >최신순
-            </option>
-            <option value="2" <c:if test="${pVO.postSort==2}">
-                selected
-            </c:if>>조회순
-            </option>
-            <option value="3" <c:if test="${pVO.postSort==3}">
-                selected
-            </c:if>>추천순
-            </option>
-        </select>
-    </div>
-    <select class="form-select" id="category-select" style="width: fit-content; margin-top: 50px" name="category">
-        <option value="0">카테고리</option>
-        <option value="1">IT/프로그래밍</option>
-        <option value="2">디자인</option>
-        <option value="3">영상음향</option>
-    </select>
+                    </c:if>>조회순
+                    </option>
+                    <option value="3" <c:if test="${pVO.postSort==3}">
+                        selected
+                    </c:if>>추천순
+                    </option>
+                </select>
+                <select class="form-select" id="category-select" style="width: fit-content;" name="category">
+                    <option value="0">카테고리</option>
+                    <option value="1">IT/프로그래밍</option>
+                    <option value="2">디자인</option>
+                    <option value="3">영상음향</option>
+                </select>
+            </div>
+        </div>
+
     <div class="board-container">
+        <div class="board-container-set">
         <div class="board-header">
             <div class="header-row">
                 <div id="num" style="width: 7%" class="list">번호</div>
                 <div id="title" style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목
                 </div>
                 <div id="user" style="width: 12%" class="list">작성자</div>
-                <div id="view" style="width: 7%" class="list">조회수</div>
-                <div id="comment" style="width: 7%" class="list">댓글</div>
-                <div id="like" style="width: 7%" class="list">좋아요</div>
+                <div id="view" style="width: 7%" class="list"><i class="fa-solid fa-eye" style="color: #0d0d0d;"></i></div>
+                <div id="comment" style="width: 7%" class="list"><i class="fa-regular fa-comment-dots" style="color: #0d0d0d;"></i></div>
+                <div id="like" style="width: 7%" class="list"><i class="fa-solid fa-heart" style="color: #0d0d0d;"></i></div>
                 <div id="date" style="width: 10%" class="list">게시일</div>
             </div>
         </div>
-        <hr>
+        <hr class="hr-styleset">
         <c:forEach items="${bVO}" var="bvo">
             <div class="board-row">
                 <div style="width: 7%" class="list">${bvo.postid}</div>
@@ -198,20 +201,20 @@
                 <div style="width: 7%" class="list">${bvo.likeAmount}</div>
                 <div style="width: 10%" class="list">${bvo.date}</div>
             </div>
-            <hr>
+            <hr class="hr-styleset">
         </c:forEach>
 
 
         <div class="search-container">
-            <form action="${pageContext.request.contextPath}/board/${boardcat}" class="d-flex" method="get">
-                <select class="form-select" style="width: fit-content" name="searchKey">
+            <form action="${pageContext.request.contextPath}/board/${boardcat}" class="d-flex board-bottom" method="get">
+                <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
                     <option value="all">전체</option>
                     <option value="title">제목</option>
                     <option value="author">작성자</option>
                     <option value="content">글내용</option>
                 </select>
-                <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요">
-                <input type="submit" class="btn btn-success" value="검색">
+                <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요" style="margin-right: 10px">
+                <input type="submit" class="btn btn-secondary" value="검색">
                 <input type="hidden" name="category" value="${pVO.category}"/>
             </form>
         </div>
@@ -277,9 +280,10 @@
                     </div>
                 </div>
             </div>
-            <a style="margin-top: 20px; color: white" href="${pageContext.servletContext.contextPath}/board/${boardcat}/write" class="btn-primary btn">글 작성</a>
+            <a style="margin-top: 20px; color: white" href="${pageContext.servletContext.contextPath}/board/${boardcat}/write" class="btn btn-secondary">글 작성</a>
         </div>
-
+        </div>
+        <div class="container_bottom"></div>
     </div>
 </div>
 </body>
