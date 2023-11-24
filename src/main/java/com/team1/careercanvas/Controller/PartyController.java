@@ -5,7 +5,6 @@ import com.team1.careercanvas.mapper.PartyMapper;
 import com.team1.careercanvas.vo.PartyVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +17,17 @@ public class PartyController {
     public PartyController(PartyMapper mapper) {
         this.mapper = mapper;
     }
+    //조석훈 시작
+    @GetMapping("/party/wanted")
+    public ModelAndView partywanted(HttpSession session){
+        //파티모집에서 필터할 것, 검색타입(제목, 내용, 파티명), 검색어, 소트(최신, 조회), 카테고리
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("party/party_wanted");
+
+        return mav;
+    }
+    //조석훈 끝
 
     // 정인식 작업
     @GetMapping("/myteam/main")

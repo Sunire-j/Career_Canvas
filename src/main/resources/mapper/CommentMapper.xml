@@ -34,4 +34,10 @@
         set target_parent = #{commentid}
         where commentid = #{commentid}
     </update>
+
+    <update id="replydel">
+        UPDATE comment
+        SET commentcontent = '삭제된 댓글입니다.', isdelete=1
+        WHERE commentid = #{param1};
+    </update>
 </mapper>

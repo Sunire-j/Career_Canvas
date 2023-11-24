@@ -1,226 +1,195 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="../header_footer/header.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
+    <title>게시판 목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
-        p {
-            margin: 0;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        ul {
-            margin: 0;
-        }
-
-        body {
-            margin: 0;
+        h2 {
+            float: left;
         }
 
         .container {
-            width: 1200px;
-        }
-
-        .mypartyvalue {
-            width: 100%;
-            height: 100px;
-            display: flex;
             text-align: center;
-            justify-content: center;
-            margin: 0 auto;
-            margin-top: 10px;
         }
 
-        .mypartylist {
-            width: 150px;
-        }
-
-        .partylisttitle {
-            font-size: 18px;
-            margin-bottom: -10px;
-        }
-
-        .partyvaluebutton1, .partyvaluebutton2 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-            width: 110px;
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .choisvalue {
-            margin: 0 auto;
-            width: fit-content;
-        }
-
-        /*-------------------------------------------------------------*/
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: auto;
-        }
-
-        /* 파티 목록 리스트 */
-        .party_list li {
-            margin-right: 20px;
-        }
-
-        .member_img {
-            width: 70px;
-            height: 70px;
-            border-radius: 20px;
-        }
-
-        .party_list_name {
-            text-align: center;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .new_party_btn {
-            border: none;
-            background: none;
-        }
-
-        section {
-            width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* 파티 목표 & 소개 */
-        .party_name {
-            margin: 0;
-            margin-top: 30px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 2.5em;
-            line-height: 100%;
-        }
-
-        /* 소개 글*/
-        .objective {
-            margin-top: 40px;
-            height: 120px;
-
-        }
-
-        .salutation {
-            margin-top: 30px;
-            height: 150px;
-        }
-
-        .salutation_name {
-            height: 40px;
-            width: 150px;
-            border-bottom: 2px solid #ddd;
-            font-size: 1.5em;
-            font-weight: 700;
-        }
-
-        .salutation_content {
-            margin-top: 10px;
-            margin-left: 10px;
-            font-size: 1.2em;
-            font-weight: bold;
-            color: grey;
-        }
-
-        /* 파티원 리스트 */
-        .member_list {
-            overflow: auto;
-        }
-
-        .member_list li {
-            margin-right: 20px;
-
-        }
-
-        .member_img {
-            width: 70px;
-            height: 70px;
-            border-radius: 20px;
-        }
-
-        .member_name {
-            text-align: center;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        /* 메모 */
-        .party_memo {
-            margin-top: 30px;
-        }
-
-        .memo_list {
-            width: 1000px;
-            margin: 0 auto;
-        }
-
-        .memo_list_box {
+        .button-container {
             margin-top: 20px;
         }
 
-        .postit {
-            box-sizing: border-box;
-            margin: 25px;
-            min-width: 280px;
-            max-width: 280px;
-            height: 250px;
-            padding: 35px 5px 5px 5px;
-            border: 1px solid #E8E8E8;
-            font-size: 17px;
-            text-align: center;
-            border-bottom-right-radius: 60px 5px;
-            position: relative;
+        .board-container {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .board-header {
+            font-weight: bold;
+        }
+
+        .board-row {
             display: flex;
-            flex-direction: column;
+            width: 100%;
         }
 
-        .postit:after {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            right: -0px;
-            bottom: 20px;
-            width: 200px;
-            height: 25px;
-            background: rgba(0, 0, 0, 0.2);
-            box-shadow: 2px 15px 5px rgba(0, 0, 0, 0.40);
-            transform: matrix(-1, -0.1, 0, 1, 0, 0);
+        .header-row {
+            display: flex;
         }
 
-        .yellow {
-            background: linear-gradient(135deg, #ffff88 81%, #ffff88 82%, #ffff88 82%, #ffffc6 100%);
-            margin: 15px 20px;
+        .search-container, .search-button {
+            display: inline-block;
         }
 
-        .memo_content {
-            min-height: 160px
+        .search-container {
+            background-color: #f2f2f2;
         }
 
-        .memo_item {
+        .search-box {
+            width: 150px;
+            display: inline-block;
+            color: #000;
+            font-size: 12px;
+            border: 1px solid #ddd;
+        }
+
+
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
             float: left;
+            padding: 6px 12px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
         }
     </style>
+
+    <script>
+        var selectedValue;
+        $('#category-select').val(${pVO.category});
+
+        $('#category-select').change(function () {
+            selectedValue = $(this).val();
+            if (selectedValue == 0) {
+                window.location.href = "${pageContext.servletContext.contextPath}/party/wanted/${boardcat}";
+            } else {
+                window.location.href = "${pageContext.servletContext.contextPath}/party/wanted/${boardcat}?category=" + selectedValue;
+            }
+        });
+        $("#postSort").change(function () {
+            var sortvalue = $(this).val();
+            window.location.href = "${pageContext.servletContext.contextPath}/party/wanted/${boardcat}?category=${pVO.category}&postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
+        });
+        })
+    </script>
 </head>
 <body>
-<main class="container">
+<div class="container">
     <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집"
-               onclick="changeValue(this)">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="changeValue(this)">
+        <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+        <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
     </div>
-</main>
+    <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
+        <h2>파티홍보 게시판</h2>
+        <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+            <option value="1"
+                    <c:if test="${pVO.postSort==1}">
+                        selected
+                    </c:if>
+            >최신순
+            </option>
+            <option value="2" <c:if test="${pVO.postSort==2}">
+                selected
+            </c:if>>조회순
+            </option>
+        </select>
+    </div>
+    <select class="form-select" id="category-select" style="width: fit-content; margin-top: 50px" name="category">
+        <option value="0">카테고리</option>
+        <option value="1">IT/프로그래밍</option>
+        <option value="2">디자인</option>
+        <option value="3">영상음향</option>
+    </select>
+    <div class="board-container">
+        <div class="board-header">
+            <div class="header-row">
+                <div id="num" style="width: 7%" class="list">번호</div>
+                <div id="title" style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목
+                </div>
+                <div id="user" style="width: 12%" class="list">작성자</div>
+                <div id="view" style="width: 7%" class="list">조회수</div>
+                <div id="comment" style="width: 7%" class="list">댓글</div>
+                <div id="like" style="width: 7%" class="list">좋아요</div>
+                <div id="date" style="width: 10%" class="list">게시일</div>
+            </div>
+        </div>
+        <hr>
+        <c:forEach items="${bVO}" var="bvo">
+            <div class="board-row">
+                <div style="width: 7%" class="list">${bvo.postid}</div>
+                <div style="width: 50%; text-align: left; padding: 0 20px;" class="list"><a
+                        href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">${bvo.posttitle}</a>
+                </div>
+                <div style="width: 12%" class="list">${bvo.user_userid}</div>
+                <div style="width: 7%" class="list">${bvo.views}</div>
+                <div style="width: 7%" class="list">${bvo.commentAmount}</div>
+                <div style="width: 7%" class="list">${bvo.likeAmount}</div>
+                <div style="width: 10%" class="list">${bvo.date}</div>
+            </div>
+            <hr>
+        </c:forEach>
+
+
+        <div class="search-container">
+            <form action="${pageContext.request.contextPath}/board/${boardcat}" class="d-flex" method="get">
+                <select class="form-select" style="width: fit-content" name="searchKey">
+                    <option value="all">전체</option>
+                    <option value="title">제목</option>
+                    <option value="author">작성자</option>
+                    <option value="content">글내용</option>
+                </select>
+                <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요">
+                <input type="submit" class="btn btn-success" value="검색">
+                <input type="hidden" name="category" value="${pVO.category}"/>
+            </form>
+        </div>
+
+        <div style="display: flex; justify-content: space-between">
+            <div></div>
+            <div>
+                <!-- 페이징 있어야하는 자리 -->
+            </div>
+            <a style="margin-top: 20px; color: white" href="${pageContext.servletContext.contextPath}/party/wanted/write" class="btn-primary btn">글 작성</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>

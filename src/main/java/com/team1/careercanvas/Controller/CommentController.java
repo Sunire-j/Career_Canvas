@@ -28,18 +28,6 @@ public class CommentController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
-        for (CommentVO rvo : replyList) {
-            LocalDateTime writeDate = LocalDateTime.parse(rvo.getDate(), dtf);
-            if (writeDate.getYear() != now.getYear()) {
-                rvo.setDate(writeDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            } else if (writeDate.getMonthValue() != now.getMonthValue()) {
-                rvo.setDate(writeDate.format(DateTimeFormatter.ofPattern("MM/dd")));
-            } else if (writeDate.getDayOfMonth() != now.getDayOfMonth()) {
-                rvo.setDate(writeDate.format(DateTimeFormatter.ofPattern("MM/dd")));
-            } else {
-                rvo.setDate(writeDate.format(DateTimeFormatter.ofPattern("HH:mm")));
-            }
-        }
         return replyList;
     }
 
@@ -65,4 +53,14 @@ public class CommentController {
         }
         return result;
     }
+
+    @PostMapping("/commentdel")
+    @ResponseBody
+    public int replydel(int commentid){
+        //댓글 삭제는 완전 삭제가 아님
+        //commentcontent와 isdelete를 업데이트해주는 방향
+        int result = commentMapper.replydel(commentid);
+        return result;
+    }
+
 }

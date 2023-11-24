@@ -219,8 +219,8 @@
 <body>
 <main class="container">
     <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="changeValue(this)">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="changeValue(this)">
+        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
     </div>
     <div class="mypartylist">
         <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>

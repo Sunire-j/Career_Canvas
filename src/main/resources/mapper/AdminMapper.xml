@@ -6,7 +6,7 @@
     </select>
 
     <select id="getBoardList" resultType="com.team1.careercanvas.vo.BoardVO">
-        select * from post
+        select * from post;
     </select>
 
     <select id="getReportList" resultType="com.team1.careercanvas.vo.ReportVO">

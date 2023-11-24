@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -26,11 +27,11 @@ public class BoardController {
 
     @GetMapping("/board/free")
     public ModelAndView boardFree(HttpSession session,
-            @RequestParam(required = false, defaultValue = "0") int category,
-            @RequestParam(required = false, defaultValue = "1") int page, // 했음
-            @RequestParam(required = false) String searchKey, // 했음
-            @RequestParam(required = false) String searchWord, // 했음
-            @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
+                                  @RequestParam(required = false, defaultValue = "0") int category,
+                                  @RequestParam(required = false, defaultValue = "1") int page, // 했음
+                                  @RequestParam(required = false) String searchKey, // 했음
+                                  @RequestParam(required = false) String searchWord, // 했음
+                                  @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
@@ -78,11 +79,11 @@ public class BoardController {
 
     @GetMapping("/board/ask")
     public ModelAndView boardAsk(HttpSession session,
-            @RequestParam(required = false, defaultValue = "0") int category,
-            @RequestParam(required = false, defaultValue = "1") int page, // 했음
-            @RequestParam(required = false) String searchKey, // 했음
-            @RequestParam(required = false) String searchWord, // 했음
-            @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
+                                 @RequestParam(required = false, defaultValue = "0") int category,
+                                 @RequestParam(required = false, defaultValue = "1") int page, // 했음
+                                 @RequestParam(required = false) String searchKey, // 했음
+                                 @RequestParam(required = false) String searchWord, // 했음
+                                 @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
@@ -130,11 +131,11 @@ public class BoardController {
 
     @GetMapping("/board/tip")
     public ModelAndView boardTip(HttpSession session,
-            @RequestParam(required = false, defaultValue = "0") int category,
-            @RequestParam(required = false, defaultValue = "1") int page, // 했음
-            @RequestParam(required = false) String searchKey, // 했음
-            @RequestParam(required = false) String searchWord, // 했음
-            @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
+                                 @RequestParam(required = false, defaultValue = "0") int category,
+                                 @RequestParam(required = false, defaultValue = "1") int page, // 했음
+                                 @RequestParam(required = false) String searchKey, // 했음
+                                 @RequestParam(required = false) String searchWord, // 했음
+                                 @RequestParam(required = false, defaultValue = "1") int postSort) {// 했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
@@ -213,7 +214,7 @@ public class BoardController {
 
     @PostMapping("/board/writeOk")
     public String boardwriteOk(HttpSession session,
-            BoardVO vo) {
+                               BoardVO vo) {
         vo.setUser_userid((String) session.getAttribute("LogId"));
         mapper.InsertNewPost(vo);
         System.out.println("완료");
@@ -225,6 +226,20 @@ public class BoardController {
             return "redirect:/board/tip";
         }
         return "404pages";
+    }
+
+    @PostMapping("/board/postdel")
+    @ResponseBody
+    public int deletePost(int postid) {
+        int result = mapper.deletePost(postid);
+        return result;
+    }
+
+    @PostMapping("/board/post_report")
+    @ResponseBody
+    public int reportPost(int target_id, String target_userid, String target_title, HttpSession session) {
+        int result = mapper.reportPost(target_id, target_userid, target_title, (String) session.getAttribute("LogId"));
+        return result;
     }
 
     // 정인식 작업 ( 글 내용보기 )

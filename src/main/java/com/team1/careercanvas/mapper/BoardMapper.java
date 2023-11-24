@@ -9,6 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
+
+    int deletePost(int postid);
     void InsertNewPost(BoardVO vo);
 
     List<BoardVO> getPost(PagingVO pvo);
@@ -17,6 +19,8 @@ public interface BoardMapper {
 
     int getPostAmount(PagingVO pvo);
     int getPostAmountWithCat(PagingVO pvo);
+
+    int reportPost(int target_id, String target_userid, String target_title, String userid);
 
     // 권혁준 작업
     List<BoardVO> getmyPost(String userId, String searchText);

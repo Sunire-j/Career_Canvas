@@ -139,6 +139,74 @@
                 display: none;
             }
         }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .board-container {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .board-header {
+            font-weight: bold;
+        }
+
+        .board-row {
+            display: flex;
+            width: 100%;
+        }
+
+        .header-row {
+            display: flex;
+        }
+
+        .search-container, .search-button {
+            display: inline-block;
+        }
+
+        .search-container {
+            background-color: #f2f2f2;
+        }
+
+        .search-box {
+            width: 150px;
+            display: inline-block;
+            color: #000;
+            font-size: 12px;
+            border: 1px solid #ddd;
+        }
+
+
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 6px 12px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
@@ -151,7 +219,7 @@
         <!-- Nav -->
         <nav class="nav_wrapper">
             <ul style="padding-left: 0px !important" class="navBar">
-                <li><a href="#">파티</a></li>
+                <li><a href="${pageContext.servletContext.contextPath}/party/wanted">파티</a></li>
                 <li><a href="popol.html">포트폴리오</a></li>
                 <li><a href="#">기업과제</a></li>
                 <li><a href="${pageContext.servletContext.contextPath}/board/free">커뮤니티</a></li>

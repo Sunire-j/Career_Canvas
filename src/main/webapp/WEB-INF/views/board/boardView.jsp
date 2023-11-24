@@ -19,7 +19,7 @@
         }
 
         article {
-            width: 1000px;
+            width: 1200px;
             margin: 0 auto;
             margin-top: 30PX;
         }
@@ -139,7 +139,7 @@
 
         .reply {
             padding: 10px;
-            width: 89%;
+            width: 85%;
             height: 50px;
         }
 
@@ -193,11 +193,19 @@
             <div class="content_text">
                 ${bvo.postcontent}
             </div>
-            <div class="content_recommend" style="width: 100%; display : flex; justify-content: space-between; align-items: center">
+            <div class="content_recommend"
+                 style="width: 100%; display : flex; justify-content: space-between; align-items: center">
                 <div></div>
                 <a style="color: white" href="${pageContext.servletContext.contextPath}/board/like?no=${bvo.postid}"
                    class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a>
-                <a style="height: fit-content" class=" btn btn-outline-danger btn-sm">신고</a>
+                <div class="d-flex">
+                    <c:if test="${LogStatus=='Y'}">
+                    <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="report_post">신고</a>
+                    </c:if>
+                    <c:if test="${LogId==bvo.user_userid}">
+                        <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">삭제</a>
+                    </c:if>
+                </div>
             </div>
         </div>
         <div>
@@ -229,24 +237,27 @@
                             var comment = result[i];
                             var marginLeft = comment.depth == 1 ? '70px' : '10px';
                             var htmltag = '<li style="margin-left: ' + marginLeft + '"><div class="comment_list_content"><img src = ${pageContext.servletContext.contextPath}/upload' + comment.profileimg + ' class="list_img"><a href ="${pageContext.servletContext.contextPath}/profile/portfolio?uid=' + comment.user_userid + '" "class="comment_writer">';
-                            htmltag += comment.username + '</a> &nbsp<div class="comment_date">' + comment.date + '</div><div class="reply_content"><div class="reply">' + comment.commentcontent;
+                            htmltag += comment.username + '</a> &nbsp<div style="font-size: 12px" class="comment_date">(' + comment.date + ')</div><div class="reply_content"><div class="reply">' + comment.commentcontent;
                             htmltag += '</div><div class="reply_btn">';
-                            htmltag+='<input type="hidden" id="commentidForReply" value="'+comment.commentid+'"/>'
+                            htmltag += '<input type="hidden" id="commentidForReply" value="' + comment.commentid + '"/>'
                             if (comment.depth == 0) {
-                                htmltag += '<div type="button" style="margin-right: 10px" id="replyreply"  class="btn btn-outline-secondary btn-sm comment_reply">답글</div>';
+                                htmltag += '<div style="margin-right: 10px" id="replyreply"  class="btn btn-outline-secondary btn-sm">답글</div>';
+                            }
+                            if(${LogStatus=='Y'}){
+                                htmltag+='<div style="margin-right: 10px" id="reply_report" class="btn btn-outline-danger btn-sm">신고</div>';
                             }
                             if ('${LogId}' == comment.user_userid) {
-                                htmltag += '<div type="button"  class="btn btn-outline-danger btn-sm comment_del">삭제</div>';
+                                htmltag += '<div class="btn btn-outline-danger btn-sm" id="comment_del">삭제</div>';
                             }
                             if (comment.isdelete == 1) {
-                                htmltag = '<li><div class="comment_list_content"><img src = "#" class="list_img"><div class="comment_writer">';
-                                htmltag += comment.user_userid + '</div><div class="comment_date">' + comment.date + '</div><div class="reply_content"><div class="reply">' + comment.commentcontent;
+                                htmltag = '<li style="margin-left: ' + marginLeft + '"><div class="comment_list_content"><div class="comment_writer">';
+                                htmltag += '</div><div style="font-size: 12px" class="comment_date">('+comment.date + ')</div><div class="reply_content"><div class="reply">' + comment.commentcontent;
                                 htmltag += '</div><div class="reply_btn">';
                             }
                             htmltag += '</div></li>';
                             var commentBlock = $(htmltag);
                             $(".comment_list_real").append(commentBlock);
-                            if(${LogStatus!='Y'}){
+                            if (${LogStatus!='Y'}) {
                                 $("#replyreply").remove();
                             }
                         }
@@ -257,43 +268,64 @@
             $(function () {
                 commentList();
 
-                $(".comment_list_real").on('click','#replyreply',function(){
+                $(".comment_list_real").on('click', '#replyreply', function () {
                     var contentdiv = $(this).parent().parent().parent().parent(); //여기 뒤에 답글 폼 붙여야함.
                     var target_parent = $(this).parent().find('input[type="hidden"]').val();
                     var post_id = ${bvo.postid};
-                    var replyform=$(
-                        '<div class= "reply-form" style="margin: 5px; width: 100%;">'+
-                        '<form id = "reply-reply" style="display: flex; ">'+
-                        '<div style="width: 20%"></div>'+
-                        '<textarea class="comment_content" id="reply-comment" placeholder="욕설, 비방, 비아냥, 음란, 사행성, 스팸, 광고 댓글은 필터링 또는 삭제됩니다." style="resize:none; width: 70%"></textarea>'+
-                        '<input type="hidden" name="postid" value="'+post_id+'">'+
-                        '<input type="hidden" name="target_parent" value="'+target_parent+'" >'+
-                        '<button id="replyreplybtn" class="btn btn-secondary comment_write_ok">댓글 등록</button>'+
+                    var replyform = $(
+                        '<div class= "reply-form" style="margin: 5px; width: 100%;">' +
+                        '<form id = "reply-reply" style="display: flex; ">' +
+                        '<div style="width: 20%"></div>' +
+                        '<textarea class="comment_content" id="reply-comment" placeholder="욕설, 비방, 비아냥, 음란, 사행성, 스팸, 광고 댓글은 필터링 또는 삭제됩니다." style="resize:none; width: 70%"></textarea>' +
+                        '<input type="hidden" name="postid" value="' + post_id + '">' +
+                        '<input type="hidden" name="target_parent" value="' + target_parent + '" >' +
+                        '<button id="replyreplybtn" class="btn btn-secondary comment_write_ok">댓글 등록</button>' +
                         '</form>' +
                         '</div>'
                     );
                     $('.reply-form').remove();
                     contentdiv.after(replyform);
-                    $("#reply-reply").on('submit',function(){
+                    $("#reply-reply").on('submit', function () {
                         event.preventDefault();
-                       if($("#reply-comment").val()==""){
-                           alert('답글 내용을 입력 후 시도해주세요');
-                           return false;
-                       }
-                       $.ajax({
-                          url: "${pageContext.servletContext.contextPath}/commentWriteHead",
-                           data:{
-                              content:$("#reply-comment").val(),
-                               target_parent:target_parent,
-                               postid : post_id
-                           },
-                           type:'post',
-                           success:function(result){//리절트는 결국 들어갔냐 안들어갔냐임
-                              console.log(result);
-                               commentList();
-                           }
-                       });
+                        if ($("#reply-comment").val() == "") {
+                            alert('답글 내용을 입력 후 시도해주세요');
+                            return false;
+                        }
+                        $.ajax({
+                            url: "${pageContext.servletContext.contextPath}/commentWriteHead",
+                            data: {
+                                content: $("#reply-comment").val(),
+                                target_parent: target_parent,
+                                postid: post_id
+                            },
+                            type: 'post',
+                            success: function (result) {//리절트는 결국 들어갔냐 안들어갔냐임
+                                console.log(result);
+                                commentList();
+                            }
+                        });
                     });
+                });
+
+                $(".comment_list_real").on('click','#comment_del',function () {
+                    console.log(123);
+                    var del_target = $(this).parent().find('input[type="hidden"]').val();
+                    if (confirm("정말 댓글을 삭제하시겠습니까?")) {
+                        $.ajax({
+                            url: "${pageContext.servletContext.contextPath}/commentdel",
+                            data: {
+                                commentid: del_target
+                            },
+                            type: 'post',
+                            success: function (r) {
+                                alert("삭제되었습니다.");
+                                commentList();
+                            },
+                            error: function (e) {
+                                console.log(e.responseText);
+                            }
+                        });
+                    }
                 });
 
                 $(".comment_write_ok").on('click', function () {
@@ -311,11 +343,66 @@
                         type: 'post',
                         success: function (result) {
                             commentList();
+                            $(".comment_content").val("");
                         },
                         error: function (error) {
                             console.log(error.responseText);
                         }
                     });
+                });
+
+                $("#del_post").on('click',function(){
+                    if(confirm("정말 글을 삭제하시겠습니까?")){
+                        var target_id = ${bvo.postid};
+                        var boardcategory = ${bvo.boardcategory};
+                        $.ajax({
+                            url : "${pageContext.servletContext.contextPath}/board/postdel",
+                            data:{
+                                postid : target_id
+                            },
+                            type:'post',
+                            success:function(result){
+                                alert("삭제되었습니다.");
+                                var url="${pageContext.servletContext.contextPath}/board";
+                                var target="";
+                                if(boardcategory==0){
+                                    target="free";
+                                }else if(boardcategory==1){
+                                    target="ask";
+                                }else{
+                                    target="tip";
+                                }
+                                alert("url");
+                                location.href="${pageContext.servletContext.contextPath}/board/"+target
+                            },
+                            error:function(error){
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
+                });
+                $("#report_post").on('click',function(){
+                    if(confirm("정말 글을 신고하시겠습니까?")){
+                        $.ajax({
+                           url : "${pageContext.servletContext.contextPath}/board/post_report",
+                            data:{
+                               target_id:${bvo.postid},
+                                target_userid:'${bvo.user_userid}',
+                                target_title:'${bvo.posttitle}'
+                            },
+                            type:'post',
+                            success:function(result){
+                               if(result>0){
+                                   alert("신고 되었습니다.");
+                               }
+                            },
+                            error:function(error){
+                               console.log(error.responseText);
+                            }
+
+                        });
+                    }
+
                 });
             });
         </script>

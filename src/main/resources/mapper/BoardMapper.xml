@@ -122,6 +122,15 @@
         limit #{onePageRecord} offset #{offsetPoint}
     </select>
 
+    <delete id="deletePost">
+        delete from post where postid=#{param1}
+    </delete>
+
+    <insert id="reportPost">
+        insert into report(reporttype, targetid, user_userid, title, userid)
+        values('board', #{param1}, #{param4}, #{param3}, #{param2});
+    </insert>
+
     <!--  정인식 작업 ( 글 내용 보기 )  -->
     <select id="SelectBoardView" resultType="com.team1.careercanvas.vo.BoardVO">
         select *
