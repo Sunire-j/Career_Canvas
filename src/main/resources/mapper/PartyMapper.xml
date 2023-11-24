@@ -2,18 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team1.careercanvas.mapper.PartyMapper">
     <select id="getmyParty" resultType="com.team1.careercanvas.vo.PartyVO">
-        select p.partyid as partyid, p.partyname as partyname, p.partycomment as partycomment, p.user_userid as user_userid
+        select p.partyid      as partyid,
+               p.partyname    as partyname,
+               p.partycomment as partycomment,
+               p.user_userid  as user_userid
         from party p
-        left join partymember m on p.partyid = m.party_partyid
+                 left join partymember m on p.partyid = m.party_partyid
         where m.user_userid = #{param1};
     </select>
+
     <select id="SelectPartyList" resultType="com.team1.careercanvas.vo.PartyVO">
-        select * from party
-        where user_userid=#{param1};
+        select *
+        from party p
+        join partymember m
+        on p.partyid = m.party_partyid and m.user_userid = #{param1};
     </select>
 
     <select id="myteamSelect" resultType="com.team1.careercanvas.vo.PartyVO">
-        select * from party
-        where partyid=#{param1};
+        select *
+        from party
+        where partyid = #{param1};
     </select>
+
+    <select id="SelectMemberList" resultType="com.team1.careercanvas.vo.UserVO">
+        select *
+        from user
+                 join partymember
+                      on partymember.user_userid = user.userid
+        where partymember.party_partyid = #{param1}
+    </select>
+
+    <select id="SelectMemoListView" resultType="com.team1.careercanvas.vo.MemoVO">
+        select partymemo.party_partyid as party_partyid,
+               partymemo.user_userid as user_userid,
+               partymemo.partymemocontent as partymemocontent,
+               partymemo.partymemo as partymemo,
+               partymemo.datetime as datetime,
+               user.username as username
+        from partymemo join user on partymemo.user_userid = user.userid
+        where party_partyid = #{param1}
+        order by datetime desc;
+    </select>
+
+    <insert id="InsertMemo">
+        insert into partymemo(party_partyid, partymemocontent, user_userid)
+        VALUES (#{param1}, #{param2}, #{param3});
+    </insert>
+
+    <delete id="DeleteMemo">
+        delete from partymemo where partymemo = #{param1};
+    </delete>
 </mapper>

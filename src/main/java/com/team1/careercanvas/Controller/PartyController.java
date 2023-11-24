@@ -2,9 +2,14 @@ package com.team1.careercanvas.Controller;
 
 
 import com.team1.careercanvas.mapper.PartyMapper;
+import com.team1.careercanvas.vo.MemoVO;
 import com.team1.careercanvas.vo.PartyVO;
+import com.team1.careercanvas.vo.UserVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -42,15 +47,53 @@ public class PartyController {
             return mav;
         }
         List<PartyVO> vo = mapper.SelectPartyList(logId);
+        PartyVO myteamView = mapper.myteamSelect(vo.get(0).getPartyid());
+        List<UserVO> memberList = mapper.SelectMemberList(vo.get(0).getPartyid());
+        List<MemoVO> memoListView = mapper.SelectMemoListView(vo.get(0).getPartyid());
+        mav.addObject("myteamView", myteamView);
+        mav.addObject("memberList", memberList);
+        mav.addObject("memoListView", memoListView);
         mav.addObject("pvo",vo);
+        mav.addObject("tempno",vo.get(0).getPartyid());
         mav.setViewName("myteam/myteam_main");
         return mav;
     }
     // 정인식 작업 ( 파티 정보 출력 )
     @GetMapping("/myteamView")
-    public PartyVO myteamView(int no){
-        PartyVO myteamView = mapper.myteamSelect(no);
-
+    @ResponseBody
+    public PartyVO myteamView(@RequestParam("no") int partyid){
+        PartyVO myteamView = mapper.myteamSelect(partyid);
         return myteamView;
     }
+    @GetMapping("/memberList")
+    @ResponseBody
+    public List<UserVO> memberList(@RequestParam("no") int partyid){
+        List<UserVO> memberList = mapper.SelectMemberList(partyid);
+        return memberList;
+    }
+    @GetMapping("/memoListView")
+    @ResponseBody
+    public List<MemoVO> memoListView(@RequestParam("no") int partyid){
+        List<MemoVO> memoListView = mapper.SelectMemoListView(partyid);
+        return memoListView;
+    }
+    @PostMapping("/memoWriteOK")
+    @ResponseBody
+    public int memoWriteOK(@RequestParam("no") int partyid,
+                              @RequestParam("content") String content,
+                              HttpSession session){
+        System.out.println("!!"+partyid+", "+content);
+        String logId = (String) session.getAttribute("LogId");
+           int a =  mapper.InsertMemo(partyid, content, logId);
+        return a;
+    }
+
+    @PostMapping("/memoDeleteOk")
+    @ResponseBody
+    public int memoDeleteOk(@RequestParam("target") int target){
+        System.out.println("aa");
+       int a = mapper.DeleteMemo(target);
+       return a;
+    }
+
 }
