@@ -72,7 +72,6 @@
     </script>
     <style>
         /* All */
-
         * {
             padding: 0;
             margin: 0;
