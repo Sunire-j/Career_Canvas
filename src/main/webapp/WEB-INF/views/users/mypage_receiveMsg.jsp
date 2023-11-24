@@ -306,7 +306,21 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <!-- ajax View -->
+      <!-- 검색창 -->
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/myReceiveMsg"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">

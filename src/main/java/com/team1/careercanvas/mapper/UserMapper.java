@@ -2,6 +2,7 @@ package com.team1.careercanvas.mapper;
 
 import com.team1.careercanvas.vo.MessageVO;
 import com.team1.careercanvas.vo.PagingVO;
+import com.team1.careercanvas.vo.PofolVO;
 import com.team1.careercanvas.vo.SubmitSubjectVO;
 import com.team1.careercanvas.vo.UserVO;
 
@@ -50,14 +51,18 @@ public interface UserMapper {
 
     void updateMypageWithoutPwd(String nickName, String tel, String comment, String userid);
 
-    List<MessageVO> getSendMsg(String LogId);
+    List<MessageVO> getSendMsg(String LogId, String searchWord);
 
-    List<MessageVO> getReceiveMsg(String LogId);
+    List<MessageVO> getReceiveMsg(String LogId, String searchWord);
 
-    List<SubmitSubjectVO> getSubmitSubjectSolo(String LogId);
+    List<SubmitSubjectVO> getSubmitSubjectSolo(String LogId, String searchWord);
 
-    List<SubmitSubjectVO> getSubmitSubjectTeam(String LogId);
+    int getSubjectSoloAmount(String LogId, String searchWord);
 
-    int getPofolAmount(String LogId);
+    List<SubmitSubjectVO> getSubmitSubjectTeam(String LogId, PagingVO pVO);
+
+    int getPofolAmount(String LogId, PagingVO pVO);
+
+    void pofolWrite(String LogId, String title, String content, String category);
 
 }

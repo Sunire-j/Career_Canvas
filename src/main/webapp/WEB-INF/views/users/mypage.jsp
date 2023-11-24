@@ -217,9 +217,8 @@ file="../header_footer/header.jspf"%>
       }
       .ajaxContent {
         width: 50%;
-        justify-content: center;
         margin-top: 80px;
-        display: flex;
+        text-align: center;
       }
       .ajaxView_wrapper {
         width: 75%;
@@ -302,54 +301,78 @@ file="../header_footer/header.jspf"%>
         </ul>
       </div>
 
-      
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
-        <c:forEach var="pVO" items="${list}">
+        <c:forEach var="list" items="${list}">
           <div class="ajaxContent">
             <a
               href="#"
               style="border: solid 1px #ddd; width: 220px; height: 170px"
-              ><img src="/img/bbb.png" alt=""
+              ><img
+                src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}"
+                alt=""
             /></a>
             <div>
-              <a href="#"><p>${pVO.portfoliotitle}</p></a>
+              <a href="#"><p>${list.portfoliotitle}</p></a>
             </div>
           </div>
         </c:forEach>
       </div>
       <!-- 페이징 -->
-      <div class="paging" style="width: 50%; margin: 0 auto; text-align: center;">
-        <c:forEach var ="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
-          <c:if test="${i <= pVO.totalPage}">
-            <c:choose>
-            <c:when test="${i != pVO.page}">
-              <button class="btn btn-outline-primary" onclick="location.href='?page=${i}'
-              <c:if test="${pVO.searchText != ''}">
-                +'&searchText=${pVO.searchText}'
-</c:if>
-              ">${i}</button>
-            </c:when>
-            <c:otherwise>
-              <strong class="btn btn-outline-primary" style="font-weight:  bold;">${i}</strong>
-            </c:otherwise>
-          </c:choose>
+      <div style="width: 60%; margin: 0 auto">
+        <ul style="display: flex; justify-content: center; align-items: center">
+          <c:if test="${pVO.page == 1}">
+            <li><</li>
           </c:if>
-        </c:forEach>
-        <c:if test="${pVO.page < pVO.totalPage}">
-                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+          <c:if test="${pVO.page > 1}">
+            <li>
+              <a
+                href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
+                ><</a
+              >
+            </li>
+          </c:if>
 
-                        <c:if test="${pVO.searchWord!=''}">
-                                +'&searchWord=${pVO.searchWord}'
-                        </c:if>
-                                ">>
-                        </button>
-                    </c:if>
-                    <!-- 글쓰기 -->
-                    <input type="button" value="글쓰기"onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'">
+          <c:forEach
+            var="p"
+            begin="${pVO.startPage}"
+            end="${pVO.page + pVO.onePageCount -1}"
+          >
+            <c:if test="${p<=pVO.totalPage}">
+              <li>
+                <a
+                  href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}"
+                  ><button
+                    type="submit"
+                    class="btn btn-outline-primary"
+                    style="margin: 10px"
+                  >
+                    ${p}
+                  </button></a
+                >
+              </li>
+            </c:if>
+          </c:forEach>
+
+          <c:if test="${pVO.page == pVO.totalPage}">
+            <li>></li>
+          </c:if>
+          <c:if test="${pVO.page < pVO.totalPage}">
+            <li>
+              <a
+                href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page + 1}"
+                >></a
+              >
+            </li>
+          </c:if>
+        </ul>
       </div>
-      
-      
+      <!-- 글쓰기 -->
+      <input
+        type="button"
+        value="글쓰기"
+        onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
+      />
 
       <!-- search -->
       <form
@@ -361,7 +384,7 @@ file="../header_footer/header.jspf"%>
         <input
           type="text"
           class="form-control"
-          name="searchText"
+          name="searchWord"
           placeholder="Search"
         />
         <button class="btn btn-success" type="submit">Go</button>

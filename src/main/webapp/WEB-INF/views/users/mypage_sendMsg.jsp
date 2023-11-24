@@ -253,7 +253,7 @@ file="../header_footer/header.jspf"%>
               <a href="${pageContext.servletContext.contextPath}/mypage">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
-              <a href="mypage_edit">
+              <a href="${pageContext.servletContext.contextPath}/mypage_edit">
                 <input
                   type="button"
                   class="btn btn-outline-primary"
@@ -276,8 +276,6 @@ file="../header_footer/header.jspf"%>
         </div>
       </div>
 
-      <!-- Center -->
-      <!-- ajax -->
       <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
           <li class="myPofol menu" id="myPofol">
@@ -306,8 +304,21 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <!-- ajax View -->
-      <!-- ajax View -->
+      <!-- 검색창 -->
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">
           <button class="btn btn-outline-primary sendMsg">보낸 쪽지함</button>

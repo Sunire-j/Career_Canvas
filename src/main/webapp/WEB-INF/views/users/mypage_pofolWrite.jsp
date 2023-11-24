@@ -204,10 +204,11 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
       <h3 style="margin-bottom: 30px">포트폴리오 작성</h3>
       <form
         method="post"
-        action="${pageContext.servletContext.contextPath}/board/writeOk"
+        action="${pageContext.servletContext.contextPath}/mypage/myPofol/writeOk"
         class="needs-validation writeform"
         novalidate
       >
+        <input type="hidden" id="content" name="postcontent" />
         <input
           type="text"
           style="width: 40%"

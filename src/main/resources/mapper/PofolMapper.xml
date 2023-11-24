@@ -4,16 +4,20 @@
 	<select id="getPofol" resultType="com.team1.careercanvas.vo.PofolVO">
         select portfoliotitle, imgsrc
         from portpolio
-        <if test="#{param2} == ''">
-            where user_userid = #{param1};
+        where user_userid = #{searchKey}
+        <if test="#{searchWord} != ''">
+        and portfoliotitle like concat('%',#{searchWord},'%')
         </if>
-        <if test="#{param2} != ''">
-            where user_userid = #{param1}
-            and portfoliotitle like concat('%',#{param2},'%');
-        </if>
+        limit #{onePageRecord} offset #{offsetPoint};
     </select>
-
-	
+	<select id="getPofolCount" resultType="Integer">
+		select count(portfoliotitle)
+		from portpolio
+		where user_userid = #{searchKey}
+		<if test="{searchWord} != ''">
+			and portfoliotitle like concat('%',#{searchWord},'%');
+		</if>
+	</select>
 	<!-- 김효준 작업 -->
 	<select id="getPofolInfo" resultType="com.team1.careercanvas.vo.PofolVO">
 		select * from portpolio
