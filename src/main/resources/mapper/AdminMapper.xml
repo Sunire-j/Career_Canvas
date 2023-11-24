@@ -2,21 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team1.careercanvas.mapper.AdminMapper">
     <select id="getUserProfile" resultType="com.team1.careercanvas.vo.UserVO">
-        select userid, date_format(date, '%y-%m-%d') date from user where usertype=0 limit 10 offset 0
+        select userid, date_format(date, '%y-%m-%d') date, username
+        from user
+        where usertype=0 limit 10
+        offset 0
+    </select>
+
+    <select id="getCompanyProfile" resultType="com.team1.careercanvas.vo.UserVO">
+        select userid, date_format(date, '%y-%m-%d') date, username
+        from user
+        where usertype=1 limit 10
+        offset 0
     </select>
 
     <select id="getBoardList" resultType="com.team1.careercanvas.vo.BoardVO">
-        select * from post;
+        select *
+        from post
     </select>
 
     <select id="getReportList" resultType="com.team1.careercanvas.vo.ReportVO">
-        select reportid, user_userid, reason, reporttype, title, userid, targetid from report
+        select reportid, user_userid, reason, reporttype, title, userid, targetid
+        from report
     </select>
 
     <select id="getAdminName" resultType="String">
-        select username from user where userid=#{param1}
+        select username
+        from user
+        where userid = #{param1}
     </select>
 
-    <select id="getDeleteList">
+    <select id="getDeleteList" resultType="com.team1.careercanvas.vo.SubjectVO">
+        select subjectid, subjecttitle, user_userid, date_format(date, '%y-%m-%d') date
+        from subject
+    </select>
+
+    <delete id="deleteAssignment">
+        delete
+        from subject
+        where subjectid = #{param1}
+    </delete>
+
+    <delete id="deleteBoard">
+        delete
+        from post
+        where postid = #{param1}
+    </delete>
+
+    <delete id="deleteReport">
+        delete
+        from report
+        where targetid = #{param1}
+    </delete>
+
+    <delete id="deleteUser">
+        delete
+        from user
+        where userid = #{param1}
+    </delete>
+
+    <update id="changeUsername">
+        update user
+        set username = #{param2}
+        where userid = #{param1}
+    </update>
+
+    <select id="getWriterUser" resultType="String">
+        select user_userid
+        from post
+        where postid = #{param1}
+    </select>
+
+    <select id="reporterUser" resultType="String">
+        select userid
+        from report
+        where targetid = #{param1}
     </select>
 </mapper>

@@ -10,9 +10,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function boardView(){
+        $(function () {
+            $(".forevent").on('click', "#deletion", function () {
+                var del_target = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/report/delete?targetid=" + del_target;
+            });
 
-        }
+            $(".forevent").on('click', "#dismiss", function () {
+                var dis_target = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/report/dismiss?targetid=" + dis_target;
+            });
+            // 부모속성,    이벤트이름, 실제로 클릭 된 자식, 이벤트 발생 시 호출함수
+            $(".forevent").on('click', "#deletionUser", function () {
+                var target_id = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/report/delete/user?target_id=" + target_id
+            });
+        });
     </script>
     <style>
         #sideBar {
@@ -65,8 +78,9 @@
 <div style="display:flex;">
     <div id="sideBar">
         <div style="text-align: center;">
-            <h2>관리자 ${name}</h2>
-            <a href="" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
+            <h4>관리자 ${name}</h4>
+            <a href="${pageContext.servletContext.contextPath}/"
+               style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
         <h3>회원관리</h3>
@@ -99,21 +113,25 @@
                 <th>처분</th>
             </tr>
             <c:forEach var="rvo" items="${rVO}">
-            <tr>
-                <td>${rvo.reportid}</td>
-                <td>${rvo.user_userid}</td>
-                <td>${rvo.reporttype}</td>
-                <td>${rvo.title}</td>
-                <td>${rvo.userid}</td>
-                <td>
-                    <button type="button" class="btn btn-info" onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}'">이동</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger">탈퇴</button>
-                    <button type="button" class="btn btn-danger">삭제</button>
-                    <button type="button" class="btn btn-success">기각</button>
-                </td>
-            </tr>
+                <tr class="forevent">
+                    <td>${rvo.reportid}</td>
+                    <td>${rvo.user_userid}</td>
+                    <td>${rvo.reporttype}</td>
+                    <td>${rvo.title}</td>
+                    <td>${rvo.userid}</td>
+                    <td>
+                        <button type="button" class="btn btn-info"
+                                onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}'">이동
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" id="deletionUser" title="${rvo.targetid}">탈퇴
+                        </button>
+                        <button type="button" class="btn btn-danger" id="deletion" title="${rvo.targetid}">삭제
+                        </button>
+                        <button type="button" class="btn btn-success" id="dismiss" title="${rvo.targetid}">기각</button>
+                    </td>
+                </tr>
             </c:forEach>
         </table>
         <div class="pagination-container">

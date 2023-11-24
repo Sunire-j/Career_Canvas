@@ -9,6 +9,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function () {
+            $(".forevent").on('click', "#deletion", function () {
+                var del_target = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/board/delete?postid=" + del_target;
+            });
+
+            $(".forevent").on('click', "#userDeletion", function () {
+                var post_id = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/board/delete/user?postid=" + post_id;
+            });
+        });
+    </script>
     <style>
         #sideBar {
             width: 250px;
@@ -60,8 +73,9 @@
 <div style="display:flex;">
     <div id="sideBar">
         <div style="text-align: center;">
-            <h2>관리자 ${name}</h2>
-            <a href="" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
+            <h4>관리자 ${name}</h4>
+            <a href="${pageContext.servletContext.contextPath}/"
+               style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
         <h3>회원관리</h3>
@@ -92,17 +106,21 @@
                 <th>처분</th>
             </tr>
             <c:forEach var="bvo" items="${bVO}">
-                <tr>
+                <tr class="forevent">
                     <td>${bvo.postid}</td>
                     <td>${bvo.category}</td>
                     <td>${bvo.posttitle}</td>
                     <td>
                         대기중
+                        <button type="button" class="btn btn-info"
+                                onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}'">
+                            이동
+                        </button>
                         <button type="button" class="btn btn-info" onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}')">이동</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger">강제삭제</button>
-                        <button type="button" class="btn btn-danger">강제탈퇴</button>
+                        <button type="button" class="btn btn-danger" id="deletion" title="${bvo.postid}">강제삭제</button>
+                        <button type="button" class="btn btn-danger" id="userDeletion" title="${bvo.postid}">강제탈퇴</button>
                     </td>
                 </tr>
             </c:forEach>

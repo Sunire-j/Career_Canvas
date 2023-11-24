@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-
+        $(function () {
+            $("#accept").on('click', function () {
+                var del_target = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/subject/delete?subjectid=" + del_target;
+            })
+        });
     </script>
     <style>
         #sideBar {
@@ -53,8 +58,9 @@
         .pagination {
             display: inline-block;
         }
-        .btn{
-            color:white;
+
+        .btn {
+            color: white;
         }
     </style>
 </head>
@@ -62,10 +68,10 @@
 <div style="display:flex;">
     <div id="sideBar">
         <div style="text-align: center;">
-            <h2>관리자 OOO</h2>
-            <a href="" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
+            <h4>관리자 ${name}</h4>
+            <a href="${pageContext.servletContext.contextPath}/" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
-        <hr />
+        <hr/>
         <h3>회원관리</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/member"> 일반회원관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/company"> 기업회원관리 </a>
@@ -90,52 +96,26 @@
                 <th>번호</th>
                 <th>기업ID</th>
                 <th>과제글제목</th>
-                <th>등록일자</th>
+                <th>신청일자</th>
                 <th>승인여부</th>
                 <th>처분</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>asdgsdfg</td>
-                <td>웹페이지 제작</td>
-                <td>2023-11-16</td>
-                <td>
-                    대기중
-                    <button type="button" class="btn btn-info">사유</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary">승인</button>
-                    <button type="button" class="btn btn-danger">거절</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>asdgsdfg</td>
-                <td>웹페이지 제작</td>
-                <td>2023-11-16</td>
-                <td>
-                    대기중
-                    <button type="button" class="btn btn-info">사유</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary">승인</button>
-                    <button type="button" class="btn btn-danger">거절</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>asdgsdfg</td>
-                <td>웹페이지 제작</td>
-                <td>2023-11-16</td>
-                <td>
-                    대기중
-                    <button type="button" class="btn btn-info">사유</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary">승인</button>
-                    <button type="button" class="btn btn-danger">거절</button>
-                </td>
-            </tr>
+            <c:forEach var="svo" items="${sVO}">
+                <tr>
+                    <td>${svo.subjectid}</td>
+                    <td>${svo.user_userid}</td>
+                    <td>${svo.subjecttitle}</td>
+                    <td>${svo.date}</td>
+                    <td>
+                        대기중
+                        <button type="button" class="btn btn-info">사유</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" id="accept" title="${svo.subjectid}">승인</button>
+                        <button type="button" class="btn btn-danger">거절</button>
+                    </td>
+                </tr>
+            </c:forEach>
         </table>
         <div class="pagination-container">
             <div class="pagination">
