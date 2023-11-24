@@ -61,6 +61,10 @@
             overflow: auto;
         }
 
+        li {
+            float: left;
+        }
+
         /* 파티 목록 리스트 */
         .party_list li{
             margin-right: 20px;
@@ -156,62 +160,201 @@
             margin: 25px;
             min-width: 280px;
             max-width: 280px;
-            height:250px;
-            padding: 35px 5px 5px 5px;
-            border:1px solid #E8E8E8;
-            font-size:17px;
-            text-align:center;
+            height: 250px;
+            padding: 0 5px 5px 5px;
+            border: 1px solid #E8E8E8;
+            font-size: 17px;
+            text-align: center;
             border-bottom-right-radius: 60px 5px;
-            position:relative;
+            position: relative;
             display: flex;
             flex-direction: column;
         }
-        .postit:after{
+
+        .postit:after {
             content: "";
-            position:absolute;
-            z-index:-1;
-            right:-0px; bottom:20px;
-            width:200px;
+            position: absolute;
+            z-index: -1;
+            right: -0px;
+            bottom: 20px;
+            width: 200px;
             height: 25px;
             background: rgba(0, 0, 0, 0.2);
-            box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
+            box-shadow: 2px 15px 5px rgba(0, 0, 0, 0.40);
             transform: matrix(-1, -0.1, 0, 1, 0, 0);
         }
-        .yellow{
-            background: linear-gradient(135deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%);
+
+        .yellow {
+            background: linear-gradient(135deg, #ffff88 81%, #ffff88 82%, #ffff88 82%, #ffffc6 100%);
             margin: 15px 20px;
         }
-        .memo_content{
+
+        .memo_content {
             min-height: 160px
         }
         .memo_item{
             float: left;
         }
+
+        /* 메모 글 작성 버튼 */
+        .memoWrite_btn{
+            background-color: transparent;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .memoWrite_btn>span{
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .salutation_memo{
+            height: 40px;
+            width: 970px;
+            border-bottom: 2px solid #ddd;
+            font-size: 1.5em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #memoWriteForm{
+            width: 268px;
+            height: 160px;
+            max-height: 160px;
+            resize: none;
+            background-color: #ffff88;
+            border: none;
+        }
+        .memo_write_ok_btn, .memo_delete_btn{
+            background-color: transparent;
+            border: none;
+        }
     </style>
     <script>
-        $(function(){
-            $(".party_list_btn").click(function() {
-                var no = ${vo.partyid};
-                var partyInfo=$(
-                    "<p class='party_name'>"+vo.partyname+"</p>"+
-                    "<div class='objective'>파티 목표</div>"+
-                    "<div class='salutation_content'>"+partygoal+"</div></div>"+
-                    "<div class='salutation'><div class='salutation_name'>파티 소개</div>"+
-                    "<div class='salutation_content'>"+partycomment+"</div></div>"
-                );
+        function loadMemo(no){
+            $("memo_list").empty();
+            $.ajax({
+                url: "${pageContext.servletContext.contextPath}/memoListView",
+                type: "GET",
+                data: {
+                    no: no
+                }, success: function (result) {
+                    var memo = "";
+                    $(result).each(function (i, r) {
+                        memo += "<li class='memo_item'><div class='memo'><div class='postit yellow'>";
+                        if(r.user_userid=="${LogId}"||${myteamView.user_userid==LogId}){
+                            memo += "<button class='memo_delete_btn' title='"+r.partymemo+"' id='memo_delete_btn'><i class='fa-solid fa-minus' style='float: right; padding: 5px'></i></button>";
+                        }else{
+                            memo += "<div style='height:27px;'></div>";
+                        }
+                        memo += "<p class='memo_content'>" + r.partymemocontent + "</p>";
+                        memo += "<div className='memo_writer'>작성자 : " + r.username + "</div>";
+                        memo += "<p>" + r.datetime + "</p></div></div></li>";
+                    });
+                    $("#memo_list").html(memo);
+                }, error: function (error) {
+                    console.log(error.responseText);
+                }
+            });
+        }
+        $(function () {
+            var no=${tempno};
+            loadMemo(no);
+            console.log(${tempno});
+            $(".party_list_btn").click(function () {
+                no = $(this).attr('title');
                 $.ajax({
                     url: "${pageContext.servletContext.contextPath}/myteamView",
                     type: "GET",
                     data: {
-                        no:no
+                        no: no
                     },
-                    success: function (result) {
-                        console.log(result);
-                        $(".teamView").append(partyInfo);
+                    success: function (r) {
+                        console.log(r);
+                        $("#party_name").html(r.partyname)
+                        $("#salutation_content").html(r.partygoal)
+                        $("#comment_content").html(r.partycomment)
+
+                        //$(".teamView").append(partyInfo);
                     }, error: function (error) {
                         console.log(error.responseText);
                     }
                 });
+                $.ajax({
+                    url: "${pageContext.servletContext.contextPath}/memberList",
+                    type: "GET",
+                    data: {
+                        no: no
+                    },
+                    success: function (r) {
+                        var member = "";
+                        $(r).each(function (i, result) {
+                            member += "<li> <img src='${pageContext.servletContext.contextPath}/upload" + result.profileimg + "' class='member_img'>";
+                            member += "<div class='member_name'>" + result.username+ "</div></li>";
+                        });
+                        $("#member_list").html(member);
+                    }, error: function (error) {
+                        console.log(error.responseText);
+                    }
+                });
+                loadMemo(no);
+            });
+            $(".memoWrite_btn").click(function () {
+                var temp = document.getElementById("memo_list");
+                var memonum=temp.childElementCount;
+                if(memonum>=6){
+                    alert("메모는 6개까지만 작성가능합니다.\n메모 삭제 후 다시 시도해주세요.");
+                    return false;
+                }
+                var memoWriteForm = $(
+                    "<li class='memo_item'><div class='memo'><div class='postit yellow'><form id='frm'>"+
+                    "<button type='submit' class='memo_write_ok_btn'  id='memo_write_ok_btn' style='float: right;'><i class='fa-solid fa-plus' style='float: right; padding: 5px'></i></button>"+
+                    "<textarea class='memo_content' id='memoWriteForm' maxlength='80' placeholder='50자 미만의 내용을 입력하세요.'></textarea>"+
+                    "</form></div></div></li>"
+                )
+                $("#memo_list").prepend(memoWriteForm);
+            });
+
+            $('#memo_list').on('submit','#frm', function(e) {
+                event.preventDefault();
+                var content = $("#memoWriteForm").val();
+                if($("#memoWriteForm").val()=="") {
+                    alert('글 내용을 입력해 주세요.');
+                    return false;
+                }
+
+                $.ajax({
+                    url: "${pageContext.servletContext.contextPath}/memoWriteOK",
+                    type: "POST",
+                    data: {
+                        no: no,
+                        content: content
+                    }, success: function (result) {
+                        loadMemo(no);
+                        event.preventDefault();
+                    }, error: function (error) {
+                        console.log(error.responseText);
+                    }
+                });
+            });
+            $('#memo_list').on('click', '#memo_delete_btn', function (){
+                var target = $(this).attr('title');
+                if(confirm("메모를 삭제하시겠습니까?")){
+                    $.ajax({
+                        url:"${pageContext.servletContext.contextPath}/memoDeleteOk",
+                        type:"POST",
+                        data:{
+                            target: target
+                        },success: function (result) {
+                            loadMemo(no);
+                            event.preventDefault();
+                        }, error: function (error) {
+                            console.log(error.responseText);
+                        }
+                    });
+                }
             });
         });
     </script>
@@ -227,15 +370,13 @@
         <hr>
     </div>
     <ul class="party_list">
-        <c:forEach items="${pvo}" var="pvo">
-            <a href="#" class="party_list_btn"><!-- 파티 프로필 링크 달아야 함 -->
-                <li style="float: left">
-                    <img src="profile.PNG" class="member_img">
-                    <div class="party_list_name">
-                        ${pvo.partyname}
-                    </div>
-                </li>
-            </a>
+        <c:forEach items="${pvo}" var="p">
+            <li title="${p.partyid}" class="party_list_btn">
+                <img src="profile.PNG" class="member_img">
+                <div class="party_list_name">
+                        ${p.partyname}
+                </div>
+            </li>
         </c:forEach>
         <li style="float: left">
             <button class="new_party_btn">
@@ -254,22 +395,22 @@
 
 <article>
     <section class="teamView">
-        <p class="party_name">Career Canvas</p>
+        <p class="party_name" id="party_name">${myteamView.partyname}</p>
 
         <div class="objective">
             <div class="salutation_name">
                 파티 목표
             </div>
-            <div class="salutation_content">
-                [기업과제] 구인구직 플랫폼
+            <div class="salutation_content" id="salutation_content">
+                ${myteamView.partygoal}
             </div>
         </div>
         <div class="salutation">
             <div class="salutation_name">
                 파티 소개
             </div>
-            <div class="salutation_content">
-                [기업과제] 구인구직 플랫폼을 제작하기 위한 파티입니다.
+            <div class="salutation_content" id="comment_content">
+                ${myteamView.partycomment}
             </div>
         </div>
         <div class="member_list_box">
@@ -277,82 +418,42 @@
                 파티원
             </div>
             <div class="salutation_content">
-                <ul class="member_list">
-                    <li style="float: left">
-                        <img src="profile.PNG" class="member_img">
-                        <div class="member_name">
-                            김**
-                        </div>
-                    </li>
-                    <li style="float: left">
-                        <img src="profile.PNG" class="member_img">
-                        <div class="member_name">
-                            박**
-                        </div>
-                    </li>
-                    <li style="float: left">
-                        <img src="profile.PNG" class="member_img">
-                        <div class="member_name">
-                            최**
-                        </div>
-                    </li>
+                <ul class="member_list" id="member_list">
+                    <c:forEach var="uvo" items="${memberList}">
+                        <li>
+                            <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}" class="member_img">
+                            <div class="member_name">
+                                    ${uvo.username}
+                            </div>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
         </div>
         <div class="party_memo">
-            <div class="salutation_name">
-                파티 메모
+            <div class="salutation_memo">
+                <div>파티 메모</div>
+                <button class="memoWrite_btn"><span>메모작성&nbsp</span><i class="fa-regular fa-pen-to-square"></i></button>
             </div>
             <div class="memo_list_box">
-                <ul class="memo_list">
-                    <li class="memo_item">
-                        <div class="memo">
-                            <div class="postit yellow">
-                                <p class="memo_content">11/20-11/26<br>OJT신청</p>
-                                <div class="memo_writer">작성자 : </div>
+                <ul class="memo_list" id="memo_list">
+                    <c:forEach var="memo" items="${memoListView}">
+                        <li class="memo_item">
+                            <div class="memo">
+                                <div class="postit yellow">
+                                    <c:if test="${LogId}==${memo.user_userid}">
+                                        <button class='memo_delete_btn'><i class='fa-solid fa-minus' style='float: right; padding: 5px'></i></button>
+                                    </c:if>
+                                    <c:if test="${LogId}!=${memo.user_userid}">
+                                        <div style='height:27px;'></div>
+                                    </c:if>
+                                    <p class="memo_content">${memo.partymemocontent}</p>
+                                    <div class="memo_writer">작성자 : ${memo.username}</div>
+                                    <p>${memo.datetime}</p>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="memo_item">
-                        <div class="memo">
-                            <div class="postit yellow">
-                                <p class="memo_content">11/24<br>중간점검</p>
-                                <div class="memo_writer">작성자 : </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="memo_item">
-                        <div class="memo">
-                            <div class="postit yellow">
-                                <p class="memo_content">11/12-11/17<br>프론트 구현</p>
-                                <div class="memo_writer">작성자 : </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="memo_item">
-                        <div class="memo">
-                            <div class="postit yellow">
-                                <p class="memo_content">11/6-11/10<br>프로젝트 설계</p>
-                                <div class="memo_writer">작성자 : </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="memo_item">
-                        <div class="memo">
-                            <div class="postit yellow">
-                                <p class="memo_content">열심히 해봅시다 화이팅</p>
-                                <div class="memo_writer">작성자 : </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="memo_item">
-                        <div class="memo">
-                            <div class="postit yellow">
-                                <p class="memo_content">아자아자 화이팅!</p>
-                                <div class="memo_writer">작성자 : </div>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </c:forEach>
                 </ul>
 
             </div>
