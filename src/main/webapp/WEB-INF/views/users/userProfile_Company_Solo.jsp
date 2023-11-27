@@ -217,10 +217,11 @@
             width: 300px;
             margin: 0 auto;
             margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .portfolio_category>button {
-            margin-left: 10px;
         }
 
         .portfolio_content,#content {
@@ -258,7 +259,14 @@
             text-align: center;
             padding: 5px 5px 5px 10px;
         }
-     
+        .solo_party{
+            display: flex;
+            justify-content : space-between;
+        }
+
+        .solo_party_btn{
+
+        }
 
         /*페이지*/
         .portfolio_paging {
@@ -291,10 +299,8 @@
                     <div class="info_count">
                         <div>포트폴리오</div>
                         <div>${pCount}</div>
-                        <div>팀</div>
-                        <div>c</div>
                         <div>기업과제</div>
-                        <div>c</div>
+                        <div>${sCount}</div>
                     </div>
                 </div>
             </div>
@@ -309,21 +315,33 @@
             <div class="portfolio">
                 <div class="portfolio_category">
                     <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
-                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject?uid=${uVO.userid}'">기업과제</button>
+                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">기업과제</button>
                 </div>
-                <div>
-                    <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
-                    <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
+                <div class="solo_party">
+                    <div></div>
+                    <div class="solo_party_btn">
+                        <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
+                        <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
+                    </div>
+                    <div></div>
                 </div>
                 <div class="portfolio_content">
                     <ul class="content">
                         <c:forEach items="${sVO}" var="svo">
                         <li>
                             <div>
-                                <img src="${pageContext.servletContext.contextPath}/upload${svo.imgsrc}" class="portfolio_img">
+                                <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}" class="portfolio_img">
                                 <div class="content_info">
                                     <div class="content_category">
-                                        ${svo.subjectid}
+                                        <c:if test="${svo.category==1}">
+                                            IT/프로그래밍
+                                        </c:if>
+                                        <c:if test="${svo.category==2}">
+                                            디자인
+                                        </c:if>
+                                        <c:if test="${svo.category==3}">
+                                            영상음향
+                                        </c:if>
                                     </div>
                                     <div class="content_title">
                                         ${svo.subjecttitle}
