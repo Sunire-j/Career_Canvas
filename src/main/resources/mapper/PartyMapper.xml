@@ -52,4 +52,11 @@
     <delete id="DeleteMemo">
         delete from partymemo where partymemo = #{param1};
     </delete>
+
+    <!--조석훈 시작-->
+    <select id="getMineParty" resultType="com.team1.careercanvas.vo.PartyVO">
+        select * from party where user_userid=#{param1};
+    </select>
+
+    <!--조석훈 끝-->
 </mapper>

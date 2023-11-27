@@ -32,6 +32,21 @@ public class PartyController {
 
         return mav;
     }
+
+    @GetMapping("/party/wanted/write")
+    public ModelAndView partywantedwrite(HttpSession session){
+        ModelAndView mav = new ModelAndView();
+        //로그인한 아이디가 파티장인지 여부 확인 겸 파티장인 파티목록 확인
+        List<PartyVO> partylist = mapper.getMineParty((String)session.getAttribute("LogId"));
+        if(partylist.size()==0){
+            mav.addObject("msg", "파티장만 글 작성이 가능합니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        mav.addObject("pVO", partylist);
+        mav.setViewName("party/party_wanted_write");
+        return mav;
+    }
     //조석훈 끝
 
     // 정인식 작업

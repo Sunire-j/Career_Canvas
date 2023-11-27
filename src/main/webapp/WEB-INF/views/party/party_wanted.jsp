@@ -92,29 +92,19 @@
     </style>
 
     <script>
-        var selectedValue;
-        $('#category-select').val(${pVO.category});
-
-        $('#category-select').change(function () {
-            selectedValue = $(this).val();
-            if (selectedValue == 0) {
-                window.location.href = "${pageContext.servletContext.contextPath}/party/wanted/${boardcat}";
-            } else {
-                window.location.href = "${pageContext.servletContext.contextPath}/party/wanted/${boardcat}?category=" + selectedValue;
-            }
-        });
         $("#postSort").change(function () {
             var sortvalue = $(this).val();
             window.location.href = "${pageContext.servletContext.contextPath}/party/wanted/${boardcat}?category=${pVO.category}&postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
         });
-        })
     </script>
 </head>
 <body>
 <div class="container">
     <div class="mypartyvalue">
-        <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+        <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집"
+               onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+        <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티"
+               onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
     </div>
     <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
         <h2>파티홍보 게시판</h2>
@@ -131,22 +121,16 @@
             </option>
         </select>
     </div>
-    <select class="form-select" id="category-select" style="width: fit-content; margin-top: 50px" name="category">
-        <option value="0">카테고리</option>
-        <option value="1">IT/프로그래밍</option>
-        <option value="2">디자인</option>
-        <option value="3">영상음향</option>
-    </select>
     <div class="board-container">
         <div class="board-header">
             <div class="header-row">
                 <div id="num" style="width: 7%" class="list">번호</div>
-                <div id="title" style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목
+                <div id="partyid" style="width: 17%">파티명</div>
+                <div id="title" style="width: 40%; text-align: left; padding: 0 20px;" class="list">제목
                 </div>
                 <div id="user" style="width: 12%" class="list">작성자</div>
                 <div id="view" style="width: 7%" class="list">조회수</div>
                 <div id="comment" style="width: 7%" class="list">댓글</div>
-                <div id="like" style="width: 7%" class="list">좋아요</div>
                 <div id="date" style="width: 10%" class="list">게시일</div>
             </div>
         </div>
@@ -186,7 +170,8 @@
             <div>
                 <!-- 페이징 있어야하는 자리 -->
             </div>
-            <a style="margin-top: 20px; color: white" href="${pageContext.servletContext.contextPath}/party/wanted/write" class="btn-primary btn">글 작성</a>
+            <a style="margin-top: 20px; color: white"
+               href="${pageContext.servletContext.contextPath}/party/wanted/write" class="btn-primary btn">글 작성</a>
         </div>
     </div>
 </div>
