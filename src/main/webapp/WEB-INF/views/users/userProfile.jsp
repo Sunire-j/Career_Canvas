@@ -291,10 +291,8 @@
                     <div class="info_count">
                         <div>포트폴리오</div>
                         <div>${pCount}</div>
-                        <div>팀</div>
-                        <div>c</div>
                         <div>기업과제</div>
-                        <div>c</div>
+                        <div>${sCount}</div>
                     </div>
                 </div>
             </div>
@@ -309,7 +307,7 @@
             <div class="portfolio">
                 <div class="portfolio_category">
                     <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
-                    <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject?uid=${uVO.userid}'">기업과제</button>
+                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">기업과제</button>
                 </div>
                 <div class="portfolio_content">
                     <ul class="content">
