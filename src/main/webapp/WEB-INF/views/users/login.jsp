@@ -23,22 +23,41 @@
             });
         });
     </script>
+    <style>
+        .login-container{
+            margin: 0 auto;
+            margin-top: 120px;
+            border: 1px solid #73351F;
+            background: #F2F2F2;
+            width: 600px;
+            padding: 0px 50px 50px 50px;
+        }
+        h3{
+            padding-top: 30px;
+            padding-bottom: 20px;
+        }
+        input::placeholder{
+            color:#D9C8A9;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h3 style="text-align: center; margin-top: 150px">Career Canvas 로그인</h3>
+    <div class="login-container">
+    <h3 style="text-align: center;">Career Canvas 로그인</h3>
+        <hr style="width: 100%; color:#73351F; opacity: 7%">
     <form method="post" action="${pageContext.servletContext.contextPath}/loginOk" id="findidForm" name="findidForm">
         <%--가입 유형 선택--%>
-        <div style="display: flex; height: 40px; font-weight: bold; margin: 50px auto 0;width: 40%">
+        <div style="display: flex; height: 40px; font-weight: bold; margin: 30px auto 0;width: 40%">
             <input type="radio" name="usertype" value="0" checked/>
             <p style="margin-left: 10px; line-height: 40px">개인회원</p>
             <input type="radio" name="usertype" value="1" style="margin-left: 20px"/>
             <p style="margin-left: 10px; line-height: 40px">기업회원</p>
         </div>
-        <div style="width: 40%; margin: 10px auto 0;">
-            <label for="userid" class="form-label">아이디:</label>
-            <input type="text" class="form-control" id="userid" placeholder="아이디를 입력해주세요." name="userid">
-            <label for="pw" class="form-label mt-3">비밀번호:</label>
+        <div style="width: 70%; margin: 10px auto 0;">
+            <label for="userid" class="form-label">아이디</label>
+            <input type="text" class="form-control" id="userid" placeholder="아이디를 입력해주세요." name="userid" >
+            <label for="pw" class="form-label mt-3">비밀번호</label>
             <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해주세요." name="userpwd">
             <div class="mt-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex;   align-items: center;">
@@ -51,6 +70,7 @@
                 <input type="submit" class="btn btn-primary" value="로그인"/>
             </div>
         </div>
+    </div>
     </form>
 </div>
 
