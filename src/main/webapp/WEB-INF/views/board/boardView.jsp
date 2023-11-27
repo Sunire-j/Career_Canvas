@@ -278,7 +278,7 @@
                                 htmltag += '<div style="margin-right: 10px" id="replyreply"  class="btn btn-outline-secondary btn-sm">답글</div>';
                             }
                             if(${LogStatus=='Y'}){
-                                htmltag+='<div style="margin-right: 10px" id="reply_report" class="btn btn-outline-danger btn-sm">신고</div>';
+                                htmltag+='<div style="margin-right: 10px" id="reply_report" class="btn btn-outline-danger btn-sm report_comment">신고</div>';
                             }
                             if ('${LogId}' == comment.user_userid) {
                                 htmltag += '<div class="btn btn-outline-danger btn-sm" id="comment_del">삭제</div>';
@@ -426,9 +426,7 @@
                             },
                             type:'post',
                             success:function(result){
-                               if(result>0){
-                                   alert("신고 되었습니다.");
-                               }
+                               alert("신고되었습니다");
                             },
                             error:function(error){
                                console.log(error.responseText);
@@ -437,6 +435,29 @@
                         });
                     }
 
+                });
+
+                $(".comment_list_real").on('click','.report_comment',function(){
+                    if(confirm("정말 댓글을 신고하시겠습니까?")){
+                        //원글번호, 대상댓글번호는 미리 따놔야함
+                        var originpostid= ${bvo.postid};
+                        var targetid = $(this).parent().find('input[type="hidden"]').val();
+                        $.ajax({
+                            url:"${pageContext.servletContext.contextPath}/comment/report",
+                            data:{
+                                originpostid:originpostid,
+                                targetid:targetid
+                            },
+                            type:'post',
+                            success:function(result){
+                                console.log("신고됨");
+                                alert("신고되었습니다.");
+                            },
+                            error:function(error){
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
                 });
             });
         </script>

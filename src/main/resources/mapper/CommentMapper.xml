@@ -40,4 +40,18 @@
         SET commentcontent = '삭제된 댓글입니다.', isdelete=1
         WHERE commentid = #{param1};
     </update>
+
+    <select id="getWriter" resultType="String">
+        select user_userid
+        from comment
+        where commentid=#{param1};
+    </select>
+
+    <select id="getContent" resultType="String">
+        select commentcontent from comment where commentid=#{param1};
+    </select>
+    <insert id="replyReport">
+         insert into report(reporttype, targetid, user_userid, title, userid, originpostid)
+         values(#{reporttype}, #{targetid}, #{user_userid}, #{title}, #{userid}, #{originpostid});
+    </insert>
 </mapper>

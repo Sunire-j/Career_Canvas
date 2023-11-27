@@ -1,6 +1,7 @@
 package com.team1.careercanvas.mapper;
 
 import com.team1.careercanvas.vo.CommentVO;
+import com.team1.careercanvas.vo.ReportVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface CommentMapper {
     int replyInsert(CommentVO vo);
     void replyInsertTP(CommentVO vo);
     int replydel(int commentid);
+    String getWriter(int targetid);
+    String getContent(int targetid);
+    int replyReport(ReportVO rvo);
 }

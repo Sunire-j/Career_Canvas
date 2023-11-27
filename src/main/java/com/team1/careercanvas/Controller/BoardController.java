@@ -26,7 +26,6 @@ public class BoardController {
         this.mapper = mapper;
     }
 
-
     @GetMapping("/board/free")
     public ModelAndView boardFree(HttpSession session,
                                   @RequestParam(required = false, defaultValue = "0") int category,
@@ -36,6 +35,7 @@ public class BoardController {
                                   @RequestParam(required = false, defaultValue = "1") int postSort) {//했음
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
+        pvo.setOnePageRecord(20);
         pvo.setPage(page);
         pvo.setPostSort(postSort);
         pvo.setBoardcategory(0);

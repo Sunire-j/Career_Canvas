@@ -2,6 +2,7 @@ package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.CommentMapper;
 import com.team1.careercanvas.vo.CommentVO;
+import com.team1.careercanvas.vo.ReportVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,6 +61,33 @@ public class CommentController {
         //댓글 삭제는 완전 삭제가 아님
         //commentcontent와 isdelete를 업데이트해주는 방향
         int result = commentMapper.replydel(commentid);
+        return result;
+    }
+
+    @PostMapping("/comment/report")
+    @ResponseBody
+    public int replyReport(int originpostid, int targetid, HttpSession session){
+        //여기서 필요한 정보 : 댓글 내용 약간, 댓글 작성자, 신고자
+        //신고자:
+        String user_userid = (String) session.getAttribute("LogId");
+        //댓글작성자 : 쿼리로 뽑아야함
+        String userid = commentMapper.getWriter(targetid);
+        //댓글내용: 쿼리로 뽑아야함
+        String commentcontent = commentMapper.getContent(targetid);
+        if (commentcontent.length() > 40) {
+            commentcontent = commentcontent.substring(0, 40);
+        }
+        ReportVO rvo = new ReportVO();
+        rvo.setReporttype("comment");
+        rvo.setUser_userid(user_userid);
+        rvo.setUserid(userid);
+        rvo.setTitle(commentcontent);
+        rvo.setOriginpostid(originpostid);
+        rvo.setTargetid(targetid);
+
+        //db에 인설트 해줘야함
+        int result = commentMapper.replyReport(rvo);
+
         return result;
     }
 

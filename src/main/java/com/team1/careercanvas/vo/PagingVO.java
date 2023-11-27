@@ -22,6 +22,7 @@ public class PagingVO {
     private int postSort;
     private int boardcategory;
 
+
     public void setPage(int page) {
         this.page = page;
         offsetPoint = (page - 1) * onePageRecord;

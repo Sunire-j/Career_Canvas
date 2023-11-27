@@ -16,4 +16,5 @@ public class ReportVO {
     private String date;
     private String reason;
     private String userid;
+    private int originpostid;
 }
