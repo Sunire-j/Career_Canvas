@@ -133,7 +133,7 @@
             ).then(neweditor => {
                 editor=neweditor;
                 editor.model.document.on('change:data',()=>{
-                    document.querySelector('#content').value=editor.getData();
+                    document.querySelector('#wantedcontent').value=editor.getData();
                 });
             })
                 .catch(err => {
@@ -159,50 +159,36 @@
                 }
             });
 
-            $("#hashtag").on('input blur',function(){
-                if(this.checkValidity()){
-                    $(this).siblings('[data-feedback="patternMismatch"]').hide();
-                    $(this).removeClass('is-invalid').addClass('is-valid');
-                }else{
-                    $(this).removeClass('is-valid').addClass('is-invalid');
-                    $(this).siblings('[data-feedback="patternMismatch"]').show();
-
-                }
-            });
             $('form').on('submit', function(e) {
                 var editorContent = editor.getData();
                 if(!editorContent) {
                     e.preventDefault();
                     alert('글 내용을 입력해 주세요.');
+                    return false;
                 }
-
+                if($('#title').hasClass('is-invalid')){
+                    e.preventDefault();
+                    alert("제목이 정규직에 어긋납니다.");
+                    return false;
+                }
             });
-
-            $('.hashtag').on('change blur',function(){
-                if($(this).hasClass('is-invalid')){
-                    $(".submitbtn").prop('disabled',true);
-                }else{
-                    $(".submitbtn").prop('disabled',false);
-                }
-            })
         });
     </script>
 </head>
 <body>
 <div class="content">
     <h3 style="margin-bottom: 30px">파티홍보 게시판 작성</h3>
-    <form method="post" action="${pageContext.servletContext.contextPath}/board/writeOk" class="needs-validation writeform" novalidate>
-        <input type="hidden" id="content" name="postcontent">
-        <input type="hidden" name="boardcategory" value="${boardcat}"> <!-- 게시판 종류(0,1,2)등으로 처리 예정 -->
-        <input type="text" style="width: 40%" class="form-control" name="posttitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
+    <form method="post" action="${pageContext.servletContext.contextPath}/party/wanted/writeOk" class="needs-validation writeform" novalidate>
+        <input type="hidden" id="wantedcontent" name="wantedcontent">
+        <input type="text" style="width: 40%" class="form-control" name="wantedtitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
         <div class="invalid-feedback">
             제목을 입력해 주세요. (30자 이내)
         </div>
     <div style="padding: 20px 0">
         <div class="button-container">
-            <c:forEach var="pvo" items="${pVO}">
-                <label class="btn btn-outline-warning">
-                    <input type="radio" name="category" value="${pvo.partyid}">
+            <c:forEach var="pvo" items="${pVO}" varStatus="status">
+                <label class="btn   ${status.index == 0 ? 'btn-warning' : 'btn-outline-warning'}">
+                    <input type="radio" name="party_partyid" value="${pvo.partyid}" ${status.index == 0 ? 'checked' : ''}>
                     <span>${pvo.partyname}</span>
                 </label>
             </c:forEach>

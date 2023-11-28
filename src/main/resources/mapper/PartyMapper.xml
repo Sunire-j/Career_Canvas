@@ -58,5 +58,77 @@
         select * from party where user_userid=#{param1};
     </select>
 
+    <insert id="InsertWanted" parameterType="com.team1.careercanvas.vo.WantedVO">
+        insert into partywanted(wantedtitle, wantedcontent, party_partyid, user_userid)
+        values (#{wantedtitle}, #{wantedcontent}, #{party_partyid}, #{user_userid})
+    </insert>
+
+    <select id="GetWantedList" resultType="com.team1.careercanvas.vo.WantedVO">
+        select pw.wantedid as wantedid,
+               pw.user_userid as user_userid,
+               pw.date as date,
+               pw.view as view,
+               pw.wantedtitle as wantedtitle,
+               p.partyname as partyname
+        from partywanted pw
+        join party p on pw.party_partyid = p.partyid
+        <where>
+            <if test="searchKey == 'all'">
+                pw.wantedtitle like CONCAT('%', #{searchWord}, '%')
+                or pw.user_userid like CONCAT('%', #{searchWord}, '%')
+                or pw.wantedcontent like CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'title'">
+                pw.wantedtitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                pw.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                pw.wantedcontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'partyname'">
+        p.partyname like CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+
+        <choose>
+            <when test="postSort==1">
+                order by wantedid desc
+            </when>
+            <when test="postSort==2">
+                order by views desc, wantedid desc
+            </when>
+        </choose>
+
+        limit #{onePageRecord} offset #{offsetPoint}
+
+    </select>
+
+    <select id="getWantedListCount" resultType="Integer">
+        select count(wantedid)
+        from partywanted
+        join party p on party_partyid = p.partyid
+        <where>
+            <if test="searchKey == 'all'">
+                wantedtitle like CONCAT('%', #{searchWord}, '%')
+                or p.user_userid like CONCAT('%', #{searchWord}, '%')
+                or wantedcontent like CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'title'">
+                wantedtitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                p.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                wantedcontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'partyname'">
+                p.partyname like CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+    </select>
+
     <!--조석훈 끝-->
 </mapper>

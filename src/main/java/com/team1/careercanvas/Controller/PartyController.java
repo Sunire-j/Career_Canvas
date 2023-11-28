@@ -2,9 +2,7 @@ package com.team1.careercanvas.Controller;
 
 
 import com.team1.careercanvas.mapper.PartyMapper;
-import com.team1.careercanvas.vo.MemoVO;
-import com.team1.careercanvas.vo.PartyVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +22,28 @@ public class PartyController {
     }
     //조석훈 시작
     @GetMapping("/party/wanted")
-    public ModelAndView partywanted(HttpSession session){
+    public ModelAndView partywanted(HttpSession session,
+                                    @RequestParam(required = false, defaultValue = "1")int page,
+                                    @RequestParam(required = false)String searchWord,
+                                    @RequestParam(required = false)String searchKey,
+                                    @RequestParam(required = false, defaultValue = "1")int postSort){
         //파티모집에서 필터할 것, 검색타입(제목, 내용, 파티명), 검색어, 소트(최신, 조회), 카테고리
 
         ModelAndView mav = new ModelAndView();
+        PagingVO pvo = new PagingVO();
+
+        pvo.setOnePageRecord(10);
+        pvo.setPage(page);
+        if(searchWord!=null||searchWord!=""){
+            pvo.setSearchKey(searchKey);
+            pvo.setSearchWord(searchWord);
+        }
+        pvo.setPostSort(postSort);
+        pvo.setTotalRecord(mapper.getWantedListCount(pvo));
+        List<WantedVO> wvo = mapper.GetWantedList(pvo);
+
+        mav.addObject("wVO",wvo);
+        mav.addObject("pVO", pvo);
         mav.setViewName("party/party_wanted");
 
         return mav;
@@ -46,6 +62,14 @@ public class PartyController {
         mav.addObject("pVO", partylist);
         mav.setViewName("party/party_wanted_write");
         return mav;
+    }
+
+    @PostMapping("/party/wanted/writeOk")
+    public String wantedWriteOk(WantedVO wVO, HttpSession session){
+        wVO.setUser_userid((String) session.getAttribute("LogId"));
+        //준비 끝 db보내고 게시판으로 보내주면 됨.
+        mapper.InsertWanted(wVO);
+        return "redirect:/party/wanted";
     }
     //조석훈 끝
 

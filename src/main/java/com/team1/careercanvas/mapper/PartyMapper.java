@@ -1,8 +1,6 @@
 package com.team1.careercanvas.mapper;
 
-import com.team1.careercanvas.vo.MemoVO;
-import com.team1.careercanvas.vo.PartyVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,5 +17,10 @@ public interface PartyMapper {
 
     //조석훈 시작
     List<PartyVO> getMineParty(String userid);
+
+    void InsertWanted(WantedVO wVO);
+
+    List<WantedVO> GetWantedList(PagingVO pvo);
+    int getWantedListCount(PagingVO pvo);
     //조석훈 끝
 }

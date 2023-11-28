@@ -94,12 +94,12 @@
     <script>
         $("#postSort").change(function () {
             var sortvalue = $(this).val();
-            window.location.href = "${pageContext.servletContext.contextPath}/party/wanted/${boardcat}?category=${pVO.category}&postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
+            window.location.href = "${pageContext.servletContext.contextPath}/party/wanted?postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
         });
     </script>
 </head>
 <body>
-<div class="container">
+<div class="container" style="background-color: white; margin-top :30px;">
     <div class="mypartyvalue">
         <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집"
                onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
@@ -108,6 +108,8 @@
     </div>
     <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
         <h2>파티홍보 게시판</h2>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 20px">
         <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
             <option value="1"
                     <c:if test="${pVO.postSort==1}">
@@ -126,7 +128,7 @@
             <div class="header-row">
                 <div id="num" style="width: 7%" class="list">번호</div>
                 <div id="partyid" style="width: 17%">파티명</div>
-                <div id="title" style="width: 40%; text-align: left; padding: 0 20px;" class="list">제목
+                <div id="title" style="width: 47%; text-align: left; padding: 0 20px;" class="list">제목
                 </div>
                 <div id="user" style="width: 12%" class="list">작성자</div>
                 <div id="view" style="width: 7%" class="list">조회수</div>
@@ -135,16 +137,16 @@
             </div>
         </div>
         <hr>
-        <c:forEach items="${bVO}" var="bvo">
+        <c:forEach items="${wVO}" var="bvo">
             <div class="board-row">
-                <div style="width: 7%" class="list">${bvo.postid}</div>
-                <div style="width: 50%; text-align: left; padding: 0 20px;" class="list"><a
-                        href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">${bvo.posttitle}</a>
+                <div style="width: 7%" class="list">${bvo.wantedid}</div>
+                <div style="width: 17%">${bvo.partyname}</div>
+                <div style="width: 40%; text-align: left; padding: 0 20px;" class="list"><a
+                        href="${pageContext.servletContext.contextPath}/party/wanted/view?no=${bvo.wantedid}">${bvo.wantedtitle}</a>
                 </div>
                 <div style="width: 12%" class="list">${bvo.user_userid}</div>
-                <div style="width: 7%" class="list">${bvo.views}</div>
-                <div style="width: 7%" class="list">${bvo.commentAmount}</div>
-                <div style="width: 7%" class="list">${bvo.likeAmount}</div>
+                <div style="width: 7%" class="list">${bvo.view}</div>
+                <div style="width: 7%" class="list">댓글수못가져옴</div>
                 <div style="width: 10%" class="list">${bvo.date}</div>
             </div>
             <hr>
@@ -152,12 +154,13 @@
 
 
         <div class="search-container">
-            <form action="${pageContext.request.contextPath}/board/${boardcat}" class="d-flex" method="get">
+            <form action="${pageContext.request.contextPath}/party/wanted/" class="d-flex" method="get">
                 <select class="form-select" style="width: fit-content" name="searchKey">
                     <option value="all">전체</option>
                     <option value="title">제목</option>
                     <option value="author">작성자</option>
                     <option value="content">글내용</option>
+                    <option value="partyname">파티명</option>
                 </select>
                 <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요">
                 <input type="submit" class="btn btn-success" value="검색">
@@ -168,7 +171,56 @@
         <div style="display: flex; justify-content: space-between">
             <div></div>
             <div>
-                <!-- 페이징 있어야하는 자리 -->
+                <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                    <div class="pagination" style="display: flex">
+                        <div class="paging">
+                            <c:if test="${pVO.page > 1}">
+                                <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                                <c:if test="${pVO.searchWord!=''}">
+                                        +'&searchKey=${pVO.searchKey}'
+                                        +'&searchWord=${pVO.searchWord}'
+                                </c:if>
+                                <c:if test="${pVO.postSort!=''}">
+                                        +'&postSort=${pVO.postSort}'
+                                </c:if>
+                                        "><
+                                </button>
+                            </c:if>
+                            <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                                <c:if test="${i <= pVO.totalPage}">
+                                    <c:choose>
+                                        <c:when test="${i != pVO.page}">
+                                            <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                            <c:if test="${pVO.searchWord!=''}">
+                                                    +'&searchKey=${pVO.searchKey}'
+                                                    +'&searchWord=${pVO.searchWord}'
+                                            </c:if>
+                                            <c:if test="${pVO.postSort!=''}">
+                                                    +'&postSort=${pVO.postSort}'
+                                            </c:if>
+                                                    ">${i}</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+                            </c:forEach>
+                            <c:if test="${pVO.page < pVO.totalPage}">
+                                <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+                                <c:if test="${pVO.searchWord!=''}">
+                                        +'&searchKey=${pVO.searchKey}'
+                                        +'&searchWord=${pVO.searchWord}'
+                                </c:if>
+                                <c:if test="${pVO.postSort!=''}">
+                                        +'&postSort=${pVO.postSort}'
+                                </c:if>
+                                        ">>
+                                </button>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
             </div>
             <a style="margin-top: 20px; color: white"
                href="${pageContext.servletContext.contextPath}/party/wanted/write" class="btn-primary btn">글 작성</a>
