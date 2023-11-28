@@ -97,7 +97,7 @@
                 order by wantedid desc
             </when>
             <when test="postSort==2">
-                order by views desc, wantedid desc
+                order by view desc, wantedid desc
             </when>
         </choose>
 
