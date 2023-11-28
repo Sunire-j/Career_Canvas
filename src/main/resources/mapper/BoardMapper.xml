@@ -152,31 +152,36 @@
     <select id="getmyPost" resultType="com.team1.careercanvas.vo.BoardVO">
         select *
         from post
-        <if test="#{param2} == ''">
-            where user_userid = #{param1};
+        <if test="#{searchWord} == ''">
+            where user_userid = #{searchKey}
         </if>
-        <if test="#{param2} != ''">
-            where user_userid = #{param1}
-            and posttitle like concat('%',#{param2},'%');
+        <if test="#{searchWord} != ''">
+            where user_userid = #{searchKey}
+            and posttitle like concat('%',#{searchWord},'%')
         </if>
+        limit #{onePageRecord} offset #{offsetPoint};
     </select>
 
-    <select id="getmyComment" resultType="com.team1.careercanvas.vo.CommentVO">
+    <select id="getmyPostAmount" parameterType="com.team1.careercanvas.vo.PagingVO" resultType="Integer">
+        select count(postid)
+        from post
+        where user_userid = #{searchKey}
+    </select>
+
+    <select id="getmyComment" parameterType="com.team1.careercanvas.vo.PagingVO" resultType="com.team1.careercanvas.vo.CommentVO">
         select *
         from comment
-        <if test="#{param2} == ''">
-            where user_userid = #{param1};
+        where user_userid = #{searchKey}
+        <if test="#{searchWord != ''}">       
+            and commentcontent like concat('%', #{searchWord} ,'%')
         </if>
-        <if test="#{param2} != ''">
-            where user_userid = #{param1}
-            and commentcontent like concat('%',#{param2},'%');
-        </if>
+        limit #{onePageRecord} offset #{offsetPoint};
     </select>
 
     <select id="getmyCommentCount" resultType="Integer">
         select count(commentid)
         from comment
-        where user_userid = #{LogId};
+        where user_userid = #{searchKey};
     </select>
 
     <select id="CheckValid" resultType="Integer">

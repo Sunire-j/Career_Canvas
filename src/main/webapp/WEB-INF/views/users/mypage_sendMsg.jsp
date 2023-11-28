@@ -127,12 +127,12 @@ file="../header_footer/header.jspf"%>
 
       /* Mypage User Info */
       .userInfo_wrapper {
-        width: 75%;
+        width: 100%;
         margin: 0 auto;
         margin-top: 25px;
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
       }
       .userIntro {
         display: flex;
@@ -193,7 +193,7 @@ file="../header_footer/header.jspf"%>
       .ajaxMenu {
         display: flex;
         margin: 0 auto;
-        width: 65%;
+        width: 100%;
         justify-content: space-around;
         background-color: white;
         height: 50px;
@@ -236,6 +236,14 @@ file="../header_footer/header.jspf"%>
       .table tr:nth-child(5n + 3) {
         width: 40%;
       }
+      .paging {
+        display: flex;
+        justify-content: center;
+
+      }
+      .paging li {
+        margin: 0 20px;
+      }
     </style>
   </head>
   <body>
@@ -247,7 +255,7 @@ file="../header_footer/header.jspf"%>
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="/img/bbb.png" alt="" />
+          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div>
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage">
@@ -321,7 +329,7 @@ file="../header_footer/header.jspf"%>
       </form>
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">
-          <button class="btn btn-outline-primary sendMsg">보낸 쪽지함</button>
+          <button class="btn btn-outline-primary sendMsg" onclick="location.href='#'">보낸 쪽지함</button>
           <button
             class="btn btn-outline-primary receiveMsg"
             onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myReceiveMsg'"
@@ -351,6 +359,57 @@ file="../header_footer/header.jspf"%>
             </div>
           </tbody>
         </table>
+
+        <!-- 페이징 -->
+        <div style="margin: 0 auto;">
+          <ul class="paging">
+            <!-- 이전 -->
+            <c:if test="${pVO.page == 1}">
+              <li><input type="button" value="<" class="btn btn-outline-primary" disabled></li>
+            </c:if>
+            <c:if test="${pVO.page > 1}">
+              <li>
+                <a
+                  href="${pageContext.servletContext.contextPath}/mypage/mySendMsg?page=${pVO.page - 1}
+                   <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
+                >
+                <input type="button" value="<" class="btn btn-outline-primary">
+                </a>
+              </li>
+            </c:if>
+            <!-- 1,2,3,4,5 -->
+            <c:forEach
+              var="p"
+              begin="${pVO.startPage}"
+              end="${pVO.startPage + pVO.onePageCount - 1}"
+            >
+            <c:if test="${p <= pVO.totalPage}">
+              <li>
+              <a
+              href="${pageContext.servletContext.contextPath}/mypage/mySendMsg?page=${p}&searchWord=${pVO.searchWord}">
+              <input type="button" value="${p}" class="btn btn-outline-primary">
+            </a>
+          </li>
+          </c:if>
+            </c:forEach>
+
+            <!-- 다음 -->
+
+            <c:if test="${pVO.page == pVO.totalPage}">
+              <li><input type="button" value=">" class="btn btn-outline-primary" disabled></li>
+            </c:if>
+            <c:if test="${pVO.page < pVO.totalPage}">
+              <li>
+                <a
+                  href="${pageContext.servletContext.contextPath}/mypage/mySendMsg?page=${pVO.page + 1}"
+                >
+                <input type="button" value=">" class="btn btn-outline-primary">
+                </a>
+              </li>
+            </c:if>
+          </ul>
+        </div>
+
       </div>
     </main>
   </body>
