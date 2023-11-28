@@ -51,15 +51,21 @@ public interface UserMapper {
 
     void updateMypageWithoutPwd(String nickName, String tel, String comment, String userid);
 
-    List<MessageVO> getSendMsg(String LogId, String searchWord);
+    List<MessageVO> getSendMsg(PagingVO pVO);
 
-    List<MessageVO> getReceiveMsg(String LogId, String searchWord);
+    int getTotalSendMsg(PagingVO pVO);
 
-    List<SubmitSubjectVO> getSubmitSubjectSolo(String LogId, String searchWord);
+    List<MessageVO> getReceiveMsg(PagingVO pVO);
 
-    int getSubjectSoloAmount(String LogId, String searchWord);
+    int getTotalReceiveMsg(PagingVO pVO);
+
+    List<SubmitSubjectVO> getSubmitSubjectSolo(PagingVO pVO);
+
+    int getSubjectSoloAmount(PagingVO pVO);
 
     List<SubmitSubjectVO> getSubmitSubjectTeam(String LogId, PagingVO pVO);
+
+    int getSubjectTeamAmount(PagingVO pVO);
 
     int getPofolAmount(String LogId, PagingVO pVO);
 

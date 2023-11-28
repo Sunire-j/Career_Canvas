@@ -217,7 +217,7 @@ public class UserController {
             return "404pages";
         }
 
-        //파일저장시작
+        // 파일저장시작
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         String newFileName = companyno + extension;
         String projectDir = new File("").getAbsolutePath();
@@ -235,13 +235,13 @@ public class UserController {
             System.out.println("파일저장실패");
             return "404pages";
         }
-        //파일저장 끝
+        // 파일저장 끝
 
-        //db에 경로넣기
+        // db에 경로넣기
         String imgsrc = "/companyauth/" + newFileName;
 
         mapper.InsertAuthImg(imgsrc, companyno);
-        //db에 경로넣기 끝
+        // db에 경로넣기 끝
         // 이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
         return "users/biz-end";
     }
@@ -378,7 +378,10 @@ public class UserController {
             pVO.setSearchWord("");
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(4);
+        pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(pofolmapper.getPofolCount(pVO));
+
         List<PofolVO> list = new ArrayList<PofolVO>();
 
         list = pofolmapper.getPofol(pVO);
@@ -410,28 +413,35 @@ public class UserController {
     // 완료
     @GetMapping("mypage/myPost")
     public ModelAndView myPost(HttpSession session,
-            @RequestParam(required = false, defaultValue = "") String searchWord) {
+            PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             mav.setViewName("alert_page");
             return mav;
         }
-        System.out.println("로그아이디" + session.getAttribute("LogId"));
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(5);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(boardmapper.getmyPostAmount(pVO));
+
         List<BoardVO> bVO = new ArrayList<BoardVO>();
-        bVO = boardmapper.getmyPost((String) session.getAttribute("LogId"), searchWord);
+        bVO = boardmapper.getmyPost(pVO);
+        System.out.println(pVO.getTotalRecord());
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("pVO", pVO);
         mav.addObject("bVO", bVO);
         mav.addObject("uVO", uVO);
         mav.setViewName("users/mypage_post");
+        System.out.println(pVO);
         return mav;
     }
 
-    // 완료
     @GetMapping("mypage/myComment")
-    public ModelAndView myComment(HttpSession session,
-            @RequestParam(required = false, defaultValue = "") String searchWord,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView myComment(HttpSession session, PagingVO pVO) {
 
         ModelAndView mav = new ModelAndView();
         if (!session.getAttribute("LogStatus").equals("Y")) {
@@ -439,24 +449,28 @@ public class UserController {
             mav.setViewName("alert_page");
             return mav;
         }
-        PagingVO pVO = new PagingVO();
-        pVO.setPage(page);
 
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(5);
+        pVO.setTotalRecord(boardmapper.getmyCommentCount(pVO));
+        pVO.setPage(pVO.getPage());
         List<CommentVO> cVO = new ArrayList<CommentVO>();
-        pVO.setTotalRecord(boardmapper.getmyCommentCount((String) session.getAttribute("LogId")));
-        cVO = boardmapper.getmyComment((String) session.getAttribute("LogId"), searchWord);
+
+        cVO = boardmapper.getmyComment(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         mav.addObject("cVO", cVO);
         mav.addObject("uVO", uVO);
+        mav.addObject("pVO", pVO);
         mav.setViewName("users/mypage_comment");
         System.out.println(pVO);
         return mav;
     }
 
     @GetMapping("mypage/mySendMsg")
-    public ModelAndView sendMsg(HttpSession session,
-            @RequestParam(required = false, defaultValue = "") String searchWord,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView sendMsg(HttpSession session, PagingVO pVO) {
 
         ModelAndView mav = new ModelAndView();
         if (!session.getAttribute("LogStatus").equals("Y")) {
@@ -464,24 +478,27 @@ public class UserController {
             mav.setViewName("alert_page");
             return mav;
         }
-        PagingVO pVO = new PagingVO();
-        pVO.setPage(page);
-
-        List<MessageVO> mVO = new ArrayList<MessageVO>();
-        mVO = mapper.getSendMsg((String) session.getAttribute("LogId"), searchWord);
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(10);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getTotalSendMsg(pVO));
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-
-        mav.addObject("mVO", mVO);
+        List<MessageVO> mVO = new ArrayList<MessageVO>();
+        mVO = mapper.getSendMsg(pVO);
         mav.addObject("uVO", uVO);
+        mav.addObject("pVO", pVO);
+        mav.addObject("mVO", mVO);
+        System.out.println(pVO);
 
         mav.setViewName("/users/mypage_sendMsg");
         return mav;
     }
 
     @GetMapping("mypage/myReceiveMsg")
-    public ModelAndView receiveMsg(HttpSession session,
-            @RequestParam(required = false, defaultValue = "") String searchWord,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView receiveMsg(HttpSession session, PagingVO pVO) {
 
         ModelAndView mav = new ModelAndView();
         if (!session.getAttribute("LogStatus").equals("Y")) {
@@ -489,36 +506,45 @@ public class UserController {
             mav.setViewName("alert_page");
             return mav;
         }
-        PagingVO pVO = new PagingVO();
-        pVO.setPage(page);
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(10);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getTotalReceiveMsg(pVO));
+
         List<MessageVO> mVO = new ArrayList<MessageVO>();
-        mVO = mapper.getReceiveMsg((String) session.getAttribute("LogId"), searchWord);
+        mVO = mapper.getReceiveMsg(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
 
         mav.addObject("mVO", mVO);
         mav.addObject("uVO", uVO);
+        mav.addObject("pVO", pVO);
+        System.out.println(pVO);
 
         mav.setViewName("/users/mypage_receiveMsg");
         return mav;
     }
 
     @GetMapping("mypage/submitSubjectSolo")
-    public ModelAndView submitSubjectSolo(HttpSession session,
-            @RequestParam(required = false, defaultValue = "") String searchWord,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+    public ModelAndView submitSubjectSolo(HttpSession session, PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
-        PagingVO pVO = new PagingVO();
-        pVO.setPage(page);
-        System.out.println((String) session.getAttribute("LogId"));
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(4);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getSubjectSoloAmount(pVO));
 
-        pVO.setSearchWord(searchWord);
-
-        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectSolo((String) session.getAttribute("LogId"), searchWord);
+        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectSolo(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        pVO.setTotalRecord(mapper.getSubjectSoloAmount((String) session.getAttribute("LogId"), searchWord));
+        mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
-        System.out.println(sVO);
+
         System.out.println(pVO);
         mav.setViewName("/users/mypage_submitSubjectSolo");
         return mav;
@@ -527,13 +553,21 @@ public class UserController {
     @GetMapping("mypage/submitSubjectTeam")
     public ModelAndView submitSubjectTeam(HttpSession session, PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(4);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getSubjectTeamAmount(pVO));
 
         List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam((String) session.getAttribute("LogId"), pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
-        System.out.println(sVO.size());
         mav.setViewName("/users/mypage_submitSubjectTeam");
+        System.out.println(pVO);
         return mav;
     }
 }
