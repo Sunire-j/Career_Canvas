@@ -11,6 +11,7 @@ import java.util.List;
 public interface BoardMapper {
 
     int deletePost(int postid);
+
     void InsertNewPost(BoardVO vo);
 
     List<BoardVO> getPost(PagingVO pvo);
@@ -24,11 +25,13 @@ public interface BoardMapper {
     int reportPost(int target_id, String target_userid, String target_title, String userid);
 
     // 권혁준 작업
-    List<BoardVO> getmyPost(String userId, String searchText);
+    List<BoardVO> getmyPost(PagingVO pVO);
 
-    List<CommentVO> getmyComment(String userid, String searchText);
+    int getmyPostAmount(PagingVO pVO);
 
-    int getmyCommentCount(String LogId);
+    List<CommentVO> getmyComment(PagingVO pVO);
+
+    int getmyCommentCount(PagingVO pVO);
 
     // 정인식 작업 ( 글내용보기 )
     BoardVO SelectBoardView(int postid);

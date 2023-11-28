@@ -127,12 +127,12 @@ file="../header_footer/header.jspf"%>
 
       /* Mypage User Info */
       .userInfo_wrapper {
-        width: 75%;
+        width: 100%;
         margin: 0 auto;
         margin-top: 25px;
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
       }
       .userIntro {
         display: flex;
@@ -193,7 +193,7 @@ file="../header_footer/header.jspf"%>
       .ajaxMenu {
         display: flex;
         margin: 0 auto;
-        width: 65%;
+        width: 100%;
         justify-content: space-around;
         background-color: white;
         height: 50px;
@@ -205,25 +205,25 @@ file="../header_footer/header.jspf"%>
         width: 20%;
         color: black;
       }
-
-      .ajaxMenu_wrapper {
-        margin-top: 50px;
-      }
-      .ajaxView_wrapper {
-        margin: 0 auto;
-      }
       .ajaxView {
         float: left;
       }
       .ajaxContent {
-        width: 50%;
+        width: 20%;
         margin-top: 80px;
         text-align: center;
       }
+      .ajaxContent img {
+        width: 170px;
+        height: 170px;
+      }
       .ajaxView_wrapper {
-        width: 75%;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
+        margin: 0 auto;
+        margin-top: 50px;
+        justify-content: center;
       }
       .userInterest span {
         margin-right: 5px;
@@ -239,7 +239,7 @@ file="../header_footer/header.jspf"%>
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="#" alt="" />
+          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div>
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage">
@@ -319,16 +319,16 @@ file="../header_footer/header.jspf"%>
         </c:forEach>
       </div>
       <!-- 페이징 -->
-      <div style="width: 60%; margin: 0 auto">
-        <ul style="display: flex; justify-content: center; align-items: center">
+      <div style="width: 60%; margin: 0 auto; display: flex; justify-content: center;">
+        <ul style="display: flex; align-items: center">
           <c:if test="${pVO.page == 1}">
-            <li><</li>
+            <li><input type="button" value="<" class="btn btn-outline-primary" disabled></li>
           </c:if>
           <c:if test="${pVO.page > 1}">
             <li>
               <a
                 href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
-                ><</a
+                ><input type="button" value="<" class="btn btn-outline-primary"></a
               >
             </li>
           </c:if>
@@ -341,7 +341,7 @@ file="../header_footer/header.jspf"%>
             <c:if test="${p<=pVO.totalPage}">
               <li>
                 <a
-                  href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}"
+                  href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}<c:if test='${pVO.searchWord != null}'>&searchWord=${pVO.searchWord}</c:if>"
                   ><button
                     type="submit"
                     class="btn btn-outline-primary"
@@ -355,29 +355,35 @@ file="../header_footer/header.jspf"%>
           </c:forEach>
 
           <c:if test="${pVO.page == pVO.totalPage}">
-            <li>></li>
+            <li><input type="button" value=">" class="btn btn-outline-primary" disabled></li>
           </c:if>
           <c:if test="${pVO.page < pVO.totalPage}">
             <li>
               <a
                 href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page + 1}"
-                >></a
+                > <input type="button" value=">" class="btn btn-outline-primary"></a
               >
             </li>
           </c:if>
         </ul>
-      </div>
-      <!-- 글쓰기 -->
-      <input
+        <!-- 글쓰기 -->
+        <input
         type="button"
+        class="btn btn-outline-primary"
         value="글쓰기"
+        style="position: relative; right: -210px;"
         onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
       />
+      </div>
+      
+        
+      
+      
 
       <!-- search -->
       <form
         class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
+        style="width: 75%; margin: 20px auto"
         action="${pageContext.servletContext.contextPath}/mypage/myPofol"
         method="GET"
       >
