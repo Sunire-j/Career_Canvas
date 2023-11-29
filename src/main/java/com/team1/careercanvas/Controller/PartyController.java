@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -176,10 +181,17 @@ public class PartyController {
         String logStatus = (String) session.getAttribute("logStatus");
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.setViewName("redirect:/");
+            mav.setViewName("alert_page");
             return mav;
         }
         List<PartyVO> vo = mapper.SelectPartyList(logId);
+
+        if (vo.isEmpty()) {
+            mav.addObject("msg", "가입한 파티가 없습니다.");
+            mav.setViewName("myteam/party_empty_alert");
+            return mav;
+        }
+
         PartyVO myteamView = mapper.myteamSelect(vo.get(0).getPartyid());
         List<UserVO> memberList = mapper.SelectMemberList(vo.get(0).getPartyid());
         List<MemoVO> memoListView = mapper.SelectMemoListView(vo.get(0).getPartyid());
@@ -189,6 +201,8 @@ public class PartyController {
         mav.addObject("pvo",vo);
         mav.addObject("tempno",vo.get(0).getPartyid());
         mav.setViewName("myteam/myteam_main");
+
+
         return mav;
     }
     // 정인식 작업 ( 파티 정보 출력 )
@@ -227,6 +241,143 @@ public class PartyController {
         System.out.println("aa");
        int a = mapper.DeleteMemo(target);
        return a;
+    }
+
+    @PostMapping("/myteam/create")
+    public ModelAndView createTeam(@RequestParam("input_name") String partyname,
+                             @RequestParam("ex_file") MultipartFile file,
+                             @RequestParam("input_objective") String objective,
+                             @RequestParam("input_intro") String intro,
+                             HttpSession session){
+        ModelAndView mav = new ModelAndView();
+        String logId = (String) session.getAttribute("LogId");
+
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        System.out.println(vo.size());
+        if(vo.size() >= 5){
+            mav.addObject("msg", "파티는 5개 이하로 가입 및 생성 가능합니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        PartyVO temp = new PartyVO();
+        temp.setPartyname(partyname);
+        temp.setPartygoal(objective);
+        temp.setPartycomment(intro);
+        temp.setUser_userid(logId);
+
+        int partyid = mapper.InsertCreateTeam(temp);
+        System.out.println(temp.getPartyid());
+
+        if (file.isEmpty()) {
+            System.out.println("파일없음");
+            mav.addObject("msg", "파일이 존재하지 않습니다. 다시 시도해주세요.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        //파일저장시작
+        String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String newFileName = temp.getPartyid() + extension;
+        String projectDir = new File("").getAbsolutePath();
+        File directory = new File(projectDir + "/upload/partyimg");
+        if (!directory.exists()) {
+            directory.mkdirs(); // 디렉토리 생성
+        }
+
+        Path path = Paths.get(directory.getAbsolutePath(), newFileName); // 절대 경로를 사용
+
+        try {
+            file.transferTo(new File(path.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("파일저장실패");
+            mav.addObject("msg", "파일 저장을 실패하였습니다. 다시 시도해주세요.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        //파일저장 끝
+
+        //db에 경로넣기
+        String imgsrc = "/partyimg/" + newFileName;
+        mapper.InsertPartyImg(imgsrc, temp.getPartyid());
+        //db에 경로넣기 끝
+        // 이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
+
+        mapper.InsertMember(temp.getPartyid(), logId, "done");
+
+        mav.setViewName("redirect:/myteam/main");
+        return mav;
+    }
+    @GetMapping("party/create")
+    public ModelAndView signup_end( HttpSession session){
+        ModelAndView mav = new ModelAndView();
+        String logId = (String) session.getAttribute("LogId");
+
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mav.addObject("pvo",vo);
+        System.out.println(vo.size());
+        if(vo.size() >= 5){
+            mav.addObject("msg", "파티는 5개 이하로 가입 및 생성 가능합니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        mav.setViewName("myteam/myteam_create");
+        return mav;
+    }
+
+    @PostMapping("party/nameCheck")
+    @ResponseBody
+    public int name_check(@RequestParam("name") String partyname){
+
+        int result = mapper.CheckPartyName(partyname);
+        return result;
+    }
+
+    @GetMapping("party/edit")
+    public ModelAndView partyEdit(@RequestParam("no") int partyid,
+                                  HttpSession session){
+        ModelAndView mav = new ModelAndView();
+        String logId = (String) session.getAttribute("LogId");
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mav.addObject("pvo",vo);
+        PartyVO pvo = mapper.myteamSelect(partyid);
+        mav.addObject("partyvo",pvo);
+        mav.setViewName("/myteam/myteam_infoEdit");
+        return mav;
+    }
+    @PostMapping("party/nameUpdate")
+    @ResponseBody
+    public int nameUpdate(  @RequestParam("name") String partyname,
+                            @RequestParam("no") int partyid,
+                            HttpSession session){
+        String logId = (String) session.getAttribute("LogId");
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mapper.UpdatePartyName(partyname, partyid);
+        return 1;
+    }
+
+    @PostMapping("party/objectiveUpdate")
+    @ResponseBody
+    public int objectiveUpdate(  @RequestParam("no") int partyid,
+                            @RequestParam("objective") String partygoal,
+                            HttpSession session){
+        String logId = (String) session.getAttribute("LogId");
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mapper.UpdatePartyObjective(partyid, partygoal);
+
+        return 1;
+    }
+
+    @PostMapping("party/introUpdate")
+    @ResponseBody
+    public int introUpdate(  @RequestParam("no") int partyid,
+                            @RequestParam("intro") String partycomment,
+                            HttpSession session){
+        String logId = (String) session.getAttribute("LogId");
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mapper.UpdatePartyIntro(partyid, partycomment);
+
+        return 1;
     }
 
 }

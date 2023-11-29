@@ -15,7 +15,8 @@
         select *
         from party p
         join partymember m
-        on p.partyid = m.party_partyid and m.user_userid = #{param1};
+        on p.partyid = m.party_partyid and m.user_userid = #{param1}
+        where m.status = 'done';
     </select>
 
     <select id="myteamSelect" resultType="com.team1.careercanvas.vo.PartyVO">
@@ -29,7 +30,7 @@
         from user
                  join partymember
                       on partymember.user_userid = user.userid
-        where partymember.party_partyid = #{param1}
+        where partymember.party_partyid = #{param1} and partymember.status = 'done';
     </select>
 
     <select id="SelectMemoListView" resultType="com.team1.careercanvas.vo.MemoVO">
@@ -52,6 +53,47 @@
     <delete id="DeleteMemo">
         delete from partymemo where partymemo = #{param1};
     </delete>
+
+    <insert id="InsertCreateTeam">
+        insert into party(partyname, partygoal, partycomment, user_userid)
+        VALUES (#{partyname}, #{partygoal}, #{partycomment}, #{user_userid});
+            <selectKey keyProperty="partyid" order="AFTER" resultType="int">
+                SELECT LAST_INSERT_ID()
+            </selectKey>
+    </insert>
+
+    <update id="InsertPartyImg">
+        update party
+        set partyimage = #{param1}
+        where partyid = #{param2}
+    </update>
+
+    <insert id="InsertMember">
+        insert into partymember(party_partyid, user_userid, status)
+        values (#{param1}, #{param2}, #{param3});
+    </insert>
+
+    <select id="CheckPartyName" resultType="Integer">
+        select count(partyid) from party where partyname = #{param1}
+    </select>
+
+    <update id="UpdatePartyName">
+        update party
+        set partyname = #{param1}
+        where partyid = #{param2}
+    </update>
+
+    <update id="UpdatePartyObjective">
+        update party
+        set partygoal = #{param2}
+        where partyid = #{param1}
+    </update>
+
+    <update id="UpdatePartyIntro">
+        update party
+        set partycomment = #{param2}
+        where partyid = #{param1}
+    </update>
 
     <!--조석훈 시작-->
     <select id="getMineParty" resultType="com.team1.careercanvas.vo.PartyVO">
