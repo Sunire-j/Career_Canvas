@@ -10,7 +10,9 @@ public class TestController {
     public String signup_end(){
         //mav
         //db에 업데이트문 보냄
-        return "myteam/myteam_main";
+        //아이 뽑
+
+        return "myteam/party/edit";
     }
 }
 
