@@ -41,7 +41,6 @@ public class PartyController {
         pvo.setPostSort(postSort);
         pvo.setTotalRecord(mapper.getWantedListCount(pvo));
         List<WantedVO> wvo = mapper.GetWantedList(pvo);
-        System.out.println(wvo.get(0).toString());
 
         mav.addObject("wVO",wvo);
         mav.addObject("pVO", pvo);
