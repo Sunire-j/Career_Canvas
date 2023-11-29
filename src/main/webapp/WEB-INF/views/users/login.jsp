@@ -44,8 +44,8 @@
 <body>
 <div class="container">
     <div class="login-container">
-    <h3 style="text-align: center;">Career Canvas 로그인</h3>
-        <hr style="width: 100%; color:#73351F; opacity: 7%">
+    <h3 style="text-align: center; color: #73351F; font-weight: bold;">Career Canvas 로그인</h3>
+        <hr style="width: 100%; color:#73351F; opacity: 40%; border: 1px dashed;" >
     <form method="post" action="${pageContext.servletContext.contextPath}/loginOk" id="findidForm" name="findidForm">
         <%--가입 유형 선택--%>
         <div style="display: flex; height: 40px; font-weight: bold; margin: 30px auto 0;width: 40%">
@@ -67,7 +67,7 @@
                     &nbsp;<p style="font-size: 14px">|</p>&nbsp;
                     <a href="${pageContext.servletContext.contextPath}/signup"><p style="font-size: 14px">회원가입</p></a>
                 </div>
-                <input type="submit" class="btn btn-primary" value="로그인"/>
+                <input type="submit" class="btn btn-outline-secondary" value="로그인"/>
             </div>
         </div>
     </div>
