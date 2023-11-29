@@ -11,6 +11,7 @@ public class CommentVO {
     private int commentid;
     private String user_userid;
     private int post_postid;
+    private int partywanted_wantedid;
     private String commentcontent;
     private int target_parent;
     private int isdelete;

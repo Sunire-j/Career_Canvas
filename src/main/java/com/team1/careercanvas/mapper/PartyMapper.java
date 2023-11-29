@@ -22,5 +22,24 @@ public interface PartyMapper {
 
     List<WantedVO> GetWantedList(PagingVO pvo);
     int getWantedListCount(PagingVO pvo);
+
+    WantedVO GetWantedView(int no);
+
+    List<CommentVO> commentLoad(int no);
+
+    int replyInsert(CommentVO cvo);
+
+    void replyInsertTP(CommentVO cvo);
+    int DeleteWanted(int wantedid);
+    int reportWanted(int wantedid, String targetuid, String title, String uid);
+    String getCommentWriter(int commentid);
+    String getCommentcontent(int commentid);
+
+    int commentReport(ReportVO rvo);
+
+    int deleteWantedComment(int commentid);
+    void increseView(int no);
+    int applyParty(String uid,int partyid);
+    String getPartyName(int partyid);
     //조석훈 끝
 }

@@ -16,4 +16,5 @@ public class WantedVO {
     private String user_userid;
     private String date;
     private int view;
+    private int commentAmount;
 }

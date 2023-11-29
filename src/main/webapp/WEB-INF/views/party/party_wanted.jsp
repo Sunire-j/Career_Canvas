@@ -150,7 +150,7 @@
                 </div>
                 <div style="width: 12%" class="list">${bvo.user_userid}</div>
                 <div style="width: 7%" class="list">${bvo.view}</div>
-                <div style="width: 7%" class="list">댓글수못가져옴</div>
+                <div style="width: 7%" class="list">${bvo.commentAmount}</div>
                 <div style="width: 10%" class="list">${bvo.date}</div>
             </div>
             <hr>

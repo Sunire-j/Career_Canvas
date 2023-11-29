@@ -69,9 +69,11 @@
                pw.date as date,
                pw.view as view,
                pw.wantedtitle as wantedtitle,
-               p.partyname as partyname
+               p.partyname as partyname,
+        count(wc.commentid) as commentAmount
         from partywanted pw
         join party p on pw.party_partyid = p.partyid
+        left join wantedcomment wc on pw.wantedid = wc.partywanted_wantedid
         <where>
             <if test="searchKey == 'all'">
                 pw.wantedtitle like CONCAT('%', #{searchWord}, '%')
@@ -92,6 +94,7 @@
             </if>
         </where>
 
+        group by pw.wantedid
         <choose>
             <when test="postSort==1">
                 order by wantedid desc
@@ -100,8 +103,7 @@
                 order by view desc, wantedid desc
             </when>
         </choose>
-
-        limit #{onePageRecord} offset #{offsetPoint}
+                    limit #{onePageRecord} offset #{offsetPoint}
 
     </select>
 
@@ -130,5 +132,92 @@
         </where>
     </select>
 
+    <select id="GetWantedView" resultType="com.team1.careercanvas.vo.WantedVO">
+        select * from partywanted where wantedid = #{param1}
+    </select>
+
+    <select id="commentLoad" resultType="com.team1.careercanvas.vo.CommentVO">
+        select wc.commentid as commentid,
+               wc.target_parent as target_parent,
+               wc.commentcontent as commentcontent,
+               wc.partywanted_wantedid as partywanted_wantedid,
+               wc.date as date,
+               wc.depth as depth,
+               wc.isdelete as isdelete,
+               u.userid as user_userid,
+               u.username as username,
+               u.profileimg as profileimg
+        from wantedcomment as wc
+        join user as u on wc.user_userid = u.userid
+        where wc.partywanted_wantedid=#{param1}
+        order by wc.target_parent asc, wc.commentid asc;
+    </select>
+
+    <insert id="replyInsert" parameterType="com.team1.careercanvas.vo.CommentVO">
+        insert into wantedcomment(user_userid, partywanted_wantedid, commentcontent, depth
+        <if test="target_parent!=null">, target_parent</if>)
+        values(#{user_userid}, #{partywanted_wantedid}, #{commentcontent}, #{depth}
+        <if test="target_parent!=null">, #{target_parent}</if>);
+            <selectKey keyProperty="commentid" order="AFTER" resultType="int">
+                select last_insert_id()
+            </selectKey>
+    </insert>
+
+    <update id="replyInsertTP">
+        update wantedcomment
+        set target_parent=#{commentid}
+        where commentid=#{commentid}
+    </update>
+
+    <delete id="DeleteWanted">
+        delete
+        from partywanted
+        where wantedid=#{param1}
+    </delete>
+
+    <insert id="reportWanted">
+        insert into report(reporttype, targetid, user_userid, title, userid)
+        values('wanted', #{param1}, #{param4}, #{param3}, #{param2});
+    </insert>
+
+    <select id="getCommentWriter" resultType="String">
+        select user_userid
+        from wantedcomment
+        where commentid=#{param1}
+    </select>
+
+    <select id="getCommentcontent" resultType="String">
+        select commentcontent
+        from wantedcomment
+        where commentid=#{param1}
+    </select>
+
+    <insert id="commentReport" parameterType="com.team1.careercanvas.vo.ReportVO">
+        insert into report(reporttype, targetid, user_userid, title, userid, originpostid)
+        values(#{reporttype}, #{targetid}, #{user_userid}, #{title}, #{userid}, #{originpostid});
+    </insert>
+
+    <update id="deleteWantedComment">
+        UPDATE wantedcomment
+        SET commentcontent = '삭제된 댓글입니다.', isdelete=1
+        WHERE commentid = #{param1};
+    </update>
+
+    <update id="increseView">
+        update partywanted
+        set view=view+1
+        where wantedid=#{param1}
+    </update>
+
+    <insert id="applyParty">
+        insert into partymember(party_partyid, user_userid)
+        values(#{param2}, #{param1});
+    </insert>
+
+    <select id="getPartyName" resultType="String">
+        select partyname
+        from party
+        where partyid=#{param1};
+    </select>
     <!--조석훈 끝-->
 </mapper>
