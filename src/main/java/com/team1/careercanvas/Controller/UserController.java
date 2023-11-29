@@ -467,7 +467,6 @@ public class UserController {
                     System.out.println("파일 삭제 실패");
                 }
             }
-            //기존파일 삭제 끝
 
             // db에 경로넣기
             String imgsrc = "/userprofileimg/" + newFileName;
