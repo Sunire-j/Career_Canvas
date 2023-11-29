@@ -52,6 +52,8 @@ public interface UserMapper {
 
     void SignupBizSecond(String userid, String companyno, String imgpath);
 
+    int CheckCompanyNo(String companyno);
+
     // 권혁준 작업
     UserVO getUserInfo(String LogId);
 

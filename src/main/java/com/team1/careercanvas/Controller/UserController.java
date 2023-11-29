@@ -246,6 +246,15 @@ public class UserController {
         if(isSuccess.equals("SUCCESS")){
             companyno = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(0).getAsJsonObject().get("inferText").getAsString();
             username = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(1).getAsJsonObject().get("inferText").getAsString();
+            //가입한 회원이였으면 빠꾸먹이기
+
+            int countCompanyNo = mapper.CheckCompanyNo(companyno);
+
+            if(countCompanyNo>=1){
+                session.setAttribute("msg","이미 가입된 회원입니다. 가입하지 않으셨다면 관리자에게 메일로 문의주세요");
+                return "alert_page";
+            }
+
         }else if(isSuccess.equals("FAILURE")){
             session.setAttribute("msg","인식할 수 없습니다. 오류가 반복되면 메일로 문의바랍니다.");
             return "alert_page";

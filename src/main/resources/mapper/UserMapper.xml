@@ -118,6 +118,12 @@
         insert into company(user_userid, companyno, authimg)
         values(#{param1}, #{param2}, #{param3});
     </update>
+
+    <select id="CheckCompanyNo">
+        select count(user_userid)
+        from company
+        where companyno=#{param1};
+    </select>
     
     <!-- 권혁준 작업  -->
 	<select id="getUserInfo" resultType="com.team1.careercanvas.vo.UserVO">
