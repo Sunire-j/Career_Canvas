@@ -122,13 +122,14 @@
             padding: 0;
         }
 
-        li {
-            float: left;
+        .content>li{
+            width: 25%;
         }
 
+
+
         article {
-            width: 1000px;
-            height: 1500px;
+            width: 1200px;
             margin: 0 auto;
             margin-top: 80PX;
         }
@@ -179,7 +180,7 @@
             margin-top: 5px;
             margin-left: 10px;
             font-size: 1.5em;
-            color: gray;
+            color: rgb(128, 128, 128);
         }
 
         .info_count>div {
@@ -217,32 +218,38 @@
             width: 300px;
             margin: 0 auto;
             margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .portfolio_category>button {
-            margin-left: 10px;
         }
 
-        .portfolio_content,#content {
+        .portfolio_content{
             margin: 0 auto;
             margin-top: 10px;
-            height: 740px;
 
         }
-
-        .content img {
-            width: 300px;
-            height: 280px;
-            border-radius: 30px;
+        .portfolio_content>li{
+            float: left;
+        }
+        .img_C{
+            width:235px;
             margin-left: 30px;
+        }
+        .content img {
+            width: 235px;
+            height: 235px;
+            border-radius: 30px;
+
             margin-top: 30px;
         }
         .content_info{
             width: 330px;
-            overflow: hidden; 
-            text-overflow: ellipsis; 
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
-            font-weight: bold;                      
+            font-weight: bold;
         }
         .content_category, .content_title{
             display: inline;
@@ -258,7 +265,14 @@
             text-align: center;
             padding: 5px 5px 5px 10px;
         }
-     
+        .solo_party{
+            display: flex;
+            justify-content : space-between;
+        }
+
+        .solo_party_btn{
+
+        }
 
         /*페이지*/
         .portfolio_paging {
@@ -278,74 +292,84 @@
 </head>
 
 <body>
-    <section>
-        <article>
-            <div class="profile">
-                <div class="profile_img">
-                    <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}">
-                </div>
+<section>
+    <article>
+        <div class="profile">
+            <div class="profile_img">
+                <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}">
+            </div>
 
-                <div class="profile_info">
-                    <div class="info_name"><b>${uVO.username }</b></div>
-                    <div class="info_email">${uVO.useremail}</div>
-                    <div class="info_count">
-                        <div>포트폴리오</div>
-                        <div>${pCount}</div>
-                        <div>팀</div>
-                        <div>c</div>
-                        <div>기업과제</div>
-                        <div>c</div>
-                    </div>
+            <div class="profile_info">
+                <div class="info_name"><b>${uVO.username }</b></div>
+                <div class="info_email">${uVO.useremail}</div>
+                <div class="info_count">
+                    <div>포트폴리오</div>
+                    <div>${pCount}</div>
+                    <div>기업과제</div>
+                    <div>${sCount}</div>
                 </div>
             </div>
-            <div class="salutation">
-                <div class="salutation_name">
-                    소개 글
-                </div>
-                <div class="salutation_content">
-                    ${uVO.comment }
-                </div>
+        </div>
+        <div class="salutation">
+            <div class="salutation_name">
+                소개 글
             </div>
-            <div class="portfolio">
-                <div class="portfolio_category">
-                    <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
-                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject?uid=${uVO.userid}'">기업과제</button>
+            <div class="salutation_content">
+                ${uVO.comment }
+            </div>
+        </div>
+        <div class="portfolio">
+            <div class="portfolio_category">
+                <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
+                <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">기업과제</button>
+            </div>
+            <div class="solo_party">
+                <div></div>
+                <div class="solo_party_btn">
+                    <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
+                    <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
                 </div>
-                <div>
-                    <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
-                    <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
-                </div>
-                <div class="portfolio_content">
-                    <ul class="content">
-                        <c:forEach items="${pVO}" var="pVo">
+                <div></div>
+            </div>
+            <div class="portfolio_content">
+                <ul class="content" style="width: 1200px; display: flex; flex-wrap: wrap">
+                    <c:forEach items="${sVO}" var="svo">
                         <li>
-                            <div>
-                                <img src="${pageContext.servletContext.contextPath}/upload${pVo.imgsrc}" class="portfolio_img">
+                            <div class="img_C">
+                                <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}" class="portfolio_img">
                                 <div class="content_info">
                                     <div class="content_category">
-                                        ${pVo.category}
+                                        <c:if test="${svo.category==1}">
+                                            IT/프로그래밍
+                                        </c:if>
+                                        <c:if test="${svo.category==2}">
+                                            디자인
+                                        </c:if>
+                                        <c:if test="${svo.category==3}">
+                                            영상음향
+                                        </c:if>
                                     </div>
                                     <div class="content_title">
-                                        ${pVo.portfoliotitle}
+                                            ${svo.subjecttitle}
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="portfolio_paging">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#"><</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">></a></li>
-                    </ul>
-                </div>
+                    </c:forEach>
+                </ul>
             </div>
-        </article>
-    </section>
+            <div class="portfolio_paging">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </article>
+</section>
 </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>
