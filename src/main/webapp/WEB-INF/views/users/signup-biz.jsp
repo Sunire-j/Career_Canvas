@@ -85,41 +85,6 @@
                 }
             });
 
-            $('input[name="userNickName"]').on('input blur', function () {
-                var $this = $(this);
-                if (this.checkValidity()) {
-                    $(this).removeClass('is-invalid').addClass('is-valid');
-                    //ajax
-                    $.ajax({
-                        url: "${pageContext.servletContext.contextPath}/checkName",
-                        type: 'post',
-                        data: {
-                            name: $(this).val()
-                        },
-                        success: function (result) {
-                            if (result == 0) {
-                                $(this).removeClass('is-invalid').addClass('is-valid');
-                            } else {
-                                $this.removeClass('is-valid').addClass('is-invalid');
-                                $this.siblings('.invalid-feedback').hide();
-                                $this.siblings('[data-feedback="duplicate"]').show();
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error.responseText);
-                        }
-                    });
-                } else {
-                    $(this).removeClass('is-valid').addClass('is-invalid');
-                    $(this).siblings('.invalid-feedback').hide();
-                    if (this.validity.valueMissing) {
-                        $(this).siblings('.invalid-feedback:not([data-feedback])').show();
-                    } else if (this.validity.patternMismatch) {
-                        $(this).siblings('[data-feedback="patternMismatch"]').show();
-                    }
-                }
-            });
-
             $('input[name="userEmail"]').on('input blur', function () {
                 var $this = $(this);
                 var $feedbacks = $this.parent().siblings('.invalid-feedback');
@@ -231,27 +196,11 @@
                 }
             });
 
-            $('input[name="companyno"]').on('input blur', function () {
-                if (this.checkValidity()) {
-                    $(this).removeClass('is-invalid').addClass('is-valid');
-                } else {
-                    $(this).removeClass('is-valid').addClass('is-invalid');
-                    $(this).siblings('.invalid-feedback').hide();
-                    if (this.validity.valueMissing) {
-                        $(this).siblings('.invalid-feedback:not([data-feedback])').show();
-                    } else if (this.validity.patternMismatch) {
-                        $(this).siblings('[data-feedback="patternMismatch"]').show();
-                    }
-                }
-            });
-
             $('.signupFrm input').on('change', function () {
                 // 모든 필수 입력 항목이 is-valid 클래스를 가지고 있는지 확인
                 let isValid = $("input[name='userId']").hasClass('is-valid') &&
                     $("input[name='userPwd']").hasClass('is-valid') &&
                     $("input[name='userPwdCheck']").hasClass('is-valid') &&
-                    $("input[name='userNickName']").hasClass('is-valid') &&
-                    $("input[name='usertel']").hasClass('is-valid') &&
                     $("input[name='usertel']").hasClass('is-valid');
 
                 // 특정 입력 항목들이 disabled 상태인지 확인
@@ -276,7 +225,7 @@
         <div class="signupFrm_wrapper">
             <p class="signupTitle">기업 회원가입</p>
             <hr>
-            <form action="${pageContext.servletContext.contextPath}/signup/bizstart" method="post"
+            <form action="${pageContext.servletContext.contextPath}/signup/biz/complete" method="post"
                   class="signupFrm needs-validation" novalidate>
                 <ul style="padding: 0">
                     <li>
@@ -307,17 +256,11 @@
                                    placeholder="비밀번호 확인"
                                    required/>
                             <div class="invalid-feedback" data-feedback="passwordMismatch">비밀번호를 확인해주세요.</div>
-
                         </div>
                     </li>
                     <li>
                         <div>
-                            <input type="text" name="userNickName" class="form-control" placeholder="회사명"
-                                   required/>
-                            <div class="invalid-feedback">회사명을 입력해주세요.</div>
-                            <div class="invalid-feedback" data-feedback="duplicate">이미 가입되었습니다. 가입한 적이 없다면 <a
-                                    style="color: black" href="mailto:sunire9850@gmail.com">문의</a>주세요.
-                            </div>
+                            <input type="text" name="userNickName" class="form-control" placeholder="회사명" value="${username}" readonly/>
                         </div>
                     </li>
                     <li>
@@ -353,13 +296,10 @@
                         </div>
                     </li>
                     <li>
-                        <input type="text" name="companyno" class="form-control" pattern="[0-9]{3}-[0-9]{2}-[0-9]{5}"
-                               placeholder="사업자등록번호( - 포함)" required/>
-                        <div class="invalid-feedback">사업자등록번호를 입력해주세요.</div>
-                        <div class="invalid-feedback" data-feedback="patternMismatch">사업자등록번호 형식에 맞지 않습니다.
-                        </div>
+                        <input type="text" name="companyno" class="form-control" value="${companyno}" readonly/>
                     </li>
                     <li>
+                        <input type="hidden" name="tempimg" value="${tempimg}"/>
                         <div class="signupBtn">
                             <input type="button" class="btn btn-secondary reset" onclick="location.reload()"
                                    value="다시작성"/>

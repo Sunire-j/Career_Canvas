@@ -108,6 +108,16 @@
         select profileimg from user
         where userid=#{param1}
     </select>
+
+    <insert id="SignupBizFirst" parameterType="com.team1.careercanvas.vo.UserVO">
+        insert into user(userid, userpwd, username, useremail, usertel, usertype, usersalt)
+        values(#{userid},#{userpwd},#{username},#{useremail},#{usertel},#{usertype},#{usersalt});
+    </insert>
+
+    <update id="SignupBizSecond">
+        insert into company(user_userid, companyno, authimg)
+        values(#{param1}, #{param2}, #{param3});
+    </update>
     
     <!-- 권혁준 작업  -->
 	<select id="getUserInfo" resultType="com.team1.careercanvas.vo.UserVO">

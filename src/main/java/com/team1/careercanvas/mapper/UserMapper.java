@@ -48,6 +48,10 @@ public interface UserMapper {
 
     String getProfileImg(String userid);
 
+    void SignupBizFirst(UserVO userVO);
+
+    void SignupBizSecond(String userid, String companyno, String imgpath);
+
     // 권혁준 작업
     UserVO getUserInfo(String LogId);
 

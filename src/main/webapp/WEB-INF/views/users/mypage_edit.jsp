@@ -451,8 +451,7 @@
                     id="comment"
                     cols="30"
                     rows="5"
-            >
-                ${uVO.comment }</textarea
+            >${uVO.comment}</textarea
             >
             </div>
         </div>

@@ -1,5 +1,8 @@
 package com.team1.careercanvas.Controller;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.team1.careercanvas.mapper.BoardMapper;
 import com.team1.careercanvas.mapper.PofolMapper;
 import com.team1.careercanvas.mapper.UserMapper;
@@ -16,15 +19,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
+import static com.team1.careercanvas.util.OCRTemplate.OCR;
 import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
 @Controller
@@ -89,7 +96,7 @@ public class UserController {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
         }
-        return "users/signup-biz";
+        return "/users/signup-biz-upload";
     }
 
     @GetMapping("/findid")
@@ -185,43 +192,29 @@ public class UserController {
         }
     }
 
-    @PostMapping("/signup/bizstart")
-    public String signUpBiz(@RequestParam("userId") String userid,
-            @RequestParam("userPwd") String userpwd,
-            @RequestParam("userNickName") String username,
-            @RequestParam("userEmail") String useremail,
-            @RequestParam("usertel") String usertel,
-            @RequestParam("companyno") String companyno,
-            HttpSession session) {
-        try {
-            String[] securearr = encryptWithSalt(userpwd);
-            mapper.signupPersonal(userid, securearr[0], username, useremail, usertel, 1, securearr[1]);
-            mapper.signupBiz(userid, companyno);
-
-            session.setAttribute("tempusername", username);
-            session.setAttribute("tempcompanyno", companyno);
-
-            return "/users/signup-biz-upload";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "404pages";
-        }
-    }
-
-    @PostMapping("/signup/bizupload")
+    @PostMapping("/signup/biz-middle")
     public String bizupload(@RequestParam("ex_file") MultipartFile file,
-            @RequestParam("companyno") String companyno) {
+                            HttpSession session) {
 
         if (file.isEmpty()) {
             System.out.println("파일없음");
             return "404pages";
         }
-
         // 파일저장시작
+
+        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+        StringBuilder salt = new StringBuilder(8);
+        for (int i = 0; i < 8; i++) {
+            int index = random.nextInt(letters.length());
+            salt.append(letters.charAt(index));
+        }
+        String saltString = salt.toString();
+
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String newFileName = companyno + extension;
+        String newFileName = saltString + extension;
         String projectDir = new File("").getAbsolutePath();
-        File directory = new File(projectDir + "/upload/companyauth");
+        File directory = new File(projectDir + "/upload/authtemp");
         if (!directory.exists()) {
             directory.mkdirs(); // 디렉토리 생성
         }
@@ -237,13 +230,82 @@ public class UserController {
         }
         // 파일저장 끝
 
-        // db에 경로넣기
-        String imgsrc = "/companyauth/" + newFileName;
+        System.out.println(path);
 
-        mapper.InsertAuthImg(imgsrc, companyno);
+        String result = OCR(String.valueOf(path));
+
+        System.out.println(result);
+        //결과 json에서 inferResult가 "FAILURE"면 아닌걸로 취급, "SUCCESS"면 성공
+        JsonElement jsonElement = JsonParser.parseString(result);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        String isSuccess = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().get("inferResult").getAsString();
+        System.out.println(isSuccess);
+        String companyno = "";
+        String username="";
+        if(isSuccess.equals("SUCCESS")){
+            companyno = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(0).getAsJsonObject().get("inferText").getAsString();
+            username = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(1).getAsJsonObject().get("inferText").getAsString();
+        }else if(isSuccess.equals("FAILURE")){
+            session.setAttribute("msg","인식할 수 없습니다. 오류가 반복되면 메일로 문의바랍니다.");
+            return "alert_page";
+        }else{
+            return "404pages";
+        }
+        //companyno 중복 검사 해주기
+        session.setAttribute("companyno", companyno);
+        session.setAttribute("username",username);
+        session.setAttribute("tempimg",path);
         // db에 경로넣기 끝
         // 이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
-        return "users/biz-end";
+        return "users/signup-biz";
+    }
+
+    @PostMapping("/signup/biz/complete")
+    public String bizComplete(String userId,
+                              String userPwd,
+                              String userNickName,
+                              String userEmail,
+                              String usertel,
+                              String companyno,
+                              String tempimg,
+                              HttpSession session) throws NoSuchAlgorithmException {
+
+        UserVO uvo = new UserVO();
+        uvo.setUserid(userId);
+        uvo.setUsername(userNickName);
+        uvo.setUseremail(userEmail);
+        uvo.setUsertel(usertel);
+
+        String[] pwdarr = encryptWithSalt(userPwd);
+
+        uvo.setUserpwd(pwdarr[0]);
+        uvo.setUsersalt(pwdarr[1]);
+        uvo.setUsertype(1);
+
+        mapper.SignupBizFirst(uvo);
+        System.out.println(uvo);
+        //temp이미지 처리
+        Path source = Paths.get(tempimg);
+
+        String targetDir = new File("").getAbsolutePath()+"/upload/companyauth";
+        File targetDirectory = new File(targetDir);
+        if(!targetDirectory.exists()){
+            targetDirectory.mkdirs();
+        }
+
+        String extension = tempimg.substring(tempimg.lastIndexOf("."));
+        Path targetPath = Paths.get(targetDirectory.getAbsolutePath(), companyno+extension);
+        try{
+            Files.copy(source, targetPath, StandardCopyOption.REPLACE_EXISTING);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        //temp이미지 처리 끝
+        mapper.SignupBizSecond(uvo.getUserid(), companyno, "/companyauth/"+companyno+extension);
+        session.setAttribute("msg","신청이 완료되었습니다. 예정 소요기간은 1~3영업일입니다.");
+
+        return "alert_page";
     }
 
     @PostMapping("/loginOk")
