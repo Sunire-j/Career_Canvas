@@ -60,5 +60,20 @@ public class ProfileController {
 		return mav;
 	}
 
+	@GetMapping("/profile/subject/party")
+	public ModelAndView Subject_party(@RequestParam("uid")String userid){
+		UserVO uservo = usermapper.getUserInfo(userid);
+		int pofolamount = pofolmapper.getpofolamount(userid);
+		List<ApplyVO> subjectvo = subjectmapper.getApplyInfo(userid);
+		int subjectamount = subjectmapper.getApplyamount(userid);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pCount", pofolamount);
+		mav.addObject("sVO", subjectvo);
+		mav.addObject("uVO", uservo);
+		mav.addObject("sCount", subjectamount);
+		mav.setViewName("users/userProfile_Company_Party");
+		return mav;
+	}
 
 }

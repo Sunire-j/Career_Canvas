@@ -122,13 +122,14 @@
             padding: 0;
         }
 
-        li {
-            float: left;
+        .content>li{
+            width: 25%;
         }
 
+
+
         article {
-            width: 1000px;
-            height: 1500px;
+            width: 1200px;
             margin: 0 auto;
             margin-top: 80PX;
         }
@@ -179,7 +180,7 @@
             margin-top: 5px;
             margin-left: 10px;
             font-size: 1.5em;
-            color: gray;
+            color: rgb(128, 128, 128);
         }
 
         .info_count>div {
@@ -224,18 +225,23 @@
         .portfolio_category>button {
         }
 
-        .portfolio_content,#content {
+        .portfolio_content{
             margin: 0 auto;
             margin-top: 10px;
-            height: 740px;
 
         }
-
-        .content img {
-            width: 300px;
-            height: 280px;
-            border-radius: 30px;
+        .portfolio_content>li{
+            float: left;
+        }
+        .img_C{
+            width:235px;
             margin-left: 30px;
+        }
+        .content img {
+            width: 235px;
+            height: 235px;
+            border-radius: 30px;
+
             margin-top: 30px;
         }
         .content_info{
@@ -326,10 +332,10 @@
                     <div></div>
                 </div>
                 <div class="portfolio_content">
-                    <ul class="content">
+                    <ul class="content" style="width: 1200px; display: flex; flex-wrap: wrap">
                         <c:forEach items="${sVO}" var="svo">
                         <li>
-                            <div>
+                            <div class="img_C">
                                 <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}" class="portfolio_img">
                                 <div class="content_info">
                                     <div class="content_category">
@@ -353,12 +359,12 @@
                     </ul>
                 </div>
                 <div class="portfolio_paging">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#"><</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">></a></li>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
                     </ul>
                 </div>
             </div>

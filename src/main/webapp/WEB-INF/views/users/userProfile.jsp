@@ -122,15 +122,19 @@
             padding: 0;
         }
 
-        li {
-            float: left;
-        }
 
         article {
-            width: 1000px;
-            height: 1500px;
+            width: 1200px;
             margin: 0 auto;
             margin-top: 80PX;
+        }
+        .content>li{
+            width: 25%;
+        }
+        .content{
+            display: flex;
+            width: 1200px;
+            flex-wrap: wrap;
         }
 
         /* 프로필 정보 */
@@ -231,11 +235,10 @@
         }
 
         .content img {
-            width: 300px;
-            height: 280px;
+            width: 235px;
+            height: 235px;
             border-radius: 30px;
-            margin-left: 30px;
-            margin-top: 30px;
+
         }
         .content_info{
             width: 330px;
@@ -244,6 +247,12 @@
             white-space: nowrap;
             font-weight: bold;                      
         }
+
+        .img_C{
+              width:235px;
+              margin-left: 30px;
+          }
+
         .content_category, .content_title{
             display: inline;
             height: 40px;
@@ -313,7 +322,7 @@
                     <ul class="content">
                         <c:forEach items="${pVO}" var="pVo">
                         <li>
-                            <div>
+                            <div class="img_C">
                                 <img src="${pageContext.servletContext.contextPath}/upload${pVo.imgsrc}" class="portfolio_img">
                                 <div class="content_info">
                                     <div class="content_category">
@@ -329,12 +338,12 @@
                     </ul>
                 </div>
                 <div class="portfolio_paging">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#"><</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">></a></li>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
                     </ul>
                 </div>
             </div>
