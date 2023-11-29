@@ -30,10 +30,13 @@
             margin: 0;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-
+        @media (min-width: 1200px) {
+            .container, .container-lg, .container-md, .container-sm, .container-xl {
+                width: 100%;
+            }
+        }
+        .headerstyle{
+            width: 100%;
         }
 
         .space {
@@ -221,48 +224,49 @@
     </style>
 </head>
 <body>
-    <header class="container" style="background: #F2F2F2; display: flex; justify-content: space-between; height: 120px;">
-        <!-- Title -->
-        <div class="title">
-            <a class="logo" href="${pageContext.servletContext.contextPath}/">CAREER CANVAS</a>
-            <i class="fa-solid fa-bars hamberger"></i>
+    <header>
+        <div class="headerstyle" style="background: #F2F2F2; display: flex; justify-content: space-between; height: 120px;">
+            <!-- Title -->
+            <div class="title">
+                <a class="logo" href="${pageContext.servletContext.contextPath}/" style="margin-left: 50px; ">CAREER CANVAS</a>
+                <i class="fa-solid fa-bars hamberger"></i>
+            </div>
+            <!-- Nav -->
+            <nav class="nav_wrapper">
+                <div>
+                <ul class="infoGroup" >
+                    <c:if test="${LogStatus=='Y'}">
+                        <li><img style="width: 50px; height: 50px; radius: 50%" src="${pageContext.servletContext.contextPath}/upload${LogImg}"/></li>
+                        <li class="userNickname">
+                                ${Logusername} ▼
+                            <div style="background-color: white">
+                                <ul class="userInfo" >
+                                    <li><a href="${pageContext.servletContext.contextPath }/profile/portfolio?uid=${LogId}">프로필</a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath }/mypage/myPofol">마이페이지</a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}/logout">로그아웃</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </c:if>
+                    <c:if test="${LogStatus!='Y'}">
+                        <li><a href="${pageContext.servletContext.contextPath}/login">로그인</a></li>
+                    </c:if>
+                </ul>
+                </div>
+                <div>
+                <ul style="margin-right: 50px; padding-left: 0px !important" class="navBar">
+                    <li><a href="${pageContext.servletContext.contextPath}/party/wanted">파티</a></li>
+                    <li><a href="popol.html">포트폴리오</a></li>
+                    <li><a href="#">기업과제</a></li>
+                    <li><a href="${pageContext.servletContext.contextPath}/board/free">커뮤니티</a></li>
+                    <c:if test="${usertype==2}">
+                    <li><a href="${pageContext.servletContext.contextPath}/admin/member">관리자 페이지</a></li>
+                    </c:if>
+                </ul>
+                </div>
+            </nav>
         </div>
-        <!-- Nav -->
-        <nav class="nav_wrapper">
-            <div>
-            <ul class="infoGroup">
-                <c:if test="${LogStatus=='Y'}">
-                    <li><img style="width: 50px; height: 50px; radius: 50%" src="${pageContext.servletContext.contextPath}/upload${LogImg}"/></li>
-                    <li class="userNickname">
-                            ${Logusername} ▼
-                        <div style="background-color: white">
-                            <ul class="userInfo">
-                                <li><a href="${pageContext.servletContext.contextPath }/profile/portfolio?uid=${LogId}">프로필</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath }/mypage/myPofol">마이페이지</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/logout">로그아웃</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </c:if>
-                <c:if test="${LogStatus!='Y'}">
-                    <li><a href="${pageContext.servletContext.contextPath}/login">로그인</a></li>
-                </c:if>
-            </ul>
-            </div>
-            <div>
-            <ul style="padding-left: 0px !important" class="navBar">
-                <li><a href="${pageContext.servletContext.contextPath}/party/wanted">파티</a></li>
-                <li><a href="popol.html">포트폴리오</a></li>
-                <li><a href="#">기업과제</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/board/free">커뮤니티</a></li>
-                <c:if test="${usertype==2}">
-                <li><a href="${pageContext.servletContext.contextPath}/admin/member">관리자 페이지</a></li>
-                </c:if>
-            </ul>
-            </div>
-        </nav>
     </header>
-
     <script>
         const toggleBtn = document.querySelector('.hamberger');
         const menu = document.querySelector('.nav_wrapper');

@@ -361,7 +361,7 @@ public class UserController {
             mapper.changePwd(userid, encryptedpwd, salt);
         }
 
-        System.out.println((file!=null));//<-이게 이상함. null로 뜸 파일을 못받아오는 것
+
         if(file!=null) {
             // 파일저장시작
             String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
@@ -386,14 +386,16 @@ public class UserController {
 
             //기존파일 삭제
             String oldFileName = mapper.getProfileImg(userid);
-            File fileToDelete = new File(directory.getAbsolutePath()+"/upload/userprofileimg", oldFileName.substring(oldFileName.lastIndexOf('/')+1));
-            System.out.println(oldFileName.substring(oldFileName.lastIndexOf('/')));
-            boolean result = fileToDelete.delete();
+            if(oldFileName!=null || oldFileName=="") {
+                File fileToDelete = new File(directory.getAbsolutePath() + "/upload/userprofileimg", oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
+                System.out.println(oldFileName.substring(oldFileName.lastIndexOf('/')));
+                boolean result = fileToDelete.delete();
 
-            if(result) {
-                System.out.println("파일 삭제 성공");
-            } else {
-                System.out.println("파일 삭제 실패");
+                if (result) {
+                    System.out.println("파일 삭제 성공");
+                } else {
+                    System.out.println("파일 삭제 실패");
+                }
             }
             //기존파일 삭제 끝
 
