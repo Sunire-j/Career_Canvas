@@ -112,10 +112,6 @@
                     <td>${bvo.posttitle}</td>
                     <td>
                         대기중
-                        <button type="button" class="btn btn-info"
-                                onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}'">
-                            이동
-                        </button>
                         <button type="button" class="btn btn-info" onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}')">이동</button>
                     </td>
                     <td>

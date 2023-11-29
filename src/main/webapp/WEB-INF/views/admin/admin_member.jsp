@@ -20,6 +20,16 @@
                 var change_target = $(this).attr("title");
                 location.href = "${pageContext.servletContext.contextPath}/change/user?username=" + change_target;
             });
+
+            $("#postSort").change(function () {
+                var sortValue = $(this).val();
+                location.href = "${pageContext.servletContext.contextPath}/admin/member?postSort=" + sortValue;
+            });
+
+            $("#searchBtn").on('click', function () {
+                location.href = "${pageContext.servletContext.contextPath}/admin/member?postSort=" + $("#postSort").val()
+                    + "&searchKey=" + $("#searchKey").val() + "&searchWord=" + $("#searchWord").val();
+            });
         });
     </script>
     <style>
@@ -97,6 +107,20 @@
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
         <h1 style="padding: 15px;">회원관리-일반회원관리</h1>
+        <select style="height: 30px" name="postSort" id="postSort">
+            <option value="1" <c:if test="${pVO.postSort==1}">
+                selected
+            </c:if>>이름
+            </option>
+            <option value="2"
+                    <c:if test="${pVO.postSort==2}"> selected
+                    </c:if>>아이디
+            </option>
+            <option value="3" <c:if test="${pVO.postSort==3}">
+                selected
+            </c:if>>최신순
+            </option>
+        </select>
         <table class="table table-hover">
             <tr>
                 <th>회원ID</th>
@@ -125,6 +149,14 @@
                 <a href="#">3</a>
                 <a href="#">4</a>
             </div>
+        </div>
+        <div class="search-container">
+            <select style="height:30px" name="searchKey" id="searchKey">
+                <option value="username">이름</option>
+                <option value="userid">아이디</option>
+            </select>
+            <input type="text" name="searchWord" id="searchWord" placeholder="검색어를 입력하세요." style="height: 30px"/>
+            <button id="searchBtn">검색</button>
         </div>
     </div>
 </div>

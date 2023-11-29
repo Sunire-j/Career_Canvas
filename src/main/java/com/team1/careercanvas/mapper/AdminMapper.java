@@ -1,21 +1,19 @@
 package com.team1.careercanvas.mapper;
 
-import com.team1.careercanvas.vo.BoardVO;
-import com.team1.careercanvas.vo.ReportVO;
-import com.team1.careercanvas.vo.SubjectVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface AdminMapper {
-    List<UserVO> getUserProfile();
+    List<UserVO> getUserProfile(PagingVO pvo);
     List<BoardVO> getBoardList();
     List<ReportVO> getReportList();
     String getAdminName(String username);
     List<SubjectVO> getDeleteList();
     int deleteAssignment(int subjectid);
+    int dismissSubject(int subjectid);
     int deleteBoard(int postid);
     int deleteReport(int targetid);
     int deleteUser(String userid);

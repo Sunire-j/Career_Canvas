@@ -14,7 +14,17 @@
             $("#accept").on('click', function () {
                 var del_target = $(this).attr("title");
                 location.href = "${pageContext.servletContext.contextPath}/subject/delete?subjectid=" + del_target;
-            })
+            });
+
+            $("#dismiss").on('click', function () {
+                var target = $(this).attr("title");
+                location.href = "${pageContext.servletContext.contextPath}/subject/dismiss?subjectid=" + target;
+            });
+
+            $(".table").on('click', "#reason",function () {
+                var reason = $(this).parent().find('input[type="hidden"]').val();
+                alert(reason);
+            });
         });
     </script>
     <style>
@@ -108,11 +118,12 @@
                     <td>${svo.date}</td>
                     <td>
                         대기중
-                        <button type="button" class="btn btn-info">사유</button>
+                        <button type="button" class="btn btn-info" id="reason">사유</button>
+                        <input type="hidden" value="${svo.reason}"/>
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary" id="accept" title="${svo.subjectid}">승인</button>
-                        <button type="button" class="btn btn-danger">거절</button>
+                        <button type="button" class="btn btn-danger" id="dismiss" title="${svo.subjectid}">거절</button>
                     </td>
                 </tr>
             </c:forEach>
