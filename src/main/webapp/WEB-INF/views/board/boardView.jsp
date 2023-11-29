@@ -23,9 +23,10 @@
             width: 1200px;
             margin: 0 auto;
             margin-top: 30PX;
-            border: 1px #73351F solid;
-            background: #D9D9D9;
-            padding: 40px;
+            border-width: 3px 1px 3px 1px;
+            border-style: solid;
+            border-color:  #73351F;;
+            background: #F2F2F2;
         }
 
         .board_category {
@@ -36,11 +37,15 @@
         }
 
         .board_title {
-            margin-top: 20px;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            height: 80px;
             font-size: 2em;
             font-weight: bold;
-            margin-bottom: 20px;
-
+            border-bottom: 2px solid #73351F;
+            padding-left: 20px;
+            background: #A69668;
         }
 
         /* 게시물 정보( 작성자, 날짜, 조회수, 추천수) */
@@ -74,13 +79,13 @@
         }
 
         .board_view {
-            width: 60px;
+            width: 70px;
             text-align: center;
             margin: auto 0 0 auto;
         }
 
         .board_recommend {
-            width: 60px;
+            width: 70px;
             text-align: center;
         }
 
@@ -112,9 +117,6 @@
             width: 90%;
             height: 100px;
             min-height: 100px;
-            margin-left: 3px;
-            margin-bottom: 3px;
-            margin-top: 3px;
         }
 
         .comment_write_ok {
@@ -127,16 +129,15 @@
 
         }
         .comment_list{
-            background:  #A69668;
 
         }
         .comment_list li {
             float: none;
         }
         .comment_list_content {
-            padding-top: 10px;
-            padding-bottom: 10px;
+            background: #A69668;
             border: 0.5px #73351F solid;
+            margin-bottom: 5px;
         }
 
         .list_img {
@@ -154,32 +155,34 @@
         }
         .reply_content{
             background: #D9D9D9;
-            margin-bottom: 15px;
         }
-        .reply_content > div {
-            display: inline-block;
-        }
+
 
         .reply {
+
             padding: 10px;
             width: 85%;
-            height: 50px;
         }
 
-
-        /* IE9 이하를 위한 css */
-        input::placeholder{
+        .container_bottom{
             display: flex;
-            text-align: center;
-            align-items: center;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
         }
-
+        .reply_btn{
+            display: flex;
+            align-items: flex-start;
+        }
     </style>
 </head>
 <body>
 <article>
-    <section>
-        <div class="board_category">
+    <div class="board_title">
+        ${bvo.posttitle}
+    </div>
+    <section style="padding: 20px;">
+        <div class="board_category" style="margin-bottom: 20px">
             <c:if test="${bvo.boardcategory==0}">
                 자유
             </c:if>
@@ -190,11 +193,6 @@
                 노하우
             </c:if>
             게시판
-
-        </div>
-
-        <div class="board_title">
-            ${bvo.posttitle}
         </div>
     <div class="board_main">
         <div class="board_info">
@@ -213,7 +211,7 @@
             <div class="board_recommend">
                 추천수
             </div>
-            <div class="board_recommend_no">
+            <div class="board_recommend_no" style="padding-right: 10px">
                 ${postlike}
             </div>
         </div>
@@ -226,12 +224,12 @@
                 <div></div>
                 <a style="color: white" href="${pageContext.servletContext.contextPath}/board/like?no=${bvo.postid}"
                    class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a>
-                <div class="d-flex">
+                <div class="d-flex" style="margin-right: 10px;">
                     <c:if test="${LogStatus=='Y'}">
-                    <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="report_post">신고</a>
+                    <a style="height: fit-content; margin-right: 10px" class=" btn btn-outline-danger btn-sm" id="report_post">게시글 신고</a>
                     </c:if>
                     <c:if test="${LogId==bvo.user_userid}">
-                        <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">삭제</a>
+                        <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">게시글 삭제</a>
                     </c:if>
                 </div>
             </div>
@@ -241,20 +239,24 @@
                 <input type="hidden" id="postid" name="post_postid" value="${bvo.postid}">
                 <textarea class="comment_content" placeholder="욕설, 비방, 비아냥, 음란, 사행성, 스팸, 광고 댓글은 필터링 또는 삭제됩니다."
                           style="resize: none;"></textarea>
-                <button type="button" class="btn btn-secondary comment_write_ok" style="border-radius: 0%; margin: 3px 3px 3px 0px; padding: 0px;"> 댓글 등록</button>
+                <button type="button" class="btn btn-secondary comment_write_ok" style="border-radius: 0%"> 댓글 등록</button>
             </div>
             <div style="height: 30px; margin: 0px; background: #D9C8A9;">
             </div>
         </div>
     </div>
+    </section>
+    <hr style="border: 2px dashed #73351F">
+    <section>
 
-        <h4 style="margin-left: 30px; margin-top: 30px">댓글</h4>
-    <div class="comment_main">
-        <div class="comment_list">
-            <ul class="comment_list_real">
-            </ul>
+        <div style="padding: 20px">
+        <div class="comment_main">
+            <div class="comment_list">
+                <ul class="comment_list_real">
+                </ul>
+            </div>
+
         </div>
-    </div>
 
         <script>
             function commentList() {
@@ -461,7 +463,9 @@
                 });
             });
         </script>
+        </div>
     </section>
+    <div class="container_bottom"></div>
 </article>
 <footer></footer>
 </body>

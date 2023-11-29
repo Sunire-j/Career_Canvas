@@ -14,16 +14,31 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/super-build/ckeditor.js"></script>
     <style>
         .content {
-            max-width: 1000px;
+            width: 1200px;
             margin: 0 auto;
             margin-top: 70px;
+            background: #F2F2F2;
+            border-width: 3px 1px 3px 1px;
+            border-color: #73351F;
+            border-style: groove;
         }
-
+        .content-header{
+            height: 100px;
+            width: 100%;
+            background: #A69668;
+            border-bottom: 2px solid #73351F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .ck-editor__editable {
             height: 400px;
         }
+        h3{
 
-
+            font-size: 40px;
+            font-weight: bold;
+        }
 
         #editor {
             width: 100%;
@@ -35,13 +50,19 @@
             display: flex;
             justify-content: space-between;
             height: 38px;
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
         input[type='radio'] {
             display: none;
         }
 
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
     </style>
     <script>
         $(function(){
@@ -142,9 +163,9 @@
             //
 
             $('.button-container input[type="radio"]').change(function(){
-                $('.button-container label').removeClass('btn-warning').addClass('btn-outline-warning');
+                $('.button-container label').removeClass('btn-secondary').addClass('btn-outline-secondary');
                 if($(this).is(':checked')){
-                    $(this).parent().removeClass('btn-outline-warning').addClass('btn-warning');
+                    $(this).parent().removeClass('btn-outline-secondary').addClass('btn-secondary');
                 }
             });
             $('#title').on('input blur', function() {
@@ -190,55 +211,62 @@
 </head>
 <body>
 <div class="content">
-    <h3 style="margin-bottom: 30px">
-        <c:if test="${boardcat==0}" >
-            자유
-        </c:if>
-        <c:if test="${boardcat==1}" >
-            질문
-        </c:if>
-        <c:if test="${boardcat==2}" >
-            노하우
-        </c:if>
-            게시판 작성</h3> <!-- 이 부분은 세션에 게시판종류 넣어서 처리할 예정 -->
-    <form method="post" action="${pageContext.servletContext.contextPath}/board/writeOk" class="needs-validation writeform" novalidate>
+    <div class="content-header">
+        <h3>
+            <c:if test="${boardcat==0}" >
+                자유
+            </c:if>
+            <c:if test="${boardcat==1}" >
+                질문
+            </c:if>
+            <c:if test="${boardcat==2}" >
+                노하우
+            </c:if>
+                게시판 작성</h3> <!-- 이 부분은 세션에 게시판종류 넣어서 처리할 예정 -->
+    </div>
+    <div style="background: #D9D9D9">
+    <form method="post" action="${pageContext.servletContext.contextPath}/board/writeOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F" novalidate>
         <input type="hidden" id="content" name="postcontent">
         <input type="hidden" name="boardcategory" value="${boardcat}"> <!-- 게시판 종류(0,1,2)등으로 처리 예정 -->
-        <input type="text" style="width: 40%" class="form-control" name="posttitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
-        <div class="invalid-feedback">
+        <input type="text" style="width: 50%; height: 45px;" class="form-control" name="posttitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
+        <span class="invalid-feedback">
             제목을 입력해 주세요. (30자 이내)
-        </div>
-    <div style="padding: 20px 0">
-        <div class="button-container">
-            <label class="btn btn-outline-warning">
-                <input type="radio" name="category" value="0" checked>
-                <span>선택안함</span>
-            </label>
-            <label class="btn btn-outline-warning">
-                <input type="radio" name="category" value="1">
-                <span>IT/프로그래밍</span>
-            </label>
-            <label class="btn btn-outline-warning">
-                <input type="radio" name="category" value="2">
-                <span>디자인</span>
-            </label>
-            <label class="btn btn-outline-warning">
-                <input type="radio" name="category" value="3">
-                <span>영상음향</span>
-            </label>
+        </span>
+
+        <div>
+            <div class="button-container">
+                <label class="btn btn-outline-secondary">
+                    <input type="radio" name="category" value="0" checked>
+                    <span>선택안함</span>
+                </label>
+                <label class="btn btn-outline-secondary">
+                    <input type="radio" name="category" value="1">
+                    <span>IT/프로그래밍</span>
+                </label>
+                <label class="btn btn-outline-secondary">
+                    <input type="radio" name="category" value="2">
+                    <span>디자인</span>
+                </label>
+                <label class="btn btn-outline-secondary">
+                    <input type="radio" name="category" value="3">
+                    <span>영상음향</span>
+                </label>
+            </div>
         </div>
     </div>
+    <div style="padding: 10px">
     <div id="editor"></div>
-
-    <div id="botContainer">
-        <div style="width: 50%" class="botContainer2">
-        <input type="text" class="form-control hashtag" name="hashtag" id="hashtag" pattern="(#[\w가-힣]+ )*(#[\w가-힣]+ )?#[\w가-힣]+" placeholder="#태그는 공백으로 구분해 주세요. (예 : #샤롯데 #오페라의유령)"/>
-        <div class="invalid-feedback" data-feedback="patternMismatch">해쉬태그 형식에 맞지 않습니다.
+        <div id="botContainer">
+            <div style="width: 50%" class="botContainer2">
+            <input type="text" class="form-control hashtag" name="hashtag" id="hashtag" pattern="(#[\w가-힣]+ )*(#[\w가-힣]+ )?#[\w가-힣]+" placeholder="#태그는 공백으로 구분해 주세요. (예 : #샤롯데 #오페라의유령)"/>
+            <div class="invalid-feedback" data-feedback="patternMismatch">해쉬태그 형식에 맞지 않습니다.
+            </div>
+            </div>
+            <input type="submit"  class="btn btn-primary submitbtn" value="글등록" />
         </div>
-        </div>
-        <input type="submit"  class="btn btn-primary submitbtn" value="글등록" />
     </div>
     </form>
+    <div class="container_bottom"></div>
 </div>
 </body>
 </html>

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>게시판 목록</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/users/boardList.css">
     <style>
         .container {
             max-width: 1200px;
@@ -20,16 +20,6 @@
 
         .container {
             text-align: center;
-        }
-
-        .button-container {
-            margin-top: 20px;
-        }
-
-        .board-container {
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 20px;
         }
 
         .board-header {
@@ -47,10 +37,19 @@
 
         .search-container, .search-button {
             display: inline-block;
+            width: 500px;
+            height: 40px;
         }
 
-        .search-container {
-            background-color: #f2f2f2;
+        h2 {
+            float: left;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .board-container {
         }
 
         .search-box {
@@ -99,35 +98,38 @@
                 window.location.href = "${pageContext.servletContext.contextPath}/party/wanted?postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
             });
         });
-
     </script>
 </head>
 <body>
-<div class="container" style="background-color: white; margin-top :30px;">
-    <div class="mypartyvalue">
-        <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집"
-               onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티"
-               onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
-    </div>
-    <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
-        <h2>파티홍보 게시판</h2>
-    </div>
-    <div style="display: flex; justify-content: space-between; padding: 20px">
-        <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
-            <option value="1"
-                    <c:if test="${pVO.postSort==1}">
-                        selected
-                    </c:if>
-            >최신순
-            </option>
-            <option value="2" <c:if test="${pVO.postSort==2}">
-                selected
-            </c:if>>조회순
-            </option>
-        </select>
+<div class="container">
+    <div class="container-top">
+        <div class="container-head" style="height: 80px; border-bottom: 2px solid #73351F">
+            <div class="mypartyvalue">
+                <h2 class="main-title" style="margin-top: 0px; font-weight: bold; font-size: 35px">파티홍보 게시판</h2>
+            </div>
+        </div>
+        <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
+
+            <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+            <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+                <option value="1"
+                        <c:if test="${pVO.postSort==1}">
+                            selected
+                        </c:if>
+                >최신순
+                </option>
+                <option value="2" <c:if test="${pVO.postSort==2}">
+                    selected
+                </c:if>>조회순
+                </option>
+            </select>
+        </div>
     </div>
     <div class="board-container">
+        <div class="board-container-set">
         <div class="board-header">
             <div class="header-row">
                 <div id="num" style="width: 7%" class="list">번호</div>
@@ -140,7 +142,7 @@
                 <div id="date" style="width: 10%" class="list">게시일</div>
             </div>
         </div>
-        <hr>
+            <hr class="hr-styleset">
         <c:forEach items="${wVO}" var="bvo">
             <div class="board-row">
                 <div style="width: 7%" class="list">${bvo.wantedid}</div>
@@ -153,21 +155,22 @@
                 <div style="width: 7%" class="list">${bvo.commentAmount}</div>
                 <div style="width: 10%" class="list">${bvo.date}</div>
             </div>
-            <hr>
+            <hr class="hr-styleset">
         </c:forEach>
 
 
         <div class="search-container">
-            <form action="${pageContext.request.contextPath}/party/wanted/" class="d-flex" method="get">
-                <select class="form-select" style="width: fit-content" name="searchKey">
+            <form action="${pageContext.request.contextPath}/board/wanted/" class="d-flex board-bottom" method="get">
+                <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
+
                     <option value="all">전체</option>
                     <option value="title">제목</option>
                     <option value="author">작성자</option>
                     <option value="content">글내용</option>
                     <option value="partyname">파티명</option>
                 </select>
-                <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요" value="${pVO.searchWord}">
-                <input type="submit" class="btn btn-success" value="검색">
+                <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요" style="margin-right: 10px">
+                <input type="submit" class="btn btn-secondary" value="검색">
             </form>
         </div>
 
@@ -228,8 +231,10 @@
                 </div>
             </div>
             <a style="margin-top: 20px; color: white"
-               href="${pageContext.servletContext.contextPath}/party/wanted/write" class="btn-primary btn">글 작성</a>
+               href="${pageContext.servletContext.contextPath}/party/wanted/write" class="btn btn-secondary">글 작성</a>
         </div>
+    </div>
+    <div class="container_bottom"></div>
     </div>
 </div>
 </body>
