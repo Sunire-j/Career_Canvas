@@ -274,17 +274,8 @@
         </div>
     </header>
     <script>
-        const toggleBtn = document.querySelector('.hamberger');
-        const menu = document.querySelector('.nav_wrapper');
         const userNickname = document.querySelector('.userNickname');
         const userInfo = document.querySelector('.userInfo');
-        const ajaxMenu = document.querySelector('.menuClick');
-
-
-
-        toggleBtn.addEventListener('click',() => {
-            menu.classList.toggle('active');    // on/off
-        });
 
         userNickname.addEventListener('click', () => {
             userInfo.classList.toggle('active');
