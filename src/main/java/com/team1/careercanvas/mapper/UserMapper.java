@@ -46,6 +46,8 @@ public interface UserMapper {
 
     void InsertProfileImg(String imgsrc, String userid);
 
+    String getProfileImg(String userid);
+
     // 권혁준 작업
     UserVO getUserInfo(String LogId);
 

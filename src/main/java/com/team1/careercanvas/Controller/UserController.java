@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -362,8 +364,9 @@ public class UserController {
         System.out.println((file!=null));//<-이게 이상함. null로 뜸 파일을 못받아오는 것
         if(file!=null) {
             // 파일저장시작
+            String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-            String newFileName = userid + extension;
+            String newFileName = userid + "_" + currentTime + extension;
             String projectDir = new File("").getAbsolutePath();
             File directory = new File(projectDir + "/upload/userprofileimg");
             if (!directory.exists()) {
@@ -381,11 +384,25 @@ public class UserController {
             }
             // 파일저장 끝
 
+            //기존파일 삭제
+            String oldFileName = mapper.getProfileImg(userid);
+            File fileToDelete = new File(directory.getAbsolutePath()+"/upload/userprofileimg", oldFileName.substring(oldFileName.lastIndexOf('/')+1));
+            System.out.println(oldFileName.substring(oldFileName.lastIndexOf('/')));
+            boolean result = fileToDelete.delete();
+
+            if(result) {
+                System.out.println("파일 삭제 성공");
+            } else {
+                System.out.println("파일 삭제 실패");
+            }
+            //기존파일 삭제 끝
+
             // db에 경로넣기
-            String imgsrc = "/companyauth/" + newFileName;
+            String imgsrc = "/userprofileimg/" + newFileName;
 
             mapper.InsertProfileImg(imgsrc, userid);
             // db에 경로넣기 끝
+            session.setAttribute("LogImg", imgsrc);
         }
 
         return "redirect:/mypage/myPofol";

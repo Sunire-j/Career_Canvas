@@ -344,6 +344,7 @@
             action="mypageEditOk"
             method="post"
             onsubmit="return frmCheck()"
+            enctype="multipart/form-data"
     >
         <p>회원정보 설정</p>
         <div class="nickName">

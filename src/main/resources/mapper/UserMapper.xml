@@ -103,6 +103,11 @@
         set profileimg=#{param1}
         where userid=#{param2}
     </update>
+
+    <select id="getProfileImg" resultType="String">
+        select profileimg from user
+        where userid=#{param1}
+    </select>
     
     <!-- 권혁준 작업  -->
 	<select id="getUserInfo" resultType="com.team1.careercanvas.vo.UserVO">
