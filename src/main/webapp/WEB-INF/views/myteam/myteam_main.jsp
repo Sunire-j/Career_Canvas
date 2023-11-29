@@ -233,6 +233,7 @@
         }
     </style>
     <script>
+
         function loadMemo(no){
             $("memo_list").empty();
             $.ajax({
@@ -356,6 +357,7 @@
                     });
                 }
             });
+
         });
     </script>
 </head>
@@ -372,14 +374,14 @@
     <ul class="party_list">
         <c:forEach items="${pvo}" var="p">
             <li title="${p.partyid}" class="party_list_btn">
-                <img src="profile.PNG" class="member_img">
+                <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
                 <div class="party_list_name">
                         ${p.partyname}
                 </div>
             </li>
         </c:forEach>
         <li style="float: left">
-            <button class="new_party_btn">
+            <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
                 <i class="fa-regular fa-square-plus fa-4x"></i><br/>
                 <span style="font-weight: bold;">파티생성</span>
             </button>

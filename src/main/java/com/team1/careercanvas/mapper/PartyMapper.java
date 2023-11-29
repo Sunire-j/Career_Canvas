@@ -15,6 +15,19 @@ public interface PartyMapper {
 
     int DeleteMemo(int partymemo);
 
+    int InsertCreateTeam(PartyVO temp);
+
+    void InsertPartyImg(String imgsrc, int partyid);
+    void InsertMember(int Partyid, String logId, String temp);
+
+    int CheckPartyName(String partyname);
+
+    void UpdatePartyName(String partyname, int partyid);
+
+    void UpdatePartyObjective(int partyid, String partygoal);
+
+    void UpdatePartyIntro(int partyid, String partycomment);
+
     //조석훈 시작
     List<PartyVO> getMineParty(String userid);
 
