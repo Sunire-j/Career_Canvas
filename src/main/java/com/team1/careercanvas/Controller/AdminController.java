@@ -1,12 +1,10 @@
 package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.AdminMapper;
-import com.team1.careercanvas.vo.BoardVO;
-import com.team1.careercanvas.vo.ReportVO;
-import com.team1.careercanvas.vo.SubjectVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -21,14 +19,22 @@ public class AdminController {
     }
 
     @GetMapping("/admin/member") // 개인회원관리
-    public ModelAndView member(HttpSession session) {
+    public ModelAndView member(HttpSession session,
+                               @RequestParam(required = false, defaultValue = "1") int postSort,
+                               @RequestParam(required = false) String searchKey,
+                               @RequestParam(required = false) String searchWord) {
         ModelAndView mav = new ModelAndView();
+        PagingVO pvo = new PagingVO();
+        pvo.setSearchKey(searchKey);
+        pvo.setSearchWord(searchWord);
+        pvo.setPostSort(postSort);
 
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
-        List<UserVO> list = mapper.getUserProfile();
+        List<UserVO> list = mapper.getUserProfile(pvo);
         mav.addObject("uVO", list);
+        mav.addObject("pVO", pvo);
         mav.setViewName("/admin/admin_member");
 
         return mav;
@@ -74,7 +80,7 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("/admin/delete") // 삭제 신청 과제
+    @GetMapping("/admin/delete") // 삭제 신청 과제 리스트
     public ModelAndView assignment(HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
@@ -90,7 +96,19 @@ public class AdminController {
 
     @GetMapping("/subject/delete") // 삭제 신청 과제 삭제
     public String deleteAssignment(HttpSession session, int subjectid) {
+        mapper.dismissSubject(subjectid);
         int result = mapper.deleteAssignment(subjectid);
+        if (result > 0) { // 삭제 성공
+            return "redirect:/admin/delete";
+        } else { // 삭제 실패
+            session.setAttribute("msg", "삭제 실패했습니다.");
+            return "alert_page";
+        }
+    }
+
+    @GetMapping("/subject/dismiss") // 삭제 신청 과제 거절
+    public String dismissAssignment(HttpSession session, int subjectid) {
+        int result = mapper.dismissSubject(subjectid);
         if (result > 0) { // 삭제 성공
             return "redirect:/admin/delete";
         } else { // 삭제 실패

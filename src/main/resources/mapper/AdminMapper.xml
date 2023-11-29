@@ -4,8 +4,25 @@
     <select id="getUserProfile" resultType="com.team1.careercanvas.vo.UserVO">
         select userid, date_format(date, '%y-%m-%d') date, username
         from user
-        where usertype=0 limit 10
-        offset 0
+        <where>usertype=0
+            <if test="searchKey=='username'">
+                AND username LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey=='userid'">
+                AND userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="postSort==1">
+                order by username asc
+            </when>
+            <when test="postSort==2">
+                order by userid asc
+            </when>
+            <when test="postSort==3">
+                order by date desc
+            </when>
+        </choose>
     </select>
 
     <select id="getCompanyProfile" resultType="com.team1.careercanvas.vo.UserVO">
@@ -18,11 +35,13 @@
     <select id="getBoardList" resultType="com.team1.careercanvas.vo.BoardVO">
         select *
         from post
+        order by date desc
     </select>
 
     <select id="getReportList" resultType="com.team1.careercanvas.vo.ReportVO">
-        select reportid, user_userid, reason, reporttype, title, userid, targetid
+        select *
         from report
+        order by date desc
     </select>
 
     <select id="getAdminName" resultType="String">
@@ -32,13 +51,23 @@
     </select>
 
     <select id="getDeleteList" resultType="com.team1.careercanvas.vo.SubjectVO">
-        select subjectid, subjecttitle, user_userid, date_format(date, '%y-%m-%d') date
-        from subject
+        select a.subjectid    as subjectid,
+               b.subjecttitle as subjecttitle,
+               b.user_userid  as user_userid,
+               date_format(b.date, '%y-%m-%d') date, a.reason as reason
+        from subject_delapply a join subject b
+        where a.subjectid = b.subjectid
     </select>
 
     <delete id="deleteAssignment">
         delete
         from subject
+        where subjectid = #{param1}
+    </delete>
+
+    <delete id="dismissSubject">
+        delete
+        from subject_delapply
         where subjectid = #{param1}
     </delete>
 

@@ -121,7 +121,12 @@
                     <td>${rvo.userid}</td>
                     <td>
                         <button type="button" class="btn btn-info"
-                                onclick="location.href='${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}'">이동
+                                <c:if test="${rvo.reporttype=='board'}">
+                                    onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}')">이동
+                                </c:if>
+                                <c:if test="${rvo.reporttype=='commnet'}">
+                                    onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${rvo.originpostid}')">이동
+                                </c:if>
                         </button>
                     </td>
                     <td>
