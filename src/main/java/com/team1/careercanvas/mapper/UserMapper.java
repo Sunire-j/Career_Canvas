@@ -2,13 +2,11 @@ package com.team1.careercanvas.mapper;
 
 import com.team1.careercanvas.vo.MessageVO;
 import com.team1.careercanvas.vo.PagingVO;
-import com.team1.careercanvas.vo.PofolVO;
 import com.team1.careercanvas.vo.SubmitSubjectVO;
 import com.team1.careercanvas.vo.UserVO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
@@ -45,6 +43,8 @@ public interface UserMapper {
     void deleteUserPwd(String userid);
 
     void changePwd(String userid, String pwd, String salt);
+
+    void InsertProfileImg(String imgsrc, String userid);
 
     // 권혁준 작업
     UserVO getUserInfo(String LogId);

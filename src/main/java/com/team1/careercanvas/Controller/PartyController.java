@@ -94,8 +94,6 @@ public class PartyController {
     @ResponseBody
     public List<CommentVO> commendLoad(int no){
         List<CommentVO> list = mapper.commentLoad(no);
-        System.out.println(list.get(0).toString());
-        System.out.println(list.get(1).toString());
         return list;
     }
 

@@ -97,6 +97,12 @@
     <update id="changePwd">
         update user set usersalt = #{param3}, userpwd = #{param2} where userid=#{param1};
     </update>
+
+    <update id="InsertProfileImg">
+        update user
+        set profileimg=#{param1}
+        where userid=#{param2}
+    </update>
     
     <!-- 권혁준 작업  -->
 	<select id="getUserInfo" resultType="com.team1.careercanvas.vo.UserVO">

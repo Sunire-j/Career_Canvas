@@ -4,8 +4,6 @@ import com.team1.careercanvas.mapper.BoardMapper;
 import com.team1.careercanvas.mapper.PofolMapper;
 import com.team1.careercanvas.mapper.UserMapper;
 import com.team1.careercanvas.vo.*;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -340,6 +338,7 @@ public class UserController {
             @RequestParam("nickName") String nickName,
             @RequestParam("tel") String tel,
             @RequestParam("comment") String comment,
+            @RequestParam(value = "fileInput", required = false)MultipartFile file,
             HttpSession session) throws NoSuchAlgorithmException {
 
         if (!session.getAttribute("LogStatus").equals("Y")) {
@@ -359,6 +358,36 @@ public class UserController {
             String salt = secureValue[1];
             mapper.changePwd(userid, encryptedpwd, salt);
         }
+
+        System.out.println((file!=null));//<-이게 이상함. null로 뜸 파일을 못받아오는 것
+        if(file!=null) {
+            // 파일저장시작
+            String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            String newFileName = userid + extension;
+            String projectDir = new File("").getAbsolutePath();
+            File directory = new File(projectDir + "/upload/userprofileimg");
+            if (!directory.exists()) {
+                directory.mkdirs(); // 디렉토리 생성
+            }
+
+            Path path = Paths.get(directory.getAbsolutePath(), newFileName); // 절대 경로를 사용
+
+            try {
+                file.transferTo(new File(path.toString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("파일저장실패");
+                return "404pages";
+            }
+            // 파일저장 끝
+
+            // db에 경로넣기
+            String imgsrc = "/companyauth/" + newFileName;
+
+            mapper.InsertProfileImg(imgsrc, userid);
+            // db에 경로넣기 끝
+        }
+
         return "redirect:/mypage/myPofol";
     }
 

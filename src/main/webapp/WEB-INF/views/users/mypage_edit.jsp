@@ -46,18 +46,6 @@
                     var formData = new FormData();
                     formData.append("file", selectedFile);
 
-                    // 서버로 이미지 업로드
-                    fetch("/upload", {
-                        method: "POST",
-                        body: formData,
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            // 서버에서 반환된 데이터를 처리하거나 알림을 표시할 수 있습니다.
-                            console.log(data);
-                        })
-                        .catch(error => console.error("Error:", error));
-
                     // 이미지를 미리보기로 표시
                     var reader = new FileReader();
                     reader.onload = function (e) {
@@ -436,7 +424,7 @@
             </div>
             <label class="btn btn-outline-primary changeimgbtn">
                 변경
-                <input type="file" accept=".jpg, .jpeg, .png" id="fileInput" style="display:none;" onchange="uploadImage()">
+                <input type="file" name="fileInput" accept=".jpg, .jpeg, .png" id="fileInput" style="display:none;" onchange="uploadImage()">
             </label>
         </div>
         <!--<i class="fas fa-user fa-3x tmpimg"></i>-->
