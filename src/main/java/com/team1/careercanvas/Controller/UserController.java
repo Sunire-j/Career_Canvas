@@ -387,8 +387,7 @@ public class UserController {
             //기존파일 삭제
             String oldFileName = mapper.getProfileImg(userid);
             if(oldFileName!=null || oldFileName=="") {
-                File fileToDelete = new File(directory.getAbsolutePath() + "/upload/userprofileimg", oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
-                System.out.println(oldFileName.substring(oldFileName.lastIndexOf('/')));
+                File fileToDelete = new File(directory, oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
                 boolean result = fileToDelete.delete();
 
                 if (result) {
