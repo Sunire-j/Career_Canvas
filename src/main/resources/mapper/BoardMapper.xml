@@ -159,6 +159,7 @@
             where user_userid = #{searchKey}
             and posttitle like concat('%',#{searchWord},'%')
         </if>
+            order by postid desc
         limit #{onePageRecord} offset #{offsetPoint};
     </select>
 

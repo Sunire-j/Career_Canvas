@@ -596,7 +596,7 @@ public class UserController {
             pVO.setSearchWord("");
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
-        pVO.setOnePageRecord(5);
+        pVO.setOnePageRecord(10);
         pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(boardmapper.getmyPostAmount(pVO));
 

@@ -419,7 +419,7 @@
                     수정+
                 </button>
                 <hr style="margin-top: 5px;"/>
-                <img src="profile.PNG">
+                <img src="${pageContext.servletContext.contextPath}/upload${partyvo.partyimage}">
             </div>
             <form id="objective_editFrm">
                 <div class="objective_edit">
