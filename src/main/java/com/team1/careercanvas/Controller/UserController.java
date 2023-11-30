@@ -27,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -404,6 +405,19 @@ public class UserController {
         return mav;
     }
 
+    @PostMapping("nickNameCheck")
+    @ResponseBody
+    public int nickNameCheck(HttpSession session, String nickname) {
+        int result = mapper.getAllUserNickname(nickname);
+        String myNickname = (String) session.getAttribute("Logusername");
+        if (result == 1) {
+            if (myNickname.equals(nickname)) {
+                result = 0;
+            }
+        }
+        return result;
+    }
+
     // 완료
     @PostMapping("mypageEditOk")
     public String mypageEditOk(
@@ -599,9 +613,10 @@ public class UserController {
             pVO.setSearchWord("");
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setTotalRecord(mapper.getTotalSendMsg(pVO));
         pVO.setOnePageRecord(10);
         pVO.setPage(pVO.getPage());
-        pVO.setTotalRecord(mapper.getTotalSendMsg(pVO));
+
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         List<MessageVO> mVO = new ArrayList<MessageVO>();
         mVO = mapper.getSendMsg(pVO);
@@ -687,4 +702,37 @@ public class UserController {
         System.out.println(pVO);
         return mav;
     }
+
+    @GetMapping("mypage/pop_sendMsg")
+    public String popSendMsg() {
+
+        return "/users/pop_sendMsg";
+    }
+
+    @PostMapping("mypage/pop_sendMsgOk")
+    public ModelAndView popsendMsgOk(
+            HttpSession session,
+            @RequestParam("receive_user") String receiveUser,
+            @RequestParam("content") String content) {
+
+        ModelAndView mav = new ModelAndView();
+        boardmapper.saveSendMsg((String) session.getAttribute("LogId"), receiveUser, content);
+        UserVO uVO = mapper.getUserInfo(receiveUser);
+        mav.addObject("uVO", uVO);
+        mav.setViewName("/users/pop_sendMsgOk");
+        return mav;
+    }
+
+    @ResponseBody
+    @PostMapping("mypage/checkReceiver")
+    public int checkReceiver(String receive_user) {
+        UserVO uVO = mapper.getUserInfo(receive_user);
+        int result = 1;
+        if (uVO == null) {
+            result = 0;
+        }
+        return result;
+
+    }
+
 }

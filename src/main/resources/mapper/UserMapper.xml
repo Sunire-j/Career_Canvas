@@ -131,6 +131,12 @@
 		from user
 		where userid=#{param1};
 	</select>
+
+    <select id="getAllUserNickname" resultType='Integer'>
+        select count(userid)
+        from user
+        where username=#{param1};
+    </select>
 	
 	<update id="updateMypageWithoutPwd"> 
 		update user set username=#{param1}, usertel=#{param2}, comment=#{param3}
@@ -144,13 +150,14 @@
         <if test="#{searchWord != ''}">
             and content like concat ('%', #{searchWord}, '%')
         </if>
+        order by date desc
         limit #{onePageRecord} offset #{offsetPoint};
     </select>
 
     <select id="getTotalSendMsg" resultType="Integer">
         select count(*) 
         from message
-        where user_userid = #{searchKey};
+        where user_userid = #{searchKey}
     </select>
 
     <select id="getReceiveMsg" parameterType="com.team1.careercanvas.vo.PagingVO" resultType="com.team1.careercanvas.vo.MessageVO">
@@ -160,6 +167,7 @@
         <if test="#{searchWord != ''}">
             and content like concat ('%', #{searchWord}, '%')
         </if>
+        order by date desc
         limit #{onePageRecord} offset #{offsetPoint};
     </select>
 
