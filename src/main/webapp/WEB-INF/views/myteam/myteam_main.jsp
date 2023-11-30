@@ -11,6 +11,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
     <style>
+        @media (min-width: 1200px) {
+            .container{
+                max-width: 1200px;
+            }
+        }
+        .container {
+            margin: 0 auto;
+            margin-top: 50px;
+            border-top: 3px solid #73351F;
+            border-bottom: 2px dashed #73351F;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+        }
+        .teamView{
+            width: 1200px;
+            margin: 0 auto;
+            border-bottom: 3px solid #73351F;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+            padding: 40px;
+        }
         p{
             margin: 0;
         }
@@ -92,7 +115,6 @@
         /* 파티 목표 & 소개 */
         .party_name{
             margin: 0;
-            margin-top: 30px;
             text-align: center;
             font-weight: bold;
             font-size: 2.5em;
@@ -396,12 +418,11 @@
             </button>
         </li>
     </ul>
-    <div class="choisvalue" style="margin-top: 30px;">
+    <div class="choisvalue" style="margin-top: 30px;padding-bottom: 20px">
         <input type="button" class="btn btn-secondary mainbtn" value="메인" onclick="changeClass(this)">
         <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
         <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리" >
     </div>
-    <hr>
 </main>
 
 <article>

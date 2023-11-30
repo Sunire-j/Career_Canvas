@@ -155,6 +155,7 @@
         }
         .reply_content{
             background: #D9D9D9;
+            display: flex;
         }
 
 
@@ -173,6 +174,7 @@
         .reply_btn{
             display: flex;
             align-items: flex-start;
+            width: fit-content;
         }
     </style>
 </head>
