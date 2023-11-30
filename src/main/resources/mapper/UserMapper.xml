@@ -119,7 +119,7 @@
         values(#{param1}, #{param2}, #{param3});
     </update>
 
-    <select id="CheckCompanyNo">
+    <select id="CheckCompanyNo" resultType="Integer">
         select count(user_userid)
         from company
         where companyno=#{param1};

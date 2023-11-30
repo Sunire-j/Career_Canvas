@@ -12,7 +12,7 @@ import java.util.UUID;
 public class OCRTemplate {
     public static String OCR(String filename) {
         String apiURL = "https://18xvoekb16.apigw.ntruss.com/custom/v1/26628/5b2b7bfe9d5913712a6ce76dd287efea4a7c9377f22d183c4479078c13232312/infer";
-        String secretKey = "S1dwdWZTZkVQTXliTk1ibVhsaURkQnBhaldadlp2b2g=";
+        String secretKey = System.getenv("NCP.secretKey");
         String imageFile = filename;
         String format = imageFile.substring(imageFile.lastIndexOf(".")+1);
         StringBuffer response = null;
