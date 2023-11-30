@@ -33,6 +33,8 @@ public interface BoardMapper {
 
     int getmyCommentCount(PagingVO pVO);
 
+    void saveSendMsg(String Logid, String receiveUser, String content);
+
     // 정인식 작업 ( 글내용보기 )
     BoardVO SelectBoardView(int postid);
 

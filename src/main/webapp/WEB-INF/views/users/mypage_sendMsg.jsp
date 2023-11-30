@@ -148,7 +148,8 @@ file="../header_footer/header.jspf"%>
         margin-bottom: 20px;
       }
       .userIntro img {
-        padding-right: 30px;
+        width: 100px;
+        height: 100px;
       }
       .btn-outline-primary {
         font-size: 14px;
@@ -244,6 +245,9 @@ file="../header_footer/header.jspf"%>
       .paging li {
         margin: 0 20px;
       }
+      .msgStyle {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -256,7 +260,7 @@ file="../header_footer/header.jspf"%>
         <!-- UserInfo Area -->
         <div class="userIntro">
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
-          <div>
+          <div style="padding-left: 20px;">
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
@@ -349,9 +353,9 @@ file="../header_footer/header.jspf"%>
           <tbody>
             <div class="ajaxContent">
               <c:forEach var="mVO" items="${mVO}">
-                <tr>
+                <tr id="msgStyle">
                   <td>${mVO.user_userid1}</td>
-                  <td>${mVO.content}</td>
+                  <td><a href="${pageContext.servletContext.contextPath}/mypage/sendMsgView">${mVO.content}</a></td>
                   <td>${mVO.date}</td>
                   <td>${mVO.ischeck}</td>
                 </tr>
@@ -408,8 +412,20 @@ file="../header_footer/header.jspf"%>
               </li>
             </c:if>
           </ul>
-        </div>
+          <input type="button" value="쪽지보내기" class="btn btn-outline-primary" onclick="openPopup()">
+          <script>
+            function openPopup(){
 
+              var left = (window.innerWidth - 700) / 2;
+              var top = (window.innerHeight - 600) / 2;
+              var popSize = `toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,location=no,width=700, height=600, top=${top},left=${left}`;
+              window.open('${pageContext.servletContext.contextPath}/mypage/pop_sendMsg','SendMsg',popSize);
+            }
+          </script>
+          
+          <!-- 보내는사람 닉네임 , 받는사람 닉네임, 내용, 전송버튼 -->
+          <!-- 깡통 JSP만들기 -->
+        </div>
       </div>
     </main>
   </body>

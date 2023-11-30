@@ -57,6 +57,8 @@ public interface UserMapper {
     // 권혁준 작업
     UserVO getUserInfo(String LogId);
 
+    int getAllUserNickname(String nickname);
+
     void updateMypageWithoutPwd(String nickName, String tel, String comment, String userid);
 
     List<MessageVO> getSendMsg(PagingVO pVO);

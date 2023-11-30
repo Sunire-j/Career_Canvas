@@ -172,16 +172,19 @@
         select *
         from comment
         where user_userid = #{searchKey}
+        and isdelete = 0
         <if test="#{searchWord != ''}">       
             and commentcontent like concat('%', #{searchWord} ,'%')
         </if>
+        order by date desc
         limit #{onePageRecord} offset #{offsetPoint};
     </select>
 
     <select id="getmyCommentCount" resultType="Integer">
         select count(commentid)
         from comment
-        where user_userid = #{searchKey};
+        where user_userid = #{searchKey}
+        and isdelete = 0;
     </select>
 
     <select id="CheckValid" resultType="Integer">
@@ -196,4 +199,10 @@
         from postlike
         where post_postid = #{param1}
     </select>
+
+    <insert id="saveSendMsg">
+        insert into message (user_userid, user_userid1, content, ischeck)
+        values (#{param1}, #{param2}, #{param3}, 1);
+    </insert>
+    
 </mapper>
