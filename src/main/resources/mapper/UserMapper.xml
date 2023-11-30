@@ -227,4 +227,10 @@
         values (#{param1}, #{param2}, #{param3},0, #{param4});
     </insert>
 
+    <delete id="deleteUser">
+        delete from user
+        where userid = #{param1}
+    </delete>
+
+
 </mapper>

@@ -81,4 +81,6 @@ public interface UserMapper {
 
     void pofolWrite(String LogId, String title, String content, String category);
 
+    int deleteUser(String LogId);
+
 }
