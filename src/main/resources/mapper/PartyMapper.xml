@@ -261,5 +261,12 @@
         from party
         where partyid=#{param1};
     </select>
+
+<!--    getpartyimg는 파티이미지 변경 시 사용 예정 건들지마세요-->
+    <select id="getpartyimg" resultType="String">
+        select partyimage
+        from party
+        where partyid=#{param1};
+    </select>
     <!--조석훈 끝-->
 </mapper>

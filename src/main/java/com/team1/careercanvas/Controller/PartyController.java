@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -274,8 +276,9 @@ public class PartyController {
         }
 
         //파일저장시작
+        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String newFileName = temp.getPartyid() + extension;
+        String newFileName = temp.getPartyid() + "_"+currentTime+extension;
         String projectDir = new File("").getAbsolutePath();
         File directory = new File(projectDir + "/upload/partyimg");
         if (!directory.exists()) {

@@ -54,5 +54,7 @@ public interface PartyMapper {
     void increseView(int no);
     int applyParty(String uid,int partyid);
     String getPartyName(int partyid);
+
+    String getpartyimg(int partyid);
     //조석훈 끝
 }
