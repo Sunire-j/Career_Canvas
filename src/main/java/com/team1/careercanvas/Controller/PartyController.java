@@ -329,11 +329,11 @@ public class PartyController {
     @PostMapping("party/nameCheck")
     @ResponseBody
     public int name_check(@RequestParam("name") String partyname,
-                          @RequestParam("no") int partyid){
+                          @RequestParam(required = false, defaultValue = "0") int no){
 
         int result = mapper.CheckPartyName(partyname);
         if(result==1){
-            if(partyname.equals(mapper.myteamSelect(partyid).getPartyname())){
+            if(partyname.equals(mapper.myteamSelect(no).getPartyname())){
                 result=0;
             }
         }
