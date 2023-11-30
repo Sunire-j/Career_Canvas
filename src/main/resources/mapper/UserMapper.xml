@@ -224,7 +224,10 @@
 
     <insert id="pofolWrite">
         insert into portpolio (user_userid, portfoliotitle, portfoliocontent, ispublic, category)
-        values (#{param1}, #{param2}, #{param3},0, #{param4});
+        values (#{user_userid} , #{portfoliotitle}, #{portfoliocontent},0, #{category});
+        <selectKey keyProperty="portfolioid" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <delete id="deleteUser">

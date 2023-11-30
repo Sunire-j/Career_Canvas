@@ -1,12 +1,10 @@
 package com.team1.careercanvas.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
 import com.team1.careercanvas.vo.PagingVO;
 import com.team1.careercanvas.vo.PofolVO;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface PofolMapper {
@@ -19,4 +17,6 @@ public interface PofolMapper {
 	int getpofolamount(String userid);
 
 	List<PofolVO> getPofolInfo(String userid);
+
+	int insertImg(String path, int pofolid);
 }

@@ -1,9 +1,6 @@
 package com.team1.careercanvas.mapper;
 
-import com.team1.careercanvas.vo.MessageVO;
-import com.team1.careercanvas.vo.PagingVO;
-import com.team1.careercanvas.vo.SubmitSubjectVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -79,7 +76,7 @@ public interface UserMapper {
 
     int getPofolAmount(String LogId, PagingVO pVO);
 
-    void pofolWrite(String LogId, String title, String content, String category);
+    int pofolWrite(PofolVO pvo);
 
     int deleteUser(String LogId);
 

@@ -8,6 +8,7 @@
         <if test="#{searchWord} != ''">
         and portfoliotitle like concat('%',#{searchWord},'%')
         </if>
+		order by portfolioid desc
         limit #{onePageRecord} offset #{offsetPoint};
     </select>
 	<select id="getPofolCount" resultType="Integer">
@@ -28,4 +29,11 @@
 		select count(portfolioid) from portpolio
 		where user_userid = #{param1};
 	</select>
+
+<!--	조석훈 작업-->
+	<update id="insertImg">
+		update portpolio
+		set imgsrc=#{param1}
+		where portfolioid=#{param2}
+	</update>
 </mapper>

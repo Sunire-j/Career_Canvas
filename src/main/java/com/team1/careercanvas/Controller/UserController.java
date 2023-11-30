@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,12 +28,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static com.team1.careercanvas.util.OCRTemplate.OCR;
 import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
@@ -539,9 +536,49 @@ public class UserController {
     public String pofolWriteOk(HttpSession session,
             @RequestParam("posttitle") String title,
             @RequestParam("postcontent") String content,
-            @RequestParam("category") String category) {
+            @RequestParam("category") String category) throws IOException {
 
-        mapper.pofolWrite((String) session.getAttribute("LogId"), title, content, category);
+        PofolVO pvo = new PofolVO();
+        pvo.setPortfoliotitle(title);
+        pvo.setPortfoliocontent(content);
+        pvo.setCategory(category);
+        pvo.setUser_userid((String)session.getAttribute("LogId"));
+
+        int result = mapper.pofolWrite(pvo);
+
+        System.out.println(content);
+        if(content.contains("<img src=")){
+            int index = content.indexOf("<img src=");
+            String first = content.substring(index+10);
+            String second = first.substring(0, first.indexOf("\""));//mime 포함 src내 전체 코드
+            String mimeType = second.split(",")[0].split(";")[0].split(":")[1];
+            String base64Data = second.split(",")[1];
+
+            String extension = mimeType.split("/")[1];
+
+            byte[] data = Base64.getDecoder().decode(base64Data);
+
+            String userid = String.valueOf(pvo.getPortfolioid());
+            String newFileName = userid + "." + extension;
+
+            String projectDir = new File("").getAbsolutePath();
+            File directory = new File(projectDir + "/upload/pofolimg");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            Path path = Paths.get(directory.getAbsolutePath(), newFileName);
+            OutputStream outputStream = new FileOutputStream(path.toString());
+            outputStream.write(data);
+            outputStream.close();
+
+            String pathfordb = "/pofolimg/"+newFileName;
+            //여기서 db에 path만 넣어주면 됨.
+            int dbresult = pofolmapper.insertImg(pathfordb, pvo.getPortfolioid());
+
+        }
+
+
         return "redirect:/mypage/myPofol";
     }
 
