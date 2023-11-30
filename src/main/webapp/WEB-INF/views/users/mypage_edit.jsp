@@ -313,6 +313,11 @@ file="../header_footer/header.jspf" %>
         height: 30px;
         width: 50px;
       }
+
+      input[type="checkbox"] {
+        opacity: 0;
+        position: absolute;
+      }
     </style>
   </head>
   <body>
@@ -353,40 +358,13 @@ file="../header_footer/header.jspf" %>
 
       <form
         class="editFrm"
-        action="mypageEditOk"
+        action="${pageContext.servletContext.contextPath}/mypageEditOk"
         method="post"
         onsubmit="return frmCheck()"
         enctype="multipart/form-data"
       >
         <p>회원정보 설정</p>
-        <script>
-          $(function () {
-            $("#nickName").on("input blur", function () {
-              var $this = $(this);
-              if (this.checkValidity()) {
-                $(this).removeClass("is-invalid").addClass("invalid");
-                $.ajax({
-                  url: "${pageContext.servletContext.contextPath}/nickNameCheck",
-                  type: "POST",
-                  data: {
-                    nickname: $(this).val(),
-                  },
-                  success: function (rsp) {
-                    if (rsp == 0) {
-                      $("#nicknameResult").html("사용가능합니다");
-                    }
-                    if (rsp == 1) {
-                      $("#nicknameResult").html("이미 가입된 닉네임 입니다");
-                    }
-                  },
-                  error: function (e) {
-                    console.log(e.responseText);
-                  },
-                });
-              }
-            });
-          });
-        </script>
+
         <div class="nickName">
           <span>닉네임</span>
           <div>
@@ -446,13 +424,149 @@ file="../header_footer/header.jspf" %>
 
         <div class="interest">
           <span>관심분야</span>
-          <div>
+          <div style="width: 60%">
+            <label for="industry"
+              ><span class="btn btn-outline-danger">산업디자인</span>
+              <input type="hidden" name="color" value="danger"
+            /></label>
             <input
-              class="form-control"
-              type="text"
+              type="checkbox"
               name="interest"
-              id="interest"
-              value="웹/개발, 사진/음향"
+              id="industry"
+              value="산업디자인"
+              class="checkbox"
+            />
+            <label for="character"
+              ><span class="btn btn-outline-danger">캐릭터&일러스트</span>
+              <input type="hidden" name="color" value="danger"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="character"
+              value="캐릭터&일러스트"
+              class="checkbox"
+            />
+            <label for="calligraphy"
+              ><span class="btn btn-outline-danger">캘리그라피</span>
+              <input type="hidden" name="color" value="danger"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="calligraphy"
+              value="캘리그라피"
+              class="checkbox"
+            />
+            <label for="architecture"
+              ><span class="btn btn-outline-danger">공간&건축</span>
+              <input type="hidden" name="color" value="danger"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="architecture"
+              value="공간&건축"
+              class="checkbox"
+            />
+            <label for="fassion"
+              ><span class="btn btn-outline-danger">패션디자인</span>
+              <input type="hidden" name="color" value="danger"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="fassion"
+              value="패션디자인"
+              class="checkbox"
+            />
+            <label for="uxui"
+              ><span class="btn btn-outline-primary">UX/UI</span>
+              <input type="hidden" name="color" value="primary"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="uxui"
+              value="UX/UI"
+              class="checkbox"
+            />
+            <label for="mobile"
+              ><span class="btn btn-outline-primary">모바일개발</span>
+              <input type="hidden" name="color" value="primary"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="mobile"
+              value="모바일개발"
+              class="checkbox"
+            />
+            <label for="web"
+              ><span class="btn btn-outline-primary">웹개발</span>
+              <input type="hidden" name="color" value="primary"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="web"
+              value="웹개발"
+              class="checkbox"
+            />
+            <label for="program"
+              ><span class="btn btn-outline-primary">프로그램</span>
+              <input type="hidden" name="color" value="primary"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="program"
+              value="프로그램"
+              class="checkbox"
+            />
+            <label for="ai"
+              ><span class="btn btn-outline-primary">인공지능</span>
+              <input type="hidden" name="color" value="primary"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="ai"
+              value="인공지능"
+              class="checkbox"
+            />
+            <label for="picture"
+              ><span class="btn btn-outline-info">사진</span>
+              <input type="hidden" name="color" value="info"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="picture"
+              value="사진"
+              class="checkbox"
+            />
+            <label for="sound"
+              ><span class="btn btn-outline-info">음향</span>
+              <input type="hidden" name="color" value="info"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="sound"
+              value="음향"
+              class="checkbox"
+            />
+            <label for="video"
+              ><span class="btn btn-outline-info">영상</span>
+              <input type="hidden" name="color" value="info"
+            /></label>
+            <input
+              type="checkbox"
+              name="interest"
+              id="video"
+              value="영상"
+              class="checkbox"
             />
           </div>
         </div>
@@ -479,7 +593,7 @@ file="../header_footer/header.jspf" %>
             />
           </label>
         </div>
-        <!--<i class="fas fa-user fa-3x tmpimg"></i>-->
+
         <div class="pofol">
           <span>포트폴리오 공개</span>
           <div>
@@ -507,7 +621,7 @@ ${uVO.comment}</textarea
             >
           </div>
         </div>
-
+        <p onclick="leave()">탈퇴하기</p>
         <input
           type="submit"
           class="btn btn-outline-primary"
@@ -517,8 +631,60 @@ ${uVO.comment}</textarea
       </form>
     </main>
     <script>
+      $(function () {
+        // 닉네임유효성 함수
+        $("#nickName").on("input blur", function () {
+          var $this = $(this);
+          if (this.checkValidity()) {
+            $(this).removeClass("is-invalid").addClass("invalid");
+            $.ajax({
+              url: "${pageContext.servletContext.contextPath}/nickNameCheck",
+              type: "POST",
+              data: {
+                nickname: $(this).val(),
+              },
+              success: function (rsp) {
+                if (rsp == 0) {
+                  $("#nicknameResult").html("사용 가능한 닉네임 입니다");
+                }
+                if (rsp == 1) {
+                  $("#nicknameResult").html("이미 가입된 닉네임 입니다");
+                }
+              },
+              error: function (e) {
+                console.log(e.responseText);
+              },
+            });
+          } else {
+            console.log("!!!!!!!!!!!!!!!" + $this.val());
+            if ($this.val() == "") {
+              $("#nicknameResult").text("닉네임 입력하세요");
+            } else {
+              $("#nicknameResult").text("형식을 확인하세요");
+            }
+          }
+        });
+        $(".checkbox").on("change", function () {
+          if (this.checked) {
+            var color = $(this).prev("label").find("span").next().val();
+            $(this)
+              .prev("label")
+              .find("span")
+              .addClass("btn-" + color)
+              .removeClass("btn-outline-" + color);
+          } else {
+            var color = $(this).prev("label").find("span").next().val();
+            $(this)
+              .prev("label")
+              .find("span")
+              .addClass("btn-outline-" + color)
+              .removeClass("btn-" + color);
+          }
+        });
+      }); // $(function() 끝
+
+      // 폼체크 함수
       function frmCheck() {
-        return false;
         let password = $("#password").val();
         let passwordCheck = $("#passwordCheck").val();
 
@@ -528,6 +694,14 @@ ${uVO.comment}</textarea
             return false;
           }
           return true;
+        }
+      }
+
+      // leave함수
+      function leave() {
+        if (confirm("탈퇴하시겠습니까?")) {
+          location.href =
+            "${pageContext.servletContext.contextPath}/mypage/leave";
         }
       }
     </script>

@@ -27,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -195,7 +196,7 @@ public class UserController {
 
     @PostMapping("/signup/biz-middle")
     public String bizupload(@RequestParam("ex_file") MultipartFile file,
-                            HttpSession session) {
+            HttpSession session) {
 
         if (file.isEmpty()) {
             System.out.println("파일없음");
@@ -236,36 +237,39 @@ public class UserController {
         String result = OCR(String.valueOf(path));
 
         System.out.println(result);
-        //결과 json에서 inferResult가 "FAILURE"면 아닌걸로 취급, "SUCCESS"면 성공
+        // 결과 json에서 inferResult가 "FAILURE"면 아닌걸로 취급, "SUCCESS"면 성공
         JsonElement jsonElement = JsonParser.parseString(result);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        String isSuccess = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().get("inferResult").getAsString();
+        String isSuccess = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().get("inferResult")
+                .getAsString();
         System.out.println(isSuccess);
         String companyno = "";
-        String username="";
-        if(isSuccess.equals("SUCCESS")){
-            companyno = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(0).getAsJsonObject().get("inferText").getAsString();
-            username = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(1).getAsJsonObject().get("inferText").getAsString();
-            //가입한 회원이였으면 빠꾸먹이기
+        String username = "";
+        if (isSuccess.equals("SUCCESS")) {
+            companyno = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(0)
+                    .getAsJsonObject().get("inferText").getAsString();
+            username = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().getAsJsonArray("fields").get(1)
+                    .getAsJsonObject().get("inferText").getAsString();
+            // 가입한 회원이였으면 빠꾸먹이기
 
             int countCompanyNo = mapper.CheckCompanyNo(companyno);
 
-            if(countCompanyNo>=1){
-                session.setAttribute("msg","이미 가입된 회원입니다. 가입하지 않으셨다면 관리자에게 메일로 문의주세요");
+            if (countCompanyNo >= 1) {
+                session.setAttribute("msg", "이미 가입된 회원입니다. 가입하지 않으셨다면 관리자에게 메일로 문의주세요");
                 return "alert_page";
             }
 
-        }else if(isSuccess.equals("FAILURE")){
-            session.setAttribute("msg","인식할 수 없습니다. 오류가 반복되면 메일로 문의바랍니다.");
+        } else if (isSuccess.equals("FAILURE")) {
+            session.setAttribute("msg", "인식할 수 없습니다. 오류가 반복되면 메일로 문의바랍니다.");
             return "alert_page";
-        }else{
+        } else {
             return "404pages";
         }
-        //companyno 중복 검사 해주기
+        // companyno 중복 검사 해주기
         session.setAttribute("companyno", companyno);
-        session.setAttribute("username",username);
-        session.setAttribute("tempimg",path);
+        session.setAttribute("username", username);
+        session.setAttribute("tempimg", path);
         // db에 경로넣기 끝
         // 이제 신청이 완료되었음 하고 로그인으로 보내든 해야함
         return "users/signup-biz";
@@ -273,13 +277,13 @@ public class UserController {
 
     @PostMapping("/signup/biz/complete")
     public String bizComplete(String userId,
-                              String userPwd,
-                              String userNickName,
-                              String userEmail,
-                              String usertel,
-                              String companyno,
-                              String tempimg,
-                              HttpSession session) throws NoSuchAlgorithmException {
+            String userPwd,
+            String userNickName,
+            String userEmail,
+            String usertel,
+            String companyno,
+            String tempimg,
+            HttpSession session) throws NoSuchAlgorithmException {
 
         UserVO uvo = new UserVO();
         uvo.setUserid(userId);
@@ -295,25 +299,25 @@ public class UserController {
 
         mapper.SignupBizFirst(uvo);
         System.out.println(uvo);
-        //temp이미지 처리
+        // temp이미지 처리
         Path source = Paths.get(tempimg);
 
-        String targetDir = new File("").getAbsolutePath()+"/upload/companyauth";
+        String targetDir = new File("").getAbsolutePath() + "/upload/companyauth";
         File targetDirectory = new File(targetDir);
-        if(!targetDirectory.exists()){
+        if (!targetDirectory.exists()) {
             targetDirectory.mkdirs();
         }
 
         String extension = tempimg.substring(tempimg.lastIndexOf("."));
-        Path targetPath = Paths.get(targetDirectory.getAbsolutePath(), companyno+extension);
-        try{
+        Path targetPath = Paths.get(targetDirectory.getAbsolutePath(), companyno + extension);
+        try {
             Files.copy(source, targetPath, StandardCopyOption.REPLACE_EXISTING);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        //temp이미지 처리 끝
-        mapper.SignupBizSecond(uvo.getUserid(), companyno, "/companyauth/"+companyno+extension);
-        session.setAttribute("msg","신청이 완료되었습니다. 예정 소요기간은 1~3영업일입니다.");
+        // temp이미지 처리 끝
+        mapper.SignupBizSecond(uvo.getUserid(), companyno, "/companyauth/" + companyno + extension);
+        session.setAttribute("msg", "신청이 완료되었습니다. 예정 소요기간은 1~3영업일입니다.");
 
         return "alert_page";
     }
@@ -425,9 +429,10 @@ public class UserController {
             @RequestParam("nickName") String nickName,
             @RequestParam("tel") String tel,
             @RequestParam("comment") String comment,
-            @RequestParam(value = "fileInput", required = false)MultipartFile file,
+            @RequestParam(value = "fileInput", required = false) MultipartFile file,
+            @RequestParam(required = false) String[] interest,
             HttpSession session) throws NoSuchAlgorithmException {
-
+        System.out.println(Arrays.toString(interest));
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
@@ -446,8 +451,7 @@ public class UserController {
             mapper.changePwd(userid, encryptedpwd, salt);
         }
 
-
-        if(file!=null) {
+        if (file != null) {
             // 파일저장시작
             String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
@@ -469,9 +473,9 @@ public class UserController {
             }
             // 파일저장 끝
 
-            //기존파일 삭제
+            // 기존파일 삭제
             String oldFileName = mapper.getProfileImg(userid);
-            if(oldFileName!=null || oldFileName!="") {
+            if (oldFileName != null || oldFileName != "") {
                 File fileToDelete = new File(directory, oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
                 boolean result = fileToDelete.delete();
 
@@ -732,7 +736,22 @@ public class UserController {
             result = 0;
         }
         return result;
-
     }
 
+    @GetMapping("/mypage/leave")
+    public ModelAndView leave(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
+        int result = mapper.deleteUser((String) session.getAttribute("LogId"));
+        if (result == 1) {
+            session.invalidate();
+            session.setAttribute("msg", "탈퇴 성공");
+            mav.setViewName("alert_page");
+        } else {
+            session.setAttribute("msg", "탈퇴 실패");
+            mav.setViewName("alert_page");
+        }
+
+        return mav;
+    }
 }
