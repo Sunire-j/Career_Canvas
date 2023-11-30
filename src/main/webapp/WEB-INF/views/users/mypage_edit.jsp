@@ -337,8 +337,7 @@ file="../header_footer/header.jspf" %>
               <a href="mypage.html"
                 ><span style="font-size: 1.5rem">${uVO.username }</span></a
               >
-            </div>
-            <p>${uVO.comment }</p>
+            </div><p>${uVO.comment }</p>
           </div>
         </div>
         <!-- Interest -->
@@ -616,9 +615,7 @@ file="../header_footer/header.jspf" %>
               id="comment"
               cols="30"
               rows="5"
-            >
-${uVO.comment}</textarea
-            >
+            >${uVO.comment}</textarea>
           </div>
         </div>
         <p onclick="leave()">탈퇴하기</p>
