@@ -85,8 +85,13 @@
             width: 1000px;
             margin: 0 auto;
         }
-
-        /*----------------- 파티 생성-----------------*/
+        .edit_category {
+            width: 210px;
+            margin: 0 auto;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        /*----------------- 파티 수정-----------------*/
         .party_name{
             margin: 0;
             margin-top: 20px;
@@ -161,7 +166,24 @@
             margin-left: 40px;
             padding-top: 20px;
         }
-
+        .party_list li{
+            margin-right: 20px;
+            float: left;
+        }
+        .member_img{
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+        }
+        .party_list_name{
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .new_party_btn{
+            border: none;
+            background: none;
+        }
 
     </style>
     <script>
@@ -204,41 +226,6 @@
 
 
         $(function () {
-
-
-            $(".checkName").on('click', function (){
-               var tag = $(".input_name");
-               var name = tag.val();
-               if(name==''){
-                   alert("파티명을 입력해주세요.");
-                   return false;
-               }
-               const regex = /^[A-Za-z가-힣]{2,8}$/;
-               if(!regex.test(name)){
-                   alert("파티명은 2-8글자, 한글, 영문만 사용 가능힙니다.");
-                   return false;
-               }
-               $.ajax({
-                  url:"${pageContext.servletContext.contextPath}/party/nameCheck",
-                  data : {
-                      name : name
-                  },type : "post",
-                   success:function (result){
-                      console.log(result);
-                      if(result==0){
-                        tag.prop("disabled", true);
-                          $(".checkName").text("사용가능");
-                          $("#realName").val(name);
-                          $(".create_btn").prop("disabled", false);
-                      }else{
-                          alert("이미 사용중입니다. 다른 파티명을 입력해주세요.");
-                          tag.val("");
-                      }
-                   },error:function (e){
-                      console.log(e.responseText);
-                   }
-               });
-            });
             // --------- 파티명 수정 ----------------
             $('.name_edit_btn').click(function() {
                 event.preventDefault();
@@ -257,24 +244,44 @@
                     alert("파티명을 입력해주세요.");
                     return false;
                 }
-
+                const regex = /^[A-Za-z가-힣0-9]{2,8}$/;
+                if(!regex.test(name)){
+                    alert("파티명은 2-8글자, 한글, 영문만 사용 가능힙니다.");
+                    return false;
+                }
                 $.ajax({
-                    url:"${pageContext.servletContext.contextPath}/party/nameUpdate",
-                    type:"post",
-                    data: {
-                        no:no,
-                        name:name
-                    },success:function(){
-                        console.log("!!");
-                        $(".name_edit_btn_ok").css('display','none');
-                        $(".name_edit_btn").css('display','block');
-                        $('.name_edit_box').prop('readonly', true);
-
-
+                    url:"${pageContext.servletContext.contextPath}/party/nameCheck",
+                    data : {
+                        name : name,
+                        no : no
+                    },type : "post",
+                    success:function (result){
+                        console.log(result);
+                        if(result==0){
+                            $.ajax({
+                                url:"${pageContext.servletContext.contextPath}/party/nameUpdate",
+                                type:"post",
+                                data: {
+                                    no:no,
+                                    name:name
+                                },success:function(){
+                                    console.log("!!");
+                                    $(".name_edit_btn_ok").css('display','none');
+                                    $(".name_edit_btn").css('display','block');
+                                    $('.name_edit_box').prop('readonly', true);
+                                },error:function (e){
+                                    console.log(e);
+                                }
+                            });
+                        }else{
+                            alert("이미 사용중인 파티명입니다. 다른 파티명을 입력해주세요.");
+                            name.val("");
+                        }
                     },error:function (e){
-                        console.log(e);
+                        console.log(e.responseText);
                     }
                 });
+
             });
             // --------- 파티 목표 수정 ----------------
             $('.objective_edit_btn').click(function() {
@@ -344,6 +351,9 @@
                     }
                 });
             });
+            $('.mainbtn').click(function (){
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main';
+            });
 
 
         });
@@ -360,16 +370,15 @@
         <hr>
     </div>
     <ul class="party_list">
-        <c:if test=" !${pvo.isEmpty()}">
+
             <c:forEach items="${pvo}" var="p">
                 <li title="${p.partyid}" class="party_list_btn">
-                    <img src="profile.PNG" class="member_img">
+                    <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
                     <div class="party_list_name">
                             ${p.partyname}
                     </div>
                 </li>
             </c:forEach>
-        </c:if>
         <li style="float: left">
             <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
                 <i class="fa-regular fa-square-plus fa-4x"></i><br/>
@@ -378,9 +387,9 @@
         </li>
     </ul>
     <div class="choisvalue" style="margin-top: 30px;">
-        <input type="button" class="btn btn-secondary mainbtn" value="메인" onclick="changeClass(this)">
+        <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" >
         <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
-        <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
+        <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
     </div>
     <hr>
 </main>
