@@ -108,13 +108,14 @@
                 <h2 class="main-title" style="margin-top: 0px; font-weight: bold; font-size: 35px">파티홍보 게시판</h2>
             </div>
         </div>
-        <div class="d-flex" style="justify-content: space-between; margin-top: 30px">
-
+        <div class="d-flex" style="display: flex; padding: 5px; justify-content: center">
+            <div style="justify-content: center; text-align: center">
             <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집"
                    onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-            <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티"
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티" style="margin-left: 20px;"
                    onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
-            <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+            </div>
+            <select class="form-select" style="width: fit-content; margin-left: 820px" id="postSort" name="postSort">
                 <option value="1"
                         <c:if test="${pVO.postSort==1}">
                             selected
@@ -139,7 +140,7 @@
                 <div id="user" style="width: 12%" class="list">작성자</div>
                 <div id="view" style="width: 7%" class="list">조회수</div>
                 <div id="comment" style="width: 7%" class="list">댓글</div>
-                <div id="date" style="width: 10%" class="list">게시일</div>
+                <div id="date" style="width: 20%" class="list">게시일</div>
             </div>
         </div>
             <hr class="hr-styleset">
@@ -153,7 +154,7 @@
                 <div style="width: 12%" class="list">${bvo.user_userid}</div>
                 <div style="width: 7%" class="list">${bvo.view}</div>
                 <div style="width: 7%" class="list">${bvo.commentAmount}</div>
-                <div style="width: 10%" class="list">${bvo.date}</div>
+                <div style="width: 20%" class="list">${bvo.date}</div>
             </div>
             <hr class="hr-styleset">
         </c:forEach>
