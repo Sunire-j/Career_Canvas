@@ -267,9 +267,9 @@ public class PartyController {
         System.out.println(temp.getPartyid());
 
         if (file.isEmpty()) {
-            System.out.println("파일없음");
-            mav.addObject("msg", "파일이 존재하지 않습니다. 다시 시도해주세요.");
-            mav.setViewName("alert_page");
+            mapper.InsertPartyImg("/partyimg/default.png", temp.getPartyid());
+            mapper.InsertMember(temp.getPartyid(), logId, "done");
+            mav.setViewName("redirect:/myteam/main");
             return mav;
         }
 
@@ -325,20 +325,56 @@ public class PartyController {
 
     @PostMapping("party/nameCheck")
     @ResponseBody
-    public int name_check(@RequestParam("name") String partyname){
+    public int name_check(@RequestParam("name") String partyname,
+                          @RequestParam("no") int partyid){
 
         int result = mapper.CheckPartyName(partyname);
+        if(result==1){
+            if(partyname.equals(mapper.myteamSelect(partyid).getPartyname())){
+                result=0;
+            }
+        }
         return result;
     }
 
     @GetMapping("party/edit")
     public ModelAndView partyEdit(@RequestParam("no") int partyid,
                                   HttpSession session){
+//        ModelAndView mav = new ModelAndView();
+//        String logId = (String) session.getAttribute("LogId");
+//        List<PartyVO> vo = mapper.SelectPartyList(logId);
+//        System.out.println(vo.size());
+//        mav.addObject("pvo",vo);
+//        PartyVO pvo = mapper.myteamSelect(partyid);
+//
+//        if(logId!= ){
+//            mav.addObject("msg", "파티장만 수정가능합니다.");
+//            mav.setViewName("alert_page");
+//        }
+//        mav.addObject("partyvo",pvo);
+//        mav.setViewName("/myteam/myteam_infoEdit");
+//        return mav;
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mav.addObject("pvo",vo);
+
         PartyVO pvo = mapper.myteamSelect(partyid);
+        boolean isPartyLeader = false;
+
+        for(PartyVO vo1 : vo){
+            if(vo1.getUser_userid().equals(logId)){
+                isPartyLeader = true;
+                break;
+            }
+        }
+
+        if(!isPartyLeader){
+            mav.addObject("msg", "파티장만 수정가능합니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
         mav.addObject("partyvo",pvo);
         mav.setViewName("/myteam/myteam_infoEdit");
         return mav;

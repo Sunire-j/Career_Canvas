@@ -358,6 +358,15 @@
                 }
             });
 
+            $('.partysetbtn').click(function (){
+                console.log(no);
+                window.location.href = '${pageContext.servletContext.contextPath}/party/edit?no='+no;
+                $('.partysetbtn').removeClass('btn-outline-secondary').addClass('btn-secondary');
+                $('.partysetbtn').prop('disable', true);
+            });
+
+
+
         });
     </script>
 </head>
@@ -390,7 +399,7 @@
     <div class="choisvalue" style="margin-top: 30px;">
         <input type="button" class="btn btn-secondary mainbtn" value="메인" onclick="changeClass(this)">
         <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
-        <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
+        <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리" >
     </div>
     <hr>
 </main>
