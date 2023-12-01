@@ -80,4 +80,6 @@ public interface UserMapper {
 
     int deleteUser(String LogId);
 
+    int saveInterest(String LogId, String str);
+
 }
