@@ -119,7 +119,6 @@ public class PartyController {
     @ResponseBody
     public String wanteddel(int wantedid){
         int result = mapper.DeleteWanted(wantedid);
-        System.out.println(result);
         return "";
     }
 
@@ -130,7 +129,7 @@ public class PartyController {
         //신고자
         String userid = (String) session.getAttribute("LogId");
         int result = mapper.reportWanted(target_id, target_userid, target_title, userid);
-        System.out.println(result);
+
         return result;
     }
 
@@ -152,7 +151,6 @@ public class PartyController {
         rvo.setTargetid(targetid);
 
         int result = mapper.commentReport(rvo);
-        System.out.println(result);
         return result;
     }
 
@@ -160,7 +158,6 @@ public class PartyController {
     @ResponseBody
     public int wantedcommentdel(int commentid){
         int result = mapper.deleteWantedComment(commentid);
-        System.out.println(result);
         return result;
     }
 
@@ -229,7 +226,6 @@ public class PartyController {
     public int memoWriteOK(@RequestParam("no") int partyid,
                               @RequestParam("content") String content,
                               HttpSession session){
-        System.out.println("!!"+partyid+", "+content);
         String logId = (String) session.getAttribute("LogId");
            int a =  mapper.InsertMemo(partyid, content, logId);
         return a;
@@ -238,7 +234,6 @@ public class PartyController {
     @PostMapping("/memoDeleteOk")
     @ResponseBody
     public int memoDeleteOk(@RequestParam("target") int target){
-        System.out.println("aa");
        int a = mapper.DeleteMemo(target);
        return a;
     }
@@ -253,7 +248,6 @@ public class PartyController {
         String logId = (String) session.getAttribute("LogId");
 
         List<PartyVO> vo = mapper.SelectPartyList(logId);
-        System.out.println(vo.size());
         if(vo.size() >= 5){
             mav.addObject("msg", "파티는 5개 이하로 가입 및 생성 가능합니다.");
             mav.setViewName("alert_page");
@@ -266,7 +260,7 @@ public class PartyController {
         temp.setUser_userid(logId);
 
         int partyid = mapper.InsertCreateTeam(temp);
-        System.out.println(temp.getPartyid());
+
 
         if (file.isEmpty()) {
             mapper.InsertPartyImg("/partyimg/default.png", temp.getPartyid());
@@ -291,7 +285,6 @@ public class PartyController {
             file.transferTo(new File(path.toString()));
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("파일저장실패");
             mav.addObject("msg", "파일 저장을 실패하였습니다. 다시 시도해주세요.");
             mav.setViewName("alert_page");
             return mav;
@@ -316,7 +309,6 @@ public class PartyController {
 
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mav.addObject("pvo",vo);
-        System.out.println(vo.size());
         if(vo.size() >= 5){
             mav.addObject("msg", "파티는 5개 이하로 가입 및 생성 가능합니다.");
             mav.setViewName("alert_page");
