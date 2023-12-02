@@ -13,7 +13,8 @@
         $(function () {
             $(".forevent").on('click', "#deletion", function () {
                 var del_target = $(this).attr("title");
-                location.href = "${pageContext.servletContext.contextPath}/report/delete?targetid=" + del_target;
+                var del_type = $(this).val();
+                location.href = "${pageContext.servletContext.contextPath}/report/delete?targetid=" + del_target + "&reporttype=" + del_type;
             });
 
             $(".forevent").on('click', "#dismiss", function () {
@@ -93,8 +94,8 @@
         <h3>배너관리</h3>
         <a href=""> 배너 관리 </a>
         <h3>통계</h3>
-        <a href=""> 유저 현황 </a>
-        <a href=""> 게시판 현황 </a>
+        <a href="${pageContext.servletContext.contextPath}/admin/user/stats"> 유저 현황 </a>
+        <a href="${pageContext.servletContext.contextPath}/admin/board/stats"> 게시판 현황 </a>
         <a href="${pageContext.servletContext.contextPath}/" style="position: absolute; bottom: 90px;">메인 페이지 이동</a>
         <p style="position: absolute; bottom: 50px;">당일 접속 유저 : 500명</p>
         <p style="position: absolute; bottom: 20px;">누적 접속 유저 : 50만명ㅋ</p>
@@ -124,15 +125,21 @@
                                 <c:if test="${rvo.reporttype=='board'}">
                                     onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}')">이동
                                 </c:if>
-                                <c:if test="${rvo.reporttype=='commnet'}">
+                                <c:if test="${rvo.reporttype=='comment'}">
                                     onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${rvo.originpostid}')">이동
+                                </c:if>
+                                <c:if test="${rvo.reporttype=='wanted'}">
+                                    onclick="window.open('${pageContext.servletContext.contextPath}/party/wanted/view?no=${rvo.targetid}')">이동
+                                </c:if>
+                                <c:if test="${rvo.reporttype=='wantedcomment'}">
+                                    onclick="window.open('${pageContext.servletContext.contextPath}/party/wanted/view?no=${rvo.originpostid}')">이동
                                 </c:if>
                         </button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger" id="deletionUser" title="${rvo.targetid}">탈퇴
                         </button>
-                        <button type="button" class="btn btn-danger" id="deletion" title="${rvo.targetid}">삭제
+                        <button type="button" class="btn btn-danger" id="deletion" title="${rvo.targetid}" value="${rvo.reporttype}">삭제
                         </button>
                         <button type="button" class="btn btn-success" id="dismiss" title="${rvo.targetid}">기각</button>
                     </td>
@@ -141,10 +148,23 @@
         </table>
         <div class="pagination-container">
             <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
+                <c:if test="${pVO.page==1}">
+                    <
+                </c:if>
+                <c:if test="${pVO.page>1}">
+                    <a href="${pageContext.servletContext.contextPath}/admin/report?page=${pVO.page-1}"><</a>
+                </c:if>
+                <c:forEach var="pvo" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                    <c:if test="${pvo <= pVO.totalPage}">
+                        <a href="${pageContext.servletContext.contextPath}/admin/report?page=${pvo}">${pvo}</a>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${pVO.totalPage==pVO.page}">
+                    >
+                </c:if>
+                <c:if test="${pVO.totalPage>pVO.page}">
+                    <a href="${pageContext.servletContext.contextPath}/admin/report?page=${pVO.page+1}">></a>
+                </c:if>
             </div>
         </div>
     </div>

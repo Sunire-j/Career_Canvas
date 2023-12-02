@@ -22,12 +22,15 @@ public class AdminController {
     public ModelAndView member(HttpSession session,
                                @RequestParam(required = false, defaultValue = "1") int postSort,
                                @RequestParam(required = false) String searchKey,
-                               @RequestParam(required = false) String searchWord) {
+                               @RequestParam(required = false) String searchWord,
+                               @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setSearchKey(searchKey);
         pvo.setSearchWord(searchWord);
         pvo.setPostSort(postSort);
+        pvo.setPage(page);
+        pvo.setTotalRecord(mapper.getUserCount());
 
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
@@ -53,42 +56,60 @@ public class AdminController {
     }
 
     @GetMapping("/admin/board") // 게시판 - 실시간 모니터링
-    public ModelAndView board(HttpSession session) {
+    public ModelAndView board(HttpSession session,
+                              @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+
+        PagingVO pvo = new PagingVO();
+        pvo.setPage(page);
+        pvo.setTotalRecord(mapper.getBoardCount());
 
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
         List<BoardVO> list = mapper.getBoardList();
         mav.addObject("bVO", list);
+        mav.addObject("pVO", pvo);
         mav.setViewName("/admin/admin_board");
 
         return mav;
     }
 
     @GetMapping("/admin/report") // 신고 게시글 관리
-    public ModelAndView report(HttpSession session) {
+    public ModelAndView report(HttpSession session,
+                               @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+
+        PagingVO pvo = new PagingVO();
+        pvo.setPage(page);
+        pvo.setTotalRecord(mapper.getReportCount());
 
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
         List<ReportVO> list = mapper.getReportList();
         mav.addObject("rVO", list);
+        mav.addObject("pVO", pvo);
         mav.setViewName("admin/report_board");
 
         return mav;
     }
 
     @GetMapping("/admin/delete") // 삭제 신청 과제 리스트
-    public ModelAndView assignment(HttpSession session) {
+    public ModelAndView assignment(HttpSession session,
+                                   @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+
+        PagingVO pvo = new PagingVO();
+        pvo.setPage(page);
+        pvo.setTotalRecord(mapper.getDeleteCount());
 
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
         List<SubjectVO> list = mapper.getDeleteList();
         mav.addObject("sVO", list);
+        mav.addObject("pVO", pvo);
         mav.setViewName("admin/delete_assignment");
 
         return mav;
@@ -140,17 +161,54 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/report/delete") // 리포트 and 포스트 테이블 삭제
-    public String deleteReport(HttpSession session, int targetid) {
+    @GetMapping("/report/delete") // 삭제 버튼 클릭 이벤트
+    public String deleteReport(HttpSession session, int targetid, String reporttype) {
+        System.out.println(reporttype);
         int Rresult = mapper.deleteReport(targetid);
-        int Bresult = mapper.deleteBoard(targetid);
-        // 보드에 삭제
-        if (Rresult > 0 && Bresult > 0) { // 삭제 성공
-            return "redirect:/admin/report";
-        } else { // 삭제 실패
+        if (Rresult > 0) {
+            if (reporttype.equals("board")) {
+                int Bresult = mapper.deleteBoard(targetid);
+                if (Bresult > 0) {
+                    System.out.println("게시글 삭제 완료");
+                    return "redirect:/admin/report";
+                } else {
+                    session.setAttribute("msg", "글 삭제 실패했습니다.");
+                    return "alert_page";
+                }
+            } else if (reporttype.equals("comment")) {
+                int Cresult = mapper.deleteComment(targetid);
+                if (Cresult > 0) {
+                    System.out.println("댓글 삭제 완료");
+                    return "redirect:/admin/report";
+                } else {
+                    session.setAttribute("msg", "삭제 실패했습니다.");
+                    return "alert_page";
+                }
+            } else if (reporttype.equals("wanted")) {
+                int Wresult = mapper.deleteWanted(targetid);
+                if (Wresult > 0) {
+                    System.out.println("파티 모집글 삭제 완료");
+                    return "redirect:/admin/report";
+                } else {
+                    session.setAttribute("msg", "삭제 실패했습니다.");
+                    return "alert_page";
+                }
+            } else if (reporttype.equals("wantedcomment")) {
+                int WCresult = mapper.deleteWantedComment(targetid);
+                if (WCresult > 0) {
+                    System.out.println("파티 모집 댓글 삭제 완료");
+                    return "redirect:/admin/report";
+                } else {
+                    session.setAttribute("msg", "삭제 실패했습니다.");
+                    return "alert_page";
+                }
+            }
+            // ---------------------------- 추가되면 여기다 작업
+        } else {
             session.setAttribute("msg", "삭제 실패했습니다.");
             return "alert_page";
         }
+        return "redirect:/admin/report";
     }
 
     @GetMapping("/report/delete/user") // 탈퇴 - 리포트 테이블에서 userid 뽑고, 리포트 앤드 보드 삭제 -> user테이블에서 삭제
@@ -201,7 +259,6 @@ public class AdminController {
     @GetMapping("/change/user") // 닉네임 강제 변경
     public String changeUser(HttpSession session, String username) {
         String changed = "불건전한닉네임" + username;
-        System.out.println(changed);
         int result = mapper.changeUsername(username, changed);
         if (result > 0) { // 삭제 성공
             return "redirect:/admin/member";
@@ -209,5 +266,25 @@ public class AdminController {
             session.setAttribute("msg", "닉네임 변경 실패했습니다.");
             return "alert_page";
         }
+    }
+
+    @GetMapping("/admin/user/stats")
+    public ModelAndView userStats(){
+        ModelAndView mav=new ModelAndView();
+
+        mav.setViewName("admin/admin_user_stats");
+        return mav;
+    }
+
+    @GetMapping("/admin/board/stats")
+    public ModelAndView boardStats(){
+        ModelAndView mav=new ModelAndView();
+        mav.addObject("bVO",mapper.getBoardCount());
+        mav.addObject("rVO",mapper.getReportCount());
+        mav.addObject("today",mapper.getBoardToday());
+        mav.addObject("month",mapper.getBoardMonth());
+        System.out.println(mapper.getBoardMonth());
+        mav.setViewName("admin/admin_board_stats");
+        return mav;
     }
 }
