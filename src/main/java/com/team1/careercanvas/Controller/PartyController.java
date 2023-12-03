@@ -27,13 +27,14 @@ public class PartyController {
     public PartyController(PartyMapper mapper) {
         this.mapper = mapper;
     }
+
     //조석훈 시작
     @GetMapping("/party/wanted")
     public ModelAndView partywanted(HttpSession session,
-                                    @RequestParam(required = false, defaultValue = "1")int page,
-                                    @RequestParam(required = false)String searchWord,
-                                    @RequestParam(required = false)String searchKey,
-                                    @RequestParam(required = false, defaultValue = "1")int postSort){
+                                    @RequestParam(required = false, defaultValue = "1") int page,
+                                    @RequestParam(required = false) String searchWord,
+                                    @RequestParam(required = false) String searchKey,
+                                    @RequestParam(required = false, defaultValue = "1") int postSort) {
         //파티모집에서 필터할 것, 검색타입(제목, 내용, 파티명), 검색어, 소트(최신, 조회), 카테고리
 
         ModelAndView mav = new ModelAndView();
@@ -41,7 +42,7 @@ public class PartyController {
 
         pvo.setOnePageRecord(10);
         pvo.setPage(page);
-        if(searchWord!=null||searchWord!=""){
+        if (searchWord != null || searchWord != "") {
             pvo.setSearchKey(searchKey);
             pvo.setSearchWord(searchWord);
         }
@@ -49,7 +50,7 @@ public class PartyController {
         pvo.setTotalRecord(mapper.getWantedListCount(pvo));
         List<WantedVO> wvo = mapper.GetWantedList(pvo);
 
-        mav.addObject("wVO",wvo);
+        mav.addObject("wVO", wvo);
         mav.addObject("pVO", pvo);
         mav.setViewName("party/party_wanted");
 
@@ -57,11 +58,11 @@ public class PartyController {
     }
 
     @GetMapping("/party/wanted/write")
-    public ModelAndView partywantedwrite(HttpSession session){
+    public ModelAndView partywantedwrite(HttpSession session) {
         ModelAndView mav = new ModelAndView();
         //로그인한 아이디가 파티장인지 여부 확인 겸 파티장인 파티목록 확인
-        List<PartyVO> partylist = mapper.getMineParty((String)session.getAttribute("LogId"));
-        if(partylist.size()==0){
+        List<PartyVO> partylist = mapper.getMineParty((String) session.getAttribute("LogId"));
+        if (partylist.size() == 0) {
             mav.addObject("msg", "파티장만 글 작성이 가능합니다.");
             mav.setViewName("alert_page");
             return mav;
@@ -72,7 +73,7 @@ public class PartyController {
     }
 
     @PostMapping("/party/wanted/writeOk")
-    public String wantedWriteOk(WantedVO wVO, HttpSession session){
+    public String wantedWriteOk(WantedVO wVO, HttpSession session) {
         wVO.setUser_userid((String) session.getAttribute("LogId"));
         //준비 끝 db보내고 게시판으로 보내주면 됨.
         mapper.InsertWanted(wVO);
@@ -80,7 +81,7 @@ public class PartyController {
     }
 
     @GetMapping("/party/wanted/view")
-    public ModelAndView wantedView(int no){
+    public ModelAndView wantedView(int no) {
         ModelAndView mav = new ModelAndView();
         //no글 선택
         mapper.increseView(no);
@@ -94,7 +95,7 @@ public class PartyController {
 
     @PostMapping("/party/commentLoad")
     @ResponseBody
-    public List<CommentVO> commendLoad(int no){
+    public List<CommentVO> commendLoad(int no) {
         List<CommentVO> list = mapper.commentLoad(no);
         return list;
     }
@@ -102,10 +103,10 @@ public class PartyController {
     @PostMapping("/party/commentWrite")
     @ResponseBody
     public int commentWrite(HttpSession session,
-                            CommentVO cvo){
+                            CommentVO cvo) {
         cvo.setUser_userid((String) session.getAttribute("LogId"));
         cvo.setDepth(0);
-        if(cvo.getTarget_parent()>0){
+        if (cvo.getTarget_parent() > 0) {
             cvo.setDepth(1);
         }
         int result = mapper.replyInsert(cvo);
@@ -117,7 +118,7 @@ public class PartyController {
 
     @PostMapping("/party/wanteddel")
     @ResponseBody
-    public String wanteddel(int wantedid){
+    public String wanteddel(int wantedid) {
         int result = mapper.DeleteWanted(wantedid);
         return "";
     }
@@ -125,7 +126,7 @@ public class PartyController {
     @PostMapping("/party/wanted/report")
     @ResponseBody
     public int reportwanted(int target_id, String target_userid, String target_title,
-                            HttpSession session){
+                            HttpSession session) {
         //신고자
         String userid = (String) session.getAttribute("LogId");
         int result = mapper.reportWanted(target_id, target_userid, target_title, userid);
@@ -135,7 +136,7 @@ public class PartyController {
 
     @PostMapping("/party/comment/report")
     @ResponseBody
-    public int reportwantedcomment(int originpostid, int targetid, HttpSession session){
+    public int reportwantedcomment(int originpostid, int targetid, HttpSession session) {
         String uid = (String) session.getAttribute("LogId");
         String userid = mapper.getCommentWriter(targetid);
         String commentcontent = mapper.getCommentcontent(targetid);
@@ -156,23 +157,24 @@ public class PartyController {
 
     @PostMapping("/party/wanted/commentdel")
     @ResponseBody
-    public int wantedcommentdel(int commentid){
+    public int wantedcommentdel(int commentid) {
         int result = mapper.deleteWantedComment(commentid);
         return result;
     }
 
     @PostMapping("/party/apply")
     @ResponseBody
-    public int applyParty(HttpSession session, int partyid){
+    public int applyParty(HttpSession session, int partyid) {
         String uid = (String) session.getAttribute("LogId");
-        int result = mapper.applyParty(uid,partyid);
+        int result = mapper.applyParty(uid, partyid);
         return result;
     }
     //조석훈 끝
 
     // 정인식 작업
     @GetMapping("/myteam/main")
-    public ModelAndView myteamMain(HttpSession session){
+    public ModelAndView myteamMain(HttpSession session,
+                                   @RequestParam(required = false, defaultValue = "0") int partyid) {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
         String logStatus = (String) session.getAttribute("logStatus");
@@ -189,61 +191,94 @@ public class PartyController {
             return mav;
         }
 
-        PartyVO myteamView = mapper.myteamSelect(vo.get(0).getPartyid());
-        List<UserVO> memberList = mapper.SelectMemberList(vo.get(0).getPartyid());
-        List<MemoVO> memoListView = mapper.SelectMemoListView(vo.get(0).getPartyid());
+        int temp = 0;
+
+        if (partyid != 0) {
+            temp=-1;
+            for (int i = 0; i < vo.size(); i++) {
+                System.out.println(1);
+                if (vo.get(i).getPartyid() == partyid) {
+                    List<UserVO> memberList = mapper.SelectMemberList(vo.get(i).getPartyid());
+                    for (int j = 0; j < memberList.size(); j++) {
+                        System.out.println(memberList.get(j).getUserid());
+                        System.out.println(logId);
+                        if (memberList.get(j).getUserid().equals(logId)) {
+                            temp = i;
+                            break;
+                        }
+                    }
+                    if (temp != -1) break;
+                }
+                if (temp != -1) break;
+            }
+            System.out.println(temp);
+            if(temp==-1){
+                //partymember X
+                mav.addObject("msg", "잘못된 접근입니다.");
+                mav.setViewName("alert_page");
+                return mav;
+            }
+        }
+
+        PartyVO myteamView = mapper.myteamSelect(vo.get(temp).getPartyid());
+        List<UserVO> memberList = mapper.SelectMemberList(vo.get(temp).getPartyid());
+        List<MemoVO> memoListView = mapper.SelectMemoListView(vo.get(temp).getPartyid());
         mav.addObject("myteamView", myteamView);
         mav.addObject("memberList", memberList);
         mav.addObject("memoListView", memoListView);
-        mav.addObject("pvo",vo);
-        mav.addObject("tempno",vo.get(0).getPartyid());
+        mav.addObject("pvo", vo);
+        mav.addObject("tempno", vo.get(temp).getPartyid());
         mav.setViewName("myteam/myteam_main");
 
 
         return mav;
     }
+
     // 정인식 작업 ( 파티 정보 출력 )
     @GetMapping("/myteamView")
     @ResponseBody
-    public PartyVO myteamView(@RequestParam("no") int partyid){
+    public PartyVO myteamView(@RequestParam("no") int partyid) {
         PartyVO myteamView = mapper.myteamSelect(partyid);
         return myteamView;
     }
+
     @GetMapping("/memberList")
     @ResponseBody
-    public List<UserVO> memberList(@RequestParam("no") int partyid){
+    public List<UserVO> memberList(@RequestParam("no") int partyid) {
         List<UserVO> memberList = mapper.SelectMemberList(partyid);
         return memberList;
     }
+
     @GetMapping("/memoListView")
     @ResponseBody
-    public List<MemoVO> memoListView(@RequestParam("no") int partyid){
+    public List<MemoVO> memoListView(@RequestParam("no") int partyid) {
         List<MemoVO> memoListView = mapper.SelectMemoListView(partyid);
         return memoListView;
     }
+
     @PostMapping("/memoWriteOK")
     @ResponseBody
     public int memoWriteOK(@RequestParam("no") int partyid,
-                              @RequestParam("content") String content,
-                              HttpSession session){
+                           @RequestParam("content") String content,
+                           HttpSession session) {
         String logId = (String) session.getAttribute("LogId");
-           int a =  mapper.InsertMemo(partyid, content, logId);
+        int a = mapper.InsertMemo(partyid, content, logId);
         return a;
     }
 
     @PostMapping("/memoDeleteOk")
     @ResponseBody
-    public int memoDeleteOk(@RequestParam("target") int target){
-       int a = mapper.DeleteMemo(target);
-       return a;
+    public int memoDeleteOk(@RequestParam("target") int target) {
+        int a = mapper.DeleteMemo(target);
+        return a;
     }
 
     @PostMapping("/myteam/create")
     public ModelAndView createTeam(@RequestParam("input_name") String partyname,
-                             @RequestParam("ex_file") MultipartFile file,
-                             @RequestParam("input_objective") String objective,
-                             @RequestParam("input_intro") String intro,
-                             HttpSession session){
+                                   @RequestParam("ex_file") MultipartFile file,
+                                   @RequestParam("input_objective") String objective,
+                                   @RequestParam("input_intro") String intro,
+                                   HttpSession session) {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
 
@@ -302,8 +337,10 @@ public class PartyController {
         mav.setViewName("redirect:/myteam/main");
         return mav;
     }
+
+    // 파티 생성 페이지
     @GetMapping("party/create")
-    public ModelAndView signup_end( HttpSession session){
+    public ModelAndView signup_end(HttpSession session) {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
 
@@ -318,6 +355,7 @@ public class PartyController {
         return mav;
     }
 
+    // 파티명 중복검사 (파티생성 및 파티 정보수정)
     @PostMapping("party/nameCheck")
     @ResponseBody
     public int name_check(@RequestParam("name") String partyname,
@@ -332,64 +370,44 @@ public class PartyController {
         return result;
     }
 
+    // 파티 정보 수정 페이지
     @GetMapping("party/edit")
     public ModelAndView partyEdit(@RequestParam("no") int partyid,
-                                  HttpSession session){
-//        ModelAndView mav = new ModelAndView();
-//        String logId = (String) session.getAttribute("LogId");
-//        List<PartyVO> vo = mapper.SelectPartyList(logId);
-//        System.out.println(vo.size());
-//        mav.addObject("pvo",vo);
-//        PartyVO pvo = mapper.myteamSelect(partyid);
-//
-//        if(logId!= ){
-//            mav.addObject("msg", "파티장만 수정가능합니다.");
-//            mav.setViewName("alert_page");
-//        }
-//        mav.addObject("partyvo",pvo);
-//        mav.setViewName("/myteam/myteam_infoEdit");
-//        return mav;
+                                  HttpSession session) {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mav.addObject("pvo",vo);
-
         PartyVO pvo = mapper.myteamSelect(partyid);
-        boolean isPartyLeader = false;
+        System.out.println(pvo.getUser_userid());
 
-        for(PartyVO vo1 : vo){
-            if(vo1.getUser_userid().equals(logId)){
-                isPartyLeader = true;
-                break;
-            }
-        }
-
-        if(!isPartyLeader){
+        if(!logId.equals(pvo.getUser_userid())){
             mav.addObject("msg", "파티장만 수정가능합니다.");
             mav.setViewName("alert_page");
             return mav;
         }
-
         mav.addObject("partyvo",pvo);
         mav.setViewName("/myteam/myteam_infoEdit");
         return mav;
     }
+    // 파티 정보 수정 ( 파티명 )
     @PostMapping("party/nameUpdate")
     @ResponseBody
-    public int nameUpdate(  @RequestParam("name") String partyname,
-                            @RequestParam("no") int partyid,
-                            HttpSession session){
+    public int nameUpdate(@RequestParam("name") String partyname,
+                          @RequestParam("no") int partyid,
+                          HttpSession session) {
         String logId = (String) session.getAttribute("LogId");
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mapper.UpdatePartyName(partyname, partyid);
         return 1;
     }
 
+    // 파티 정보 수정 ( 파티목표 )
     @PostMapping("party/objectiveUpdate")
     @ResponseBody
-    public int objectiveUpdate(  @RequestParam("no") int partyid,
-                            @RequestParam("objective") String partygoal,
-                            HttpSession session){
+    public int objectiveUpdate(@RequestParam("no") int partyid,
+                               @RequestParam("objective") String partygoal,
+                               HttpSession session) {
         String logId = (String) session.getAttribute("LogId");
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mapper.UpdatePartyObjective(partyid, partygoal);
@@ -397,11 +415,12 @@ public class PartyController {
         return 1;
     }
 
+    // 파티 정보 수정 ( 파티소개 )
     @PostMapping("party/introUpdate")
     @ResponseBody
-    public int introUpdate(  @RequestParam("no") int partyid,
-                            @RequestParam("intro") String partycomment,
-                            HttpSession session){
+    public int introUpdate(@RequestParam("no") int partyid,
+                           @RequestParam("intro") String partycomment,
+                           HttpSession session) {
         String logId = (String) session.getAttribute("LogId");
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mapper.UpdatePartyIntro(partyid, partycomment);
@@ -409,4 +428,60 @@ public class PartyController {
         return 1;
     }
 
+    // 파티 회원 관리 페이지
+    @GetMapping("party/memberEdit")
+    @ResponseBody
+    public ModelAndView memberEdit (@RequestParam("no") int partyid,
+                                    HttpSession session){
+        ModelAndView mav = new ModelAndView();
+        String logId = (String) session.getAttribute("LogId");
+
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mav.addObject("pvo",vo);
+
+        PartyVO pvo = mapper.myteamSelect(partyid);
+        mav.addObject("partyvo",pvo);
+        if(!logId.equals(pvo.getUser_userid())){
+            mav.addObject("msg", "파티장만 수정가능합니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        List<UserVO> memberList1 = mapper.SelectMemberList(partyid);
+        mav.addObject("memberList", memberList1);
+
+        List<UserVO> waitingList1 = mapper.SelectWaitingList(partyid);
+        mav.addObject("waitingList", waitingList1);
+
+        mav.setViewName("/myteam/myteam_memberEdit");
+        return mav;
+    }
+
+    // 파티 멤버 제명
+    @PostMapping("party/memberDel")
+    @ResponseBody
+    public String memberDel (@RequestParam("no") int partyid,
+                            @RequestParam("memberId") String user_userid){
+        mapper.DeleteMember(partyid, user_userid);
+
+        return "redirect:party/memberEdit";
+    }
+    // 파티 가입 승인
+    @PostMapping ("party/memberApprove")
+    @ResponseBody
+    public String memberApprove (@RequestParam("no") int partyid,
+                                 @RequestParam("memberId") String user_userid){
+        mapper.ApproveMember(partyid, user_userid);
+
+        return "redirect:party/memberEdit";
+    }
+    // 파티 가입 거절
+    @PostMapping ("party/memberRefuse")
+    @ResponseBody
+    public String memberRefuse (@RequestParam("no") int partyid,
+                                 @RequestParam("memberId") String user_userid){
+        mapper.RefuseMember(partyid, user_userid);
+
+        return "redirect:party/memberEdit";
+    }
 }

@@ -124,11 +124,11 @@
         }
 
         #ex_file + label {
-            background-image: url("${pageContext.servletContext.contextPath}/upload/staticimage/fileUploadImg.PNG");
+            background-image: url("${pageContext.servletContext.contextPath}/upload/staticimage/fileUploadImg.png");
             border-radius: 20px;
             background-size: cover;
-            width: 120px;
-            height: 100px;
+            width: 130px;
+            height: 130px;
             display: inline-block;
             cursor: pointer;
         }
@@ -204,7 +204,10 @@
 
 
         $(function () {
-
+            $(".party_list_btn").click(function () {
+                no = $(this).attr('title');
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?partyid='+no;
+            });
 
             $(".checkName").on('click', function (){
                var tag = $(".input_name");
@@ -215,7 +218,7 @@
                }
                const regex = /^[A-Za-z가-힣0-9]{2,8}$/;
                if(!regex.test(name)){
-                   alert("파티명은 2-8글자, 한글, 영문만 사용 가능힙니다.");
+                   alert("파티명은 2-8글자, 한글, 영문만 사용 가능합니다.");
                    return false;
                }
                $.ajax({
@@ -242,15 +245,6 @@
                });
             });
 
-            $('.mainbtn').click(function (){
-                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main';
-            });
-            $('.partysetbtn').click(function (){
-                console.log(no);
-                window.location.href = '${pageContext.servletContext.contextPath}/party/edit?no='+no;
-                $('.partysetbtn').removeClass('btn-outline-secondary').addClass('btn-secondary');
-                $('.partysetbtn').prop('disable', true);
-            });
         });
     </script>
 </head>
@@ -280,11 +274,7 @@
             </button>
         </li>
     </ul>
-    <div class="choisvalue" style="margin-top: 30px;">
-        <input type="button" class="btn btn-secondary mainbtn" value="메인" >
-        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
-        <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리">
-    </div>
+    <div class="choisvalue" style="margin-top: 30px;height: 38px;"></div>
     <hr>
 </main>
 
