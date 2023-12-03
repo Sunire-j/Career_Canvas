@@ -269,4 +269,33 @@
         where partyid=#{param1};
     </select>
     <!--조석훈 끝-->
+
+    <!-- 정인식 작업 -->
+    <select id="SelectWaitingList" resultType="com.team1.careercanvas.vo.UserVO">
+        select *
+        from user
+                 join partymember
+                      on partymember.user_userid = user.userid
+        where partymember.party_partyid = #{param1} and partymember.status = 'waiting';
+    </select>
+
+    <delete id="DeleteMember">
+        delete
+        from partymember
+        where party_partyid = #{param1} and user_userid = #{param2}
+    </delete>
+
+    <update id="ApproveMember">
+        update partymember
+        set status = 'done'
+        where party_partyid=#{param1} and user_userid=#{param2}
+    </update>
+
+    <delete id="RefuseMember">
+        delete
+        from partymember
+        where party_partyid = #{param1} and user_userid = #{param2}
+    </delete>
+    <!-- 정인식 작업 끝 -->
+
 </mapper>

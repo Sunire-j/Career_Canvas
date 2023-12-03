@@ -57,4 +57,12 @@ public interface PartyMapper {
 
     String getpartyimg(int partyid);
     //조석훈 끝
+
+    // 정인식 작업
+    List<UserVO> SelectWaitingList(int partyid);
+
+    void DeleteMember(int partyid, String user_userid);
+    void ApproveMember(int partyid, String user_userid);
+    void RefuseMember(int partyid, String user_userid);
+    // 정인식 작업 끝
 }

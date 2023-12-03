@@ -121,8 +121,8 @@
             word-wrap: break-word;
             resize: none;
         }
-        .name_edit_btn, .objective_edit_btn, .intro_edit_btn,
-        .name_edit_btn_ok, .objective_edit_btn_ok, .intro_edit_btn_ok{
+        .name_edit_btn, .objective_edit_btn, .intro_edit_btn,.partyImg_edit_btn,
+        .name_edit_btn_ok, .objective_edit_btn_ok, .intro_edit_btn_ok, .partyImg_edit_btn_ok{
             font-size: 0.9em;
             color: #868e96;
             float: right;
@@ -157,12 +157,12 @@
             cursor: pointer;
         }
 
-        .profile_upload{
+        .profile_edit_box{
             margin-top: 10px;
             margin-left: 40px;
         }
 
-        .upload_guide{
+        .edit_guide{
             margin-left: 40px;
             padding-top: 20px;
         }
@@ -183,6 +183,37 @@
         .new_party_btn{
             border: none;
             background: none;
+        }
+
+        /* 프로필 업로드 */
+        #ex_file {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        #ex_file + label {
+            background-image: url("${pageContext.servletContext.contextPath}/upload/staticimage/fileUploadImg.png");
+            border-radius: 20px;
+            background-size: cover;
+            width: 120px;
+            height: 120px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .profile_edit_box{
+            margin-top: 10px;
+            margin-left: 40px;
+            display: flex;
+        }
+
+        .edit_guide{
+            margin-left: 40px;
+            padding-top: 20px;
         }
 
     </style>
@@ -354,7 +385,15 @@
             $('.mainbtn').click(function (){
                 window.location.href = '${pageContext.servletContext.contextPath}/myteam/main';
             });
+            $(".party_list_btn").click(function () {
+                no = $(this).attr('title');
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?partyid='+no;
+            });
 
+            $("#memberEdit_btn").click(function () {
+                no = ${partyvo.partyid};
+                window.location.href = '${pageContext.servletContext.contextPath}/party/memberEdit?no='+ no;
+            });
 
         });
     </script>
@@ -398,9 +437,12 @@
     <section class="teamView">
         <p class="party_name">${partyvo.partyname}</p>
         <p class="content_title">파티관리</p>
-        <div class="edit_category">
-            <button type="button" class="btn btn-secondary" style="margin-right: 20px;">정보수정</button>
-            <button type="button" class="btn btn-outline-secondary">회원관리</button>
+        <div class="edit_category" style="display: flex;">
+            <button type="button" class="btn btn-secondary"  style="margin-right: 20px;">정보수정</button>
+            <form>
+                <input type="hidden" name="partyid" value="${partyvo.partyid}"/>
+                <button type="button" class="btn btn-outline-secondary" id="memberEdit_btn">회원관리</button>
+            </form>
         </div>
         <hr style="width: 900px; margin: 0 auto"/>
         <div class="edit_content">
@@ -413,14 +455,25 @@
                     <input type="text" class="name_edit_box" name="name_edit_box" style="margin-left: 20px; font-size: 1.7em; border: none;" value="${partyvo.partyname}" readonly />
                 </div>
             </form>
+        <form id="profileImg_editFrm">
             <div class="profile_edit">
                 <span style=" font-size: 1.3em; color: #495057;">프로필 이미지</span>
-                <button  style=" font-size: 0.9em; color: #868e96; float: right; border: none; background: none;">
-                    수정+
-                </button>
+                <input type="button" class="partyImg_edit_btn" value="수정+" />
+                <input type="submit" class="partyImg_edit_btn_ok" style="display: none" value="수정하기"/>
                 <hr style="margin-top: 5px;"/>
-                <img src="${pageContext.servletContext.contextPath}/upload${partyvo.partyimage}">
+                <div class="profile_edit_box">
+                    <!-- <div class="img_file" id="previewContainer"></div> -->
+                    <div class="file-edit">
+                        <input type="file" id="ex_file" name="ex_file" accept=".png, .jpg, .jpeg" onchange="handleFileUpload()" disabled>
+                        <label for="ex_file" class="imgpreview"></label>
+                    </div>
+                    <div class="edit_guide" style="display: none">
+                        <p style="font-size: .8em; font-weight: bold;padding-bottom: 5px;">변경할 파티 프로필 이미지를 선택해주세요.</p>
+                        <p style="font-size: .7em; font-weight: bold;">* png, jpg, jpeg 파일만 업로드 가능합니다.</p>
+                    </div>
+                </div>
             </div>
+        </form>
             <form id="objective_editFrm">
                 <div class="objective_edit">
                     <span style=" font-size: 1.3em; color: #495057;">파티 목표</span>
