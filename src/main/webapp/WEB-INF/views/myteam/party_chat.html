@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            width:1000px;
+            margin: 0 auto;
+            height: 1200px;   
+        }
+        .chat{
+            width: 900px;
+            margin: 0 auto;
+        }
+        .party_name{
+            margin: 0;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 2.5em;
+            line-height: 100%;
+        }
+        
+
+        /* 멤버 리스트 */
+        .salutation_name {
+            margin-top: 60px;
+            height: 40px;
+            width: 130px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        .member_list{
+            overflow: auto;
+            margin-left: 20px;
+            
+        }
+        .member_list li{
+            margin-right: 20px;
+            float: left;
+        }
+        .member_img{
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+        }
+        .member_name{
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        /* 채팅 */
+        .chat_list{
+            width: 880px;
+            height: 700px;
+            overflow: auto;
+            margin: 0 auto;
+            overflow-y: scroll;
+        }
+        .chat_list li{
+            width: 840px;
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        p{
+            margin-bottom: 0;
+        }
+        
+        .msg_content, .other_content{
+            padding: 10px;
+            background-color: #ddd;
+            border-radius: 10px;
+            min-width: 100px;
+            max-width: 350px;
+            word-break: break-all;
+        }
+        .msg_date{
+            padding-right: 10px;
+            float: right;
+        }
+        .other_date{
+            padding-left: 10px;
+        }
+        .otherMsg>img{
+            width: 70px;
+            height: 70px;
+            border-radius: 30px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .otherMsg, .myMsg{
+            display: flex;
+        }
+        .otherMsg{
+            float: left;
+        }
+        .myMsg{
+            justify-content: flex-end;
+        }
+        .chat_container{
+                width: 880px;
+                height: 760px;
+                background-color: #e9ecef;
+                margin-top: 50px;
+            }
+        /* 채팅 스크롤바*/
+       /* 아래의 모든 코드는 영역::코드로 사용 */
+        .scrollBar::-webkit-scrollbar {
+            width: 10px;  /* 스크롤바의 너비 */
+        }
+
+        .scrollBar::-webkit-scrollbar-thumb {
+            height: 30%; /* 스크롤바의 길이 */
+            background: darkgray; /* 스크롤바의 색상 */
+            
+            border-radius: 10px;
+        }
+
+        .scrollBar::-webkit-scrollbar-track {
+            background: none;  /*스크롤바 뒷 배경 색상*/
+        }
+        .chat_name{
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            color: darkgray;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto;
+            border-bottom: 1px solid darkgray;
+            width: 600px;
+            margin-bottom: 10px;
+        }
+
+        .comment_write{
+            width: 880px;
+            margin: 0;
+            display: flex;
+            padding-bottom: 20px;
+        }
+        
+        .comment_content{
+            border: 1px solid #ddd;
+            width: 90%;
+            min-height: 100px;
+            padding: 10px;
+        }
+        .comment_write_ok{
+            width: 10%;
+        }
+    </style>
+</head>
+<body>
+
+    <hr/>
+    <p class="party_name">Career Canvas</p>
+    <div class="chat">
+        <div class="salutation_name">
+            채팅목록
+        </div>
+        <ul class="member_list">
+            <li>
+                <img src="profile.PNG" class="member_img">
+                <div class="member_name">
+                    전체
+                </div>
+            </li>
+            <li>
+                <img src="profile.PNG" class="member_img">
+                <div class="member_name">
+                    박**
+                </div>
+            </li>
+            <li>
+                <img src="profile.PNG" class="member_img">
+                <div class="member_name">
+                    최**
+                </div>
+            </li>
+        </ul>
+        <div class="chat_container">
+            <div class="chat_name">
+                <span>전체</span>
+            </div>
+            <ul class="chat_list scrollBar">
+                <li class="myMsg">
+                    <div class="myMsg_content">
+                        <p class="msg_content">ㅋㅋ</p>
+                        <p class="msg_date">23.11.14 15:24</p>
+                    </div>
+                </li>
+                <li class="otherMsg">
+                    <img src="profile.PNG" />
+                    <div class="other_Msg_content">
+                        <p style="margin-left: 10px; font-weight: bold;">홍길동</p>
+                        <p class="other_content">sdasda</p>
+                    </div>
+                </li>
+                <li class="otherMsg" style="margin-top: 0;">
+                    <div style="width: 80px;"></div>
+                    <div class="other_Msg_content">
+                        <p class="other_content">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas</p>
+                        <p class="other_date">23.11.14 15:24</p>
+                    </div>
+                </li>
+                <li class="myMsg">
+                    <div class="myMsg_content">
+                        <p class="msg_content">ㅋㅋ</p>
+                    </div>
+                </li>
+                <li class="myMsg">
+                    <div class="myMsg_content">
+                        <p class="msg_content">ㅋㅋadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasads</p>
+                        <p class="msg_date">23.11.14 15:24</p>
+                    </div>
+                </li>
+                <li class="otherMsg">
+                    <img src="profile.PNG" />
+                    <div class="other_Msg_content">
+                        <p style="margin-left: 10px; font-weight: bold;">홍길동</p>
+                        <p class="other_content">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas</p>
+                        <p class="other_date">23.11.14 15:24</p>
+                    </div>
+                </li>
+                <li class="otherMsg">
+                    <img src="profile.PNG" />
+                    <div class="other_Msg_content">
+                        <p style="margin-left: 10px; font-weight: bold;">이순신</p>
+                        <p class="other_content">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas</p>
+                        <p class="other_date">23.11.14 15:24</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+            <form>
+                <div class="comment_write">
+                    <textarea class="comment_content" placeholder="내용을 입력하세요." style="resize: none;"></textarea>
+                    <button type="button" class="btn btn-secondary comment_write_ok"> 보내기</button>
+                </div>
+            </form>
+    </div>
+</body>
+</html>

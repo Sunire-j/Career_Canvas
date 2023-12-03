@@ -1,8 +1,13 @@
 package com.team1.careercanvas.Controller;
 
 
+import com.team1.careercanvas.mapper.ChatMapper;
 import com.team1.careercanvas.mapper.PartyMapper;
+import com.team1.careercanvas.mapper.UserMapper;
 import com.team1.careercanvas.vo.*;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,16 +21,22 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class PartyController {
     private final PartyMapper mapper;
+    private final ChatMapper chatmapper;
+    private final UserMapper userMapper;
 
-    public PartyController(PartyMapper mapper) {
+    public PartyController(PartyMapper mapper, ChatMapper chatmapper, UserMapper userMapper) {
         this.mapper = mapper;
+        this.chatmapper = chatmapper;
+        this.userMapper = userMapper;
     }
 
     //조석훈 시작
@@ -169,6 +180,74 @@ public class PartyController {
         int result = mapper.applyParty(uid, partyid);
         return result;
     }
+
+    @GetMapping("myteam/chat")
+    public ModelAndView partychat(int no, HttpSession session){
+        ModelAndView mav = new ModelAndView();
+
+        //파티가 존재하는지 확인
+        if(no==0){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        int count = mapper.CheckpartyId(no);
+        System.out.println(count);
+
+        if(count==0){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        //파티원인지 확인
+        int temp = 0;
+        List<UserVO> memberlist = mapper.SelectMemberList(no);
+        for(int i = 0 ; i<memberlist.size(); i++){
+            if(memberlist.get(i).getUserid().equals(session.getAttribute("LogId"))){
+                temp=1;
+                break;
+            }
+        }
+        if(temp==0){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        String logId = (String) session.getAttribute("LogId");
+
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mav.addObject("pvo",vo);
+        mav.addObject("no", no);
+        //여기에서 db에 이전 채팅내역 불러오는게 있어야함.
+        mav.setViewName("/myteam/myteam_chat");
+
+
+        return mav;
+    }
+
+    @MessageMapping("/chatting/{partyid}")
+    @SendTo("/topic/{partyid}")
+    public ChattingVO send(ChattingVO vo, @DestinationVariable String partyid){
+
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        vo.setDate(time);
+        //db에 저장
+        chatmapper.InsertChat(vo);
+        //username이랑 profileimg추가
+        vo.setUsername(userMapper.getUserInfo(vo.getUser_userid()).getUsername());
+        vo.setProfileimg(userMapper.getUserInfo(vo.getUser_userid()).getProfileimg());
+
+        return vo;
+    }
+
+    @PostMapping("/myteam/getChat")
+    @ResponseBody
+    public List<ChattingVO> getChat(int partyid){
+        List<ChattingVO> list = chatmapper.getChat(partyid);
+        return list;
+    }
     //조석훈 끝
 
     // 정인식 작업
@@ -178,6 +257,7 @@ public class PartyController {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
         String logStatus = (String) session.getAttribute("logStatus");
+
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
             mav.setViewName("alert_page");

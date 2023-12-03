@@ -56,6 +56,8 @@ public interface PartyMapper {
     String getPartyName(int partyid);
 
     String getpartyimg(int partyid);
+
+    int CheckpartyId(int partyid);
     //조석훈 끝
 
     // 정인식 작업

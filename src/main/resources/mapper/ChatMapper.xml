@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1.careercanvas.mapper.ChatMapper">
+    <insert id="InsertChat" parameterType="com.team1.careercanvas.vo.ChattingVO">
+        insert into partychat(party_partyid, user_userid, date, partychatcontent)
+        values(#{party_partyid}, #{user_userid}, #{date}, #{partychatcontent});
+    </insert>
+
+    <select id="getChat" resultType="com.team1.careercanvas.vo.ChattingVO">
+        select pc. party_partyid as party_partyid,
+               pc.user_userid as user_userid,
+               pc.date as date,
+               pc.partychatcontent as partychatcontent,
+               u.profileimg as profileimg,
+               u.username as username
+        from partychat pc
+        join user u on pc.user_userid = u.userid
+        where party_partyid= #{param1 } and pc.date >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        order by pc.date asc;
+    </select>
+</mapper>
