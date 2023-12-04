@@ -40,7 +40,10 @@
             width: 500px;
             height: 40px;
         }
+        .search-container {
+            background-color: #f2f2f2;
 
+        }
         h2 {
             float: left;
         }
@@ -176,12 +179,12 @@
         </div>
 
         <div style="display: flex; justify-content: space-between">
-            <div style="width: 80px"></div>
+            <div></div>
             <div>
                 <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
                     <div class="pagination" style="display: flex">
                         <div class="paging">
-                            <ul class="pagination justify-content-center d-flex">
+                            <ul class="pagination justify-content-center">
                             <c:if test="${pVO.page > 1}">
                                 <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'
                                 <c:if test="${pVO.searchWord!=''}">

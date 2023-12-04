@@ -148,8 +148,7 @@ file="../header_footer/header.jspf"%>
         margin-bottom: 20px;
       }
       .userIntro img {
-        width: 100px;
-        height: 100px;
+        margin-right: 30px;
       }
       .btn-outline-primary {
         font-size: 14px;
@@ -240,8 +239,8 @@ file="../header_footer/header.jspf"%>
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
-          <div style="padding-left: 20px;">
+          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" style="height: 235px; width: 235px; object-fit: fill; border-radius: 30%;"/>
+          <div>
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage">
                 <span style="font-size: 1.5rem">${uVO.username }</span>

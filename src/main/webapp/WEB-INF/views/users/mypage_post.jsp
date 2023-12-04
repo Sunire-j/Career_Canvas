@@ -256,7 +256,7 @@ file="../header_footer/header.jspf"%>
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
+          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" style="height: 235px; width: 235px; object-fit: cover; border-radius: 30%;"/>
           <div style="padding-left: 20px;">
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage">

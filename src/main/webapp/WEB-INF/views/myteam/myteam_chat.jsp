@@ -298,7 +298,7 @@
                     success: function (result) {
                         console.log(result);
                         result.map(function (item, index) {
-                            if (item.user_userid == "${LogId}") {
+                            if (item.user_userid == "${LogId}") {//보낸거
                                 console.log("동일함");
                                 var tag = `
                        <li class="myMsg">
@@ -308,7 +308,7 @@
                            </div>
                        </li>`;
                                 $(".chat_list").append(tag);
-                            } else {
+                            } else {//받은거
                                 console.log("다름");
                                 var tag = `
                        <li class="otherMsg">
