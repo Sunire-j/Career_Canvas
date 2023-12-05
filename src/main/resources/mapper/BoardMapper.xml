@@ -150,7 +150,7 @@
 
     <!-- 권혁준 작업 -->
     <select id="getmyPost" resultType="com.team1.careercanvas.vo.BoardVO">
-        select *
+        select postid, boardcategory, posttitle, date_format(date, '%y-%m-%d') date
         from post
         <if test="#{searchWord} == ''">
             where user_userid = #{searchKey}

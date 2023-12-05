@@ -19,4 +19,8 @@ public interface PofolMapper {
 	List<PofolVO> getPofolInfo(String userid);
 
 	int insertImg(String path, int pofolid);
+
+	// 권혁준 작업
+
+	List<PofolVO> getBestPofol(String category);
 }

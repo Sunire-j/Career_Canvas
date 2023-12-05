@@ -206,10 +206,6 @@ file="../header_footer/header.jspf"%>
         width: 20%;
         color: black;
       }
-
-      .ajaxMenu_wrapper {
-        margin-top: 50px;
-      }
       .ajaxView {
         float: left;
       }
@@ -262,7 +258,7 @@ file="../header_footer/header.jspf"%>
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div style="padding-left: 20px;">
             <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
+              <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
               <a href="${pageContext.servletContext.contextPath}/mypage_edit">
@@ -281,9 +277,9 @@ file="../header_footer/header.jspf"%>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -316,21 +312,7 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <!-- 검색창 -->
-      <form
-        class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">
           <button class="btn btn-outline-primary sendMsg" onclick="location.href='#'">보낸 쪽지함</button>
@@ -366,6 +348,10 @@ file="../header_footer/header.jspf"%>
 
         <!-- 페이징 -->
         <div style="margin: 0 auto;">
+          <c:if test="${pVO.totalRecord == 0}">
+            보낸 쪽지가 없습니다
+          </c:if>
+          <c:if test="${pVO.totalRecord > 0}">
           <ul class="paging">
             <!-- 이전 -->
             <c:if test="${pVO.page == 1}">
@@ -412,7 +398,11 @@ file="../header_footer/header.jspf"%>
               </li>
             </c:if>
           </ul>
-          <input type="button" value="쪽지보내기" class="btn btn-outline-primary" onclick="openPopup()">
+        </c:if>
+        </div>
+      </div>
+      <div style="width: 60%; text-align: right; margin:0 auto;">
+      <input type="button" value="쪽지보내기" class="btn btn-outline-primary" onclick="openPopup()">
           <script>
             function openPopup(){
 
@@ -422,11 +412,22 @@ file="../header_footer/header.jspf"%>
               window.open('${pageContext.servletContext.contextPath}/mypage/pop_sendMsg','SendMsg',popSize);
             }
           </script>
-          
-          <!-- 보내는사람 닉네임 , 받는사람 닉네임, 내용, 전송버튼 -->
-          <!-- 깡통 JSP만들기 -->
-        </div>
       </div>
+      <!-- 검색창 -->
+      <form
+      class="input-group mb-3"
+      style="width: 60%; margin: 20px auto"
+      action="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+      method="GET"
+    >
+      <input
+        type="text"
+        class="form-control"
+        name="searchWord"
+        placeholder="Search"
+      />
+      <button class="btn btn-success" type="submit">Go</button>
+    </form>
     </main>
   </body>
 </html>

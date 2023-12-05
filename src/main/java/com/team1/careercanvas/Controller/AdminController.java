@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -20,10 +22,10 @@ public class AdminController {
 
     @GetMapping("/admin/member") // 개인회원관리
     public ModelAndView member(HttpSession session,
-                               @RequestParam(required = false, defaultValue = "1") int postSort,
-                               @RequestParam(required = false) String searchKey,
-                               @RequestParam(required = false) String searchWord,
-                               @RequestParam(required = false, defaultValue = "1") int page) {
+            @RequestParam(required = false, defaultValue = "1") int postSort,
+            @RequestParam(required = false) String searchKey,
+            @RequestParam(required = false) String searchWord,
+            @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setSearchKey(searchKey);
@@ -57,7 +59,7 @@ public class AdminController {
 
     @GetMapping("/admin/board") // 게시판 - 실시간 모니터링
     public ModelAndView board(HttpSession session,
-                              @RequestParam(required = false, defaultValue = "1") int page) {
+            @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
         PagingVO pvo = new PagingVO();
@@ -77,7 +79,7 @@ public class AdminController {
 
     @GetMapping("/admin/report") // 신고 게시글 관리
     public ModelAndView report(HttpSession session,
-                               @RequestParam(required = false, defaultValue = "1") int page) {
+            @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
         PagingVO pvo = new PagingVO();
@@ -97,7 +99,7 @@ public class AdminController {
 
     @GetMapping("/admin/delete") // 삭제 신청 과제 리스트
     public ModelAndView assignment(HttpSession session,
-                                   @RequestParam(required = false, defaultValue = "1") int page) {
+            @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
         PagingVO pvo = new PagingVO();
@@ -152,7 +154,7 @@ public class AdminController {
     @GetMapping("/report/dismiss") // 기각해서 리포트 테이블만 삭제
     public String dismissReport(HttpSession session, int targetid) {
         int result = mapper.deleteReport(targetid);
-        //보드에 삭제
+        // 보드에 삭제
         if (result > 0) { // 삭제 성공
             return "redirect:/admin/report";
         } else { // 삭제 실패
@@ -269,22 +271,37 @@ public class AdminController {
     }
 
     @GetMapping("/admin/user/stats")
-    public ModelAndView userStats(){
-        ModelAndView mav=new ModelAndView();
+    public ModelAndView userStats() {
+        ModelAndView mav = new ModelAndView();
 
         mav.setViewName("admin/admin_user_stats");
         return mav;
     }
 
     @GetMapping("/admin/board/stats")
-    public ModelAndView boardStats(){
-        ModelAndView mav=new ModelAndView();
-        mav.addObject("bVO",mapper.getBoardCount());
-        mav.addObject("rVO",mapper.getReportCount());
-        mav.addObject("today",mapper.getBoardToday());
-        mav.addObject("month",mapper.getBoardMonth());
+    public ModelAndView boardStats() {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("bVO", mapper.getBoardCount());
+        mav.addObject("rVO", mapper.getReportCount());
+        mav.addObject("today", mapper.getBoardToday());
+        mav.addObject("month", mapper.getBoardMonth());
         System.out.println(mapper.getBoardMonth());
         mav.setViewName("admin/admin_board_stats");
+        return mav;
+    }
+
+    // 권혁준 작업
+    @GetMapping("/admin/banner")
+    public ModelAndView banner(PagingVO pVO) {
+        ModelAndView mav = new ModelAndView();
+        List<BannerVO> bVO = mapper.getBannerList();
+        pVO.setOnePageRecord(5);
+        pVO.setTotalRecord(mapper.getBannerAmount(pVO));
+        pVO.setPage(pVO.getPage());
+
+        System.out.println(pVO);
+        mav.addObject("bannerVO", bVO);
+        mav.setViewName("/admin/admin_banner");
         return mav;
     }
 }
