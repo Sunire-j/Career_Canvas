@@ -1,8 +1,22 @@
 package com.team1.careercanvas.Controller;
 
-import static com.team1.careercanvas.util.OCRTemplate.OCR;
-import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.team1.careercanvas.mapper.BoardMapper;
+import com.team1.careercanvas.mapper.PofolMapper;
+import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.vo.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,37 +28,10 @@ import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.team1.careercanvas.mapper.BoardMapper;
-import com.team1.careercanvas.mapper.PofolMapper;
-import com.team1.careercanvas.mapper.UserMapper;
-import com.team1.careercanvas.vo.BoardVO;
-import com.team1.careercanvas.vo.CommentVO;
-import com.team1.careercanvas.vo.MessageVO;
-import com.team1.careercanvas.vo.PagingVO;
-import com.team1.careercanvas.vo.PofolVO;
-import com.team1.careercanvas.vo.SubmitSubjectVO;
-import com.team1.careercanvas.vo.UserVO;
+import static com.team1.careercanvas.util.OCRTemplate.OCR;
+import static com.team1.careercanvas.util.securePassword.encryptWithSalt;
 
 @Controller
 public class UserController {
@@ -443,10 +430,10 @@ public class UserController {
             @RequestParam(name = "interest", required = false) String interest,
             HttpSession session) throws NoSuchAlgorithmException {
 
-        String str = String.join(",", interest);
-        int saveInterestResult = mapper.saveInterest((String) session.getAttribute("LogId"), str);
-        System.out.println(str);
-
+        if(interest!=null){
+            String str = String.join(",", interest);
+            int saveInterestResult = mapper.saveInterest((String) session.getAttribute("LogId"), str);
+        }
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
@@ -465,7 +452,8 @@ public class UserController {
             mapper.changePwd(userid, encryptedpwd, salt);
         }
 
-        if (file != null) {
+        System.out.println(file.isEmpty());
+        if (!file.isEmpty()) {
             // 파일저장시작
             String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
@@ -535,10 +523,10 @@ public class UserController {
 
         list = pofolmapper.getPofol(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        String interestArr[] = uVO.getInterest().split(",");
-        System.out.println(Arrays.toString(interestArr));
-        System.out.println(uVO);
-        mav.addObject("interest", interestArr);
+        if(uVO.getInterest()!=null){
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("searchWord", pVO.getSearchWord());
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
@@ -623,10 +611,10 @@ public class UserController {
         bVO = boardmapper.getmyPost(pVO);
 
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        String interestArr[] = uVO.getInterest().split(",");
-        System.out.println(Arrays.toString(interestArr));
-
-        mav.addObject("interest", interestArr);
+        if(uVO.getInterest()!=null){
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("pVO", pVO);
         mav.addObject("bVO", bVO);
         mav.addObject("uVO", uVO);
@@ -656,10 +644,10 @@ public class UserController {
 
         cVO = boardmapper.getmyComment(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        String interestArr[] = uVO.getInterest().split(",");
-        System.out.println(Arrays.toString(interestArr));
-
-        mav.addObject("interest", interestArr);
+        if(uVO.getInterest()!=null){
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("cVO", cVO);
         mav.addObject("uVO", uVO);
         mav.addObject("pVO", pVO);
@@ -686,10 +674,10 @@ public class UserController {
         pVO.setPage(pVO.getPage());
 
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        String interestArr[] = uVO.getInterest().split(",");
-        System.out.println(Arrays.toString(interestArr));
-
-        mav.addObject("interest", interestArr);
+        if(uVO.getInterest()!=null){
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         List<MessageVO> mVO = new ArrayList<MessageVO>();
         mVO = mapper.getSendMsg(pVO);
         mav.addObject("uVO", uVO);
@@ -722,10 +710,10 @@ public class UserController {
         List<MessageVO> mVO = new ArrayList<MessageVO>();
         mVO = mapper.getReceiveMsg(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        String interestArr[] = uVO.getInterest().split(",");
-        System.out.println(Arrays.toString(interestArr));
-
-        mav.addObject("interest", interestArr);
+        if(uVO.getInterest()!=null){
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
 
         mav.addObject("mVO", mVO);
         mav.addObject("uVO", uVO);
@@ -749,10 +737,10 @@ public class UserController {
 
         List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectSolo(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        String interestArr[] = uVO.getInterest().split(",");
-        System.out.println(Arrays.toString(interestArr));
-
-        mav.addObject("interest", interestArr);
+        if(uVO.getInterest()!=null){
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
@@ -764,6 +752,7 @@ public class UserController {
 
     @GetMapping("mypage/submitSubjectTeam")
     public ModelAndView submitSubjectTeam(HttpSession session, PagingVO pVO) {
+
         ModelAndView mav = new ModelAndView();
         if (pVO.getSearchWord() == null) {
             pVO.setSearchWord("");
@@ -775,10 +764,10 @@ public class UserController {
 
         List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam((String) session.getAttribute("LogId"), pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        String interestArr[] = uVO.getInterest().split(",");
-        System.out.println(Arrays.toString(interestArr));
-
-        mav.addObject("interest", interestArr);
+        if(uVO.getInterest()!=null){
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
