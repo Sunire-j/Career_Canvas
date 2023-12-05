@@ -130,6 +130,8 @@
         }
         .content>li{
             width: 25%;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
         .content{
             display: flex;
@@ -227,11 +229,9 @@
             margin-left: 10px;
         }
 
-        .portfolio_content,#content {
+        .portfolio_content{
             margin: 0 auto;
             margin-top: 10px;
-            height: 740px;
-
         }
 
         .content img {
@@ -260,7 +260,7 @@
         }
         .content_category{
             height: 30px;
-            margin-left: 40px;
+            margin-top: 10px;
             margin-right: 10px;
             background-color: #ddd;
             border-radius: 5px;
@@ -316,7 +316,7 @@
             <div class="portfolio">
                 <div class="portfolio_category">
                     <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
-                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">기업과제</button>
+                    <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">기업과제</button>
                 </div>
                 <div class="portfolio_content">
                     <ul class="content">
@@ -326,7 +326,18 @@
                                 <img src="${pageContext.servletContext.contextPath}/upload${pVo.imgsrc}" class="portfolio_img">
                                 <div class="content_info">
                                     <div class="content_category">
-                                        ${pVo.category}
+                                        <c:if test="${pVo.category==0}">
+                                            분류없음
+                                        </c:if>
+                                        <c:if test="${pVo.category==1}">
+                                            IT/개발
+                                        </c:if>
+                                        <c:if test="${pVo.category==2}">
+                                            디자인
+                                        </c:if>
+                                        <c:if test="${pVo.category==3}">
+                                            영상
+                                        </c:if>
                                     </div>
                                     <div class="content_title">
                                         ${pVo.portfoliotitle}
@@ -337,14 +348,34 @@
                         </c:forEach>
                     </ul>
                 </div>
-                <div class="portfolio_paging">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-                    </ul>
+                <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                    <div class="pagination" style="display: flex">
+                        <div class="paging">
+                            <ul class="pagination justify-content-center d-flex">
+                                <c:if test="${PagingVO.page > 1}">
+                                    <li class="page-item"><a class="page-link" href="?page =${PagingVO.page - 1}&uid=${uVO.userid}"><
+                                    </a></li>
+                                </c:if>
+                                <c:forEach var="i" begin="${PagingVO.startPage}" end="${PagingVO.startPage + PagingVO.onePageCount - 1}">
+                                    <c:if test="${i <= PagingVO.totalPage}">
+                                        <c:choose>
+                                            <c:when test="${i != PagingVO.page}">
+                                                <li class="page-item"><a class="page-link" href="?page=${i}&uid=${uVO.userid}
+                                                    ">${i}</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link active" href="">${i}</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${PagingVO.page < PagingVO.totalPage}">
+                                    <li class="page-item"><a class="page-link" href="?page=${PagingVO.page + 1}&uid=${uVO.userid}">>
+                                    </a></li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>

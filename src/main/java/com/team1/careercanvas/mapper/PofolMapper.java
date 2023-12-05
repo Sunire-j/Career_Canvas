@@ -16,7 +16,12 @@ public interface PofolMapper {
 	// 김효준작업
 	int getpofolamount(String userid);
 
-	List<PofolVO> getPofolInfo(String userid);
+	List<PofolVO> getPofolInfo(PagingVO pvo);
+
+
+	PofolVO getPofolall(int pofolid);
+
+	int getpofollike(int pofolid);
 
 	int insertImg(String path, int pofolid);
 
