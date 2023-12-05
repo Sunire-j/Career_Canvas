@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team1.careercanvas.mapper.BoardMapper;
 import com.team1.careercanvas.mapper.PofolMapper;
 import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.vo.PagingVO;
 import com.team1.careercanvas.vo.PofolVO;
 
 @Controller
@@ -23,21 +24,12 @@ public class PofolController {
     }
 
     @GetMapping("/pofol_preview")
-    public ModelAndView pofol(@RequestParam(required = false, value = "category") String category) {
+    public ModelAndView pofol(PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
-
-        List<PofolVO> pofolVO = mapper.getBestPofol(category);
-
+        List<PofolVO> pofolVO = mapper.getCategoryPofol(pVO);
+        System.out.println(pofolVO);
         mav.addObject("pofolVO", pofolVO);
         mav.setViewName("/pofol/pofol_preview");
         return mav;
-    }
-
-    @ResponseBody
-    @GetMapping("/pofol_solo")
-    public List<PofolVO> solo(@RequestParam(required = false, value = "category") String category) {
-        List<PofolVO> pofol = mapper.getBestPofol(category);
-        System.out.println(pofol);
-        return pofol;
     }
 }
