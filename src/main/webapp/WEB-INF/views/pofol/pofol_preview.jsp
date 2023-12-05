@@ -106,18 +106,51 @@ file="../header_footer/header.jspf" %>
       </section>
 
       <section style="text-align: left">
-        <h2 style="padding-right: 30px">카테고리별 둘러보기</h2>
-        <article>
-          <p>전체보기</p>
-          <div style="display:flex;">
-            <c:forEach var="p" items="${pofolVO}"> 
+        <!-- line 1 -->
+        <div style="display: flex; align-items: center">
+          <select
+            name="category"
+            id="category"
+            style="width: fit-content; margin-right: 20px"
+            class="form-select"
+          >
+            <option value="viewAll">전체보기</option>
+            <option value="1">IT/프로그래밍</option>
+            <option value="2">디자인</option>
+            <option value="3">영상음향</option>
+          </select>
+          <select
+            name="sort"
+            id="sort"
+            class="form-select"
+            style="width: fit-content"
+          >
+            <option value="likeCnt">인기순</option>
+            <option value="date">최신순</option>
+          </select>
+        </div>
+        <p>총 n개</p>
+
+        <!-- content -->
+        <div
+          style="
+            display: grid;
+            row-gap: 50px;
+            column-gap: 25px;
+            grid-template-columns: repeat(5, 1fr);
+          "
+        >
+          <c:forEach var="p" items="${pofolVO}">
+            <img src="${pageContext.servletContext.contextPath}/upload${p.imgsrc}" alt="">
+            <div class="subscribe">
+              <p>${p.portfoliotitle}</p>
               <div>
-                <img src="${pageContext.servletContext.contextPath}/upload"+${p.imgsrc}>
-                <p>${p.portfoliotitle}</p>
-             </div>
-            </c:forEach>
-          </div>
-        </article>
+                <img src="${pageContext.servletContext.contextPath}/upload${p.profileimg}">
+                <span>${p.username}</span>
+              </div>
+            </div>
+          </c:forEach>
+        </div>
       </section>
     </main>
   </body>
