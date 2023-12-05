@@ -206,10 +206,6 @@ file="../header_footer/header.jspf"%>
         width: 20%;
         color: black;
       }
-
-      .ajaxMenu_wrapper {
-        margin-top: 50px;
-      }
       .ajaxView {
         float: left;
       }
@@ -229,6 +225,10 @@ file="../header_footer/header.jspf"%>
       .userInterest span {
         margin-right: 5px;
       }
+      .table {
+        table-layout: fixed;
+        width:100%;
+      }
       .table th,
       .table tr {
         width: 15%;
@@ -245,6 +245,8 @@ file="../header_footer/header.jspf"%>
       .paging li {
         margin: 0 20px;
       }
+      
+
     </style>
   </head>
   <body>
@@ -259,7 +261,7 @@ file="../header_footer/header.jspf"%>
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div style="padding-left: 20px;">
             <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
+              <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
               <a href="${pageContext.servletContext.contextPath}/mypage_edit">
@@ -278,9 +280,9 @@ file="../header_footer/header.jspf"%>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -317,31 +319,18 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <form
-        class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/myPost"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3">
           <table class="table">
             <thead class="table-dark">
               <tr>
-                <th>번호</th>
-                <th>카테고리</th>
-                <th>제목</th>
-                <th>작성일시</th>
-                <th>조회수</th>
+                <th class="col-sm-1">번호</th>
+                <th class="col-sm-2">카테고리</th>
+                <th class="col-sm-3">제목</th>
+                <th class="col-sm-2">작성일시</th>
+                <th class="col-sm-1">조회수</th>
               </tr>
             </thead>
             <tbody>
@@ -358,7 +347,10 @@ file="../header_footer/header.jspf"%>
                     <c:if test="${bVO.boardcategory eq 2}">
                       <td>노하우게시판</td>
                     </c:if>
-                    <td><a href="${pageContext.servletContext.contextPath}/board/view?no=${bVO.postid}">${bVO.posttitle}</a></td>
+                    <td style="white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;"><a
+                      href="${pageContext.servletContext.contextPath}/board/view?no=${bVO.postid}">${bVO.posttitle}</a></td>
                     <td>${bVO.date}</td>
                     <td>${bVO.views}</td>
                   </tr>
@@ -368,6 +360,10 @@ file="../header_footer/header.jspf"%>
           </table>
           <!-- 페이징 -->
           <div class="paging_wrapper">
+            <c:if test="${pVO.totalRecord == 0}"> 
+              작성된 게시글이 없습니다
+            </c:if>
+            <c:if test="${pVO.totalRecord > 0}">
             <ul class="paging">
               <!-- 이전 -->
               <c:if test="${pVO.page == 1}">
@@ -382,6 +378,7 @@ file="../header_footer/header.jspf"%>
                   <input type="button" value="<" class="btn btn-outline-primary">
                   </a>
                 </li>
+              </c:if>
               </c:if>
               <!-- 1,2,3,4,5 -->
               <c:forEach
@@ -417,6 +414,20 @@ file="../header_footer/header.jspf"%>
           </div>
         </div>
       </div>
+      <form
+        class="input-group mb-3"
+        style="width: 63%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/myPost"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
     </main>
   </body>
 </html>

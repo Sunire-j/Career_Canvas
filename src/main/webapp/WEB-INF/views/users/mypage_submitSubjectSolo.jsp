@@ -207,9 +207,6 @@ file="../header_footer/header.jspf"%>
         color: black;
       }
 
-      .ajaxMenu_wrapper {
-        margin-top: 50px;
-      }
       .ajaxView {
         float: left;
       }
@@ -220,7 +217,7 @@ file="../header_footer/header.jspf"%>
         display: flex;
       }
       .ajaxView_wrapper {
-        width: 64%;
+        width: 100%;
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
@@ -244,6 +241,7 @@ file="../header_footer/header.jspf"%>
       .paging li {
         margin: 0 20px;
       }
+      
     </style>
   </head>
   <body>
@@ -258,7 +256,7 @@ file="../header_footer/header.jspf"%>
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div style="padding-left: 20px;">
             <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
+              <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
               <a href="${pageContext.servletContext.contextPath}/mypage_edit">
@@ -277,9 +275,9 @@ file="../header_footer/header.jspf"%>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -313,57 +311,54 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <form
-        class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      
 
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
-        <div class="container mt-3" style="text-align: center">
+        <div class="container mt-3" style="text-align: center; display:flex; gap: 20px; justify-content: center;" >
           <button
             class="btn btn-outline-primary sendMsg"
             onclick="location.href='#'"
+            style="width: 60px;"
           >
             개인
           </button>
           <button
             class="btn btn-outline-primary receiveMsg"
             onclick="location.href='${pageContext.servletContext.contextPath}/mypage/submitSubjectTeam'"
+            style="width: 60px;"
           >
             팀
           </button>
         </div>
-      </div>
+      
       <!-- DB리스트 -->
-      <div
-        class="submitSubjectSolo"
-        style="width: 61%; margin: 0 auto; display: flex; flex-wrap: wrap"
-      >
+   
         <c:forEach var="sVO" items="${sVO}">
-          <div style="width: 25%">
-            <img
+          <div style="width: 70%; margin:0 auto;">
+            <img style="width: 170px; height: 170px;"
               src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
             />
             <p>${sVO.subjecttitle}</p>
           </div>
         </c:forEach>
-      </div>
+      
+    </div>
 
       <!-- 페이징 -->
       <div class="paging_wrapper" style="margin: 0 auto;">
+        <c:if test="${pVO.totalRecord == 0 }">
+          <p style="text-align: center; margin-top: 20px;">제출한 과제가 없습니다</p>
+        </c:if>
+        <c:if test="${pVO.totalRecord > 0}">
         <ul class="paging">
-          <!-- 이전 -->
+          <!-- 토탈레코드 == 0 -->
+          <c:if test="${pVO.totalRecord == 0}">
+            작성된 글이 없습니다
+          </c:if>
+          <!-- 토틸레코드 > 0 -->
+          <c:if test="${pVO.totalRecord > 0}">
+            <!-- 이전 -->
           <c:if test="${pVO.page == 1}">
             <li><input type="button" value="<" class="btn btn-outline-primary" disabled></li>
           </c:if>
@@ -407,9 +402,25 @@ file="../header_footer/header.jspf"%>
               </a>
             </li>
           </c:if>
-        </ul>
+        </ul>     
+      </c:if>
+      
+        <form
+        class="input-group mb-3"
+        style="width: 70%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
       </div>
-
+    </c:if>
 
     </main>
   </body>

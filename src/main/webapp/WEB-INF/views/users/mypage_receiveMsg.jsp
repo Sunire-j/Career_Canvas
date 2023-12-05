@@ -206,10 +206,6 @@ file="../header_footer/header.jspf"%>
         width: 20%;
         color: black;
       }
-
-      .ajaxMenu_wrapper {
-        margin-top: 50px;
-      }
       .ajaxView {
         float: left;
       }
@@ -258,7 +254,7 @@ file="../header_footer/header.jspf"%>
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div style="padding-left: 20px;">
             <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
+              <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
               <a href="mypage_edit">
@@ -277,9 +273,9 @@ file="../header_footer/header.jspf"%>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -314,21 +310,7 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <!-- 검색창 -->
-      <form
-        class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/myReceiveMsg"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3" style="text-align: center">
@@ -369,6 +351,10 @@ file="../header_footer/header.jspf"%>
         </table>
         <!-- 페이징 -->
         <div class="paging_wrapper" style="margin: 0 auto;">
+          <c:if test="${pVO.totalRecord == 0}">
+            보낸 쪽지가 없습니다
+          </c:if>
+          <c:if test="${pVO.totalRecord > 0}">
           <ul class="paging">
             <!-- 이전 -->
             <c:if test="${pVO.page == 1}">
@@ -415,8 +401,24 @@ file="../header_footer/header.jspf"%>
               </li>
             </c:if>
           </ul>
+        </c:if>
         </div>
       </div>
+      <!-- 검색창 -->
+      <form
+        class="input-group mb-3"
+        style="width: 64%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/myReceiveMsg"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
     </main>
   </body>
 </html>
