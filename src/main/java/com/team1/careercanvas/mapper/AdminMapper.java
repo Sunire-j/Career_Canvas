@@ -25,8 +25,6 @@ public interface AdminMapper {
 
     int deleteReport(int targetid);
 
-    int deleteBoard(int postid);
-
     int deleteWanted(int wantedid);
 
     int deleteComment(int commentid);

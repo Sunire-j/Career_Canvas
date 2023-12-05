@@ -360,7 +360,7 @@
                         $('.chat_list').scrollTop($('.chat_list')[0].scrollHeight);
                     }
                 });
-            })
+            });
 
             $(".comment_write_ok").on('click', function () {
                 sendMessage();

@@ -600,6 +600,7 @@ file="../header_footer/header.jspf" %>
               type="file"
               accept=".jpg, .jpeg, .png"
               id="fileInput"
+              name="fileInput"
               style="display: none"
               onchange="uploadImage()"
             />
