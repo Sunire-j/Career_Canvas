@@ -26,6 +26,7 @@
     <a href="${pageContext.servletContext.contextPath}/login">로그인</a>
     <a href="${pageContext.servletContext.contextPath}/myteam/main">마이팀-메인 페이지</a>
 
+    <a href="${pageContext.servletContext.contextPath}/pofolview">포폴뷰</a>
     <hr/>
     <p>이 영역은 원래 get으로 접근 못하는 영역임.</p><br/>
     <p>완성 후 삭제되어야 함</p>
