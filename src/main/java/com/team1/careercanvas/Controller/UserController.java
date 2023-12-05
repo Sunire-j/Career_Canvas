@@ -427,9 +427,12 @@ public class UserController {
             @RequestParam("tel") String tel,
             @RequestParam("comment") String comment,
             @RequestParam(value = "fileInput", required = false) MultipartFile file,
-            @RequestParam(required = false) String[] interest,
+            @RequestParam(name = "interest", required = false) String[] interest,
             HttpSession session) throws NoSuchAlgorithmException {
-        System.out.println(Arrays.toString(interest));
+
+        String str = String.join(",", interest);
+        int saveInterestResult = mapper.saveInterest((String) session.getAttribute("LogId"), str);
+        System.out.println(str);
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
@@ -518,6 +521,7 @@ public class UserController {
 
         list = pofolmapper.getPofol(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        System.out.println(uVO);
         mav.addObject("searchWord", pVO.getSearchWord());
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
