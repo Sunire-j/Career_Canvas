@@ -345,9 +345,9 @@ file="../header_footer/header.jspf" %>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input type="button" class="btn btn-outline-primary" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -434,6 +434,7 @@ file="../header_footer/header.jspf" %>
               id="industry"
               value="산업디자인"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="character"
               ><span class="btn btn-outline-danger">캐릭터&일러스트</span>
@@ -445,6 +446,7 @@ file="../header_footer/header.jspf" %>
               id="character"
               value="캐릭터&일러스트"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="calligraphy"
               ><span class="btn btn-outline-danger">캘리그라피</span>
@@ -456,6 +458,7 @@ file="../header_footer/header.jspf" %>
               id="calligraphy"
               value="캘리그라피"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="architecture"
               ><span class="btn btn-outline-danger">공간&건축</span>
@@ -467,6 +470,7 @@ file="../header_footer/header.jspf" %>
               id="architecture"
               value="공간&건축"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="fassion"
               ><span class="btn btn-outline-danger">패션디자인</span>
@@ -478,6 +482,7 @@ file="../header_footer/header.jspf" %>
               id="fassion"
               value="패션디자인"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="uxui"
               ><span class="btn btn-outline-primary">UX/UI</span>
@@ -489,6 +494,7 @@ file="../header_footer/header.jspf" %>
               id="uxui"
               value="UX/UI"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="mobile"
               ><span class="btn btn-outline-primary">모바일개발</span>
@@ -500,6 +506,7 @@ file="../header_footer/header.jspf" %>
               id="mobile"
               value="모바일개발"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="web"
               ><span class="btn btn-outline-primary">웹개발</span>
@@ -511,6 +518,7 @@ file="../header_footer/header.jspf" %>
               id="web"
               value="웹개발"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="program"
               ><span class="btn btn-outline-primary">프로그램</span>
@@ -522,6 +530,7 @@ file="../header_footer/header.jspf" %>
               id="program"
               value="프로그램"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="ai"
               ><span class="btn btn-outline-primary">인공지능</span>
@@ -533,6 +542,7 @@ file="../header_footer/header.jspf" %>
               id="ai"
               value="인공지능"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="picture"
               ><span class="btn btn-outline-info">사진</span>
@@ -544,6 +554,7 @@ file="../header_footer/header.jspf" %>
               id="picture"
               value="사진"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="sound"
               ><span class="btn btn-outline-info">음향</span>
@@ -555,6 +566,7 @@ file="../header_footer/header.jspf" %>
               id="sound"
               value="음향"
               class="checkbox"
+              onclick="return checkedCount()"
             />
             <label for="video"
               ><span class="btn btn-outline-info">영상</span>
@@ -566,6 +578,7 @@ file="../header_footer/header.jspf" %>
               id="video"
               value="영상"
               class="checkbox"
+              onclick="return checkedCount()"
             />
           </div>
         </div>
@@ -701,6 +714,26 @@ file="../header_footer/header.jspf" %>
             "${pageContext.servletContext.contextPath}/mypage/leave";
         }
       }
+      
+      function checkedCount() {
+        var checkedCount = 0;
+
+        var checkboxes = document.getElementsByName("interest");
+        for(var i=0; i<checkboxes.length; i++){
+          if(checkboxes[i].checked){
+            checkedCount++;
+          }
+        }
+
+        if(checkedCount > 3){
+          alert("관심분야는 3개를 초과할 수 없습니다");
+          return false;
+          };
+
+          return true;
+        }
+      
+        
     </script>
   </body>
 </html>

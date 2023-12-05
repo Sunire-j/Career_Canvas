@@ -163,13 +163,7 @@ file="../header_footer/header.jspf"%>
         margin: 0;
         padding: 0;
       }
-      .web {
-        background: rgb(250, 110, 133);
-        border-radius: 10px;
-        padding: 5px;
-        color: white;
-        font-size: 14px;
-      }
+
       .picture {
         background: rgb(86, 70, 235);
         border-radius: 10px;
@@ -211,7 +205,6 @@ file="../header_footer/header.jspf"%>
       }
       .ajaxContent {
         width: 20%;
-        margin-top: 80px;
         text-align: center;
       }
       .ajaxContent img {
@@ -219,12 +212,11 @@ file="../header_footer/header.jspf"%>
         height: 170px;
       }
       .ajaxView_wrapper {
-        width: 100%;
+        width: 70%;
         display: flex;
         flex-wrap: wrap;
         margin: 0 auto;
         margin-top: 50px;
-        justify-content: center;
       }
       .userInterest span {
         margin-right: 5px;
@@ -243,7 +235,7 @@ file="../header_footer/header.jspf"%>
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div style="padding-left: 20px;">
             <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
+              <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
               <a href="${pageContext.servletContext.contextPath}/mypage_edit">
@@ -262,9 +254,9 @@ file="../header_footer/header.jspf"%>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -320,19 +312,23 @@ file="../header_footer/header.jspf"%>
         </c:forEach>
       </div>
       <!-- 페이징 -->
-      <div style="width: 60%; margin: 0 auto; display: flex; justify-content: center;">
-        <ul style="display: flex; align-items: center">
-          <c:if test="${pVO.page == 1}">
-            <li><input type="button" value="<" class="btn btn-outline-primary" disabled></li>
-          </c:if>
-          <c:if test="${pVO.page > 1}">
-            <li>
-              <a
-                href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
-                ><input type="button" value="<" class="btn btn-outline-primary"></a
-              >
-            </li>
-          </c:if>
+      <c:if test="${pVO.totalRecord == 0}">
+          <p style="text-align: center;">작성된 포트폴리오가 없습니다</p>
+        </c:if> 
+      <div class="paging" style="text-align: center; margin: 0 auto; text-align: center; width: 70%;">
+        <c:if test="${pVO.totalRecord > 0}">
+          
+            <c:if test="${pVO.page == 1}">
+              <input type="button" value="<" class="btn btn-outline-primary" disabled>
+            </c:if>
+            <c:if test="${pVO.page > 1}">
+              
+                <a
+                  href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
+                  ><input type="button" value="<" class="btn btn-outline-primary"></a
+                >
+              
+            </c:if>
 
           <c:forEach
             var="p"
@@ -340,7 +336,7 @@ file="../header_footer/header.jspf"%>
             end="${pVO.page + pVO.onePageCount -1}"
           >
             <c:if test="${p<=pVO.totalPage}">
-              <li>
+              
                 <a
                   href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}<c:if test='${pVO.searchWord != null}'>&searchWord=${pVO.searchWord}</c:if>"
                   ><button
@@ -351,30 +347,49 @@ file="../header_footer/header.jspf"%>
                     ${p}
                   </button></a
                 >
-              </li>
+              
             </c:if>
           </c:forEach>
 
           <c:if test="${pVO.page == pVO.totalPage}">
-            <li><input type="button" value=">" class="btn btn-outline-primary" disabled></li>
+            <input type="button" value=">" class="btn btn-outline-primary" disabled>
           </c:if>
           <c:if test="${pVO.page < pVO.totalPage}">
-            <li>
+            
               <a
                 href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page + 1}"
                 > <input type="button" value=">" class="btn btn-outline-primary"></a
               >
-            </li>
+            
           </c:if>
         </ul>
-        <!-- 글쓰기 -->
-        <input
-        type="button"
-        class="btn btn-outline-primary"
-        value="글쓰기"
-        style="position: relative; right: -210px;"
-        onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
-      />
+      </c:if>
+      <!-- 글쓰기 -->
+      <input
+      type="button"
+      class="btn btn-outline-primary"
+      value="글쓰기"
+      onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
+    />
+      </div>
+      
+
+      <!-- 페이징2 -->
+      <div>
+        <ul class="pagination">
+          <c:if test="${pVO.page==1}">
+            <li class="page-item"><a class="page-link">Previous</a></li>
+          </c:if>
+          <c:if test="${pVO.page>1}">
+            <li class="page-item"><a class="page-link" href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page-1}">Previous</a></li>
+          </c:if>
+          <c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount -1}">
+            <c:if test="${p <= pVO.totalPage}">
+              <li class="page-item"><a class="page-link" href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}">${p}</a></li>
+            </c:if>
+          </c:forEach>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
       </div>
       
         
@@ -384,7 +399,7 @@ file="../header_footer/header.jspf"%>
       <!-- search -->
       <form
         class="input-group mb-3"
-        style="width: 75%; margin: 20px auto"
+        style="width: 70%; margin: 20px auto"
         action="${pageContext.servletContext.contextPath}/mypage/myPofol"
         method="GET"
       >

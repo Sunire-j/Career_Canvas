@@ -206,10 +206,6 @@ file="../header_footer/header.jspf"%>
         width: 20%;
         color: black;
       }
-
-      .ajaxMenu_wrapper {
-        margin-top: 50px;
-      }
       .ajaxView {
         float: left;
       }
@@ -258,7 +254,7 @@ file="../header_footer/header.jspf"%>
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div style="padding-left: 20px;">
             <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
+              <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
               <a href="${pageContext.servletContext.contextPath}/mypage_edit">
@@ -277,9 +273,9 @@ file="../header_footer/header.jspf"%>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -316,21 +312,6 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <form
-        class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/myComment"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
-      <!-- ajax View -->
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
         <div class="container mt-3">
@@ -371,13 +352,17 @@ file="../header_footer/header.jspf"%>
 
           <!-- 페이징  -->
           <div>
+            <c:if test="${pVO.totalRecord == 0}">
+              <p style="text-align: center;">작성된 댓글이 없습니다</p>
+            </c:if>
+            <c:if test="${pVO.totalRecord > 0}">
             <ul class="paging">
               <c:if test="${pVO.page == 1}">
                 <li><input type="button" value="<" class="btn btn-outline-primary" disabled></li>
               </c:if>
               <c:if test="${pVO.page > 1}">
                 <li><a href="${pageContext.servletContext.contextPath}/mypage/myComment?page=${pVO.page - 1}<c:if test='${pVO.searchWord != ""}'>&searchWord=${pVO.searchWord}</c:if>"><input type="button" value="<" class="btn btn-outline-primary"></a></li>
-              </c:if>
+             </c:if>
               <!--  -->
               <c:forEach
                 var="p"
@@ -395,9 +380,24 @@ file="../header_footer/header.jspf"%>
                 <li><a href="${pageContext.servletContext.contextPath}/mypage/myComment?page=${pVO.page + 1}<c:if test='${pVO.searchWord != ""}'>&searchWord=${pVO.searchWord}</c:if>"><input type="button" value=">" class="btn btn-outline-primary"></a></li>
               </c:if>
             </ul>
+          </c:if>
           </div>
         </div>
       </div>
+      <form
+        class="input-group mb-3"
+        style="width: 63%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/myComment"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
     </main>
   </body>
 </html>

@@ -36,4 +36,21 @@
 		set imgsrc=#{param1}
 		where portfolioid=#{param2}
 	</update>
+
+	<!-- 권혁준 작업 -->
+	<select id="getBestPofol" resultType="com.team1.careercanvas.vo.PofolVO"> 
+		select portpolio.portfoliotitle as portfoliotitle,
+		portpolio.imgsrc as imgsrc,
+		portpolio.likeCnt as likeCnt,
+		portpolio.portfolioid as portfolioid,
+		user.username as user_userid
+		from portpolio
+		join user on portpolio.user_userid = user.userid
+		where portpolio.ispublic=1
+		<if test="category != null and category != ''">
+			and category=#{param1}
+		</if>
+		order by portpolio.likecnt desc
+		limit 10;
+	</select>
 </mapper>

@@ -162,4 +162,15 @@
         from report
         where targetid = #{param1}
     </select>
+
+    <!-- 권혁준 작업 -->
+    <select id="getBannerList" resultType="com.team1.careercanvas.vo.BannerVO">
+        select * 
+        from banner;
+    </select>
+
+    <select id="getBannerAmount" resultType="Integer">
+        select count(bannerid)
+        from banner;
+    </select>
 </mapper>
