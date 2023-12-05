@@ -13,6 +13,7 @@ public class UserVO {
     private int usertype;
     private String comment;
     private String usersalt;
-
+    private String[] interest;
+    private String[] interest_category;
     private String profileimg;
 }
