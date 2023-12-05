@@ -14,9 +14,10 @@
             subjectapply.applyimg as applyimg
         from subjectapply
         join subject on subject.subjectid=subjectapply.subject_subjectid
-        where subjectapply.user_userid=#{param1} and subjectapply.isteam=1;
+        where subjectapply.user_userid=#{searchWord} and subjectapply.isteam=1
+        limit #{onePageRecord} offset #{offsetPoint}
     </select>
-    <select id="getApplyamount" resultType="Integer">
+    <select id="getApplyamountSolo" resultType="Integer">
         select count(applyid) from subjectapply
         where user_userid = #{param1} and isteam=1;
     </select>
