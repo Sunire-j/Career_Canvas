@@ -27,5 +27,6 @@ public interface PofolMapper {
 
 	// 권혁준 작업
 
-	List<PofolVO> getBestPofol(String category);
+	List<PofolVO> getCategoryPofol(PagingVO pVO);
+
 }

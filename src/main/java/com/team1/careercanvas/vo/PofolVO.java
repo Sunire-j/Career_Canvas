@@ -19,4 +19,6 @@ public class PofolVO {
 	private int isteam;
 	private int partyid;
 	private int likeCnt;
+	private String username;
+	private String profileimg;
 }
