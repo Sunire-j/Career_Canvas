@@ -8,6 +8,104 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(function () {
+            var stackedLine = null;
+
+            // 최근 30일 일 별 신규 가입자 라인 차트
+            var labels = [];
+            for (var i = 0; i < 30; i++) {
+                var date = new Date();
+                date.setDate(date.getDate() - 29);
+                date.setDate(date.getDate() + i);
+                var yyyy = String(date.getFullYear());
+                var mm = String(date.getMonth() + 1).padStart(2, '0');
+                var dd = String(date.getDate()).padStart(2, '0');
+                labels.push(yyyy + '-' + mm + '-' + dd);
+            }
+            var datas = [];
+            labels.forEach(function (date) {
+                var found = false;
+                <c:forEach items="${newMember}" var="item">
+                if (date == "${item.date}") {
+                    datas.push(${item.userid});
+                    found = true;
+                }
+                </c:forEach>
+                if (!found) {
+                    datas.push(0);
+                }
+            });
+
+            function lineChart(datas) {
+                var data = {
+                    labels: labels,
+                    datasets: [{
+                        label: "최근 30일 일 별 신규 가입자",
+                        data: datas,
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                };
+                stackedLine = new Chart(document.getElementById("newMember"), {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        scales: {
+                            y: {
+                                stacked: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            lineChart(datas);
+
+            var Adatas = [];
+            labels.forEach(function (date) {
+                var found = false;
+                <c:forEach items="${accessor}" var="item">
+                if (date == "${item.date}") {
+                    Adatas.push(${item.count});
+                    found = true;
+                }
+                </c:forEach>
+                if (!found) {
+                    Adatas.push(0);
+                }
+            });
+
+            function accessorChart(Adatas) {
+                var data = {
+                    labels: labels,
+                    datasets: [{
+                        label: "최근 30일 일 별 접속자",
+                        data: Adatas,
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                };
+                stackedLine = new Chart(document.getElementById("accessor"), {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        scales: {
+                            y: {
+                                stacked: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            accessorChart(Adatas);
+
+        });
+    </script>
     <style>
         #sideBar {
             width: 250px;
@@ -26,6 +124,19 @@
             display: flex;
             height: 30px;
             align-items: center;
+        }
+
+        .top {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            height: 100px;
+            align-items: center;
+        }
+
+        .top div {
+            flex: 1;
+            text-align: center;
         }
     </style>
 </head>
@@ -56,14 +167,14 @@
     </div>
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
-        <div>
-
+        <div class="top">
+            <div>일반회원 : ${member}</div>
+            <div>기업회원 : ${company}</div>
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div style="width: 50%; display: flex;">
+            <canvas id="accessor"></canvas>
+            <canvas id="newMember"></canvas>
+        </div>
     </div>
 </div>
 </body>

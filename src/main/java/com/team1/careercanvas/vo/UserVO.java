@@ -14,5 +14,6 @@ public class UserVO {
     private String comment;
     private String usersalt;
     private String interest;
+    private int count;
     private String profileimg;
 }
