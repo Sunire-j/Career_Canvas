@@ -35,7 +35,6 @@
             height: 400px;
         }
         h3{
-
             font-size: 40px;
             font-weight: bold;
         }
