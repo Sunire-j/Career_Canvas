@@ -72,20 +72,171 @@
 	</update>
 
 	<!-- 권혁준 작업 -->
-	<select id="getCategoryPofol" resultType="com.team1.careercanvas.vo.PofolVO">
+	<select id="getPublicSoloPofol" resultType="com.team1.careercanvas.vo.PofolVO">
 		select portpolio.portfoliotitle as portfoliotitle,
 		portpolio.portfoliocontent as portfoliocontent,
 		portpolio.ispublic as ispublic,
 		portpolio.category as category,
 		portpolio.imgsrc as imgsrc,
 		count(portfoliolike.user_userid) as likeCnt,
+		portpolio.view as view,
 		user.username as username, 
 		user.profileimg as profileimg
 		from portpolio
 		join user on portpolio.user_userid = user.userid
-		left join portfoliolike on portpolio.portfolioid=portfoliolike.portpolio_portfolioid
+		left join portfoliolike on portpolio.portfolioid = portfoliolike.portpolio_portfolioid
+		<choose>
+			<when test="category == 0">
+				where 1=1
+			</when>
+			<when test="category == 1">
+				where portpolio.category = "1"
+			</when>
+			<when test="category == 2">
+				where portpolio.category = "2"
+			</when>
+			<when test="category == 3">
+				where portpolio.category = "3"
+			</when>
+		</choose>	
+			and isteam=0
+		<choose>
+			<when test="searchKey == 'all'">
+                AND (portpolio.portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')
+				OR user.username LIKE CONCAT('%', #{searchWord}, '%')
+				or portpolio.portfoliocontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </when>
+			<when test="searchKey == 'title'">
+				and portfoliotitle like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchKey == 'author'">
+				and portpolio.user_userid like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchKey == 'content'">
+				and portfoliocontent like CONCAT('%', #{searchWord}, '%')
+			</when>
+		</choose>
+		
 		group by portpolio.portfolioid
-		order by portfolioid desc;
+		<choose>
+			<when test="postSort == 1">
+				ORDER BY portpolio.portfolioid DESC
+			</when>
+			<when test="postSort == 2">
+				ORDER BY portpolio.view DESC
+			</when>
+			<when test="postSort == 3">
+				ORDER BY COUNT(portfoliolike.user_userid) DESC
+			</when>
+		</choose>
+		limit #{onePageRecord} offset #{offsetPoint}
 	</select>
 
+	<select id="getPublicTeamPofol" resultType="com.team1.careercanvas.vo.PofolVO">
+		select portpolio.portfoliotitle as portfoliotitle,
+		portpolio.portfoliocontent as portfoliocontent,
+		portpolio.ispublic as ispublic,
+		portpolio.category as category,
+		portpolio.imgsrc as imgsrc,
+		count(portfoliolike.user_userid) as likeCnt,
+		portpolio.view as view,
+		party.partyname as username, 
+		party.partyimage as profileimg
+		from portpolio
+		join party on portpolio.partyid = party.partyid
+		left join portfoliolike on portpolio.portfolioid = portfoliolike.portpolio_portfolioid
+		<choose>
+			<when test="category == 0">
+				where 1=1
+			</when>
+			<when test="category == 1">
+				where portpolio.category = "1"
+			</when>
+			<when test="category == 2">
+				where portpolio.category = "2"
+			</when>
+			<when test="category == 3">
+				where portpolio.category = "3"
+			</when>
+		</choose>	
+			and isteam=1
+		<choose>
+			<when test="searchKey == 'all'">
+                AND (portpolio.portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')
+				OR party.partyname LIKE CONCAT('%', #{searchWord}, '%')
+				or portpolio.portfoliocontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </when>
+			<when test="searchKey == 'title'">
+				and portfoliotitle like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchKey == 'author'">
+				and party.partyname like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchKey == 'content'">
+				and portfoliocontent like CONCAT('%', #{searchWord}, '%')
+			</when>
+		</choose>
+		
+		group by portpolio.portfolioid
+		<choose>
+			<when test="postSort == 1">
+				ORDER BY portpolio.portfolioid DESC
+			</when>
+			<when test="postSort == 2">
+				ORDER BY portpolio.view DESC
+			</when>
+			<when test="postSort == 3">
+				ORDER BY COUNT(portfoliolike.user_userid) DESC
+			</when>
+		</choose>
+		limit #{onePageRecord} offset #{offsetPoint}
+	</select>
+
+	<select id="getTotalSoloPofol" resultType="Integer">
+        select count(portfolioid) from portpolio
+        <where>
+			isteam=0
+			<if test="category != 0">
+            	AND category=#{category} 
+			</if>
+            <if test="searchKey == 'all'">
+                AND (portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')
+                             OR user_userid LIKE CONCAT('%', #{searchWord}, '%')
+                             or portfoliocontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </if>
+            <if test="searchKey == 'title'">
+                AND portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                AND user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                AND portfoliocontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+    </select>
+
+	<select id="getTotalTeamPofol" resultType="Integer">
+        select count(portfolioid) from portpolio
+        <where>
+			isteam=1
+			<if test="category != 0">
+            	AND category=#{category} 
+			</if>
+            <if test="searchKey == 'all'">
+                AND (portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')
+                             OR user_userid LIKE CONCAT('%', #{searchWord}, '%')
+                             or portfoliocontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </if>
+            <if test="searchKey == 'title'">
+                AND portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'author'">
+                AND user_userid LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey == 'content'">
+                AND portfoliocontent LIKE CONCAT('%', #{searchWord}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>
