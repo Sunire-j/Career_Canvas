@@ -357,7 +357,7 @@
             <input type="radio" name="usertype" value="1" style="margin-left: 20px"/>
             <p style="margin-left: 10px; line-height: 40px">기업회원</p>
         </div>
-        <div style="width: 40%; margin: 10px auto 0;">
+        <div style="width: 60%; margin: 10px auto 0;">
             <div>
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" class="form-control userEmail" id="email" placeholder="가입당시 이메일" name="userEmail"

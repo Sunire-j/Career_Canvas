@@ -28,208 +28,226 @@
     ></script>
 
     <style>
-      /* All */
+        /* All */
 
-      * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        list-style: none;
-        text-decoration: none;
-      }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            list-style: none;
+            text-decoration: none;
+        }
 
-      ul,
-      li {
-        padding: 0;
-        margin: 0;
-      }
-      .container {
-        width: 1200px;
-        margin: 0 auto;
-      }
+        ul,
+        li {
+            padding: 0;
+            margin: 0;
+        }
 
-      a:link,
-      a:visited {
-        color: black;
-        text-decoration: none;
-      }
-      .buttonGroup {
-        text-align: center;
-      }
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+        }
 
-      /* Header*/
+        a:link,
+        a:visited {
+            color: black;
+            text-decoration: none;
+        }
 
-      /* Title & Logo */
+        .buttonGroup {
+            text-align: center;
+        }
 
-      .title {
-        display: flex;
-        align-items: center;
-      }
-      .hamberger {
-        display: none;
-        font-size: 1.7rem;
-      }
-      .logo {
-        height: 60px;
-        line-height: 60px;
-        font-size: 1.7rem;
-        margin: 0;
-      }
-      .login {
-        position: absolute;
-      }
+        /* Header*/
 
-      /* NavBar */
+        /* Title & Logo */
 
-      .nav_wrapper {
-        display: flex;
-        justify-content: space-between;
-      }
-      .navBar,
-      .infoGroup {
-        display: flex;
-        justify-content: center;
-        padding: 0;
-        margin: 0;
-        line-height: 50px;
-      }
-      .nav_wrapper li {
-        padding-right: 20px;
-      }
+        .title {
+            display: flex;
+            align-items: center;
+        }
 
-      .userInfo {
-        display: none;
-        position: absolute;
-        background: rgba(255, 255, 255, 0.849);
-        z-index: 1;
-      }
-      .userInfo li {
-        height: 30px;
-        line-height: 30px;
-      }
-      .userInfo.active {
-        display: block;
-        margin: 0;
-        padding: 0;
-      }
-      .infoGroup img {
-        width: 35px;
-        height: 35px;
-      }
-      .carousel {
-        z-index: 0;
-      }
+        .hamberger {
+            display: none;
+            font-size: 1.7rem;
+        }
 
-      .firstHr {
-        left: 0;
-        width: 100%;
-      }
+        .logo {
+            height: 60px;
+            line-height: 60px;
+            font-size: 1.7rem;
+            margin: 0;
+        }
 
-      /* Main */
+        .login {
+            position: absolute;
+        }
 
-      /* Mypage User Info */
-      .userInfo_wrapper {
-        width: 100%;
-        margin: 0 auto;
-        margin-top: 25px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .userIntro {
-        display: flex;
-        align-items: center;
-        padding-bottom: 50px;
-      }
-      .userId {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 5px;
-        margin-bottom: 20px;
-      }
-      .userIntro img {
-        margin-right: 30px;
-      }
-      .btn-outline-primary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
-      .userIntro p {
-        margin: 0px;
-      }
-      .dropdown {
-        display: block;
-        margin: 0;
-        padding: 0;
-      }
-      .web {
-        background: rgb(250, 110, 133);
-        border-radius: 10px;
-        padding: 5px;
-        color: white;
-        font-size: 14px;
-      }
-      .picture {
-        background: rgb(86, 70, 235);
-        border-radius: 10px;
-        padding: 5px;
-        color: rgb(255, 255, 255);
-        font-size: 14px;
-      }
-      .etc {
-        background: rgb(0, 183, 255);
-        border-radius: 10px;
-        padding: 5px;
-        color: white;
-        font-size: 14px;
-      }
+        /* NavBar */
 
-      /* Center ajax */
-      .homeworkImg {
-        width: 220px;
-        height: 170px;
-        padding-right: 50px;
-      }
-      .ajaxMenu {
-        display: flex;
-        margin: 0 auto;
-        width: 100%;
-        justify-content: space-around;
-        background-color: white;
-        height: 50px;
-        line-height: 50px;
-        border-radius: 10px;
-        text-align: center;
-      }
-      .ajaxMenu a {
-        width: 20%;
-        color: black;
-      }
-      .ajaxView {
-        float: left;
-      }
-      .ajaxContent {
-        width: 20%;
-        margin-top: 80px;
-        text-align: center;
-      }
-      .ajaxContent img {
-        width: 170px;
-        height: 170px;
-      }
-      .ajaxView_wrapper {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0 auto;
-        margin-top: 50px;
-        justify-content: center;
-      }
-      .userInterest span {
-        margin-right: 5px;
-      }
+        .nav_wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navBar,
+        .infoGroup {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            line-height: 50px;
+        }
+
+        .nav_wrapper li {
+            padding-right: 20px;
+        }
+
+        .userInfo {
+            display: none;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.849);
+            z-index: 1;
+        }
+
+        .userInfo li {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .userInfo.active {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        .infoGroup img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .carousel {
+            z-index: 0;
+        }
+
+        .firstHr {
+            left: 0;
+            width: 100%;
+        }
+
+        /* Main */
+
+        /* Mypage User Info */
+        .userInfo_wrapper {
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 25px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .userIntro {
+            display: flex;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+
+        .userId {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        .userIntro img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .btn-outline-primary {
+            font-size: 14px;
+            padding: 2px 4px;
+        }
+
+        .userIntro p {
+            margin: 0px;
+        }
+
+        .dropdown {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        .picture {
+            background: rgb(86, 70, 235);
+            border-radius: 10px;
+            padding: 5px;
+            color: rgb(255, 255, 255);
+            font-size: 14px;
+        }
+
+        .etc {
+            background: rgb(0, 183, 255);
+            border-radius: 10px;
+            padding: 5px;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Center ajax */
+        .homeworkImg {
+            width: 220px;
+            height: 170px;
+            padding-right: 50px;
+        }
+
+        .ajaxMenu {
+            display: flex;
+            margin: 0 auto;
+            width: 100%;
+            justify-content: space-around;
+            background-color: white;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .ajaxMenu a {
+            width: 20%;
+            color: black;
+        }
+
+        .ajaxView {
+            float: left;
+        }
+
+        .ajaxContent {
+            width: 20%;
+            text-align: center;
+        }
+
+        .ajaxContent img {
+            width: 170px;
+            height: 170px;
+        }
+
+        .ajaxView_wrapper {
+            width: 70%;
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+
+        .userInterest span {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -241,19 +259,21 @@
     <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" style="height: 235px; width: 235px; object-fit: fill; border-radius: 30%;"/>
-          <div>
-            <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
-                <span style="font-size: 1.5rem">${uVO.username }</span>
-              </a>
-              <a href="${pageContext.servletContext.contextPath}/mypage_edit">
-                <input
-                  type="button"
-                  class="btn btn-outline-primary"
-                  value="수정"
-                />
-              </a>
+            <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt=""/>
+            <div style="padding-left: 20px;">
+                <div class="userId">
+                    <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
+                        <span style="font-size: 1.5rem">${uVO.username }</span>
+                    </a>
+                    <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+                        <input
+                                type="button"
+                                class="btn btn-outline-primary"
+                                value="수정"
+                        />
+                    </a>
+                </div>
+                <p>${uVO.comment }</p>
             </div>
         </div>
         <!-- Interest -->
