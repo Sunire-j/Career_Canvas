@@ -235,9 +235,7 @@
 
         $(function () {
 
-            $('.mainbtn').click(function (){
-                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main';
-            });
+
             $(".party_list_btn").click(function () {
                 no = ${partyvo.partyid};
                 window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?no='+no;
@@ -312,11 +310,16 @@
                 window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?partyid='+no;
             });
             $('.mainbtn').click(function (){
-                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main';
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?partyid=${partyvo.partyid}';
             });
             $("#infoEdit_btn").click(function () {
                 no = ${partyvo.partyid};
                 window.location.href = '${pageContext.servletContext.contextPath}/party/edit?no='+ no;
+            });
+
+            $(".portpoliobtn").click(function () {
+                no = ${partyvo.partyid};
+                window.location.href = '${pageContext.servletContext.contextPath}/party/portpolio?no='+ no;
             });
 
         });
@@ -352,6 +355,7 @@
         <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" >
         <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
         <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
+        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" >
     </div>
     <hr>
 </main>

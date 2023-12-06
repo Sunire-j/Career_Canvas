@@ -233,7 +233,7 @@
         }
         .salutation_memo{
             height: 40px;
-            width: 970px;
+            width: 100%;
             border-bottom: 2px solid #ddd;
             font-size: 1.5em;
             font-weight: 700;
@@ -387,6 +387,19 @@
                 $('.partysetbtn').prop('disable', true);
             });
 
+            $('.chatbtn').click(function (){
+                console.log(no);
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/chat?no='+no;
+                $('.chatbtn').removeClass('btn-outline-secondary').addClass('btn-secondary');
+                $('.chatbtn').prop('disable', true);
+            });
+
+            $('.portpoliobtn').click(function (){
+                console.log(no);
+                window.location.href = '${pageContext.servletContext.contextPath}/party/portpolio?no='+no;
+                $('.portpoliobtn').removeClass('btn-outline-secondary').addClass('btn-secondary');
+                $('.portpoliobtn').prop('disable', true);
+            });
 
 
         });
@@ -420,8 +433,9 @@
     </ul>
     <div class="choisvalue" style="margin-top: 30px;padding-bottom: 20px">
         <input type="button" class="btn btn-secondary mainbtn" value="메인" onclick="changeClass(this)">
-        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
+        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" >
         <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리" >
+        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
     </div>
 </main>
 
