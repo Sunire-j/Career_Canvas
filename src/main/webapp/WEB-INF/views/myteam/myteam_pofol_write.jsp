@@ -160,7 +160,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
               .addClass("btn-warning");
           }
         });
-        $('.button-container input[type="checkbox"]').change(function () {
+        $('.check-container input[type="checkbox"]').change(function () {
           $(this)
                   .parent()
                   .toggleClass("btn-success", $(this).is(":checked"))
@@ -246,7 +246,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             </label>
           </div>
         </div>
-        <div class="button-container" style="margin: 10px 0;">
+        <div class="check-container" style="margin: 10px 0;">
           <c:forEach items="${memberList}" var="uvo" >
               <label class="btn btn-outline-success">
                 <input type="hidden" name="no" value="${no}">
