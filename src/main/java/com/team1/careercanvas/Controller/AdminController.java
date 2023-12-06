@@ -277,7 +277,10 @@ public class AdminController {
     @GetMapping("/admin/user/stats")
     public ModelAndView userStats() {
         ModelAndView mav = new ModelAndView();
-
+        mav.addObject("member",mapper.getUserCount());
+        mav.addObject("company",mapper.getCompanyCount());
+        mav.addObject("newMember",mapper.getNewMember());
+        mav.addObject("accessor",mapper.getAccessor());
         mav.setViewName("admin/admin_user_stats");
         return mav;
     }
@@ -289,7 +292,9 @@ public class AdminController {
         mav.addObject("rVO", mapper.getReportCount());
         mav.addObject("today", mapper.getBoardToday());
         mav.addObject("month", mapper.getBoardMonth());
+        mav.addObject("category", mapper.getBoardCategory());
         System.out.println(mapper.getBoardMonth());
+        System.out.println(mapper.getBoardCategory());
         mav.setViewName("admin/admin_board_stats");
         return mav;
     }

@@ -41,6 +41,7 @@ public interface AdminMapper {
 
     int getUserCount();
 
+    int getCompanyCount();
     int getBoardCount();
 
     int getReportCount();
@@ -50,6 +51,9 @@ public interface AdminMapper {
     int getBoardToday();
 
     List<BoardVO> getBoardMonth();
+    List<BoardVO> getBoardCategory();
+    List<UserVO> getNewMember();
+    List<UserVO> getAccessor();
 
     // 권혁준작업
     List<BannerVO> getBannerList();
