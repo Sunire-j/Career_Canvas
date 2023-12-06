@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -677,17 +678,25 @@ public class PartyController {
                                   @RequestParam("posttitle") String title,
                                   @RequestParam("postcontent") String content,
                                   @RequestParam("category") String category,
-                                  @RequestParam("member") String member,
+                                  @RequestParam("member") String[] member,
                                   @RequestParam("no") int partyid) throws IOException {
+        String logId = (String) session.getAttribute("LogId");
+
         PofolVO pvo = new PofolVO();
         pvo.setPortfoliotitle(title);
         pvo.setPortfoliocontent(content);
         pvo.setCategory(category);
-        pvo.setUser_userid(member);
-
+        pvo.setUser_userid(logId);
+        pvo.setPartyid(partyid);
+        System.out.println(Arrays.toString(member));
 
 
         int result = mapper.pofolWrite(pvo);
+
+        //1. pofolcont에 참여한 멤버 추가
+        for(int i = 0; i<member.length;i++){
+            mapper.addPofolMember(pvo.getPortfolioid(), member[i]);
+        }
 
         System.out.println(content);
         if(content.contains("<img src=")){
@@ -717,12 +726,9 @@ public class PartyController {
 
             String pathfordb = "/pofolimg/"+newFileName;
             //여기서 db에 path만 넣어주면 됨.
-            //int dbresult = pofolmapper.insertImg(pathfordb, pvo.getPortfolioid());
+            int dbresult = mapper.insertPofolImg(pathfordb, pvo.getPortfolioid());
 
         }
-
-        return "redirect:/party/pofolWrite";
+        return "redirect:/party/portpolio?no="+partyid;
     }
-
-
 }
