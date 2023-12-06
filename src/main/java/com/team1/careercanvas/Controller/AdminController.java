@@ -4,12 +4,16 @@ import com.team1.careercanvas.mapper.AdminMapper;
 import com.team1.careercanvas.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-
-import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -304,4 +308,55 @@ public class AdminController {
         mav.setViewName("/admin/admin_banner");
         return mav;
     }
+
+    //조석훈 작업
+    @GetMapping("/admin/banner/add")
+    public String banner_add(){
+        return "admin/admin_banner_add";
+    }
+
+    @PostMapping("/admin/banner/addOk")
+    public String banner_addOk(String startdate,
+                               String deadline,
+                               String owner,
+                               MultipartFile bannerimg){
+        //db에 배너정보 넣어주고 그냥 배너페이지로 redirect
+        BannerVO bvo = new BannerVO();
+        bvo.setStartdate(startdate);
+        bvo.setDeadline(deadline);
+        bvo.setOwner(owner);
+        int result = mapper.InsertBanner(bvo);
+        //bvo에 id는 들어왔음
+        //파일 업로드처리
+        if (!bannerimg.isEmpty()) {
+            // 파일저장시작
+            String extension = bannerimg.getOriginalFilename().substring(bannerimg.getOriginalFilename().lastIndexOf("."));
+            String newFileName = bvo.getBannerid() + "_" +extension;
+            String projectDir = new File("").getAbsolutePath();
+            File directory = new File(projectDir + "/upload/bannerimg");
+            if (!directory.exists()) {
+                directory.mkdirs(); // 디렉토리 생성
+            }
+
+            Path path = Paths.get(directory.getAbsolutePath(), newFileName); // 절대 경로를 사용
+
+            try {
+                bannerimg.transferTo(new File(path.toString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("파일저장실패");
+                return "404pages";
+            }
+            // 파일저장 끝
+
+            // db에 경로넣기
+            String imgsrc = "/bannerimg/" + newFileName;
+
+            mapper.InsertBannerimg(imgsrc, bvo.getBannerid());
+        }
+        //일단 insert는 했는데 bannerid를 얻어내서 이미지를 업로드하고 db에 또 반영해야함
+
+        return "redirect:/admin/banner";
+    }
+
 }

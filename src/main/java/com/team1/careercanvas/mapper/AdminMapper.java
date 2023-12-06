@@ -55,4 +55,9 @@ public interface AdminMapper {
     List<BannerVO> getBannerList();
 
     int getBannerAmount(PagingVO pVO);
+
+    //조석훈 작업
+
+    int InsertBanner(BannerVO bvo);
+    void InsertBannerimg(String imgsrc, int bannerid);
 }

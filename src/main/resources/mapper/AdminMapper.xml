@@ -173,4 +173,19 @@
         select count(bannerid)
         from banner;
     </select>
+
+<!--    조석훈 작업-->
+    <insert id="InsertBanner" parameterType="com.team1.careercanvas.vo.BannerVO">
+        insert into banner(deadline, owner, startdate)
+        values(#{deadline}, #{owner}, #{startdate});
+            <selectKey keyProperty="bannerid" order="AFTER" resultType="int">
+                select last_insert_id()
+            </selectKey>
+    </insert>
+
+    <update id="InsertBannerimg">
+        update banner
+        set bannerimg=#{param1}
+        where bannerid=#{param2}
+    </update>
 </mapper>

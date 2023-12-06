@@ -57,12 +57,14 @@
 		portpolio.ispublic as ispublic,
 		portpolio.category as category,
 		portpolio.imgsrc as imgsrc,
-		portpolio.likecnt as likeCnt,
+		count(portfoliolike.user_userid) as likeCnt,
 		user.username as username, 
 		user.profileimg as profileimg
 		from portpolio
 		join user on portpolio.user_userid = user.userid
-		where ispublic=1 ;
+		left join portfoliolike on portpolio.portfolioid=portfoliolike.portpolio_portfolioid
+		group by portpolio.portfolioid
+		order by portfolioid desc;
 	</select>
 
 </mapper>

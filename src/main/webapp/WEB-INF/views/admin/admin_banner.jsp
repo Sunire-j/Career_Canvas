@@ -149,6 +149,9 @@ prefix="c" %>
             </tr>
         </c:forEach>
         </table>
+          <div style="width: 100%; text-align: right;" >
+              <input type="button" class="btn-primary btn" value="배너 추가" onclick="location.href='${pageContext.servletContext.contextPath}/admin/banner/add'">
+          </div>
         <!-- 페이징 -->
         <div>
             <ul style="display: flex; align-items: center">

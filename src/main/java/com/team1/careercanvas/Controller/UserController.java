@@ -613,6 +613,7 @@ public class UserController {
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if(uVO.getInterest()!=null){
             String[] interestArr = uVO.getInterest().split(",");
+            System.out.println("arr size : "+interestArr.length);
             mav.addObject("interest", interestArr);
         }
         mav.addObject("pVO", pVO);
