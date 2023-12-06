@@ -11,7 +11,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         /* All */
-
+        h3{
+            height: 40px;
+            display: flex;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 32px;
+            text-shadow: 0px 0px 1px #0D0D0D;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+            color: #73351F;
+        }
         * {
             padding: 0;
             margin: 0;
@@ -25,11 +36,16 @@
             margin: 0;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .container{
+            width: 600px;
+            margin : 0 auto;
+            margin-top: 100px;
+            background-color: #F2F2F2;
+            border-width: 3px 1px 3px 1px;
+            border-style: solid;
+            border-color: #73351F;
 
+        }
         .space {
             height: 200px;
             background: white;
@@ -233,6 +249,26 @@
                 display: none;
             }
         }
+
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 15px;
+        }
+
     </style>
     <script>
         $(function () {
@@ -308,8 +344,11 @@
 </head>
 <body>
 
-<div class="container">
-    <h3 style="text-align: center; margin-top: 150px">아이디를 잊으셨나요?</h3>
+<div class="container" style="padding: 0px">
+<div class="container-head"></div>
+    <div class="container-wrap" style="padding: 20px 50px 50px 25px;">
+    <h3 style="text-align: center;">아이디를 잊으셨나요?</h3>
+    <hr class="hr-styleset" style="margin-top: 30px">
     <form method="post" id="findidForm" action="${pageContext.servletContext.contextPath}/findidStart" class="needs-validation" name="findidForm" novalidate>
         <%--가입 유형 선택--%>
         <div style="display: flex; height: 40px; font-weight: bold; margin: 50px auto 0;width: 40%">
@@ -332,8 +371,9 @@
                 <input type="button" class="btn btn-secondary" value="돌아가기" onclick="history.back()"/>
             </div>
         </div>
-
     </form>
+    </div>
+    <div class="container_bottom"></div>
 </div>
 
 </body>
