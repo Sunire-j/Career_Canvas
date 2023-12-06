@@ -216,7 +216,7 @@ file="../header_footer/header.jspf"%>
         display: flex;
       }
       .ajaxView_wrapper {
-        width: 64%;
+        width: 1200px;
         margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
@@ -319,10 +319,9 @@ file="../header_footer/header.jspf"%>
             <thead class="table-dark">
               <tr>
                 <th>번호</th>
-                <th>카테고리</th>
+                <th>제목</th>
                 <th>내용</th>
                 <th>날짜</th>
-                <th>신고</th>
               </tr>
             </thead>
             <tbody>
@@ -339,11 +338,11 @@ file="../header_footer/header.jspf"%>
                     <c:if test="${cVO.post_postid eq 3}">
                       <td>노하우게시판</td>
                     </c:if>
+                    
                     <c:if test="${cVO.isdelete eq 0}">
                       <td>${cVO.commentcontent}</td>
                     </c:if>
                     <td>${cVO.date}</td>
-                    <td>5</td>
                   </tr>
                 </c:forEach>
               </div>
