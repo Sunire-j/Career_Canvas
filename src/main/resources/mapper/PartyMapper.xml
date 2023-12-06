@@ -322,12 +322,23 @@
     </select>
 
     <insert id="pofolWrite">
-        insert into portpolio (user_userid, portfoliotitle, portfoliocontent, ispublic, category, partyid)
-        values (#{user_userid} , #{portfoliotitle}, #{portfoliocontent},0, #{category}, #{partyid});
+        insert into portpolio (user_userid, portfoliotitle, portfoliocontent, ispublic, category, partyid, isteam)
+        values (#{user_userid} , #{portfoliotitle}, #{portfoliocontent},0, #{category}, #{partyid},0);
         <selectKey keyProperty="portfolioid" order="AFTER" resultType="int">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+
+    <insert id="addPofolMember">
+        insert into pofolcont (portfolioid, userid)
+        values  (#{param1}, #{param2})
+    </insert>
+
+    <update id="insertPofolImg">
+        update portpolio
+        set imgsrc=#{param1}
+        where portfolioid=#{param2}
+    </update>
     <!-- 정인식 작업 끝 -->
 
 </mapper>

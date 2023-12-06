@@ -75,5 +75,9 @@ public interface PartyMapper {
 
     int pofolWrite(PofolVO pvo);
 
+    void addPofolMember(int portfolioid, String userid);
+
+    int insertPofolImg(String pathfordb,int Portfolioid);
+
     // 정인식 작업 끝
 }
