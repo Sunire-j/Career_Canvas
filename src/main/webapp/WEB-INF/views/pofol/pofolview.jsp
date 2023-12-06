@@ -227,14 +227,14 @@
                 <div class="content_recommend"
                      style="width: 100%; display : flex; justify-content: space-between; align-items: center">
                     <div></div>
-                    <a style="color: white" href="${pageContext.servletContext.contextPath}/board/like?no=${pVO.portfolioid}"
+                    <a style="color: white" href="${pageContext.servletContext.contextPath}/pofol/like?no=${pVO.portfolioid}"
                        class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a>
                     <div class="d-flex" style="margin-right: 10px;">
                         <c:if test="${LogStatus=='Y'}">
                             <a style="height: fit-content; margin-right: 10px" class=" btn btn-outline-danger btn-sm"
                                id="report_post">게시글 신고</a>
                         </c:if>
-                        <c:if test="${LogId==bvo.user_userid}">
+                        <c:if test="${LogId==pVO.user_userid}">
                             <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">게시글
                                 삭제</a>
                         </c:if>
@@ -244,62 +244,51 @@
         </div>
     </section>
     <hr style="border: 2px dashed #73351F">
-<%--    <script>--%>
-<%--        $(function () {--%>
+    <script>
+        $(function () {
 
-<%--            $("#del_post").on('click', function () {--%>
-<%--                if (confirm("정말 글을 삭제하시겠습니까?")) {--%>
-<%--                    var target_id = ${bvo.postid};--%>
-<%--                    var boardcategory = ${bvo.boardcategory};--%>
-<%--                    $.ajax({--%>
-<%--                        url: "${pageContext.servletContext.contextPath}/board/postdel",--%>
-<%--                        data: {--%>
-<%--                            postid: target_id--%>
-<%--                        },--%>
-<%--                        type: 'post',--%>
-<%--                        success: function (result) {--%>
-<%--                            alert("삭제되었습니다.");--%>
-<%--                            var url = "${pageContext.servletContext.contextPath}/board";--%>
-<%--                            var target = "";--%>
-<%--                            if (boardcategory == 0) {--%>
-<%--                                target = "free";--%>
-<%--                            } else if (boardcategory == 1) {--%>
-<%--                                target = "ask";--%>
-<%--                            } else {--%>
-<%--                                target = "tip";--%>
-<%--                            }--%>
-<%--                            alert("url");--%>
-<%--                            location.href = "${pageContext.servletContext.contextPath}/board/" + target--%>
-<%--                        },--%>
-<%--                        error: function (error) {--%>
-<%--                            console.log(error.responseText);--%>
-<%--                        }--%>
-<%--                    });--%>
-<%--                }--%>
-<%--            });--%>
-<%--            $("#report_post").on('click', function () {--%>
-<%--                if (confirm("정말 글을 신고하시겠습니까?")) {--%>
-<%--                    $.ajax({--%>
-<%--                        url: "${pageContext.servletContext.contextPath}/board/post_report",--%>
-<%--                        data: {--%>
-<%--                            target_id:${bvo.postid},--%>
-<%--                            target_userid: '${bvo.user_userid}',--%>
-<%--                            target_title: '${bvo.posttitle}'--%>
-<%--                        },--%>
-<%--                        type: 'post',--%>
-<%--                        success: function (result) {--%>
-<%--                            alert("신고되었습니다");--%>
-<%--                        },--%>
-<%--                        error: function (error) {--%>
-<%--                            console.log(error.responseText);--%>
-<%--                        }--%>
+            $("#del_post").on('click', function () {
+                if (confirm("정말 글을 삭제하시겠습니까?")) {
+                    var target_id = ${pVO.portfolioid};
+                    $.ajax({
+                        url: "${pageContext.servletContext.contextPath}/pofol/postdel",
+                        data: {
+                            pofolid: target_id
+                        },
+                        type: 'post',
+                        success: function (result) {
+                            alert("삭제되었습니다.");
+                            location.href = "${pageContext.servletContext.contextPath}/pofol_preview";
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                        }
+                    });
+                }
+            });
+            $("#report_post").on('click', function () {
+                if (confirm("정말 글을 신고하시겠습니까?")) {
+                    $.ajax({
+                        url: "${pageContext.servletContext.contextPath}/pofol/pofol_report",
+                        data: {
+                            target_id:${pVO.portfolioid},
+                            target_userid: '${pVO.user_userid}',
+                            target_title: '${pVO.portfoliotitle}'
+                        },
+                        type: 'post',
+                        success: function (result) {
+                            alert("신고되었습니다");
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                        }
 
-<%--                    });--%>
-<%--                }--%>
+                    });
+                }
 
-<%--            });--%>
-<%--        });--%>
-<%--    </script>--%>
+            });
+        });
+    </script>
     <div class="container_bottom"></div>
 </article>
 <footer></footer>
