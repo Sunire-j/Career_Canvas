@@ -17,7 +17,13 @@ public interface PofolMapper {
 	int getpofolamount(String userid);
 
 	List<PofolVO> getPofolInfo(PagingVO pvo);
+	int isLike(int no, String userid);
 
+	void pofolLike(int no, String userid);
+
+	void reportPofol(int target_id, String userid, String title, String user_userid);
+
+	int deletePofol(int pofolid);
 
 	PofolVO getPofolall(int pofolid);
 

@@ -43,6 +43,27 @@
 		where portpolio_portfolioid = #{param1};
 	</select>
 
+	<select id="isLike" resultType="Integer">
+		select count(user_userid)
+		from portfoliolike
+		where user_userid = #{param2} and portpolio_portfolioid = #{param1};
+	</select>
+
+	<insert id="pofolLike">
+		insert into portfoliolike(user_userid, portpolio_portfolioid)
+		values(#{param2}, #{param1});
+	</insert>
+
+	<insert id="reportPofol">
+		insert into report(reporttype, targetid, user_userid, title, userid)
+		values('pp', #{param1}, #{param4}, #{param3}, #{param2});
+	</insert>
+
+	<delete id="deletePofol">
+		delete from portpolio
+		where portfolioid = #{param1};
+	</delete>
+
 <!--	조석훈 작업-->
 	<update id="insertImg">
 		update portpolio
