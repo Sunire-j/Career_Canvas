@@ -63,40 +63,46 @@
     </script>
 </head>
 <body>
-<div class="container">
-    <h3 style="text-align: center; margin-top: 150px">비밀번호 변경</h3>
-    <form method="post" action="${pageContext.servletContext.contextPath}/startchangepwd" novalidate class="needs-validation"
-          id="findidForm" name="findidForm">
-        <%--가입 유형 선택--%>
-        <div style="width: 40%; margin: 10px auto 0;">
-            <form action="${pageContext.servletContext.contextPath}/signup/personalstart" method="post"
-                  class="signupFrm needs-validation" novalidate>
-                <ul style="padding: 0; margin-top: 50px">
-                    <li>
-                        <div>
-                            <input type="password" id="userPwd" name="userPwd" class="form-control"
-                                   placeholder="비밀번호"
-                                   pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$" required/>
-                            <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
-                            <div class="invalid-feedback" data-feedback="patternMismatch">8~20자, 영문, 숫자, 특문을 모두
-                                이용해주세요.
+<div class="container" style="padding: 0px; margin-top: 150px">
+    <div class="container-head"></div>
+    <div style="padding: 0px 50px 30px 50px">
+        <h3 class="signupTitle" style="text-align: center; margin-top: 10px">비밀번호 변경</h3>
+        <hr class="hr-styleset">
+        <div>
+            <%--가입 유형 선택--%>
+            <div style="width: 60%; margin: 10px auto 0;">
+                <form action="${pageContext.servletContext.contextPath}/startchangepwd" method="post"
+                      class="signupFrm needs-validation" novalidate>
+                    <ul style="padding: 0; margin-top: 30px">
+                        <li>
+                            <div>
+                                <input type="password" id="userPwd" name="userPwd" class="form-control"
+                                       placeholder="비밀번호"
+                                       pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$" required/>
+                                <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+                                <div class="invalid-feedback" data-feedback="patternMismatch">8~20자, 영문, 숫자, 특문을 모두
+                                    이용해주세요.
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <input type="password" id="userPwdCheck" name="userPwdCheck" class="form-control"
-                                   placeholder="비밀번호 확인"
-                                   required/>
-                            <div class="invalid-feedback" data-feedback="passwordMismatch">비밀번호를 확인해주세요.</div>
-
-                        </div>
-                    </li>
-                </ul>
-                    <input type="submit"  class="btn btn-primary pwchangebtn" value="비밀번호 변경" disabled/>
-            </form>
+                        </li>
+                        <li>
+                            <div>
+                                <input type="password" id="userPwdCheck" name="userPwdCheck" class="form-control"
+                                       placeholder="비밀번호 확인"
+                                       required/>
+                                <div class="invalid-feedback" data-feedback="passwordMismatch">비밀번호를 확인해주세요.</div>
+                            </div>
+                        </li>
+                    </ul>
+                        <input type="submit" style="display: flex; margin: 0; margin-top: 10px"  class="btn btn-primary pwchangebtn" value="비밀번호 변경" disabled/>
+                </form>
+            </div>
         </div>
+    </div>
+        <div class="container_bottom"></div>
 
+</div>
+</form>
 </body>
 </html>
 

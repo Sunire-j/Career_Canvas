@@ -17,15 +17,30 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/super-build/ckeditor.js"></script>
     <style>
       .content {
-        max-width: 1000px;
+        width: 1200px;
         margin: 0 auto;
         margin-top: 70px;
+        background: #F2F2F2;
+        border-width: 3px 1px 3px 1px;
+        border-color: #73351F;
+        border-style: groove;
       }
-
+      .content-header{
+        height: 100px;
+        width: 100%;
+        background: #A69668;
+        border-bottom: 2px solid #73351F;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       .ck-editor__editable {
         height: 400px;
       }
-
+      h3{
+        font-size: 40px;
+        font-weight: bold;
+      }
       #editor {
         width: 100%;
         height: 600px;
@@ -40,6 +55,12 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
 
       input[type="radio"] {
         display: none;
+      }
+      .container_bottom{
+        display: flex;
+        background: #A69668;
+        height: 10px;
+        margin-top: 10px;
       }
     </style>
     <script>
@@ -207,56 +228,61 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
   </head>
   <body>
     <div class="content">
-      <h3 style="margin-bottom: 30px">포트폴리오 작성</h3>
-      <form
-        method="post"
-        action="${pageContext.servletContext.contextPath}/myteam/pofolWriteOk"
-        class="needs-validation writeform"
-        novalidate
-      >
-        <input type="hidden" id="content" name="postcontent" />
-        <input
-          type="text"
-          style="width: 40%"
-          class="form-control"
-          name="posttitle"
-          id="title"
-          placeholder="제목을 입력해 주세요."
-          required
-          maxlength="30"
-        />
-        <div class="invalid-feedback">제목을 입력해 주세요. (30자 이내)</div>
-        <div style="padding: 20px 0">
-          <div class="button-container">
-            <label class="btn btn-outline-warning">
-              <input type="radio" name="category" value="0" checked />
-              <span>선택안함</span>
-            </label>
-            <label class="btn btn-outline-warning">
-              <input type="radio" name="category" value="1" />
-              <span>IT/프로그래밍</span>
-            </label>
-            <label class="btn btn-outline-warning">
-              <input type="radio" name="category" value="2" />
-              <span>디자인</span>
-            </label>
-            <label class="btn btn-outline-warning">
-              <input type="radio" name="category" value="3" />
-              <span>영상음향</span>
-            </label>
+      <div class="content-header" style="margin-bottom: 30px">
+        <h3>포트폴리오 작성</h3>
+      </div>
+        <form
+          method="post"
+          style=""
+          action="${pageContext.servletContext.contextPath}/myteam/pofolWriteOk"
+          class="needs-validation writeform"
+          novalidate
+        >
+          <input type="hidden" id="content" name="postcontent" />
+          <div style="#D9D9D9">
+          <input
+            type="text"
+            style="width: 40%"
+            class="form-control"
+            name="posttitle"
+            id="title"
+            placeholder="제목을 입력해 주세요."
+            required
+            maxlength="30"
+          />
+          <div class="invalid-feedback">제목을 입력해 주세요. (30자 이내)</div>
+          <div style="padding: 20px 0">
+            <div class="button-container">
+              <label class="btn btn-outline-warning">
+                <input type="radio" name="category" value="0" checked />
+                <span>선택안함</span>
+              </label>
+              <label class="btn btn-outline-warning">
+                <input type="radio" name="category" value="1" />
+                <span>IT/프로그래밍</span>
+              </label>
+              <label class="btn btn-outline-warning">
+                <input type="radio" name="category" value="2" />
+                <span>디자인</span>
+              </label>
+              <label class="btn btn-outline-warning">
+                <input type="radio" name="category" value="3" />
+                <span>영상음향</span>
+              </label>
+            </div>
+          </div>
+          <div class="check-container" style="margin: 10px 0;">
+            <c:forEach items="${memberList}" var="uvo" >
+                <label class="btn btn-outline-success">
+                  <input type="hidden" name="no" value="${no}">
+                  <input type="checkbox" name="member" value="${uvo.userid}" />
+                  <span>${uvo.username}</span>
+                </label>
+            </c:forEach>
           </div>
         </div>
-        <div class="check-container" style="margin: 10px 0;">
-          <c:forEach items="${memberList}" var="uvo" >
-              <label class="btn btn-outline-success">
-                <input type="hidden" name="no" value="${no}">
-                <input type="checkbox" name="member" value="${uvo.userid}" />
-                <span>${uvo.username}</span>
-              </label>
-          </c:forEach>
-        </div>
+      <div style="background: #F2F2F2">
         <div id="editor"></div>
-
         <div id="botContainer">
           <div style="width: 50%" class="botContainer2">
             <input
@@ -277,7 +303,9 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             value="글등록"
           />
         </div>
+      </div>
       </form>
+      <div class="container_bottom"></div>
     </div>
   </body>
 </html>
