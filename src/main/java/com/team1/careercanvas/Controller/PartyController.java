@@ -18,12 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -220,6 +223,8 @@ public class PartyController {
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mav.addObject("pvo",vo);
         mav.addObject("no", no);
+        PartyVO partyvo=mapper.myteamSelect(no);
+        mav.addObject("teamname",partyvo.getPartyname());
         //여기에서 db에 이전 채팅내역 불러오는게 있어야함.
         mav.setViewName("/myteam/myteam_chat");
 
@@ -508,6 +513,55 @@ public class PartyController {
         return 1;
     }
 
+    @PostMapping("party/profileUpdate")
+    public String profileUpdate(@RequestParam("no") int partyid,
+                             @RequestParam("ex_file") MultipartFile file
+                             ){
+        if (file != null) {
+            // 파일저장시작
+            String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+            String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            String newFileName = partyid + "_" + currentTime + extension;
+            String projectDir = new File("").getAbsolutePath();
+            File directory = new File(projectDir + "/upload/partyimg");
+            if (!directory.exists()) {
+                directory.mkdirs(); // 디렉토리 생성
+            }
+
+            Path path = Paths.get(directory.getAbsolutePath(), newFileName); // 절대 경로를 사용
+
+            try {
+                file.transferTo(new File(path.toString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("파일저장실패");
+                return "404pages";
+            }
+            // 파일저장 끝
+
+            // 기존파일 삭제
+            String oldFileName = mapper.getpartyimg(partyid);
+            if (oldFileName != null || oldFileName != "") {
+                File fileToDelete = new File(directory, oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
+                boolean result = fileToDelete.delete();
+
+                if (result) {
+                    System.out.println("파일 삭제 성공");
+                } else {
+                    System.out.println("파일 삭제 실패");
+                }
+            }
+
+            // db에 경로넣기
+            String imgsrc = "/partyimg/" + newFileName;
+
+            mapper.UpdatePartyImg(imgsrc, partyid);
+            // db에 경로넣기 끝
+
+        }
+        return "redirect:/party/edit?no="+partyid;
+    }
+
     // 파티 회원 관리 페이지
     @GetMapping("party/memberEdit")
     @ResponseBody
@@ -564,4 +618,111 @@ public class PartyController {
 
         return "redirect:party/memberEdit";
     }
+
+    @GetMapping("party/portpolio")
+    @ResponseBody
+    public ModelAndView partyportpolio (@RequestParam("no") int partyid,
+                                        HttpSession session,
+                                        @RequestParam(required = false, defaultValue = "1") int page){
+        ModelAndView mav = new ModelAndView();
+
+        PagingVO pagingvo = new PagingVO();
+
+        pagingvo.setOnePageRecord(12);
+        pagingvo.setPage(page);
+
+        int totalrecord = mapper.getpofolamountforparty(partyid);
+        pagingvo.setTotalRecord(totalrecord);
+
+        mav.addObject("no", partyid);
+        String logId = (String) session.getAttribute("LogId");
+
+        List<PartyVO> vo = mapper.SelectPartyList(logId);
+        mav.addObject("pvo",vo);
+        pagingvo.setSearchWord(String.valueOf(partyid));
+        System.out.println(pagingvo.toString());
+
+        List<PofolVO> pofolvo = mapper.SelectPofolList(pagingvo);
+        mav.addObject("Povo", pofolvo);
+        mav.addObject("Pagingvo", pagingvo);
+        mav.setViewName("myteam/myteam_portpolio");
+        return mav;
+    }
+
+    @GetMapping("party/pofolWrite")
+    public ModelAndView partypofolwrite(HttpSession session,
+                                        @RequestParam("no") int partyid){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("no", partyid);
+
+        String logId = (String) session.getAttribute("LogId");
+
+        PartyVO pvo = mapper.myteamSelect(partyid);
+        mav.addObject("partyvo",pvo);
+
+        if(!logId.equals(pvo.getUser_userid())){
+            mav.addObject("msg", "파티장만 등록 가능합니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+
+        List<UserVO> memberList1 = mapper.SelectMemberList(partyid);
+        mav.addObject("memberList", memberList1);
+
+        mav.setViewName("myteam/myteam_pofol_write");
+        return mav;
+    }
+    @PostMapping("myteam/pofolWriteOk")
+    public String partyfolwriteOk(HttpSession session,
+                                  @RequestParam("posttitle") String title,
+                                  @RequestParam("postcontent") String content,
+                                  @RequestParam("category") String category,
+                                  @RequestParam("member") String member,
+                                  @RequestParam("no") int partyid) throws IOException {
+        PofolVO pvo = new PofolVO();
+        pvo.setPortfoliotitle(title);
+        pvo.setPortfoliocontent(content);
+        pvo.setCategory(category);
+        pvo.setUser_userid(member);
+
+
+
+        int result = mapper.pofolWrite(pvo);
+
+        System.out.println(content);
+        if(content.contains("<img src=")){
+            int index = content.indexOf("<img src=");
+            String first = content.substring(index+10);
+            String second = first.substring(0, first.indexOf("\""));//mime 포함 src내 전체 코드
+            String mimeType = second.split(",")[0].split(";")[0].split(":")[1];
+            String base64Data = second.split(",")[1];
+
+            String extension = mimeType.split("/")[1];
+
+            byte[] data = Base64.getDecoder().decode(base64Data);
+
+            String userid = String.valueOf(pvo.getPortfolioid());
+            String newFileName = userid + "." + extension;
+
+            String projectDir = new File("").getAbsolutePath();
+            File directory = new File(projectDir + "/upload/pofolimg");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            Path path = Paths.get(directory.getAbsolutePath(), newFileName);
+            OutputStream outputStream = new FileOutputStream(path.toString());
+            outputStream.write(data);
+            outputStream.close();
+
+            String pathfordb = "/pofolimg/"+newFileName;
+            //여기서 db에 path만 넣어주면 됨.
+            //int dbresult = pofolmapper.insertImg(pathfordb, pvo.getPortfolioid());
+
+        }
+
+        return "redirect:/party/pofolWrite";
+    }
+
+
 }

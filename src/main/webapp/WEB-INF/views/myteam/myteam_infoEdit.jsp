@@ -196,7 +196,7 @@
         }
 
         #ex_file + label {
-            background-image: url("${pageContext.servletContext.contextPath}/upload/staticimage/fileUploadImg.png");
+            background-image: url("${pageContext.servletContext.contextPath}/upload/${partyvo.partyimage}");
             border-radius: 20px;
             background-size: cover;
             width: 120px;
@@ -382,8 +382,18 @@
                     }
                 });
             });
+
+            // 파티프로필 수정
+            $('.partyImg_edit_btn').click(function() {
+                $(this).css('display', 'none');
+                $(".partyImg_edit_btn_ok").css('display','block');
+                $('#ex_file').prop('disabled', false);
+            });
+
+
+
             $('.mainbtn').click(function (){
-                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main';
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?partyid=${partyvo.partyid}';
             });
             $(".party_list_btn").click(function () {
                 no = $(this).attr('title');
@@ -393,6 +403,16 @@
             $("#memberEdit_btn").click(function () {
                 no = ${partyvo.partyid};
                 window.location.href = '${pageContext.servletContext.contextPath}/party/memberEdit?no='+ no;
+            });
+
+            $('.chatbtn').click(function (){
+                no = ${partyvo.partyid};
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/chat?no='+no;
+            });
+
+            $('.portpoliobtn').click(function (){
+                no = ${partyvo.partyid};
+                window.location.href = '${pageContext.servletContext.contextPath}/party/portpolio?no='+no;
             });
 
         });
@@ -409,7 +429,6 @@
         <hr>
     </div>
     <ul class="party_list">
-
             <c:forEach items="${pvo}" var="p">
                 <li title="${p.partyid}" class="party_list_btn">
                     <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
@@ -425,10 +444,11 @@
             </button>
         </li>
     </ul>
-    <div class="choisvalue" style="margin-top: 30px;">
-        <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" >
-        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
-        <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
+    <div class="choisvalue" style="margin-top: 30px; display: flex">
+        <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" style="margin-right: 10px">
+        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" style="margin-right: 10px">
+        <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" style="margin-right: 10px" onclick="changeClass(this)">
+        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
     </div>
     <hr>
 </main>
@@ -455,7 +475,8 @@
                     <input type="text" class="name_edit_box" name="name_edit_box" style="margin-left: 20px; font-size: 1.7em; border: none;" value="${partyvo.partyname}" readonly />
                 </div>
             </form>
-        <form id="profileImg_editFrm">
+        <form id="profileImg_editFrm" action="${pageContext.servletContext.contextPath}/party/profileUpdate" enctype="multipart/form-data" method="post">
+            <input type="hidden" value="${partyvo.partyid}" name="no">
             <div class="profile_edit">
                 <span style=" font-size: 1.3em; color: #495057;">프로필 이미지</span>
                 <input type="button" class="partyImg_edit_btn" value="수정+" />
