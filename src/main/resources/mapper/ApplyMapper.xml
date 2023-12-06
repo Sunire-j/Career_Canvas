@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team1.careercanvas.mapper.ApplyMapper">
+    <select id="getApplyInfo" resultType="com.team1.careercanvas.vo.ApplyVO">
+        select
+            subject.subjecttitle as subjecttitle,
+            subject.category as category,
+            subjectapply.applyid as applyid,
+            subjectapply.subject_subjectid as subject_subjectid,
+            subjectapply.applycontent as applycontent,
+            subjectapply.isteam as isteam,
+            subjectapply.party_partyid as party_partyid,
+            subjectapply.user_userid as user_userid,
+            subjectapply.applyimg as applyimg
+        from subjectapply
+                 join subject on subject.subjectid=subjectapply.subject_subjectid
+        where subjectapply.user_userid=#{searchWord} and subjectapply.isteam=1
+        limit #{onePageRecord} offset #{offsetPoint}
+    </select>
+    <select id="getApplyamountSolo" resultType="Integer">
+        select count(applyid) from subjectapply
+        where user_userid = #{param1} and isteam=1;
+    </select>
+</mapper>

@@ -195,11 +195,13 @@
             <ul>
                 <c:forEach items="${Povo}" var="P">
                     <li>
-                        <div class="portpolio_content">
-                            <input type="hidden" value="${P.portfolioid}">
-                            <img src="${pageContext.servletContext.contextPath}/upload${P.imgsrc}" class="portpolio_img"/>
-                            <p class="portpolio_name">${P.portfoliotitle}</p>
-                        </div>
+                        <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${P.portfolioid}">
+                            <div class="portpolio_content">
+                                <input type="hidden" value="${P.portfolioid}">
+                                <img src="${pageContext.servletContext.contextPath}/upload${P.imgsrc}" class="portpolio_img"/>
+                                <p class="portpolio_name">${P.portfoliotitle}</p>
+                            </div>
+                        </a>
                     </li>
                 </c:forEach>
             </ul>
