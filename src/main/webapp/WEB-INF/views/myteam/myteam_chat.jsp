@@ -24,17 +24,16 @@
         }
 
         body {
-            width: 1000px;
             margin: 0 auto;
-            height: 1200px;
         }
 
         .chat {
-            width: 900px;
+            width: 1000px;
             margin: 0 auto;
         }
 
         .party_name {
+            padding-bottom: 20px;
             margin: 0;
             margin-top: 20px;
             text-align: center;
@@ -80,7 +79,7 @@
 
         /* 채팅 */
         .chat_list {
-            width: 880px;
+            width: 1000px;
             height: 700px;
             overflow: auto;
             margin: 0 auto;
@@ -88,7 +87,7 @@
         }
 
         .chat_list li {
-            width: 840px;
+            width: 945px;
             margin-left: 20px;
             margin-top: 15px;
         }
@@ -101,7 +100,7 @@
             padding: 10px;
             background-color: #ddd;
             border-radius: 10px;
-            min-width: 100px;
+            /*min-width: 100px;*/
             max-width: 350px;
             word-break: break-all;
         }
@@ -136,10 +135,11 @@
         }
 
         .chat_container {
-            width: 880px;
+            width: 1000px;
             height: 760px;
             background-color: #e9ecef;
             margin-top: 50px;
+            margin: 0 auto;
         }
 
         /* 채팅 스크롤바*/
@@ -173,8 +173,8 @@
         }
 
         .comment_write {
-            width: 880px;
-            margin: 0;
+            width: 1000px;
+            margin: 0 auto;
             display: flex;
             padding-bottom: 20px;
         }
@@ -301,12 +301,12 @@
                             if (item.user_userid == "${LogId}") {//보낸거
                                 console.log("동일함");
                                 var tag = `
-                       <li class="myMsg">
-                           <div class="myMsg_content">
-                               <p class="msg_content">` + item.partychatcontent + `</p>
-                               <p class="msg_date">` + item.date + `</p>
-                           </div>
-                       </li>`;
+                               <li class="myMsg">
+                                   <div class="myMsg_content">
+                                       <p class="msg_content">` + item.partychatcontent + `</p>
+                                       <p class="msg_date">` + item.date + `</p>
+                                   </div>
+                               </li>`;
                                 $(".chat_list").append(tag);
                             } else {//받은거
                                 console.log("다름");
@@ -316,6 +316,7 @@
                 <div class="other_Msg_content">
                     <p style="margin-left: 10px; font-weight: bold;">` + item.username + `</p>
                     <p class="other_content">` + item.partychatcontent + `</p>
+                    <p class="other_date">`+ item.date +`</p>
                 </div>
             </li>`;
                                 $(".chat_list").append(tag);
@@ -354,13 +355,14 @@
                 <div class="other_Msg_content">
                     <p style="margin-left: 10px; font-weight: bold;">` + message.username + `</p>
                     <p class="other_content">` + message.partychatcontent + `</p>
+                    <p class="other_date">`+ message.date +`</p>
                 </div>
             </li>`;
                         $(".chat_list").append(tag);
                         $('.chat_list').scrollTop($('.chat_list')[0].scrollHeight);
                     }
                 });
-            })
+            });
 
             $(".comment_write_ok").on('click', function () {
                 sendMessage();
@@ -384,8 +386,14 @@
             }
 
             $('.mainbtn').click(function () {
-                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main';
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?partyid=${no}';
             });
+
+            $(".party_list_btn").click(function () {
+                no = $(this).attr('title');
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/main?partyid='+no;
+            });
+
         });
 
     </script>
@@ -422,15 +430,18 @@
     <div class="choisvalue" style="margin-top: 30px;">
         <input type="button" class="btn btn-outline-secondary mainbtn" value="메인">
         <input type="button" class="btn btn-secondary chatbtn" value="채팅">
-        <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리">
+            <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/party/edit?no=${no}'">
+        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오"
+                    onclick="location.href='${pageContext.servletContext.contextPath}/party/portpolio?no=${no}'">
     </div>
     <hr>
 </main>
-<p class="party_name">Career Canvas</p>
+
 <div class="chat">
     <div class="chat_container">
         <div class="chat_name">
-            <span>전체</span>
+            <span style="font-size: 30px;">${teamname}</span>
         </div>
         <ul class="chat_list scrollBar">
         </ul>

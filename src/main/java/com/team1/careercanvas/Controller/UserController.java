@@ -427,9 +427,13 @@ public class UserController {
             @RequestParam("tel") String tel,
             @RequestParam("comment") String comment,
             @RequestParam(value = "fileInput", required = false) MultipartFile file,
-            @RequestParam(required = false) String[] interest,
+            @RequestParam(name = "interest", required = false) String interest,
             HttpSession session) throws NoSuchAlgorithmException {
-        System.out.println(Arrays.toString(interest));
+
+        if (interest != null) {
+            String str = String.join(",", interest);
+            int saveInterestResult = mapper.saveInterest((String) session.getAttribute("LogId"), str);
+        }
         if (!session.getAttribute("LogStatus").equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
@@ -448,7 +452,7 @@ public class UserController {
             mapper.changePwd(userid, encryptedpwd, salt);
         }
 
-        if (file != null) {
+        if (!file.isEmpty()) {
             // 파일저장시작
             String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
@@ -518,12 +522,15 @@ public class UserController {
 
         list = pofolmapper.getPofol(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("searchWord", pVO.getSearchWord());
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("list", list);
         mav.setViewName("users/mypage");
-        System.out.println(pVO);
         return mav;
     }
 
@@ -542,15 +549,15 @@ public class UserController {
         pvo.setPortfoliotitle(title);
         pvo.setPortfoliocontent(content);
         pvo.setCategory(category);
-        pvo.setUser_userid((String)session.getAttribute("LogId"));
+        pvo.setUser_userid((String) session.getAttribute("LogId"));
 
         int result = mapper.pofolWrite(pvo);
 
         System.out.println(content);
-        if(content.contains("<img src=")){
+        if (content.contains("<img src=")) {
             int index = content.indexOf("<img src=");
-            String first = content.substring(index+10);
-            String second = first.substring(0, first.indexOf("\""));//mime 포함 src내 전체 코드
+            String first = content.substring(index + 10);
+            String second = first.substring(0, first.indexOf("\""));// mime 포함 src내 전체 코드
             String mimeType = second.split(",")[0].split(";")[0].split(":")[1];
             String base64Data = second.split(",")[1];
 
@@ -572,12 +579,11 @@ public class UserController {
             outputStream.write(data);
             outputStream.close();
 
-            String pathfordb = "/pofolimg/"+newFileName;
-            //여기서 db에 path만 넣어주면 됨.
+            String pathfordb = "/pofolimg/" + newFileName;
+            // 여기서 db에 path만 넣어주면 됨.
             int dbresult = pofolmapper.insertImg(pathfordb, pvo.getPortfolioid());
 
         }
-
 
         return "redirect:/mypage/myPofol";
     }
@@ -602,8 +608,13 @@ public class UserController {
 
         List<BoardVO> bVO = new ArrayList<BoardVO>();
         bVO = boardmapper.getmyPost(pVO);
-        System.out.println(pVO.getTotalRecord());
+
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            System.out.println("arr size : " + interestArr.length);
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("pVO", pVO);
         mav.addObject("bVO", bVO);
         mav.addObject("uVO", uVO);
@@ -633,11 +644,14 @@ public class UserController {
 
         cVO = boardmapper.getmyComment(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("cVO", cVO);
         mav.addObject("uVO", uVO);
         mav.addObject("pVO", pVO);
         mav.setViewName("users/mypage_comment");
-        System.out.println(pVO);
         return mav;
     }
 
@@ -659,6 +673,10 @@ public class UserController {
         pVO.setPage(pVO.getPage());
 
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         List<MessageVO> mVO = new ArrayList<MessageVO>();
         mVO = mapper.getSendMsg(pVO);
         mav.addObject("uVO", uVO);
@@ -691,6 +709,10 @@ public class UserController {
         List<MessageVO> mVO = new ArrayList<MessageVO>();
         mVO = mapper.getReceiveMsg(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
 
         mav.addObject("mVO", mVO);
         mav.addObject("uVO", uVO);
@@ -714,6 +736,10 @@ public class UserController {
 
         List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectSolo(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
@@ -725,6 +751,7 @@ public class UserController {
 
     @GetMapping("mypage/submitSubjectTeam")
     public ModelAndView submitSubjectTeam(HttpSession session, PagingVO pVO) {
+
         ModelAndView mav = new ModelAndView();
         if (pVO.getSearchWord() == null) {
             pVO.setSearchWord("");
@@ -736,6 +763,10 @@ public class UserController {
 
         List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam((String) session.getAttribute("LogId"), pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);

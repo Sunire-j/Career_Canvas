@@ -302,6 +302,43 @@
         from partymember
         where party_partyid = #{param1} and user_userid = #{param2}
     </delete>
+
+    <update id="UpdatePartyImg">
+        update party
+        set partyimage=#{param1}
+        where partyid=#{param2}
+    </update>
+
+    <select id="SelectPofolList" resultType="com.team1.careercanvas.vo.PofolVO">
+        select *
+        from portpolio
+        where partyid = #{searchWord}
+        order by portfolioid desc
+        limit #{onePageRecord} offset #{offsetPoint}
+    </select>
+
+    <select id="getpofolamountforparty" resultType="Integer">
+        select count(portfolioid) from portpolio where partyid=#{param1}
+    </select>
+
+    <insert id="pofolWrite">
+        insert into portpolio (user_userid, portfoliotitle, portfoliocontent, ispublic, category, partyid, isteam)
+        values (#{user_userid} , #{portfoliotitle}, #{portfoliocontent},0, #{category}, #{partyid},0);
+        <selectKey keyProperty="portfolioid" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="addPofolMember">
+        insert into pofolcont (portfolioid, userid)
+        values  (#{param1}, #{param2})
+    </insert>
+
+    <update id="insertPofolImg">
+        update portpolio
+        set imgsrc=#{param1}
+        where portfolioid=#{param2}
+    </update>
     <!-- 정인식 작업 끝 -->
 
 </mapper>

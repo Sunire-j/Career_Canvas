@@ -148,7 +148,8 @@ file="../header_footer/header.jspf"%>
         margin-bottom: 20px;
       }
       .userIntro img {
-        padding-right: 30px;
+        width: 100px;
+        height: 100px;
       }
       .btn-outline-primary {
         font-size: 14px;
@@ -205,10 +206,6 @@ file="../header_footer/header.jspf"%>
         width: 20%;
         color: black;
       }
-
-      .ajaxMenu_wrapper {
-        margin-top: 50px;
-      }
       .ajaxView {
         float: left;
       }
@@ -252,12 +249,12 @@ file="../header_footer/header.jspf"%>
     <main class="container">
       <!-- Top  -->
       <div class="userInfo_wrapper">
-        <!-- UserInfo Area -->
-        <div class="userIntro">
+         <!-- UserInfo Area -->
+         <div class="userIntro">
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
-          <div>
+          <div style="padding-left: 20px;">
             <div class="userId">
-              <a href="${pageContext.servletContext.contextPath}/mypage">
+              <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
               <a href="mypage_edit">
@@ -276,9 +273,9 @@ file="../header_footer/header.jspf"%>
         <div>
           <p>관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
+            <c:forEach var="interest" items="${interest}">
+              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+            </c:forEach>
           </div>
         </div>
       </div>
@@ -312,34 +309,22 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      <!-- 검색창 -->
-      <form
-        class="input-group mb-3"
-        style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      
 
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
-        <div class="container mt-3" style="text-align: center">
+        <div class="container mt-3" style="text-align: center; display:flex; justify-content: center; gap: 20px;">
           <button
             class="btn btn-outline-primary sendMsg"
             onclick="location.href='${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo'"
+            style="width: 60px;"
           >
             개인
           </button>
           <button
             class="btn btn-outline-primary receiveMsg"
             onclick="location.href='#'"
+            style="width: 60px;"
           >
             팀
           </button>
@@ -356,6 +341,10 @@ file="../header_footer/header.jspf"%>
 
       <!-- 페이징 -->
       <div class="paging_wrapper" style="margin: 0 auto;">
+        <c:if test="${pVO.totalRecord == 0 }">
+          <p style="text-align: center; margin-top: 20px;">제출한 과제가 없습니다</p>
+        </c:if>
+        <c:if test="${pVO.totalRecord > 0 }">
         <ul class="paging">
           <!-- 이전 -->
           <c:if test="${pVO.page == 1}">
@@ -402,7 +391,24 @@ file="../header_footer/header.jspf"%>
             </li>
           </c:if>
         </ul>
+      </c:if>
       </div>
+
+      <!-- 검색창 -->
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
 
     </main>
   </body>

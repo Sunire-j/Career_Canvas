@@ -124,6 +124,7 @@
 
         .content>li{
             width: 25%;
+            margin-top: 30px;
         }
 
 
@@ -326,8 +327,8 @@
             <div class="solo_party">
                 <div></div>
                 <div class="solo_party_btn">
-                    <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
-                    <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
+                    <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
+                    <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
                 </div>
                 <div></div>
             </div>

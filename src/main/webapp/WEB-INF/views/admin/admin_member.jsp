@@ -96,7 +96,7 @@
         <a href="${pageContext.servletContext.contextPath}/admin/report"> 신고 게시글 관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/delete"> 과제 삭제 신청 목록 </a>
         <h3>배너관리</h3>
-        <a href=""> 배너 관리 </a>
+        <a href="${pageContext.servletContext.contextPath}/admin/banner"> 배너 관리 </a>
         <h3>통계</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/user/stats"> 유저 현황 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/board/stats"> 게시판 현황 </a>

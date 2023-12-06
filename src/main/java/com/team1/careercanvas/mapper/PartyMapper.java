@@ -66,5 +66,18 @@ public interface PartyMapper {
     void DeleteMember(int partyid, String user_userid);
     void ApproveMember(int partyid, String user_userid);
     void RefuseMember(int partyid, String user_userid);
+
+    void UpdatePartyImg(String imgsrc, int partyid);
+
+    List<PofolVO> SelectPofolList(PagingVO pvo);
+
+    int getpofolamountforparty(int partyid);
+
+    int pofolWrite(PofolVO pvo);
+
+    void addPofolMember(int portfolioid, String userid);
+
+    int insertPofolImg(String pathfordb,int Portfolioid);
+
     // 정인식 작업 끝
 }

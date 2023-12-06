@@ -1,28 +1,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"
-pageEncoding="UTF-8" %> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %> <%@include
-file="../header_footer/header.jspf"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c"
+           uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include
+        file="../header_footer/header.jspf" %>
 
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Career Canvas</title>
     <script
-      src="https://kit.fontawesome.com/2026ef433b.js"
-      crossorigin="anonymous"
+            src="https://kit.fontawesome.com/2026ef433b.js"
+            crossorigin="anonymous"
     ></script>
     <link
-      href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
+            href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
     ></script>
 
     <style>
@@ -229,14 +231,14 @@ file="../header_footer/header.jspf"%>
         margin-right: 5px;
       }
     </style>
-  </head>
-  <body>
-    <!-- Main -->
+</head>
+<body>
+<!-- Main -->
 
-    <!-- Mypage User Info -->
-    <main class="container">
-      <!-- Top  -->
-      <div class="userInfo_wrapper">
+<!-- Mypage User Info -->
+<main class="container">
+    <!-- Top  -->
+    <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
           <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" style="height: 235px; width: 235px; object-fit: fill; border-radius: 30%;"/>
@@ -253,149 +255,175 @@ file="../header_footer/header.jspf"%>
                 />
               </a>
             </div>
-            <p>${uVO.comment }</p>
-          </div>
         </div>
         <!-- Interest -->
 
         <div>
-          <p>관심분야</p>
-          <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <span class="web">웹/개발</span>
-            <span class="picture">사진/음향</span>
-            <span class="etc">기타등등</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Center -->
-      <!-- ajax -->
-      <div class="ajaxMenu_wrapper">
-        <ul class="ajaxMenu">
-          <li class="myPofol menu" id="myPofol menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myPofol"
-              >나의 포트폴리오</a
-            >
-          </li>
-          <li class="submitTask menu" id="submitTask">
-            <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-              >제출한 과제</a
-            >
-          </li>
-          <li class="myPost menu" id="myPost menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
-              >나의 게시글</a
-            >
-          </li>
-          <li class="myComment menu" id="myComment menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myComment"
-              >나의 댓글</a
-            >
-          </li>
-          <li class="myNote menu" id="myNote menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
-              >쪽지함</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- ajax View -->
-      <div class="ajaxView_wrapper">
-        <c:forEach var="list" items="${list}">
-          <div class="ajaxContent">
-            <a
-              href="#"
-              style="border: solid 1px #ddd; width: 220px; height: 170px"
-              ><img
-                src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}"
-                alt=""
-            /></a>
-            <div>
-              <a href="#"><p>${list.portfoliotitle}</p></a>
+            <p>관심분야</p>
+            <div class="userInterest" style="display: flex; flex-wrap: wrap">
+                <c:if test="${not empty interest}">
+                    <c:forEach var="interest" items="${interest}">
+                        <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+                    </c:forEach>
+                </c:if>
             </div>
-          </div>
-        </c:forEach>
-      </div>
-      <!-- 페이징 -->
-      <div style="width: 60%; margin: 0 auto; display: flex; justify-content: center;">
-        <ul style="display: flex; align-items: center">
-          <c:if test="${pVO.page == 1}">
-            <li><input type="button" value="<" class="btn btn-outline-primary" disabled></li>
-          </c:if>
-          <c:if test="${pVO.page > 1}">
-            <li>
-              <a
-                href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
-                ><input type="button" value="<" class="btn btn-outline-primary"></a
-              >
-            </li>
-          </c:if>
+        </div>
+    </div>
 
-          <c:forEach
-            var="p"
-            begin="${pVO.startPage}"
-            end="${pVO.page + pVO.onePageCount -1}"
-          >
-            <c:if test="${p<=pVO.totalPage}">
-              <li>
-                <a
-                  href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}<c:if test='${pVO.searchWord != null}'>&searchWord=${pVO.searchWord}</c:if>"
-                  ><button
-                    type="submit"
-                    class="btn btn-outline-primary"
-                    style="margin: 10px"
-                  >
-                    ${p}
-                  </button></a
+    <!-- Center -->
+    <!-- ajax -->
+    <div class="ajaxMenu_wrapper">
+        <ul class="ajaxMenu">
+            <li class="myPofol menu" id="myPofol menu">
+                <a href="${pageContext.servletContext.contextPath}/mypage/myPofol"
+                >나의 포트폴리오</a
                 >
-              </li>
-            </c:if>
-          </c:forEach>
-
-          <c:if test="${pVO.page == pVO.totalPage}">
-            <li><input type="button" value=">" class="btn btn-outline-primary" disabled></li>
-          </c:if>
-          <c:if test="${pVO.page < pVO.totalPage}">
-            <li>
-              <a
-                href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page + 1}"
-                > <input type="button" value=">" class="btn btn-outline-primary"></a
-              >
             </li>
-          </c:if>
+            <li class="submitTask menu" id="submitTask">
+                <a
+                        href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
+                >제출한 과제</a
+                >
+            </li>
+            <li class="myPost menu" id="myPost menu">
+                <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
+                >나의 게시글</a
+                >
+            </li>
+            <li class="myComment menu" id="myComment menu">
+                <a href="${pageContext.servletContext.contextPath}/mypage/myComment"
+                >나의 댓글</a
+                >
+            </li>
+            <li class="myNote menu" id="myNote menu">
+                <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+                >쪽지함</a
+                >
+            </li>
         </ul>
+    </div>
+
+    <!-- ajax View -->
+    <div class="ajaxView_wrapper">
+        <c:forEach var="list" items="${list}">
+            <div class="ajaxContent">
+                <a
+                        href="#"
+                        style="border: solid 1px #ddd; width: 220px; height: 170px"
+                ><img
+                        src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}"
+                        alt=""
+                /></a>
+                <div>
+                    <a href="#"><p>${list.portfoliotitle}</p></a>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+    <!-- 페이징 -->
+    <c:if test="${pVO.totalRecord == 0}">
+        <p style="text-align: center;">작성된 포트폴리오가 없습니다</p>
+    </c:if>
+    <div class="paging" style="text-align: center; margin: 0 auto; text-align: center; width: 70%;">
+        <c:if test="${pVO.totalRecord > 0}">
+
+            <c:if test="${pVO.page == 1}">
+                <input type="button" value="<" class="btn btn-outline-primary" disabled>
+            </c:if>
+            <c:if test="${pVO.page > 1}">
+
+                <a
+                        href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
+                ><input type="button" value="<" class="btn btn-outline-primary"></a
+                >
+
+            </c:if>
+
+            <c:forEach
+                    var="p"
+                    begin="${pVO.startPage}"
+                    end="${pVO.page + pVO.onePageCount -1}"
+            >
+                <c:if test="${p<=pVO.totalPage}">
+
+                    <a
+                            href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}<c:if test='${pVO.searchWord != null}'>&searchWord=${pVO.searchWord}</c:if>"
+                    >
+                        <button
+                                type="submit"
+                                class="btn btn-outline-primary"
+                                style="margin: 10px"
+                        >
+                                ${p}
+                        </button>
+                    </a
+                    >
+
+                </c:if>
+            </c:forEach>
+
+            <c:if test="${pVO.page == pVO.totalPage}">
+                <input type="button" value=">" class="btn btn-outline-primary" disabled>
+            </c:if>
+            <c:if test="${pVO.page < pVO.totalPage}">
+
+                <a
+                        href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page + 1}"
+                > <input type="button" value=">" class="btn btn-outline-primary"></a
+                >
+
+            </c:if>
+            </ul>
+        </c:if>
         <!-- 글쓰기 -->
         <input
-        type="button"
-        class="btn btn-outline-primary"
-        value="글쓰기"
-        style="position: relative; right: -210px;"
-        onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
-      />
-      </div>
-      
-        
-      
-      
+                type="button"
+                class="btn btn-outline-primary"
+                value="글쓰기"
+                onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
+        />
+    </div>
 
-      <!-- search -->
-      <form
-        class="input-group mb-3"
-        style="width: 75%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/myPofol"
-        method="GET"
-      >
+
+    <!-- 페이징2 -->
+    <div>
+        <ul class="pagination">
+            <c:if test="${pVO.page==1}">
+                <li class="page-item"><a class="page-link">Previous</a></li>
+            </c:if>
+            <c:if test="${pVO.page>1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page-1}">Previous</a>
+                </li>
+            </c:if>
+            <c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount -1}">
+                <c:if test="${p <= pVO.totalPage}">
+                    <li class="page-item"><a class="page-link"
+                                             href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}">${p}</a>
+                    </li>
+                </c:if>
+            </c:forEach>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </div>
+
+
+    <!-- search -->
+    <form
+            class="input-group mb-3"
+            style="width: 70%; margin: 20px auto"
+            action="${pageContext.servletContext.contextPath}/mypage/myPofol"
+            method="GET"
+    >
         <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
+                type="text"
+                class="form-control"
+                name="searchWord"
+                placeholder="Search"
         />
         <button class="btn btn-success" type="submit">Go</button>
-      </form>
-    </main>
-  </body>
+    </form>
+</main>
+</body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>

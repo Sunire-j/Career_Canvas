@@ -16,7 +16,30 @@ public interface PofolMapper {
 	// 김효준작업
 	int getpofolamount(String userid);
 
-	List<PofolVO> getPofolInfo(String userid);
+	List<PofolVO> getPofolInfo(PagingVO pvo);
+
+	int isLike(int no, String userid);
+
+	void pofolLike(int no, String userid);
+
+	void reportPofol(int target_id, String userid, String title, String user_userid);
+
+	int deletePofol(int pofolid);
+
+	PofolVO getPofolall(int pofolid);
+
+	int getpofollike(int pofolid);
 
 	int insertImg(String path, int pofolid);
+
+	// 권혁준 작업
+
+	List<PofolVO> getPublicSoloPofol(PagingVO pVO);
+
+	List<PofolVO> getPublicTeamPofol(PagingVO pVO);
+
+	int getTotalSoloPofol(PagingVO pVO);
+
+	int getTotalTeamPofol(PagingVO pVO);
+
 }
