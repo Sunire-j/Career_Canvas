@@ -141,9 +141,12 @@
         }
 
         .list_img {
-            width: 50px;
-            height: 50px;
-            border-radius: 15px;
+            padding: 5px;
+            width: 40px;
+            height: 40px;
+            radius: 50%;
+            object-fit: cover;
+            border-radius: 70%
         }
 
         .comment_writer, .comment_date {
@@ -175,6 +178,7 @@
             display: flex;
             align-items: flex-start;
             width: fit-content;
+            margin-top: 7.5px;
         }
     </style>
 </head>

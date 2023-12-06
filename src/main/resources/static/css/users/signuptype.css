@@ -10,6 +10,26 @@ ul{
 main{
     text-align: center;
 }
+
+.container{
+    width: 900px;
+    background-color: #F2F2F2;
+    margin-top: 70px;
+    border-width: 3px 1px 3px 1px;
+    border-style: solid;
+    border-color: #73351F;
+
+}
+.content-header{
+    height: 100px;
+    width: 100%;
+    background: #A69668;
+    border-bottom: 2px solid #73351F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .signupOkTitle{
     font-size: 28px;
     margin-top: 20px;
@@ -18,9 +38,9 @@ main{
 .textbar{
     margin: 0 auto;
     margin-top: 30px;
-    width: 700px;
+    width: 800px;
     height: 300px;
-    border: 2px solid #000;
+    border: 2px solid #73351F;
     text-align: left;
 }
 

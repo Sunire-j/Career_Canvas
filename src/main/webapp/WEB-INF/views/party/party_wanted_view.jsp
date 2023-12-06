@@ -23,9 +23,10 @@
             width: 1200px;
             margin: 0 auto;
             margin-top: 30PX;
-            border: 1px #73351F solid;
-            background: #D9D9D9;
-            padding: 40px;
+            border-width: 3px 1px 3px 1px;
+            border-style: solid;
+            border-color:  #73351F;;
+            background: #F2F2F2;
         }
 
         .board_category {
@@ -36,11 +37,15 @@
         }
 
         .board_title {
-            margin-top: 20px;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            height: 80px;
             font-size: 2em;
             font-weight: bold;
-            margin-bottom: 20px;
-
+            border-bottom: 2px solid #73351F;
+            padding-left: 20px;
+            background: #A69668;
         }
 
         /* 게시물 정보( 작성자, 날짜, 조회수, 추천수) */
@@ -74,7 +79,7 @@
         }
 
         .board_view {
-            width: 60px;
+            width: 70px;
             text-align: center;
             margin: auto 0 0 auto;
         }
@@ -112,9 +117,6 @@
             width: 90%;
             height: 100px;
             min-height: 100px;
-            margin-left: 3px;
-            margin-bottom: 3px;
-            margin-top: 3px;
         }
 
         .comment_write_ok {
@@ -127,22 +129,24 @@
 
         }
         .comment_list{
-            background:  #A69668;
 
         }
         .comment_list li {
             float: none;
         }
         .comment_list_content {
-            padding-top: 10px;
-            padding-bottom: 10px;
+            background: #A69668;
             border: 0.5px #73351F solid;
+            margin-bottom: 5px;
         }
 
         .list_img {
-            width: 50px;
-            height: 50px;
-            border-radius: 15px;
+            padding: 5px;
+            width: 40px;
+            height: 40px;
+            radius: 50%;
+            object-fit: cover;
+            border-radius: 70%
         }
 
         .comment_writer, .comment_date {
@@ -154,18 +158,30 @@
         }
         .reply_content{
             background: #D9D9D9;
-            margin-bottom: 15px;
+            display: flex;
         }
+        /*
         .reply_content > div {
             display: inline-block;
         }
-
+        */
         .reply {
             padding: 10px;
             width: 85%;
             height: 50px;
         }
-
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .reply_btn{
+            display: flex;
+            align-items: flex-start;
+            width: fit-content;
+            margin-top: 7.5px;
+        }
 
         /* IE9 이하를 위한 css */
         input::placeholder{
@@ -178,13 +194,12 @@
 </head>
 <body>
 <article>
-    <section>
-        <div class="board_category">
+    <div class="board_title">
+        ${wvo.wantedtitle}
+    </div>
+    <section style="padding: 20px;">
+        <div class="board_category" style="margin-bottom: 20px">
             파티홍보 게시판
-        </div>
-
-        <div class="board_title">
-            ${wvo.wantedtitle}
         </div>
     <div class="board_main">
         <div class="board_info">
@@ -210,9 +225,9 @@
                 <div></div>
                 <button type="button" style="color: white" onclick="applyParty()"
                    class="btn btn-primary"><i class="fa-solid fa-hand"></i>&nbsp신청</button>
-                <div class="d-flex">
+                <div class="d-flex" style="margin-right: 10px;">
                     <c:if test="${LogStatus=='Y'}">
-                    <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="report_post">신고</a>
+                    <a style="height: fit-content; margin-right: 10px" class=" btn btn-outline-danger btn-sm" id="report_post">파티 신고</a>
                     </c:if>
                     <c:if test="${LogId==wvo.user_userid}">
                         <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">삭제</a>
@@ -231,15 +246,17 @@
             </div>
         </div>
     </div>
-
-        <h4 style="margin-left: 30px; margin-top: 30px">댓글</h4>
-    <div class="comment_main">
-        <div class="comment_list">
-            <ul class="comment_list_real">
-            </ul>
+    </section>
+    <hr style="border: 2px dashed #73351F">
+    <section>
+        <div style="padding: 20px">
+            <div class="comment_main">
+                <div class="comment_list">
+                    <ul class="comment_list_real">
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-
         <script>
             function commentList() {
                 var no = ${wvo.wantedid};
@@ -455,6 +472,7 @@
             }
         </script>
     </section>
+    <div class="container_bottom"></div>
 </article>
 <footer></footer>
 </body>
