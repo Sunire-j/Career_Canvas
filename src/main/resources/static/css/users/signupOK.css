@@ -9,17 +9,43 @@ p{
 ul{
     margin: 0;
 }
+
 .container{
-    width: 1200px;
+    width: 700px;
     margin : 0 auto;
+    margin-top: 100px;
+    background-color: #F2F2F2;
+    border-width: 3px 1px 3px 1px;
+    border-style: solid;
+    border-color: #73351F;
     text-align: center;
     align-items: center;
+
 }
+
+.textbar{
+    display: grid;
+    margin: 0 auto;
+    margin-top: 30px;
+    width: 600px;
+    height: 200px;
+    border: 2px solid #73351F;
+    margin-bottom: 50px;
+    justify-content: center;
+    align-content: center;
+}
+
 .signupOKcompany{
-    margin-top: 150px;
-    margin-bottom: 20px;
-    font-size: 24px;
+    height: 70px;
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 32px;
+    text-shadow: 0px 0px 1px #0D0D0D;
     font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    color: #73351F;
 }
 .pstyle1{
     margin-bottom: 15px;
@@ -105,10 +131,29 @@ ul{
     display: none; /* 초기에는 숨김 */
     justify-content: center;
     align-items: center;
+    margin-bottom: 30px;
 }
 
 .img_file img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+.container_bottom{
+    display: flex;
+    background: #A69668;
+    height: 10px;
+    margin-top: 10px;
+}
+.hr-styleset{
+    border: 0;
+    border-top: 2.5px dashed #73351F ;
+    border-bottom: 1px dashed #D9D9D9;
+}
+.container-head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #A69668;
+    height: 10px;
 }

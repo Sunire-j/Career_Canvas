@@ -24,54 +24,78 @@
         });
     </script>
     <style>
+        .container-inner{
+            padding: 0px 50px 30px 50px;
+        }
         .login-container{
             margin: 0 auto;
             margin-top: 120px;
-            border: 1px solid #73351F;
+            border-width: 3px 1px 3px 1px;
+            border-style: solid;
+            border-color: #73351F;
             background: #F2F2F2;
             width: 600px;
-            padding: 0px 50px 50px 50px;
+
         }
         h3{
-            padding-top: 30px;
+            padding-top: 20px;
             padding-bottom: 20px;
         }
         input::placeholder{
             color:#D9C8A9;
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="login-container">
-    <h3 style="text-align: center; color: #73351F; font-weight: bold;">Career Canvas 로그인</h3>
-        <hr style="width: 100%; color:#73351F; opacity: 40%; border: 1px dashed;" >
-    <form method="post" action="${pageContext.servletContext.contextPath}/loginOk" id="findidForm" name="findidForm">
-        <%--가입 유형 선택--%>
-        <div style="display: flex; height: 40px; font-weight: bold; margin: 30px auto 0;width: 40%">
-            <input type="radio" name="usertype" value="0" checked/>
-            <p style="margin-left: 10px; line-height: 40px">개인회원</p>
-            <input type="radio" name="usertype" value="1" style="margin-left: 20px"/>
-            <p style="margin-left: 10px; line-height: 40px">기업회원</p>
-        </div>
-        <div style="width: 70%; margin: 10px auto 0;">
-            <label for="userid" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="userid" placeholder="아이디를 입력해주세요." name="userid" >
-            <label for="pw" class="form-label mt-3">비밀번호</label>
-            <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해주세요." name="userpwd">
-            <div class="mt-3" style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="display: flex;   align-items: center;">
-                    <a href="${pageContext.servletContext.contextPath}/findid"><p style="color: red; font-size: 14px">아이디</p></a>
-                    <p style="font-size: 14px">/</p>
-                    <a href="${pageContext.servletContext.contextPath}/findpw"><p style="color: red; font-size: 14px">비밀번호찾기</p></a>
-                    &nbsp;<p style="font-size: 14px">|</p>&nbsp;
-                    <a href="${pageContext.servletContext.contextPath}/signup"><p style="font-size: 14px">회원가입</p></a>
+    <div class="container-head"></div>
+        <div class="container-inner">
+            <h3 style="text-align: center; color: #73351F; font-weight: bold; text-shadow: 0px 0px 1px #0D0D0D; font-size: 32px">Career Canvas 로그인</h3>
+                <hr style="    border: 0;border-top: 2.5px dashed #73351F ; border-bottom: 1px dashed #D9D9D9;" >
+            <form method="post" action="${pageContext.servletContext.contextPath}/loginOk" id="findidForm" name="findidForm">
+                <%--가입 유형 선택--%>
+                <div style="display: flex; height: 40px; font-weight: bold; margin: 30px auto 0;width: 40%">
+                    <input type="radio" name="usertype" value="0" checked/>
+                    <p style="margin-left: 10px; line-height: 40px">개인회원</p>
+                    <input type="radio" name="usertype" value="1" style="margin-left: 20px"/>
+                    <p style="margin-left: 10px; line-height: 40px">기업회원</p>
                 </div>
-                <input type="submit" class="btn btn-outline-secondary" value="로그인"/>
+                <div style="width: 70%; margin: 10px auto 0;">
+                    <label for="userid" class="form-label">아이디</label>
+                    <input type="text" class="form-control" id="userid" placeholder="아이디를 입력해주세요." name="userid" >
+                    <label for="pw" class="form-label mt-3">비밀번호</label>
+                    <input type="password" class="form-control" id="pw" placeholder="비밀번호를 입력해주세요." name="userpwd">
+                    <div class="mt-3" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex;   align-items: center;">
+                            <a href="${pageContext.servletContext.contextPath}/findid"><p style="color: red; font-size: 14px">아이디</p></a>
+                            <p style="font-size: 14px">/</p>
+                            <a href="${pageContext.servletContext.contextPath}/findpw"><p style="color: red; font-size: 14px">비밀번호찾기</p></a>
+                            &nbsp;<p style="font-size: 14px">|</p>&nbsp;
+                            <a href="${pageContext.servletContext.contextPath}/signup"><p style="font-size: 14px">회원가입</p></a>
+                        </div>
+                    <input type="submit" class="btn btn-outline-secondary" value="로그인"/>
+                </div>
             </div>
         </div>
+        <div class="container_bottom"></div>
     </div>
+
     </form>
+
 </div>
 
 </body>

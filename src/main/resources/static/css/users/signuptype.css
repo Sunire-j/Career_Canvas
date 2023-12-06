@@ -21,19 +21,29 @@ main{
 
 }
 .content-header{
-    height: 100px;
-    width: 100%;
-    background: #A69668;
-    border-bottom: 2px solid #73351F;
+    height: 70px;
     display: flex;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 32px;
+    text-shadow: 0px 0px 1px #0D0D0D;
+    font-weight: bold;
     justify-content: center;
     align-items: center;
+    color: #73351F;
 }
 
 .signupOkTitle{
-    font-size: 28px;
-    margin-top: 20px;
+    height: 70px;
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 32px;
+    text-shadow: 0px 0px 1px #0D0D0D;
     font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    color: #73351F;
 }
 .textbar{
     margin: 0 auto;
@@ -61,6 +71,7 @@ main{
     width: 700px;
     margin: 0 auto;
     display: flex;
+    padding-bottom: 20px;
     justify-content: space-between;
 }
 .btn-secondary{
@@ -69,4 +80,22 @@ main{
     height: 100px;
     font-weight: bold;
     font-size: 30px;
+}
+.container_bottom{
+    display: flex;
+    background: #A69668;
+    height: 10px;
+    margin-top: 10px;
+}
+.hr-styleset{
+    border: 0;
+    border-top: 2.5px dashed #73351F ;
+    border-bottom: 1px dashed #D9D9D9;
+}
+.container-head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #A69668;
+    height: 10px;
 }

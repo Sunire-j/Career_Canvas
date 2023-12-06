@@ -11,29 +11,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
     <style>
-        @media (min-width: 1200px) {
-            .container{
-                max-width: 1200px;
-            }
-        }
         .container {
             margin: 0 auto;
-            margin-top: 50px;
-            border-top: 3px solid #73351F;
-            border-bottom: 2px dashed #73351F;
             border-left: 1px solid #73351F;
             border-right: 1px solid #73351F;
             background: #F2F2F2;
+
         }
-        .teamView{
-            width: 1200px;
-            margin: 0 auto;
-            border-bottom: 3px solid #73351F;
-            border-left: 1px solid #73351F;
-            border-right: 1px solid #73351F;
-            background: #F2F2F2;
-            padding: 40px;
-        }
+
         p{
             margin: 0;
         }
@@ -136,7 +121,7 @@
         .salutation_name {
             height: 40px;
             width: 150px;
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid #73351F;
             font-size: 1.5em;
             font-weight: 700;
         }
@@ -234,7 +219,7 @@
         .salutation_memo{
             height: 40px;
             width: 100%;
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid #73351F;
             font-size: 1.5em;
             font-weight: 700;
             display: flex;
@@ -252,6 +237,27 @@
         .memo_write_ok_btn, .memo_delete_btn{
             background-color: transparent;
             border: none;
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
         }
     </style>
     <script>
@@ -406,104 +412,110 @@
     </script>
 </head>
 <body>
-<main class="container">
-    <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
-    </div>
-    <div class="mypartylist">
-        <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
-        <hr>
-    </div>
-    <ul class="party_list">
-        <c:forEach items="${pvo}" var="p">
-            <li title="${p.partyid}" class="party_list_btn">
-                <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
-                <div class="party_list_name">
-                        ${p.partyname}
-                </div>
+<main class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+    <div class="container-head"></div>
+    <div style="padding: 40px 40px 20px 40px">
+        <div class="mypartyvalue">
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+            <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+        </div>
+        <div class="mypartylist">
+            <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
+            <hr>
+        </div>
+        <ul class="party_list">
+            <c:forEach items="${pvo}" var="p">
+                <li title="${p.partyid}" class="party_list_btn">
+                    <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
+                    <div class="party_list_name">
+                            ${p.partyname}
+                    </div>
+                </li>
+            </c:forEach>
+            <li style="float: left">
+                <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
+                    <i class="fa-regular fa-square-plus fa-4x"></i><br/>
+                    <span style="font-weight: bold;">파티생성</span>
+                </button>
             </li>
-        </c:forEach>
-        <li style="float: left">
-            <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
-                <i class="fa-regular fa-square-plus fa-4x"></i><br/>
-                <span style="font-weight: bold;">파티생성</span>
-            </button>
-        </li>
-    </ul>
-    <div class="choisvalue" style="margin-top: 30px;padding-bottom: 20px">
-        <input type="button" class="btn btn-secondary mainbtn" value="메인" onclick="changeClass(this)">
-        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" >
-        <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리" >
-        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
+        </ul>
+        <div class="choisvalue" style="margin-top: 30px;padding-bottom: 20px">
+            <input type="button" class="btn btn-secondary mainbtn" value="메인" onclick="changeClass(this)">
+            <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
+            <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리" >
+            <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
+        </div>
     </div>
 </main>
 
 <article>
-    <section class="teamView">
-        <p class="party_name" id="party_name">${myteamView.partyname}</p>
+    <section class="container" style="padding: 0px; border-bottom: 3px solid #73351F;">
+        <div style="padding: 20px 40px 40px 40px">
+            <p class="party_name" id="party_name">${myteamView.partyname}</p>
 
-        <div class="objective">
-            <div class="salutation_name">
-                파티 목표
+            <div class="objective">
+                <div class="salutation_name">
+                    파티 목표
+                </div>
+                <div class="salutation_content" id="salutation_content">
+                    ${myteamView.partygoal}
+                </div>
             </div>
-            <div class="salutation_content" id="salutation_content">
-                ${myteamView.partygoal}
+            <div class="salutation">
+                <div class="salutation_name">
+                    파티 소개
+                </div>
+                <div class="salutation_content" id="comment_content">
+                    ${myteamView.partycomment}
+                </div>
             </div>
-        </div>
-        <div class="salutation">
-            <div class="salutation_name">
-                파티 소개
-            </div>
-            <div class="salutation_content" id="comment_content">
-                ${myteamView.partycomment}
-            </div>
-        </div>
-        <div class="member_list_box">
-            <div class="salutation_name">
-                파티원
-            </div>
-            <div class="salutation_content">
-                <ul class="member_list" id="member_list">
-                    <c:forEach var="uvo" items="${memberList}">
-                        <li>
-                            <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}" class="member_img">
-                            <div class="member_name">
-                                    ${uvo.username}
-                            </div>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </div>
-        <div class="party_memo">
-            <div class="salutation_memo">
-                <div>파티 메모</div>
-                <button class="memoWrite_btn"><span>메모작성&nbsp</span><i class="fa-regular fa-pen-to-square"></i></button>
-            </div>
-            <div class="memo_list_box">
-                <ul class="memo_list" id="memo_list">
-                    <c:forEach var="memo" items="${memoListView}">
-                        <li class="memo_item">
-                            <div class="memo">
-                                <div class="postit yellow">
-                                    <c:if test="${LogId}==${memo.user_userid}">
-                                        <button class='memo_delete_btn'><i class='fa-solid fa-minus' style='float: right; padding: 5px'></i></button>
-                                    </c:if>
-                                    <c:if test="${LogId}!=${memo.user_userid}">
-                                        <div style='height:27px;'></div>
-                                    </c:if>
-                                    <p class="memo_content">${memo.partymemocontent}</p>
-                                    <div class="memo_writer">작성자 : ${memo.username}</div>
-                                    <p>${memo.datetime}</p>
+            <div class="member_list_box">
+                <div class="salutation_name">
+                    파티원
+                </div>
+                <div class="salutation_content">
+                    <ul class="member_list" id="member_list">
+                        <c:forEach var="uvo" items="${memberList}">
+                            <li>
+                                <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}" class="member_img">
+                                <div class="member_name">
+                                        ${uvo.username}
                                 </div>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </ul>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+            <div class="party_memo">
+                <div class="salutation_memo">
+                    <div>파티 메모</div>
+                    <button class="memoWrite_btn"><span>메모작성&nbsp</span><i class="fa-regular fa-pen-to-square"></i></button>
+                </div>
+                <div class="memo_list_box">
+                    <ul class="memo_list" id="memo_list">
+                        <c:forEach var="memo" items="${memoListView}">
+                            <li class="memo_item">
+                                <div class="memo">
+                                    <div class="postit yellow">
+                                        <c:if test="${LogId}==${memo.user_userid}">
+                                            <button class='memo_delete_btn'><i class='fa-solid fa-minus' style='float: right; padding: 5px'></i></button>
+                                        </c:if>
+                                        <c:if test="${LogId}!=${memo.user_userid}">
+                                            <div style='height:27px;'></div>
+                                        </c:if>
+                                        <p class="memo_content">${memo.partymemocontent}</p>
+                                        <div class="memo_writer">작성자 : ${memo.username}</div>
+                                        <p>${memo.datetime}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </c:forEach>
+                    </ul>
 
+                </div>
             </div>
         </div>
+        <div class="container_bottom"></div>
     </section>
 </article>
 </body>

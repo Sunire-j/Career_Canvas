@@ -255,97 +255,98 @@
     </script>
 </head>
 <body>
-<div class="container">
-    <main style="margin-top: 100px" class="container">
-        <div class="signupFrm_wrapper">
-            <p class="signupTitle">일반 회원가입</p>
-            <hr>
-            <form action="${pageContext.servletContext.contextPath}/signup/personalstart" method="post" class="signupFrm needs-validation" novalidate>
-                <ul style="padding: 0">
-                    <li>
-                        <div>
-                            <input type="text" name="userId" class="form-control" placeholder="아이디"
-                                   pattern="^[a-zA-Z0-9_\-\.]{5,50}$" required/>
-                            <div class="invalid-feedback">아이디를 입력해주세요.</div>
-                            <div class="invalid-feedback" data-feedback="patternMismatch">5~50자리, 영문, 숫자, _, -,
-                                .만 사용해주세요.
-                            </div>
-                            <div class="invalid-feedback" data-feedback="duplicate">중복된 아이디입니다.</div>
+<main style="margin-top: 100px; padding:0px" class="container">
+    <div class="container-style"></div>
+    <div class="container-head"></div>
+    <p class="signupTitle">일반 회원가입</p>
+    <div class="signupFrm_wrapper" style="padding: 0px 20px 20px 20px">
+    <hr class="hr-styleset">
+        <form action="${pageContext.servletContext.contextPath}/signup/personalstart" method="post" class="signupFrm needs-validation" novalidate>
+            <ul style="padding: 0">
+                <li>
+                    <div>
+                        <input type="text" name="userId" class="form-control" placeholder="아이디"
+                               pattern="^[a-zA-Z0-9_\-\.]{5,50}$" required/>
+                        <div class="invalid-feedback">아이디를 입력해주세요.</div>
+                        <div class="invalid-feedback" data-feedback="patternMismatch">5~50자리, 영문, 숫자, _, -,
+                            .만 사용해주세요.
                         </div>
-                    </li>
-                    <li>
-                        <div>
-                            <input type="password" id="userPwd" name="userPwd" class="form-control"
-                                   placeholder="비밀번호"
-                                   pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$" required/>
-                            <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
-                            <div class="invalid-feedback" data-feedback="patternMismatch">8~20자, 영문, 숫자, 특문을 모두
-                                이용해주세요.
-                            </div>
+                        <div class="invalid-feedback" data-feedback="duplicate">중복된 아이디입니다.</div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <input type="password" id="userPwd" name="userPwd" class="form-control"
+                               placeholder="비밀번호"
+                               pattern="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,20}$" required/>
+                        <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+                        <div class="invalid-feedback" data-feedback="patternMismatch">8~20자, 영문, 숫자, 특문을 모두
+                            이용해주세요.
                         </div>
-                    </li>
-                    <li>
-                        <div>
-                            <input type="password" id="userPwdCheck" name="userPwdCheck" class="form-control"
-                                   placeholder="비밀번호 확인"
-                                   required/>
-                            <div class="invalid-feedback" data-feedback="passwordMismatch">비밀번호를 확인해주세요.</div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <input type="password" id="userPwdCheck" name="userPwdCheck" class="form-control"
+                               placeholder="비밀번호 확인"
+                               required/>
+                        <div class="invalid-feedback" data-feedback="passwordMismatch">비밀번호를 확인해주세요.</div>
 
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <input type="text" name="userNickName" class="form-control" placeholder="닉네임"
+                               pattern="^[a-zA-Z0-9가-힣]{2,12}$" required/>
+                        <div class="invalid-feedback">닉네임을 입력해주세요.</div>
+                        <div class="invalid-feedback" data-feedback="patternMismatch">2~12자리, 한글, 영문, 숫자만
+                            사용해주세요.
                         </div>
-                    </li>
-                    <li>
-                        <div>
-                            <input type="text" name="userNickName" class="form-control" placeholder="닉네임"
-                                   pattern="^[a-zA-Z0-9가-힣]{2,12}$" required/>
-                            <div class="invalid-feedback">닉네임을 입력해주세요.</div>
-                            <div class="invalid-feedback" data-feedback="patternMismatch">2~12자리, 한글, 영문, 숫자만
-                                사용해주세요.
-                            </div>
-                            <div class="invalid-feedback" data-feedback="duplicate">중복된 닉네임입니다.</div>
+                        <div class="invalid-feedback" data-feedback="duplicate">중복된 닉네임입니다.</div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <div class="input-group">
+                            <input type="hidden" id="userEmailcopy" name="userEmail"/>
+                            <input type="text" class="form-control userEmail" name="userEmail" id="useremail"
+                                   pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" required
+                                   placeholder="이메일">
+                            <input type="button" class="btn btn-success" id="authbtn" value="메일인증"/>
                         </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="input-group">
-                                <input type="hidden" id="userEmailcopy" name="userEmail"/>
-                                <input type="text" class="form-control userEmail" name="userEmail" id="useremail"
-                                       pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" required
-                                       placeholder="이메일">
-                                <input type="button" class="btn btn-success" id="authbtn" value="메일인증"/>
-                            </div>
-                            <div class="invalid-feedback">이메일을 입력해주세요.</div>
-                            <div class="invalid-feedback" data-feedback="patternMismatch">이메일 형식에 맞지 않습니다.
-                            </div>
-                            <div class="invalid-feedback" data-feedback="duplicate">중복된 이메일입니다.</div>
+                        <div class="invalid-feedback">이메일을 입력해주세요.</div>
+                        <div class="invalid-feedback" data-feedback="patternMismatch">이메일 형식에 맞지 않습니다.
                         </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div class="input-group">
-                                <input type="text" class="form-control userEmailcheck" id="emailauth" required
-                                       placeholder="인증번호" disabled>
-                                <input type="button" class="btn btn-success" id="emailauthbtn" value="확인" disabled/>
-                            </div>
-                            <div class="invalid-feedback">이메일인증을 완료해주세요.</div>
+                        <div class="invalid-feedback" data-feedback="duplicate">중복된 이메일입니다.</div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" class="form-control userEmailcheck" id="emailauth" required
+                                   placeholder="인증번호" disabled>
+                            <input type="button" class="btn btn-success" id="emailauthbtn" value="확인" disabled/>
                         </div>
-                    </li>
-                    <li>
-                        <input type="text" name="usertel" class="form-control" pattern="01[016789]-([0-9]{3}|[0-9]{4})-[0-9]{4}" placeholder="전화번호" required/>
-                        <div class="invalid-feedback">휴대전화번호를 입력해주세요.</div>
-                        <div class="invalid-feedback" data-feedback="patternMismatch">전화번호 형식에 맞지 않습니다.
-                        </div>
-                    </li>
-                    <li>
-                        <div class="signupBtn">
-                            <input type="button" class="btn btn-secondary reset" onclick="location.reload()" value="다시작성"/>
-                            <input type="submit" class="btn btn-primary signup" value="회원가입" disabled/>
-                        </div>
-                    </li>
-                </ul>
-            </form>
-        </div>
-    </main>
-</div>
+                        <div class="invalid-feedback">이메일인증을 완료해주세요.</div>
+                    </div>
+                </li>
+                <li>
+                    <input type="text" name="usertel" class="form-control" pattern="01[016789]-([0-9]{3}|[0-9]{4})-[0-9]{4}" placeholder="전화번호" required/>
+                    <div class="invalid-feedback">휴대전화번호를 입력해주세요.</div>
+                    <div class="invalid-feedback" data-feedback="patternMismatch">전화번호 형식에 맞지 않습니다.
+                    </div>
+                </li>
+                <li>
+                    <div class="signupBtn">
+                        <input type="button" class="btn btn-secondary reset" onclick="location.reload()" value="다시작성"/>
+                        <input type="submit" class="btn btn-primary signup" value="회원가입" disabled/>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="container_bottom"></div>
+</main>
 
 </body>
 </html>
