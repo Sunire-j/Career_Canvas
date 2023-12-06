@@ -8,6 +8,99 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(function () {
+            var stackedLine = null;
+            var piechart = null;
+
+            // 최근 30일 일 별 게시글 라인 차트
+            var labels = [];
+            for (var i = 0; i < 30; i++) {
+                var date = new Date();
+                date.setDate(date.getDate() - 29);
+                date.setDate(date.getDate() + i);
+                var yyyy = String(date.getFullYear());
+                var mm = String(date.getMonth() + 1).padStart(2, '0');
+                var dd = String(date.getDate()).padStart(2, '0');
+                labels.push(yyyy + '-' + mm + '-' + dd);
+            }
+            var Bdatas = [];
+            labels.forEach(function (date) {
+                var found = false;
+                <c:forEach items="${month}" var="item">
+                if (date == "${item.date}") {
+                    Bdatas.push(${item.postid});
+                    found = true;
+                }
+                </c:forEach>
+                if (!found) {
+                    Bdatas.push(0);
+                }
+            });
+
+            lineChart(Bdatas);
+
+            function lineChart(Bdatas) {
+                var data = {
+                    labels: labels,
+                    datasets: [{
+                        label: "최근 30일 일 별 게시글",
+                        data: Bdatas,
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                };
+                if (stackedLine != null) {
+                    stackedLine.destroy();
+                }
+                stackedLine = new Chart(document.getElementById("board_chart"), {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        scales: {
+                            y: {
+                                stacked: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 카테고리 별 등록된 게시글 파이 차트
+            var Pdatas = [];
+            var Plabels = ['자유게시판', '질문게시판', '노하우게시판'];
+            <c:forEach items="${category}" var="item">
+            Pdatas.push(${item.postid});
+            </c:forEach>
+
+            pieChart(Pdatas);
+
+            function pieChart(Pdatas) {
+                var data = {
+                    labels: Plabels,
+                    datasets: [{
+                        label: "게시판 카테고리별 현황",
+                        data: Pdatas,
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ]
+                    }]
+                };
+                if (piechart != null) {
+                    piechart.destroy();
+                }
+                piechart = new Chart(document.getElementById("board_pie"), {
+                    type: 'pie',
+                    data: data
+                });
+            }
+
+        });
+    </script>
     <style>
         #sideBar {
             width: 250px;
@@ -26,6 +119,19 @@
             display: flex;
             height: 30px;
             align-items: center;
+        }
+
+        .top {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            height: 100px;
+            align-items: center;
+        }
+
+        .top div {
+            flex: 1;
+            text-align: center;
         }
     </style>
 </head>
@@ -56,17 +162,14 @@
     </div>
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
-        <div>
-            전체 게시글 : ${bVO}
+        <div class="top">
+            <div>전체 게시글 : ${bVO}</div>
+            <div>오늘 업로드 된 게시글 : ${today}</div>
+            <div>신고 된 게시글 : ${rVO}</div>
         </div>
-        <div>
-            오늘 업로드 된 게시글 : ${today}
-        </div>
-        <div>
-            신고 된 게시글 : ${rVO}
-        </div>
-        <div>
-            일 별 게시글 수 : ${}
+        <div style="width: 50%; display: flex;  align-items: center">
+            <canvas id="board_chart"></canvas>
+            <canvas id="board_pie"></canvas>
         </div>
     </div>
 </div>
