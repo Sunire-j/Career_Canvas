@@ -211,12 +211,6 @@ file="../header_footer/header.jspf" %>
         width: 100px;
         height: 100px;
       }
-
-      .btn-outline-primary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
-
       .userIntro p {
         margin: 0px;
       }
@@ -308,12 +302,6 @@ file="../header_footer/header.jspf" %>
         max-height: 50px; /* 이미지 최대 높이 지정 */
         border-radius: 50%;
       }
-
-      .changeimgbtn {
-        height: 30px;
-        width: 50px;
-      }
-
       input[type="checkbox"] {
         opacity: 0;
         position: absolute;
@@ -423,7 +411,7 @@ file="../header_footer/header.jspf" %>
 
         <div class="interest">
           <span>관심분야</span>
-          <div style="width: 60%">
+          <div style="width: 60%; text-align: right;">
             <label for="industry"
               ><span class="btn btn-outline-danger">산업디자인</span>
               <input type="hidden" name="color" value="danger"

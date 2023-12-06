@@ -430,7 +430,7 @@ public class UserController {
             @RequestParam(name = "interest", required = false) String interest,
             HttpSession session) throws NoSuchAlgorithmException {
 
-        if(interest!=null){
+        if (interest != null) {
             String str = String.join(",", interest);
             int saveInterestResult = mapper.saveInterest((String) session.getAttribute("LogId"), str);
         }
@@ -452,7 +452,6 @@ public class UserController {
             mapper.changePwd(userid, encryptedpwd, salt);
         }
 
-        System.out.println(file.isEmpty());
         if (!file.isEmpty()) {
             // 파일저장시작
             String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
@@ -523,7 +522,7 @@ public class UserController {
 
         list = pofolmapper.getPofol(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        if(uVO.getInterest()!=null){
+        if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
@@ -611,9 +610,9 @@ public class UserController {
         bVO = boardmapper.getmyPost(pVO);
 
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        if(uVO.getInterest()!=null){
+        if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
-            System.out.println("arr size : "+interestArr.length);
+            System.out.println("arr size : " + interestArr.length);
             mav.addObject("interest", interestArr);
         }
         mav.addObject("pVO", pVO);
@@ -645,7 +644,7 @@ public class UserController {
 
         cVO = boardmapper.getmyComment(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        if(uVO.getInterest()!=null){
+        if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
@@ -653,7 +652,6 @@ public class UserController {
         mav.addObject("uVO", uVO);
         mav.addObject("pVO", pVO);
         mav.setViewName("users/mypage_comment");
-        System.out.println(pVO);
         return mav;
     }
 
@@ -675,7 +673,7 @@ public class UserController {
         pVO.setPage(pVO.getPage());
 
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        if(uVO.getInterest()!=null){
+        if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
@@ -711,7 +709,7 @@ public class UserController {
         List<MessageVO> mVO = new ArrayList<MessageVO>();
         mVO = mapper.getReceiveMsg(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        if(uVO.getInterest()!=null){
+        if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
@@ -738,7 +736,7 @@ public class UserController {
 
         List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectSolo(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        if(uVO.getInterest()!=null){
+        if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
@@ -765,7 +763,7 @@ public class UserController {
 
         List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam((String) session.getAttribute("LogId"), pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
-        if(uVO.getInterest()!=null){
+        if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
