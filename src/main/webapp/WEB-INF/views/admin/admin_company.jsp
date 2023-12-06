@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,8 +50,9 @@
         .pagination {
             display: inline-block;
         }
-        .btn{
-            color:white;
+
+        .btn {
+            color: white;
         }
     </style>
 </head>
@@ -60,9 +61,10 @@
     <div id="sideBar">
         <div style="text-align: center;">
             <h4>관리자 ${name}</h4>
-            <a href="${pageContext.servletContext.contextPath}/" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
+            <a href="${pageContext.servletContext.contextPath}/"
+               style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
-        <hr />
+        <hr/>
         <h3>회원관리</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/member"> 일반회원관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/company"> 기업회원관리 </a>
@@ -82,57 +84,79 @@
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
         <h1 style="padding: 15px;">회원관리-기업회원관리</h1>
+        <select style="height: 30px" name="postSort" id="postSort">
+            <option value="1" <c:if test="${pVO.postSort==1}">
+                selected
+            </c:if>>이름
+            </option>
+            <option value="2"
+                    <c:if test="${pVO.postSort==2}"> selected
+                    </c:if>>아이디
+            </option>
+            <option value="3" <c:if test="${pVO.postSort==3}">
+                selected
+            </c:if>>최신순
+            </option>
+            <option value="4" <c:if test="${pVO.postSort==4}">
+                selected
+            </c:if>>승인여부
+            </option>
+        </select>
         <table class="table table-hover">
             <tr>
-                <th>회원번호</th>
                 <th>회원ID</th>
+                <th>법인명</th>
                 <th>가입일자</th>
                 <th>사업자등록번호</th>
                 <th>승인여부</th>
                 <th>처분</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>asdgsdfg</td>
-                <td>2023-11-10</td>
-                <td>123-45-67890</td>
-                <td>
-                    대기중
-                    <button type="button" class="btn btn-info">증빙확인</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary">승인</button>
-                    <button type="button" class="btn btn-danger">거절</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>asdgsdfg</td>
-                <td>2023-11-10</td>
-                <td>123-45-67890</td>
-                <td>
-                    대기중
-                    <button type="button" class="btn btn-info">증빙확인</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary">승인</button>
-                    <button type="button" class="btn btn-danger">거절</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>asdgsdfg</td>
-                <td>2023-11-10</td>
-                <td>123-45-67890</td>
-                <td>
-                    대기중
-                    <button type="button" class="btn btn-info">증빙확인</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary">승인</button>
-                    <button type="button" class="btn btn-danger">거절</button>
-                </td>
-            </tr>
+            <c:forEach items="${cVO}" var="cvo">
+                <tr>
+                    <td>${cvo.user_userid}</td>
+                    <td>${cvo.companyname}</td>
+                    <td>${cvo.date}</td>
+                    <td>${cvo.companyno}</td>
+                    <td>
+                        <c:if test="${cvo.isaccept==1}">
+                        대기중
+                        </c:if>
+                        <c:if test="${cvo.isaccept==0}">
+                            승인
+                        </c:if>
+                        <button onclick="window.open('${pageContext.servletContext.contextPath}/admin/company/check?uid=${cvo.user_userid}')" type="button" class="btn btn-info btn-sm">증빙확인</button>
+                    </td>
+                    <td>
+                        <c:if test="${cvo.isaccept==1}">
+                        <button onclick="accept('${cvo.user_userid}')" type="button" class="btn btn-primary btn-sm">승인</button>
+                        <button onclick="deny('${cvo.user_userid}')" type="button" class="btn btn-danger btn-sm">거절</button>
+                        </c:if>
+                        <c:if test="${cvo.isaccept==0}">
+                            <button onclick="forceDeleteCompany('${cvo.user_userid}')" type="button" class="btn btn-danger btn-sm">강제탈퇴</button>
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            <script>
+                function accept(userid){
+                    var url = "${pageContext.servletContext.contextPath}/admin/company/accept?uid="+userid;
+                    if(confirm("정말 "+userid+"회원가입을 승인하시겠습니까?")){
+                        location.href=url;
+                    }
+                }
+                function deny(userid){
+                    var url = "${pageContext.servletContext.contextPath}/admin/company/deny?uid="+userid;
+                    if(confirm("정말 "+userid+"회원가입을 거절하시겠습니까?")){
+                        location.href=url;
+                    }
+                }
+                function forceDeleteCompany(userid){
+                    var url = "${pageContext.servletContext.contextPath}/admin/company/forceDelete?uid="+userid;
+                    if(confirm("정말"+userid+"회원을 강제탈퇴시키겠습니까?")){
+                        location.href=url;
+                    }
+                }
+            </script>
         </table>
         <div class="pagination-container">
             <div class="pagination">

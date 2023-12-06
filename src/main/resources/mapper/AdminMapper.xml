@@ -192,7 +192,8 @@
     <!-- 권혁준 작업 -->
     <select id="getBannerList" resultType="com.team1.careercanvas.vo.BannerVO">
         select * 
-        from banner;
+        from banner
+        order by deadline asc;
     </select>
 
     <select id="getBannerAmount" resultType="Integer">
@@ -214,4 +215,69 @@
         set bannerimg=#{param1}
         where bannerid=#{param2}
     </update>
+
+    <select id="getBannerImg" resultType="String">
+        select bannerimg
+        from banner
+        where bannerid=#{param1}
+    </select>
+
+    <delete id="deleteBanner">
+        delete
+        from banner
+        where bannerid=#{param1}
+    </delete>
+
+    <select id="getCompanyList" resultType="com.team1.careercanvas.vo.CompanyVO">
+        select c.user_userid as user_userid,
+               c.companyno as companyno,
+               c.isaccept as isaccept,
+               c.authimg as authimg,
+               u.username as companyname,
+               u.date as date
+        from company c
+        join user u on u.userid = c.user_userid
+        <where>
+            usertype=1
+        <if test="searchKey=='username'">
+        and u.username like concat('%', #{searchWord}, '%')
+        </if>
+        <if test="searchKey=='userid'">
+            and c.user_userid like concat('%',#{searchWord}, '%')
+        </if>
+        </where>
+        <choose>
+            <when test="postSort==1">
+                order by u.username asc
+            </when>
+            <when test="postSort==2">
+                order by c.user_userid asc
+            </when>
+            <when test="postSort==3">
+                order by u.date desc
+            </when>
+            <when test="postSort==4">
+                order by c.isaccept desc;
+            </when>
+        </choose>
+limit #{onePageRecord} offset #{offsetPoint}
+    </select>
+
+    <select id="getAuthimg" resultType="String">
+        select authimg
+        from company
+        where user_userid = #{param1};
+    </select>
+
+    <update id="acceptCompany">
+        update company
+        set isaccept = 0
+        where user_userid=#{param1}
+    </update>
+
+    <delete id="denyCompany">
+        delete
+        from user
+        where userid=#{param1};
+    </delete>
 </mapper>

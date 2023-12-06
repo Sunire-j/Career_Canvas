@@ -126,7 +126,7 @@
                 <th>회원ID</th>
                 <th>회원 닉네임</th>
                 <th>가입일자</th>
-                <th>누적 신고횟수</th>
+                <th>프로필</th>
                 <th>처분</th>
             </tr>
             <c:forEach var="uvo" items="${uVO}">
@@ -134,7 +134,7 @@
                     <td>${uvo.userid}</td>
                     <td>${uvo.username}</td>
                     <td>${uvo.date}</td>
-                    <td>0회</td>
+                    <td><a class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">바로가기</a></td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm deletion" id="deletion" title="${uvo.userid}">강제탈퇴</button>
                         <button type="button" class="btn btn-danger btn-sm" id="changeUsername" title="${uvo.userid}">닉네임 변경</button>

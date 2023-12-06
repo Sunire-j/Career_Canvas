@@ -64,4 +64,14 @@ public interface AdminMapper {
 
     int InsertBanner(BannerVO bvo);
     void InsertBannerimg(String imgsrc, int bannerid);
+
+    String getBannerImg(int bannerid);
+
+    void deleteBanner(int bannerid);
+    List<CompanyVO> getCompanyList(PagingVO pvo);
+
+    String getAuthimg(String userid);
+
+    void acceptCompany(String userid);
+    void denyCompany(String userid);
 }

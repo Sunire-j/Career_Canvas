@@ -1,6 +1,7 @@
 package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.AdminMapper;
+import com.team1.careercanvas.mapper.UserMapper;
 import com.team1.careercanvas.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,11 @@ import java.util.List;
 @Controller
 public class AdminController {
     private final AdminMapper mapper;
+    private final UserMapper usermapper;
 
-    public AdminController(AdminMapper mapper) {
+    public AdminController(AdminMapper mapper, UserMapper usermapper) {
         this.mapper = mapper;
+        this.usermapper = usermapper;
     }
 
     @GetMapping("/admin/member") // 개인회원관리
@@ -45,18 +48,6 @@ public class AdminController {
         mav.addObject("uVO", list);
         mav.addObject("pVO", pvo);
         mav.setViewName("/admin/admin_member");
-
-        return mav;
-    }
-
-    @GetMapping("/admin/company") // 기업회원관리
-    public ModelAndView company(HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-
-        String name = mapper.getAdminName((String) session.getAttribute("LogId"));
-        mav.addObject("name", name);
-
-        mav.setViewName("/admin/admin_company");
 
         return mav;
     }
@@ -304,7 +295,7 @@ public class AdminController {
     public ModelAndView banner(PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
         List<BannerVO> bVO = mapper.getBannerList();
-        pVO.setOnePageRecord(5);
+        pVO.setOnePageRecord(10);
         pVO.setTotalRecord(mapper.getBannerAmount(pVO));
         pVO.setPage(pVO.getPage());
 
@@ -317,6 +308,10 @@ public class AdminController {
     //조석훈 작업
     @GetMapping("/admin/banner/add")
     public String banner_add(){
+        List<BannerVO> list = mapper.getBannerList();
+        if(list.size()>=10){
+            return "redirect:/admin/banner";
+        }
         return "admin/admin_banner_add";
     }
 
@@ -325,14 +320,11 @@ public class AdminController {
                                String deadline,
                                String owner,
                                MultipartFile bannerimg){
-        //db에 배너정보 넣어주고 그냥 배너페이지로 redirect
         BannerVO bvo = new BannerVO();
         bvo.setStartdate(startdate);
         bvo.setDeadline(deadline);
         bvo.setOwner(owner);
         int result = mapper.InsertBanner(bvo);
-        //bvo에 id는 들어왔음
-        //파일 업로드처리
         if (!bannerimg.isEmpty()) {
             // 파일저장시작
             String extension = bannerimg.getOriginalFilename().substring(bannerimg.getOriginalFilename().lastIndexOf("."));
@@ -362,6 +354,96 @@ public class AdminController {
         //일단 insert는 했는데 bannerid를 얻어내서 이미지를 업로드하고 db에 또 반영해야함
 
         return "redirect:/admin/banner";
+    }
+
+    @GetMapping("/admin/banner/check")
+    public ModelAndView checkBanner(int bannerid){
+        ModelAndView mav = new ModelAndView();
+
+        String bannerimg = mapper.getBannerImg(bannerid);
+        System.out.println(bannerimg);
+
+        mav.addObject("imgsrc", bannerimg);
+        mav.setViewName("/admin/image_popup");
+        return mav;
+    }
+
+    @GetMapping("/admin/banner/delete")
+    public String delBanner(int bannerid, HttpSession session){
+        UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
+        if(uvo.getUsertype()!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            return "alert_page";
+        }
+        mapper.deleteBanner(bannerid);
+        return "redirect:/admin/banner";
+    }
+
+    @GetMapping("/admin/company") // 기업회원관리
+    public ModelAndView company(HttpSession session, PagingVO pvo) {
+        ModelAndView mav = new ModelAndView();
+        String name = mapper.getAdminName((String) session.getAttribute("LogId"));
+        mav.addObject("name", name);
+
+        //기업회원 select하고
+        //onepagerecord 15로 그대로 쓰기
+        pvo.setTotalRecord(mapper.getCompanyCount());
+        List<CompanyVO> list = mapper.getCompanyList(pvo);
+        //mav에 넣기
+
+        mav.addObject("cVO", list);
+        mav.addObject("pvo", pvo);
+        mav.setViewName("/admin/admin_company");
+
+        return mav;
+    }
+
+    @GetMapping("/admin/company/check")
+    public ModelAndView checkAuth(String uid){
+        ModelAndView mav = new ModelAndView();
+
+        String imgsrc = mapper.getAuthimg(uid);
+
+        mav.addObject("imgsrc", imgsrc );
+        mav.setViewName("admin/image_popup");
+        return mav;
+    }
+
+    @GetMapping("/admin/company/accept")
+    public String acceptCompany(String uid, HttpSession session){
+        UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
+        if(uvo.getUsertype()!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            return "alert_page";
+        }
+
+        mapper.acceptCompany(uid);
+
+        return "redirect:/admin/company";
+    }
+
+    @GetMapping("/admin/company/deny")
+    public String denyCompany(String uid, HttpSession session){
+        UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
+        if(uvo.getUsertype()!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            return "alert_page";
+        }
+        mapper.denyCompany(uid);
+
+        return "redirect:/admin/company";
+    }
+
+    @GetMapping("/admin/company/forceDelete")
+    public String forceDelete(String uid, HttpSession session){
+        UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
+        if(uvo.getUsertype()!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            return "alert_page";
+        }
+        mapper.denyCompany(uid);
+
+        return "redirect:/admin/company";
     }
 
 }

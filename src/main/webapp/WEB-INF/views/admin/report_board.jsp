@@ -121,7 +121,7 @@
                     <td>${rvo.title}</td>
                     <td>${rvo.userid}</td>
                     <td>
-                        <button type="button" class="btn btn-info"
+                        <button type="button" class="btn btn-info btn-sm"
                                 <c:if test="${rvo.reporttype=='board'}">
                                     onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}')">이동
                                 </c:if>
@@ -137,11 +137,11 @@
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger" id="deletionUser" title="${rvo.targetid}">탈퇴
+                        <button type="button" class="btn btn-danger btn-sm" id="deletionUser" title="${rvo.targetid}">탈퇴
                         </button>
-                        <button type="button" class="btn btn-danger" id="deletion" title="${rvo.targetid}" value="${rvo.reporttype}">삭제
+                        <button type="button" class="btn btn-danger btn-sm" id="deletion" title="${rvo.targetid}" value="${rvo.reporttype}">삭제
                         </button>
-                        <button type="button" class="btn btn-success" id="dismiss" title="${rvo.targetid}">기각</button>
+                        <button type="button" class="btn btn-success btn-sm" id="dismiss" title="${rvo.targetid}">기각</button>
                     </td>
                 </tr>
             </c:forEach>

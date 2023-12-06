@@ -12,4 +12,6 @@ public class CompanyVO {
     private String companyno;
     private int isaccept;
     private String authimg;
+    private String companyname;
+    private String date;
 }

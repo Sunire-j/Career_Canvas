@@ -121,14 +121,13 @@
                     </td>
                     <td>${bvo.posttitle}</td>
                     <td>
-                        대기중
-                        <button type="button" class="btn btn-info"
+                        <button type="button" class="btn btn-sm btn-info"
                                 onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}')">이동
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger" id="deletion" title="${bvo.postid}">강제삭제</button>
-                        <button type="button" class="btn btn-danger" id="userDeletion" title="${bvo.postid}">강제탈퇴</button>
+                        <button type="button" class="btn btn-sm btn-danger" id="deletion" title="${bvo.postid}">강제삭제</button>
+                        <button type="button" class="btn btn-sm btn-danger" id="userDeletion" title="${bvo.postid}">강제탈퇴</button>
                     </td>
                 </tr>
             </c:forEach>

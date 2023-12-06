@@ -138,14 +138,37 @@ prefix="c" %>
                 <th>배너 파일</th>
                 <th>시작날짜</th>
                 <th>종료날짜</th>
-            </tr> 
+                <th>관리</th>
+            </tr>
+            <script>
+                function isPastDeadline(deadlinestr){
+                    var deadline = new Date(deadlinestr);
+                    var now = new Date();
+                    return deadline<now;
+                }
+                function dueDelete(bannerid){
+                    location.href="${pageContext.servletContext.contextPath}/admin/banner/delete?bannerid="+bannerid;
+                }
+                function forceDelete(bannerid){
+                    if(confirm("기한이 남아있는 배너입니다. 정말 삭제하시겠습니까?")){
+                        location.href="${pageContext.servletContext.contextPath}/admin/banner/delete?bannerid="+bannerid;
+                    }
+                }
+            </script>
         <c:forEach var="bannerVO" items="${bannerVO}">
             <tr class="forevent"></tr>
                 <td>${bannerVO.bannerid}</td>
                 <td>${bannerVO.owner}</td>
-                <td><img style="width:100px; height:100px;"src="${pageContext.servletContext.contextPath}/upload${bannerVO.bannerimg}"></td>
+            <td><a class="btn btn-sm btn-primary" onclick="window.open('${pageContext.servletContext.contextPath}/admin/banner/check?bannerid=${bannerVO.bannerid}')">확인</a></td>
                 <td>${bannerVO.startdate}</td>
                 <td>${bannerVO.deadline}</td>
+            <td>
+                <a class="btn btn-sm btn-danger" onclick="forceDelete(${bannerVO.bannerid})">강제삭제</a>
+                <button onclick="dueDelete(${bannerVO.bannerid})" class="btn btn-sm btn-danger" style="margin-left: 10px" id="expireDelete${bannerVO.bannerid}">만료삭제</button>
+                <script>
+                    document.getElementById('expireDelete${bannerVO.bannerid}').disabled = !isPastDeadline('${bannerVO.deadline}');
+                </script>
+            </td>
             </tr>
         </c:forEach>
         </table>
