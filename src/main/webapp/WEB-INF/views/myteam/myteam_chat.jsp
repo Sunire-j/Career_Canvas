@@ -17,6 +17,12 @@
             integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
+        .container {
+            margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+        }
         ul {
             list-style-type: none;
             margin: 0;
@@ -140,11 +146,15 @@
             background-color: #e9ecef;
             margin-top: 50px;
             margin: 0 auto;
+            border-width: 2px 2px 0px 2px;
+            border-style: solid;
+            border-color: #73351F;
         }
 
         /* 채팅 스크롤바*/
         /* 아래의 모든 코드는 영역::코드로 사용 */
         .scrollBar::-webkit-scrollbar {
+            padding-right: 30px;
             width: 10px; /* 스크롤바의 너비 */
         }
 
@@ -160,23 +170,28 @@
         }
 
         .chat_name {
-            height: 50px;
+            height: 70px;
             line-height: 50px;
-            text-align: center;
-            color: darkgray;
+            color: #000;
             font-size: 1.5em;
             font-weight: bold;
             margin: 0 auto;
-            border-bottom: 1px solid darkgray;
+            border-bottom: 2px solid #73351F;
             width: 600px;
             margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
         .comment_write {
             width: 1000px;
             margin: 0 auto;
             display: flex;
-            padding-bottom: 20px;
+            border-width: 2px 2px 2px 2px;
+            border-color: #73351F;
+            border-style: solid;
         }
 
         .comment_content {
@@ -233,10 +248,6 @@
             margin: 0;
         }
 
-        .container {
-            width: 1200px;
-        }
-
         .mypartyvalue {
             width: 100%;
             height: 100px;
@@ -269,6 +280,27 @@
         .choisvalue {
             margin: 0 auto;
             width: fit-content;
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
         }
     </style>
     <script>
@@ -399,57 +431,64 @@
     </script>
 </head>
 <body>
-<main class="container">
-    <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집"
-               onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티"
-               onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
-    </div>
-    <div class="mypartylist">
-        <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
-        <hr>
-    </div>
-    <ul class="party_list">
-        <c:forEach items="${pvo}" var="p">
-            <li title="${p.partyid}" class="party_list_btn">
-                <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
-                <div class="party_list_name">
-                        ${p.partyname}
-                </div>
-            </li>
-        </c:forEach>
-        <li style="float: left">
-            <button class="new_party_btn"
-                    onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
-                <i class="fa-regular fa-square-plus fa-4x"></i><br/>
-                <span style="font-weight: bold;">파티생성</span>
-            </button>
-        </li>
-    </ul>
-    <div class="choisvalue" style="margin-top: 30px;">
-        <input type="button" class="btn btn-outline-secondary mainbtn" value="메인">
-        <input type="button" class="btn btn-secondary chatbtn" value="채팅">
-            <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리"
-                   onclick="location.href='${pageContext.servletContext.contextPath}/party/edit?no=${no}'">
-        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오"
-                    onclick="location.href='${pageContext.servletContext.contextPath}/party/portpolio?no=${no}'">
-    </div>
-    <hr>
-</main>
-
-<div class="chat">
-    <div class="chat_container">
-        <div class="chat_name">
-            <span style="font-size: 30px;">${teamname}</span>
+<main class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+<div class="container-head"></div>
+    <div style="padding: 40px 40px 20px 40px">
+        <div class="mypartyvalue">
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+            <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
         </div>
-        <ul class="chat_list scrollBar">
+        <div class="mypartylist">
+            <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
+            <hr>
+        </div>
+        <ul class="party_list">
+            <c:forEach items="${pvo}" var="p">
+                <li title="${p.partyid}" class="party_list_btn">
+                    <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
+                    <div class="party_list_name">
+                            ${p.partyname}
+                    </div>
+                </li>
+            </c:forEach>
+            <li style="float: left">
+                <button class="new_party_btn"
+                        onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
+                    <i class="fa-regular fa-square-plus fa-4x"></i><br/>
+                    <span style="font-weight: bold;">파티생성</span>
+                </button>
+            </li>
         </ul>
+        <div class="choisvalue" style="margin-top: 30px;">
+            <input type="button" class="btn btn-outline-secondary mainbtn" value="메인">
+            <input type="button" class="btn btn-secondary chatbtn" value="채팅">
+                <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리"
+                       onclick="location.href='${pageContext.servletContext.contextPath}/party/edit?no=${no}'">
+            <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오"
+                        onclick="location.href='${pageContext.servletContext.contextPath}/party/portpolio?no=${no}'">
+        </div>
     </div>
-    <div class="comment_write">
-        <textarea class="comment_content" placeholder="내용을 입력하세요." style="resize: none;"></textarea>
-        <button type="button" class="btn btn-secondary comment_write_ok"> 보내기</button>
-    </div>
+</main>
+<div class="container"  style="background: #D9C8A9;padding:0px; border-bottom: 3px solid #73351F;">
+   <div style="padding: 20px 20px 40px 20px">
+        <div class="chat">
+            <div class="chat_container" >
+                <div class="chat_name">
+                    <span style="font-size: 30px;">${teamname}</span>
+                </div>
+                <ul class="chat_list scrollBar">
+                </ul>
+            </div>
+            <div class="comment_write">
+                <textarea class="comment_content" placeholder="내용을 입력하세요." style="resize: none;"></textarea>
+                <button type="button" class="btn btn-secondary comment_write_ok" style="border-radius: 0px"> 보내기</button>
+            </div>
+        </div>
+   </div>
+    <div class="container_bottom"></div>
 </div>
 </body>
 </html>
+<%@include file="../header_footer/footer.jspf" %>

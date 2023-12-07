@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<script src="https://kit.fontawesome.com/12f8d3210e.js" crossorigin="anonymous"></script>
 <style>
     .footer-section {
         width: 100%;
-        background-color: #ddd;
-        height: 350px;
+        background-color: #97847D;
+        height: 230px;
         margin: 0;
-        margin-top: 60px;
+        margin-top: 100px;
+        border-top: 3px solid #73351F;
     }
 
     .footer-first-area,
@@ -17,15 +19,14 @@
     }
 
     .footer-second-area {
-        margin-top: 30px;
+        margin-top: 10px;
     }
 
     .footer-second-area {
     }
 
     .footer-first-first {
-        width: 252px;
-        height: 190px;
+        width: 350px;
     }
 
     .footer-first-second > .footer-content,
@@ -35,10 +36,10 @@
     }
 
     .footer-title {
-        color: rgb(17, 23, 75);
+        color: #3F302A;
         font-size: 20px;
         font-weight: 600;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .footer-section ul,
@@ -51,12 +52,12 @@
     }
 
     .footer-content {
-        color: rgb(68, 73, 111);
+        color: #73351F;
         font-size: 16px;
     }
 
     .footer-social-section {
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     .footer__social {
@@ -64,7 +65,7 @@
     }
 
     .footer-first-area {
-        padding-top: 60px;
+        padding-top: 15px;
     }
 
     .footer__social,
@@ -77,18 +78,22 @@
     .something:link,
     .something:visited,
     .something:active{
-        color: rgb(70, 77, 134);
+        color: #73351F;
     }
     ul{
         padding: 0 !important;
     }
 
 </style>
+
 <footer class="footer-section">
     <div class="footer-first-area">
         <div class="footer-first-first">
             <div class="footer-title">Career Canvas</div>
-            <div class="footer-content">사용자들이 어쩌고 저쩌고 암튼 우리는 좋은 페이지임</div>
+            <div class="footer-content">대표 조석훈 | 커리어캔버스
+                <br>㈜멀티캠퍼스 본사 서울특별시 강남구 언주로 508 14층 (역삼동, 서울상록빌딩)
+                <br>Email qudwnsdhqk@gmail.com
+            </div>
             <div class="footer-social-section">
                 <a href="https://www.facebook.com/" target="_blank" class="footer__social">
                     <i class="ri-facebook-box-fill"></i>
@@ -136,7 +141,7 @@
         </div>
     </div>
     <div class="footer-second-area">
-        <div class="footer-second-left">
+        <div class="footer-second-left" style="color: #0D0D0D">
             © 2023 Multi-Campus Semi-Project Team 1. All rigths reserved.
         </div>
         <div class="footer-second-right" style="display: flex">

@@ -11,16 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
     <style>
-        @media (min-width: 1200px) {
-            .container{
-                max-width: 1200px;
-            }
-        }
         .container {
             margin: 0 auto;
-            margin-top: 50px;
-            border-top: 3px solid #73351F;
-            border-bottom: 2px dashed #73351F;
             border-left: 1px solid #73351F;
             border-right: 1px solid #73351F;
             background: #F2F2F2;
@@ -42,9 +34,6 @@
         }
         body{
             margin: 0;
-        }
-        .container{
-            width: 1200px;
         }
         .mypartyvalue{
             width: 100%;
@@ -111,11 +100,11 @@
         .portpolio_list_box{
             width: 1100px;
             margin: 0 auto;
-            margin-top: 30px;
         }
         .portpolio_list_box ul{
             width: 1100px;
             margin: 0 auto;
+            margin-left: 10px;
         }
         .portpolio_list_box li{
             width: 240px;
@@ -143,6 +132,27 @@
             white-space: nowrap;
             padding: 0 15px;
         }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
+        }
     </style>
     <script>
         $(function (){
@@ -154,83 +164,89 @@
     </script>
 </head>
 <body>
-<main class="container">
-    <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
-    </div>
-    <div class="mypartylist">
-        <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
-        <hr>
-    </div>
-    <ul class="party_list">
-        <c:forEach items="${pvo}" var="p">
-            <li title="${p.partyid}" class="party_list_btn">
-                <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
-                <div class="party_list_name">
-                    ${p.partyname}
-                </div>
+<main class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+    <div class="container-head"></div>
+    <div style="padding: 40px 40px 20px 40px">
+        <div class="mypartyvalue">
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+            <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+        </div>
+        <div class="mypartylist">
+            <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
+            <hr>
+        </div>
+        <ul class="party_list">
+            <c:forEach items="${pvo}" var="p">
+                <li title="${p.partyid}" class="party_list_btn">
+                    <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
+                    <div class="party_list_name">
+                        ${p.partyname}
+                    </div>
+                </li>
+            </c:forEach>
+            <li style="float: left">
+                <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
+                    <i class="fa-regular fa-square-plus fa-4x"></i><br/>
+                    <span style="font-weight: bold;">파티생성</span>
+                </button>
             </li>
-        </c:forEach>
-        <li style="float: left">
-            <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
-                <i class="fa-regular fa-square-plus fa-4x"></i><br/>
-                <span style="font-weight: bold;">파티생성</span>
-            </button>
-        </li>
-    </ul>
-    <div class="choisvalue" style="margin-top: 30px;padding-bottom: 20px">
-        <input type="button" class="btn btn-outline-secondary mainbtn" value="메인"
-               onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main?partyid=${no}'">
-        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅"
-               onclick="location.href='${pageContext.servletContext.contextPath}/myteam/chat?no=${no}'">
-        <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리"
-               onclick="location.href='${pageContext.servletContext.contextPath}/party/edit?no=${no}'">
-        <input type="button" class="btn btn-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
+        </ul>
+        <div class="choisvalue" style="margin-top: 30px;padding-bottom: 20px">
+            <input type="button" class="btn btn-outline-secondary mainbtn" value="메인"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main?partyid=${no}'">
+            <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/myteam/chat?no=${no}'">
+            <input type="button" class="btn btn-outline-secondary partysetbtn" value="파티관리"
+                   onclick="location.href='${pageContext.servletContext.contextPath}/party/edit?no=${no}'">
+            <input type="button" class="btn btn-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
+        </div>
     </div>
 </main>
 <article>
-    <section>
-        <div class="portpolio_list_box">
-            <ul>
-                <c:forEach items="${Povo}" var="P">
-                    <li>
-                        <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${P.portfolioid}">
-                            <div class="portpolio_content">
-                                <input type="hidden" value="${P.portfolioid}">
-                                <img src="${pageContext.servletContext.contextPath}/upload${P.imgsrc}" class="portpolio_img"/>
-                                <p class="portpolio_name">${P.portfoliotitle}</p>
-                            </div>
-                        </a>
-                    </li>
-                </c:forEach>
-            </ul>
+    <section class="container" style="padding:0px; border-bottom: 3px solid #73351F;">
+        <div style="padding: 20px 20px 40px 20px">
+            <div class="portpolio_list_box">
+                <ul>
+                    <c:forEach items="${Povo}" var="P">
+                        <li>
+                            <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${P.portfolioid}">
+                                <div class="portpolio_content">
+                                    <input type="hidden" value="${P.portfolioid}">
+                                    <img src="${pageContext.servletContext.contextPath}/upload${P.imgsrc}" class="portpolio_img"/>
+                                    <p class="portpolio_name">${P.portfoliotitle}</p>
+                                </div>
+                            </a>
+                        </li>
+                    </c:forEach>
+                </ul>
 
-        </div>
-        <ul class="pagination justify-content-center">
-            <c:if test="${Pagingvo.page>1}">
-                <li class="page-item"><a class="page-link" href="?no=${no}&page=${Pagingvo.page - 1}"><</a></li>
-            </c:if>
-            <c:forEach var="i" begin="${Pagingvo.startPage}" end="${Pagingvo.startPage + Pagingvo.onePageCount - 1}">
-                <c:if test="${i <= Pagingvo.totalPage}">
-                    <c:choose>
-                        <c:when test="${i != Pagingvo.page}">
-                            <li class="page-item"><a class="page-link" href='?no=${no}&page=${i}'>${i}</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link active" href="">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
+            </div>
+            <ul class="pagination justify-content-center">
+                <c:if test="${Pagingvo.page>1}">
+                    <li class="page-item"><a class="page-link" href="?no=${no}&page=${Pagingvo.page - 1}"><</a></li>
                 </c:if>
-            </c:forEach>
-            <c:if test="${Pagingvo.page < Pagingvo.totalPage}">
-                <li class="page-item"><a class="page-link" href="?no=${no}&page=${Pagingvo.page + 1}">></a></li>
-            </c:if>
-        </ul>
-        <div style="width: fit-content; margin: 0 auto; margin-top: 20px;">
-            <input type="button" class="btn btn-outline-secondary partysetbtn" value="포트폴리오 작성하기"
-                   onclick="location.href='${pageContext.servletContext.contextPath}/party/pofolWrite?no=${no}'">
+                <c:forEach var="i" begin="${Pagingvo.startPage}" end="${Pagingvo.startPage + Pagingvo.onePageCount - 1}">
+                    <c:if test="${i <= Pagingvo.totalPage}">
+                        <c:choose>
+                            <c:when test="${i != Pagingvo.page}">
+                                <li class="page-item"><a class="page-link" href='?no=${no}&page=${i}'>${i}</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item"><a class="page-link active" href="">${i}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${Pagingvo.page < Pagingvo.totalPage}">
+                    <li class="page-item"><a class="page-link" href="?no=${no}&page=${Pagingvo.page + 1}">></a></li>
+                </c:if>
+            </ul>
+            <div style="width: fit-content; margin: 0 auto; margin-top: 20px;">
+                <input type="button" class="btn btn-outline-secondary partysetbtn" value="포트폴리오 작성하기"
+                       onclick="location.href='${pageContext.servletContext.contextPath}/party/pofolWrite?no=${no}'">
+            </div>
         </div>
+        <div class="container_bottom"></div>
     </section>
 </article>
 </body>

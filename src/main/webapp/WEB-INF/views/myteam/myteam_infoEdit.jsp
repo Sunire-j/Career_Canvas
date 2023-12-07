@@ -11,6 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
     <style>
+        .container {
+            margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+        }
         p{
             margin: 0;
         }
@@ -124,7 +130,7 @@
         .name_edit_btn, .objective_edit_btn, .intro_edit_btn,.partyImg_edit_btn,
         .name_edit_btn_ok, .objective_edit_btn_ok, .intro_edit_btn_ok, .partyImg_edit_btn_ok{
             font-size: 0.9em;
-            color: #868e96;
+            color: #73351F;
             float: right;
             border: none;
             background: none;
@@ -214,6 +220,27 @@
         .edit_guide{
             margin-left: 40px;
             padding-top: 20px;
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
         }
 
     </style>
@@ -419,103 +446,107 @@
     </script>
 </head>
 <body>
-<main class="container">
-    <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+<main class="container"style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+ <div class="container-head"></div>
+    <div style="padding: 40px 40px 20px 40px">
+        <div class="mypartyvalue">
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+            <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+        </div>
+        <div class="mypartylist">
+            <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
+            <hr>
+        </div>
+        <ul class="party_list">
+                <c:forEach items="${pvo}" var="p">
+                    <li title="${p.partyid}" class="party_list_btn">
+                        <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
+                        <div class="party_list_name">
+                                ${p.partyname}
+                        </div>
+                    </li>
+                </c:forEach>
+            <li style="float: left">
+                <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
+                    <i class="fa-regular fa-square-plus fa-4x"></i><br/>
+                    <span style="font-weight: bold;">파티생성</span>
+                </button>
+            </li>
+        </ul>
+        <div class="choisvalue" style="margin-top: 30px; display: flex">
+            <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" style="margin-right: 10px">
+            <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" style="margin-right: 10px">
+            <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" style="margin-right: 10px" onclick="changeClass(this)">
+            <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
+        </div>
     </div>
-    <div class="mypartylist">
-        <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
-        <hr>
-    </div>
-    <ul class="party_list">
-            <c:forEach items="${pvo}" var="p">
-                <li title="${p.partyid}" class="party_list_btn">
-                    <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
-                    <div class="party_list_name">
-                            ${p.partyname}
-                    </div>
-                </li>
-            </c:forEach>
-        <li style="float: left">
-            <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
-                <i class="fa-regular fa-square-plus fa-4x"></i><br/>
-                <span style="font-weight: bold;">파티생성</span>
-            </button>
-        </li>
-    </ul>
-    <div class="choisvalue" style="margin-top: 30px; display: flex">
-        <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" style="margin-right: 10px">
-        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" style="margin-right: 10px">
-        <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" style="margin-right: 10px" onclick="changeClass(this)">
-        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" onclick="changeClass(this)">
-    </div>
-    <hr>
 </main>
 
-<article>
-    <section class="teamView">
-        <p class="party_name">${partyvo.partyname}</p>
-        <p class="content_title">파티관리</p>
-        <div class="edit_category" style="display: flex;">
-            <button type="button" class="btn btn-secondary"  style="margin-right: 20px;">정보수정</button>
-            <form>
-                <input type="hidden" name="partyid" value="${partyvo.partyid}"/>
-                <button type="button" class="btn btn-outline-secondary" id="memberEdit_btn">회원관리</button>
-            </form>
-        </div>
-        <hr style="width: 900px; margin: 0 auto"/>
-        <div class="edit_content">
-            <form id="name_editFrm">
-                <div class="name_edit">
-                    <span style=" font-size: 1.3em; color: #495057;">파티명</span>
-                    <input type="button" class="name_edit_btn" value="수정+" />
-                    <input type="submit" class="name_edit_btn_ok" style="display: none" value="수정하기"/>
-                    <hr style="margin-top: 5px;"/>
-                    <input type="text" class="name_edit_box" name="name_edit_box" style="margin-left: 20px; font-size: 1.7em; border: none;" value="${partyvo.partyname}" readonly />
-                </div>
-            </form>
-        <form id="profileImg_editFrm" action="${pageContext.servletContext.contextPath}/party/profileUpdate" enctype="multipart/form-data" method="post">
-            <input type="hidden" value="${partyvo.partyid}" name="no">
-            <div class="profile_edit">
-                <span style=" font-size: 1.3em; color: #495057;">프로필 이미지</span>
-                <input type="button" class="partyImg_edit_btn" value="수정+" />
-                <input type="submit" class="partyImg_edit_btn_ok" style="display: none" value="수정하기"/>
-                <hr style="margin-top: 5px;"/>
-                <div class="profile_edit_box">
-                    <!-- <div class="img_file" id="previewContainer"></div> -->
-                    <div class="file-edit">
-                        <input type="file" id="ex_file" name="ex_file" accept=".png, .jpg, .jpeg" onchange="handleFileUpload()" disabled>
-                        <label for="ex_file" class="imgpreview"></label>
-                    </div>
-                    <div class="edit_guide" style="display: none">
-                        <p style="font-size: .8em; font-weight: bold;padding-bottom: 5px;">변경할 파티 프로필 이미지를 선택해주세요.</p>
-                        <p style="font-size: .7em; font-weight: bold;">* png, jpg, jpeg 파일만 업로드 가능합니다.</p>
-                    </div>
-                </div>
+<article class="container" style="padding:0px; border-bottom: 3px solid #73351F;">
+    <div style="padding: 20px 20px 40px 20px">
+        <section class="teamView">
+            <p class="party_name">${partyvo.partyname}</p>
+            <p class="content_title">파티관리</p>
+            <div class="edit_category" style="display: flex;">
+                <button type="button" class="btn btn-secondary"  style="margin-right: 20px;">정보수정</button>
+                <form>
+                    <input type="hidden" name="partyid" value="${partyvo.partyid}"/>
+                    <button type="button" class="btn btn-outline-secondary" id="memberEdit_btn">회원관리</button>
+                </form>
             </div>
-        </form>
-            <form id="objective_editFrm">
-                <div class="objective_edit">
-                    <span style=" font-size: 1.3em; color: #495057;">파티 목표</span>
-                    <input type="button" class="objective_edit_btn" value="수정+" />
-                    <input type="submit" class="objective_edit_btn_ok" style="display: none" value="수정하기"/>
+            <hr style="width: 900px; margin: 0 auto"/>
+            <div class="edit_content">
+                <form id="name_editFrm">
+                    <div class="name_edit">
+                        <span style=" font-size: 1.3em; color: #495057;">파티명</span>
+                        <input type="button" class="name_edit_btn" value="수정+" />
+                        <input type="submit" class="name_edit_btn_ok" style="display: none" value="수정하기"/>
+                        <hr style="margin-top: 5px;"/>
+                        <input type="text" class="name_edit_box" name="name_edit_box" style="margin-left: 20px; font-size: 1.7em; border: none; border: 1px solid #73351F;" value="${partyvo.partyname}" readonly />
+                    </div>
+                </form>
+            <form id="profileImg_editFrm" action="${pageContext.servletContext.contextPath}/party/profileUpdate" enctype="multipart/form-data" method="post">
+                <input type="hidden" value="${partyvo.partyid}" name="no">
+                <div class="profile_edit">
+                    <span style=" font-size: 1.3em; color: #495057;">프로필 이미지</span>
+                    <input type="button" class="partyImg_edit_btn" value="수정+" />
+                    <input type="submit" class="partyImg_edit_btn_ok" style="display: none" value="수정하기"/>
                     <hr style="margin-top: 5px;"/>
-                    <textarea class="objective_edit_box" readonly style="border:none;" maxlength="80">${partyvo.partygoal}</textarea>
+                    <div class="profile_edit_box">
+                        <!-- <div class="img_file" id="previewContainer"></div> -->
+                        <div class="file-edit">
+                            <input type="file" id="ex_file" name="ex_file" accept=".png, .jpg, .jpeg" onchange="handleFileUpload()" disabled>
+                            <label for="ex_file" class="imgpreview"></label>
+                        </div>
+                        <div class="edit_guide" style="display: none">
+                            <p style="font-size: .8em; font-weight: bold;padding-bottom: 5px;">변경할 파티 프로필 이미지를 선택해주세요.</p>
+                            <p style="font-size: .7em; font-weight: bold;">* png, jpg, jpeg 파일만 업로드 가능합니다.</p>
+                        </div>
+                    </div>
                 </div>
             </form>
-            <form id="intro_editFrm">
-                <div class="intro_edit">
-                    <span style=" font-size: 1.3em; color: #495057;">파티 소개</span>
-                    <input type="button" class="intro_edit_btn" value="수정+" />
-                    <input type="submit" class="intro_edit_btn_ok" style="display: none" value="수정하기"/>
-                    <hr style="margin-top: 5px;"/>
-                    <textarea class="intro_edit_box" readonly style="border: none;" maxlength="80">${partyvo.partycomment}</textarea>
-                </div>
-            </form>
-
-        </div>
-    </section>
+                <form id="objective_editFrm">
+                    <div class="objective_edit">
+                        <span style=" font-size: 1.3em; color: #495057;">파티 목표</span>
+                        <input type="button" class="objective_edit_btn" value="수정+" />
+                        <input type="submit" class="objective_edit_btn_ok" style="display: none" value="수정하기"/>
+                        <hr style="margin-top: 5px;"/>
+                        <textarea class="objective_edit_box" readonly style="border:none;border: 1px solid #73351F;" maxlength="80">${partyvo.partygoal}</textarea>
+                    </div>
+                </form>
+                <form id="intro_editFrm">
+                    <div class="intro_edit">
+                        <span style=" font-size: 1.3em; color: #495057;">파티 소개</span>
+                        <input type="button" class="intro_edit_btn" value="수정+" />
+                        <input type="submit" class="intro_edit_btn_ok" style="display: none" value="수정하기"/>
+                        <hr style="margin-top: 5px;"/>
+                        <textarea class="intro_edit_box" readonly style="border: 1px solid #73351F;" maxlength="80">${partyvo.partycomment}</textarea>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <div class="container_bottom"></div>
 </article>
 </body>
 </html>
