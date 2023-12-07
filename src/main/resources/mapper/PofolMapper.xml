@@ -99,7 +99,7 @@
 				where portpolio.category = "3"
 			</when>
 		</choose>	
-			and isteam=0
+			and isteam=1
 		<choose>
 			<when test="searchKey == 'all'">
                 AND (portpolio.portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')
@@ -159,7 +159,7 @@
 				where portpolio.category = "3"
 			</when>
 		</choose>	
-			and isteam=1
+			and isteam=0
 		<choose>
 			<when test="searchKey == 'all'">
                 AND (portpolio.portfoliotitle LIKE CONCAT('%', #{searchWord}, '%')

@@ -288,31 +288,22 @@
             <div class="portfolio">
                 <h1>포트폴리오</h1>
                 <p>내용채우기</p>
-                <div style="display: flex; padding: 5px 20px 20px 20px; gap: 10px;">
+                <div class="contenttitle" style="display: flex; padding: 5px 20px 20px 20px; gap: 10px;">
                 <select class="form-select" style="width: fit-content;" name="category" id="category">
                     <option value="0">카테고리</option>
                     <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
                     <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
                     <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
                 </select>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject'" >기업과제</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제</button>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
-            </div>
-            </div>
-            <script>
-                $(function(){
-                    var checked = $("#category").val(${pVO.category});
-                    checked.change(function(){
-                        var selectedValue = $(this).val();
-                        window.location.href = "${pageContext.servletContext.contextPath}/subject?category=" + selectedValue;
-                    });
-                });
-            </script>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject'" >기업과제</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제</button>
+                </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
+                </div>
 
     <!-- 리스트 레이아웃 -->
     <div class="portfolio_content">
@@ -368,7 +359,7 @@
               <c:if test="${pVO.page > 1}">
                 
                   <a
-                    href="${pageContext.servletContext.contextPath}/subject/apply?page=${pVO.page - 1}
+                    href="${pageContext.servletContext.contextPath}/subject/apply/team?page=${pVO.page - 1}
                      <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
                   >
                   <input type="button" value="<" class="btn btn-outline-primary">
@@ -385,7 +376,7 @@
               <c:if test="${p <= pVO.totalPage}">
                 
                 <a
-                href="${pageContext.servletContext.contextPath}/subject/apply?page=${p}&searchWord=${pVO.searchWord}">
+                href="${pageContext.servletContext.contextPath}/subject/apply/team?page=${p}&searchWord=${pVO.searchWord}">
                 <input type="button" value="${p}" class="btn btn-outline-primary">
               </a>
             
@@ -398,7 +389,7 @@
               </c:if>
               <c:if test="${pVO.page < pVO.totalPage}">
                   <a
-                    href="${pageContext.servletContext.contextPath}/subject/apply?page=${pVO.page + 1}"
+                    href="${pageContext.servletContext.contextPath}/subject/apply/team?page=${pVO.page + 1}"
                   >
                   <input type="button" value=">" class="btn btn-outline-primary">
                   </a>   
@@ -407,7 +398,7 @@
           <!-- 검색 -->
           <div style="width: 100%; text-align: center;">
             <div class="search-container" style="margin: 30px;">
-              <form action="${pageContext.servletContext.contextPath}/subject/apply" class="d-flex board-bottom" method="get">
+              <form action="${pageContext.servletContext.contextPath}/subject/apply/team" class="d-flex board-bottom" method="get">
                   <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
                       <option value="all">전체</option>
                       <option value="title">제목</option>
@@ -422,5 +413,14 @@
         </div>
         </article>
     </section>
+    <script>
+        $(function(){
+            var checked = $("#category").val(${pVO.category});
+            checked.change(function(){
+                var selectedValue = $(this).val();
+                window.location.href = "${pageContext.servletContext.contextPath}/subject?category=" + selectedValue;
+            });
+        });
+    </script>
 </body>
 </html>

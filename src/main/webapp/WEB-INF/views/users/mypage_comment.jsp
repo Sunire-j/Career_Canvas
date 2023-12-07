@@ -215,24 +215,14 @@ file="../header_footer/header.jspf"%>
         margin-top: 80px;
         display: flex;
       }
-      .ajaxView_wrapper {
-        width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-      }
       .userInterest span {
         margin-right: 5px;
       }
       .table th,
       .table tr {
-        width: 15%;
         text-align: center;
       }
-      .table th:nth-child(5n + 3),
-      .table tr:nth-child(5n + 3) {
-        width: 40%;
-      }
+      
       .paging {
         display: flex;
         justify-content: center;
@@ -314,7 +304,6 @@ file="../header_footer/header.jspf"%>
       </div>
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
-        <div class="container mt-3">
           <table class="table">
             <thead class="table-dark">
               <tr>
@@ -325,20 +314,21 @@ file="../header_footer/header.jspf"%>
               </tr>
             </thead>
             <tbody>
-              <div class="ajaxContent">
                 <c:forEach var="cVO" items="${cVO}">
                   <tr>
                     <td>${cVO.commentid}</td>
                     <td>${cVO.username}</td>
                     <c:if test="${cVO.isdelete eq 0}">
-                      <td><a href="${pageContext.servletContext.contextPath}/board/view?no=${cVO.post_postid}">${cVO.commentcontent}</a></td>
+                      <td style="overflow: hidden; 
+                      text-overflow: ellipsis; 
+                      white-space: nowrap;"><a href="${pageContext.servletContext.contextPath}/board/view?no=${cVO.post_postid}">${cVO.commentcontent}</a></td>
                     </c:if>
                     <td>${cVO.date}</td>
                   </tr>
                 </c:forEach>
-              </div>
             </tbody>
           </table>
+          
 
           <!-- 페이징  -->
           <div>
@@ -371,7 +361,6 @@ file="../header_footer/header.jspf"%>
               </c:if>
             </ul>
           </c:if>
-          </div>
         </div>
       </div>
       <form

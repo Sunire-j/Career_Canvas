@@ -314,4 +314,21 @@ public class BoardController {
         mav.setViewName("/subject/subjectApplyList");
         return mav;
     }
+
+    @GetMapping("/subject/apply/team")
+    public ModelAndView subjectApplyTeam(PagingVO pVO) {
+        ModelAndView mav = new ModelAndView();
+        pVO.setOnePageCount(12);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getSubjectApplyCount());
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        List<SubjectVO> SubjectVO = mapper.getSubjectApplyTeamList(pVO);
+        System.out.println(SubjectVO);
+        mav.addObject("sVO", SubjectVO);
+        mav.addObject("pVO", pVO);
+        mav.setViewName("/subject/subjectApplyTeamList");
+        return mav;
+    }
 }
