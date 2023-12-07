@@ -182,7 +182,7 @@
             margin-top: 5px;
             margin-left: 10px;
             font-size: 1.5em;
-            color: gray;
+            color: rgb(128, 128, 128);
         }
 
         .info_count>div {
@@ -302,38 +302,40 @@
             <div class="portfolio_content">
                 <ul class="content">
                     <c:forEach items="${sVO}" var="sVO">
-                    <li>
-                        <div class="img_C">
-                            <img src="${pageContext.servletContext.contextPath}/upload${sVO.imgsrc}" class="portfolio_img">
-                            <!-- line 1 -->
-                            <div class="content_info">
-                                <div class="content_category">
-                                    <c:if test="${sVO.category==0}">
-                                        분류없음
-                                    </c:if>
-                                    <c:if test="${sVO.category==1}">
-                                        IT/개발
-                                    </c:if>
-                                    <c:if test="${sVO.category==2}">
-                                        디자인
-                                    </c:if>
-                                    <c:if test="${sVO.category==3}">
-                                        영상
-                                    </c:if>
+                        <li>
+                            <a href="${pageContext.servletContext.contextPath}/subject/view?no=${sVO.subjectid}">
+                                <div class="img_C">
+                                    <img src="${pageContext.servletContext.contextPath}/upload${sVO.imgsrc}" class="portfolio_img">
+                                    <!-- line 1 -->
+                                    <div class="content_info">
+                                        <div class="content_category">
+                                            <c:if test="${sVO.category==0}">
+                                                분류없음
+                                            </c:if>
+                                            <c:if test="${sVO.category==1}">
+                                                IT/개발
+                                            </c:if>
+                                            <c:if test="${sVO.category==2}">
+                                                디자인
+                                            </c:if>
+                                            <c:if test="${sVO.category==3}">
+                                                영상
+                                            </c:if>
+                                        </div>
+                                        <div class="content_title">
+                                            ${sVO.subjecttitle}
+                                        </div>
+                                    </div>
+                                     <!-- line 2 -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="${pageContext.servletContext.contextPath}/upload${sVO.imgsrc}" style="width:20px; height:20px;" alt="">
+                                            <span style="margin-left:10px; width: 118px;white-space: nowrap;
+                                        overflow: hidden; text-overflow: ellipsis;">${sVO.user_userid}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="content_title">
-                                    ${sVO.subjecttitle}
-                                </div>
-                            </div>
-                            <!-- line 2 -->
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div style="display: flex; align-items: center;">
-                                    <img src="${pageContext.servletContext.contextPath}/upload${sVO.imgsrc}" style="width:20px; height:20px;" alt="">
-                                    <span style="margin-left:10px; width: 118px;white-space: nowrap;
-                                    overflow: hidden; text-overflow: ellipsis;">${sVO.user_userid}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </a>
                         </li>
                     </c:forEach>
                 </ul>
@@ -403,7 +405,7 @@
                   <input type="hidden" name="category" value="${pVO.category}"/>
               </form>
           </div>
-            
+          </div>
         </div>
         </article>
     </section>
