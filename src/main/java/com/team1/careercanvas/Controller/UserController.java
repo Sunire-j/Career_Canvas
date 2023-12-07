@@ -735,6 +735,7 @@ public class UserController {
         pVO.setTotalRecord(mapper.getSubjectSoloAmount(pVO));
 
         List<ApplyVO> sVO = mapper.getSubmitSubjectSolo(pVO);
+        System.out.println(sVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
@@ -757,18 +758,18 @@ public class UserController {
             pVO.setSearchWord("");
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
-        pVO.setOnePageRecord(4);
-        pVO.setTotalRecord(mapper.getSubjectTeamAmount(pVO));
+        pVO.setOnePageRecord(12);
+        pVO.setTotalRecord(mapper.getSubjectTeamAmount(pVO));//이거 다시 계산해줘야함 쿼리문 새로 ㄱㄱ
         pVO.setPage(pVO.getPage());
 
         pVO.setSearchKey((String) session.getAttribute("LogId"));
-        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam(pVO);
+        List<ApplyVO> sVO = mapper.getSubmitSubjectTeam(pVO);
+        System.out.println(sVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
-        System.out.println(sVO);
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);

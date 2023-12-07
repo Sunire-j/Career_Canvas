@@ -245,7 +245,39 @@ file="../header_footer/header.jspf"%>
         margin: 0 auto;
         margin-top: 50px;
       }
-      
+
+      .img_C{
+        width:235px;
+        margin-left: 30px;
+      }
+      .content_category, .content_title{
+        display: inline;
+        height: 40px;
+        line-height: 40px;
+      }
+      .content_category{
+        height: 30px;
+        margin-top: 10px;
+        margin-right: 10px;
+        background-color: #ddd;
+        border-radius: 5px;
+        text-align: center;
+        padding: 5px 5px 5px 10px;
+      }
+
+      .content img {
+        width: 235px;
+        height: 235px;
+        border-radius: 30px;
+
+      }
+
+      .profile_img>img {
+        width: 160px;
+        height: 160px;
+        border-radius: 40px;
+
+      }
     </style>
   </head>
   <body>
@@ -337,19 +369,11 @@ file="../header_footer/header.jspf"%>
         </div>
       
       <!-- DB리스트 -->
-   
-        
-          <div class="viewList">
+
+
+        <div style="margin: 0 auto; margin-top: 30px; ">
+          <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
             <c:forEach var="svo" items="${sVO}">
-              <div>
-                <img style="width: 170px; height: 170px;"
-                  src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
-                />
-                <p>${sVO.subjecttitle}</p>
-              </div>
-
-
-<%--              --%>
               <a href="${pageContext.servletContext.contextPath}/#${svo.applyid}">
                 <div class="img_C">
                   <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}" class="portfolio_img">
@@ -359,26 +383,25 @@ file="../header_footer/header.jspf"%>
                       <c:if test="${svo.category==0}">
                         분류없음
                       </c:if>
-                      <c:if test="${list.category==1}">
+                      <c:if test="${svo.category==1}">
                         IT/개발
                       </c:if>
-                      <c:if test="${list.category==2}">
+                      <c:if test="${svo.category==2}">
                         디자인
                       </c:if>
-                      <c:if test="${list.category==3}">
+                      <c:if test="${svo.category==3}">
                         영상
                       </c:if>
                     </div>
                     <div class="content_title">
-                        ${list.portfoliotitle}
+                        ${svo.subjecttitle}
                     </div>
                   </div>
                 </div>
               </a>
           </c:forEach>
-          </div>
-        
-      
+          </ul>
+        </div>
     </div>
 
       <!-- 페이징 -->

@@ -70,7 +70,7 @@ public interface UserMapper {
 
     int getSubjectSoloAmount(PagingVO pVO);
 
-    List<SubmitSubjectVO> getSubmitSubjectTeam(PagingVO pVO);
+    List<ApplyVO> getSubmitSubjectTeam(PagingVO pVO);
 
     int getSubjectTeamAmount(PagingVO pVO);
 

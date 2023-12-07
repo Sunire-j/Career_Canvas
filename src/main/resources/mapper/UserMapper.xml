@@ -177,9 +177,9 @@
         where user_userid1 = #{searchKey};
     </select>
 
-    <select id="getSubmitSubjectSolo" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
+    <select id="getSubmitSubjectSolo" resultType="com.team1.careercanvas.vo.ApplyVO">
         <![CDATA[
-            select a.applyid as applyid, s.subjecttitle as subjecttitle, a.applyimg as applyimg
+            select a.applyid as applyid, s.subjecttitle as subjecttitle, a.applyimg as applyimg, s.category as category
             from subjectapply a
             left join subject s on a.subject_subjectid = s.subjectid
             where a.user_userid = #{searchKey}
@@ -201,24 +201,27 @@
         </if>
     </select>
     
-    <select id="getSubmitSubjectTeam" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
+    <select id="getSubmitSubjectTeam" resultType="com.team1.careercanvas.vo.ApplyVO">
         SELECT subjectapply.applyimg as applyimg,
-        subject.subjecttitle
+        subject.subjecttitle as subjecttitle
         FROM subjectapply
         JOIN subject ON subject.subjectid = subjectapply.subject_subjectid
-        WHERE subjectapply.user_userid = #{searchKey}
+        left join subjectcontributor sc on subjectapply.subject_subjectid = sc.subjectapply_applyid
+        WHERE sc.user_userid = #{searchKey}
         AND isteam = 0
-        
         <if test="#{searchWord != ''}">
             AND subject.subjecttitle LIKE CONCAT('%', #{searchWord}, '%')
         </if>
+        limit #{onePageRecord} offset #{offsetPoint}
     </select>
 
     <select id="getSubjectTeamAmount" resultType="Integer">
-        select count(sa.subject_subjectid)
-        from subjectapply sa
-        join subject s on sa.subject_subjectid = s.subjectid
-        where sa.user_userid = #{searchKey} and isteam=0
+        select count(sc.subjectapply_applyid)
+        from subjectcontributor sc
+        join user u on u.userid =sc.user_userid
+        left join subjectapply sa on sa.applyid = sc.subjectapply_applyid
+        left join subject s on s.subjectid = sa.subject_subjectid
+        where sc.user_userid = #{searchKey}
         <if test="#{searchWord != ''}">
             and s.subjecttitle like concat('%', #{searchWord}, '%');
         </if>
