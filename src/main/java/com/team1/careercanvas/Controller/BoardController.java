@@ -308,7 +308,7 @@ public class BoardController {
             pVO.setSearchWord("");
         }
         List<SubjectVO> SubjectVO = mapper.getSubjectApplyList(pVO);
-        System.out.println(SubjectVO);
+        System.out.println(pVO);
         mav.addObject("sVO", SubjectVO);
         mav.addObject("pVO", pVO);
         mav.setViewName("/subject/subjectApplyList");
@@ -320,12 +320,12 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
         pVO.setOnePageCount(12);
         pVO.setPage(pVO.getPage());
-        pVO.setTotalRecord(mapper.getSubjectApplyCount());
+        pVO.setTotalRecord(mapper.getSubjectApplyTeamCount());
         if (pVO.getSearchWord() == null) {
             pVO.setSearchWord("");
         }
         List<SubjectVO> SubjectVO = mapper.getSubjectApplyTeamList(pVO);
-        System.out.println(SubjectVO);
+        System.out.println(pVO);
         mav.addObject("sVO", SubjectVO);
         mav.addObject("pVO", pVO);
         mav.setViewName("/subject/subjectApplyTeamList");
