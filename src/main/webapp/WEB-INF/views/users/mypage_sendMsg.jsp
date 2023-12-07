@@ -314,7 +314,7 @@ file="../header_footer/header.jspf"%>
       </div>
       
       <div style="width: 900px; margin: 0 auto">
-        <div class="container mt-3" style="text-align: center">
+        <div class="mt-3" style="text-align: center">
           <button class="btn btn-outline-primary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'">보낸 쪽지함</button>
           <button
             class="btn btn-outline-primary receiveMsg"

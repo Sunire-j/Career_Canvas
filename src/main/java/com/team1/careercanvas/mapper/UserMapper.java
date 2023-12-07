@@ -66,7 +66,7 @@ public interface UserMapper {
 
     int getTotalReceiveMsg(PagingVO pVO);
 
-    List<SubmitSubjectVO> getSubmitSubjectSolo(PagingVO pVO);
+    List<ApplyVO> getSubmitSubjectSolo(PagingVO pVO);
 
     int getSubjectSoloAmount(PagingVO pVO);
 

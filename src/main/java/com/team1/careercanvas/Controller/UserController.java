@@ -734,7 +734,7 @@ public class UserController {
         pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(mapper.getSubjectSoloAmount(pVO));
 
-        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectSolo(pVO);
+        List<ApplyVO> sVO = mapper.getSubmitSubjectSolo(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");

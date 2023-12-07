@@ -340,13 +340,41 @@ file="../header_footer/header.jspf"%>
    
         
           <div class="viewList">
-            <c:forEach var="sVO" items="${sVO}">
+            <c:forEach var="svo" items="${sVO}">
               <div>
                 <img style="width: 170px; height: 170px;"
                   src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
                 />
                 <p>${sVO.subjecttitle}</p>
               </div>
+
+
+<%--              --%>
+              <a href="${pageContext.servletContext.contextPath}/#${svo.applyid}">
+                <div class="img_C">
+                  <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}" class="portfolio_img">
+                  <!-- line 1 -->
+                  <div class="content_info">
+                    <div class="content_category">
+                      <c:if test="${svo.category==0}">
+                        분류없음
+                      </c:if>
+                      <c:if test="${list.category==1}">
+                        IT/개발
+                      </c:if>
+                      <c:if test="${list.category==2}">
+                        디자인
+                      </c:if>
+                      <c:if test="${list.category==3}">
+                        영상
+                      </c:if>
+                    </div>
+                    <div class="content_title">
+                        ${list.portfoliotitle}
+                    </div>
+                  </div>
+                </div>
+              </a>
           </c:forEach>
           </div>
         

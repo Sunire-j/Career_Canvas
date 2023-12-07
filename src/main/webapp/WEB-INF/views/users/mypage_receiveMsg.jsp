@@ -310,19 +310,13 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      
-      <!-- ajax View -->
-      <div class="ajaxView_wrapper">
-        <div class="container mt-3" style="text-align: center">
+
+      <div style="width: 900px; margin: 0 auto">
+        <div class="mt-3" style="text-align: center">
+          <button class="btn btn-outline-primary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'">보낸 쪽지함</button>
           <button
-            class="btn btn-outline-primary sendMsg"
-            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'"
-          >
-            보낸 쪽지함
-          </button>
-          <button
-            class="btn btn-outline-primary receiveMsg"
-            onclick="location.href='#'"
+                  class="btn btn-outline-primary receiveMsg"
+                  onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myReceiveMsg'"
           >
             받은 쪽지함
           </button>
@@ -333,7 +327,6 @@ file="../header_footer/header.jspf"%>
               <th>보낸사람</th>
               <th>내용</th>
               <th>날짜</th>
-              <th>안읽은 쪽지</th>
             </tr>
           </thead>
           <tbody>
@@ -341,9 +334,8 @@ file="../header_footer/header.jspf"%>
               <c:forEach var="mVO" items="${mVO}">
                 <tr>
                   <td>${mVO.user_userid1}</td>
-                  <td>${mVO.content}</td>
+                  <td><a style="display: inline-block; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${mVO.content}</a></td>
                   <td>${mVO.date}</td>
-                  <td>${mVO.ischeck}</td>
                 </tr>
               </c:forEach>
             </div>
@@ -352,7 +344,7 @@ file="../header_footer/header.jspf"%>
         <!-- 페이징 -->
         <div class="paging_wrapper" style="margin: 0 auto;">
           <c:if test="${pVO.totalRecord == 0}">
-            보낸 쪽지가 없습니다
+            <p style="width: 100%; text-align: center">보낸 쪽지가 없습니다</p>
           </c:if>
           <c:if test="${pVO.totalRecord > 0}">
           <ul class="paging">

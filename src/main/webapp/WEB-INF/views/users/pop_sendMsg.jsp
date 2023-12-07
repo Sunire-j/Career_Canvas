@@ -49,9 +49,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <textarea
         class="form-control"
         style="resize: none; margin-top: 40px"
-        rows="10"
+        rows="5"
         name="content"
         id="content"
+        maxlength="80"
       ></textarea>
       <input
         type="submit"

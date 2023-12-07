@@ -244,6 +244,38 @@
         .userInterest span {
             margin-right: 5px;
         }
+        .img_C{
+            width:235px;
+            margin-left: 30px;
+        }
+        .content_category, .content_title{
+            display: inline;
+            height: 40px;
+            line-height: 40px;
+        }
+        .content_category{
+            height: 30px;
+            margin-top: 10px;
+            margin-right: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            text-align: center;
+            padding: 5px 5px 5px 10px;
+        }
+
+        .content img {
+            width: 235px;
+            height: 235px;
+            border-radius: 30px;
+
+        }
+
+        .profile_img>img {
+            width: 160px;
+            height: 160px;
+            border-radius: 40px;
+
+        }
     </style>
 </head>
 <body>
@@ -320,21 +352,36 @@
     </div>
 
     <!-- ajax View -->
-    <div class="ajaxView_wrapper">
+    <div style="margin: 0 auto; margin-top: 30px; ">
+        <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
         <c:forEach var="list" items="${list}">
-            <div class="ajaxContent">
-                <a
-                        href="#"
-                        style="border: solid 1px #ddd; width: 220px; height: 170px"
-                ><img
-                        src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}"
-                        alt=""
-                /></a>
-                <div>
-                    <a href="#"><p>${list.portfoliotitle}</p></a>
+            <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${list.portfolioid}">
+            <div class="img_C">
+                <img src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}" class="portfolio_img">
+                <!-- line 1 -->
+                <div class="content_info">
+                    <div class="content_category">
+                        <c:if test="${list.category==0}">
+                            분류없음
+                        </c:if>
+                        <c:if test="${list.category==1}">
+                            IT/개발
+                        </c:if>
+                        <c:if test="${list.category==2}">
+                            디자인
+                        </c:if>
+                        <c:if test="${list.category==3}">
+                            영상
+                        </c:if>
+                    </div>
+                    <div class="content_title">
+                            ${list.portfoliotitle}
+                    </div>
                 </div>
             </div>
+            </a>
         </c:forEach>
+        </ul>
     </div>
     <!-- 페이징 -->
     <c:if test="${pVO.totalRecord == 0}">
