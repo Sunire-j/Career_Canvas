@@ -4,6 +4,40 @@
     <select id="SelectCompany" resultType="com.team1.careercanvas.vo.UserVO">
         select * from user where userid=#{param1} and usertype=1
     </select>
+
+    <insert id="SubjectWrite">
+        insert into subject (user_userid, subjecttitle, subjectcontent, category)
+        values (#{user_userid} , #{subjecttitle}, #{subjectcontent}, #{category});
+        <selectKey keyProperty="subjectid" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+
+    <update id="insertSubjectImg">
+        update subject
+        set imgsrc=#{param1}
+        where subjectid=#{param2}
+    </update>
+
+    <select id="SelectSubject" resultType="com.team1.careercanvas.vo.SubjectVO">
+        select s.subjectid as subjectid,
+               s.subjecttitle as subjecttitle,
+               s.subjectcontent as subjectcontent,
+               s.date as date,
+               s.category as category,
+               u.username as username,
+               s.user_userid as user_userid
+        from subject s
+             join  user u on u.userid = s.user_userid
+        where s.subjectid=#{param1}
+    </select>
+
+    <insert id="Insertdelapply">
+        insert into subject_delapply(subjectid, reason, userid)
+        values (#{param1}, #{param2}, #{param3})
+    </insert>
+
 </mapper>
 
 

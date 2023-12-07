@@ -15,4 +15,5 @@ public class SubjectVO {
     private String user_userid;
     private String imgsrc;
     private int category;
+    private String username;
 }
