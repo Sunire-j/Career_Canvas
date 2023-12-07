@@ -336,7 +336,7 @@ file="../header_footer/header.jspf"%>
               <c:forEach var="mVO" items="${mVO}">
                 <tr id="msgStyle">
                   <td>${mVO.user_userid1}</td>
-                  <td><a style="display: inline-block; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${mVO.content}</a></td>
+                  <td><a style="display: inline-block; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="${mVO.content}">${mVO.content}</a></td>
                   <td>${mVO.date}</td>
                 </tr>
               </c:forEach>
@@ -402,6 +402,12 @@ file="../header_footer/header.jspf"%>
       <div style="width: 60%; text-align: right; margin:0 auto;">
       <input type="button" value="쪽지보내기" class="btn btn-outline-primary" onclick="openPopup()">
           <script>
+            $(function(){
+              var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+              var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+              })
+            });
             function openPopup(){
 
               var left = (window.innerWidth - 700) / 2;
