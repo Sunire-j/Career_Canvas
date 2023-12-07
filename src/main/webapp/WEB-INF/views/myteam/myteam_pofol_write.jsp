@@ -228,7 +228,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
   </head>
   <body>
     <div class="content">
-      <div class="content-header" style="margin-bottom: 30px">
+      <div class="content-header">
         <h3>포트폴리오 작성</h3>
       </div>
         <form
@@ -238,11 +238,11 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
           class="needs-validation writeform"
           novalidate
         >
-          <input type="hidden" id="content" name="postcontent" />
-          <div style="#D9D9D9">
+          <div style="background: #D9D9D9; padding: 20px; border-bottom: 2px solid #73351F">
+          <input type="hidden" id="content" name="postcontent"/>
           <input
             type="text"
-            style="width: 40%"
+            style="width: 40%;"
             class="form-control"
             name="posttitle"
             id="title"
@@ -281,7 +281,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             </c:forEach>
           </div>
         </div>
-      <div style="background: #F2F2F2">
+      <div style="background: #F2F2F2; padding: 10px">
         <div id="editor"></div>
         <div id="botContainer">
           <div style="width: 50%" class="botContainer2">

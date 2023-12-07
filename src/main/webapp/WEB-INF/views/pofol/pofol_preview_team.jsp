@@ -13,6 +13,12 @@
     <script src="https://kit.fontawesome.com/2026ef433b.js" crossorigin="anonymous"></script>
     <style>
         /*-----------------------------------------------*/
+        .container {
+            margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+        }
         * {
             padding: 0;
             margin: 0;
@@ -131,7 +137,7 @@
         }
         .content{
             display: flex;
-            width: 1200px;
+            width: 1100px;
             flex-wrap: wrap;
         }
 
@@ -279,51 +285,68 @@
             color: black;
             border-radius: 6px;
         }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
+        }
     </style>
 </head>
 
 <body>
     <section>
-        <article>
-            
-            <!-- 여기부터 -->
-            <div class="portfolio">
-                <h1>포트폴리오</h1>
-                <p>내용채우기</p>
-                
-                <!-- select -->
-                <div style="display: flex; padding: 5px 20px 20px 20px; gap:10px;">
-                  <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
-                      <option value="1"
-                              <c:if test="${pVO.postSort==1}">
-                                  selected
-                              </c:if>
-                      >최신순
-                      </option>
-                      <option value="2" <c:if test="${pVO.postSort==2}">
-                          selected
-                      </c:if>>조회순
-                      </option>
-                      <option value="3" <c:if test="${pVO.postSort==3}">
-                          selected
-                      </c:if>>추천순
-                      </option>
-                  </select>
-                  <select class="form-select" style="width: fit-content;" name="category" id="category">
-                      <option value="0">카테고리</option>
-                      <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
-                      <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
-                      <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
-                  </select>
-                    <button class="btn btn-outline-primary" onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview'">개인</button>
-                    <button class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview/team'">팀</button>
-              </div>
-              
-
-              <!-- search -->
-              
-
-                <!-- 리스트 레이아웃 -->
+        <article class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+            <div class="container-head"></div>
+            <div style="padding: 20px 40px 20px 40px">
+                <div class="portfolio">
+                    <h1>포트폴리오</h1>
+                    <div style="display: flex; padding: 5px 20px 20px 0px; gap:10px;">
+                      <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+                          <option value="1"
+                                  <c:if test="${pVO.postSort==1}">
+                                      selected
+                                  </c:if>
+                          >최신순
+                          </option>
+                          <option value="2" <c:if test="${pVO.postSort==2}">
+                              selected
+                          </c:if>>조회순
+                          </option>
+                          <option value="3" <c:if test="${pVO.postSort==3}">
+                              selected
+                          </c:if>>추천순
+                          </option>
+                      </select>
+                      <select class="form-select" style="width: fit-content;" name="category" id="category">
+                          <option value="0">카테고리</option>
+                          <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
+                          <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
+                          <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
+                      </select>
+                        <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview'">개인</button>
+                        <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview/team'">팀</button>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F;">
+            <div style="padding: 20px 40px 40px 40px">
                 <div class="portfolio_content">
                     <ul class="content">
                         <c:forEach items="${pofolVO}" var="p">
@@ -435,7 +458,9 @@
               </div>
             </div>
             </div>
-        </article>
+            <div class="container_bottom"></div>
+        </div>
+        </div>
     </section>
     <script>
       $(function(){
