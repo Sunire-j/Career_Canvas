@@ -101,8 +101,8 @@
         <a href="${pageContext.servletContext.contextPath}/admin/user/stats"> 유저 현황 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/board/stats"> 게시판 현황 </a>
         <a href="${pageContext.servletContext.contextPath}/" style="position: absolute; bottom: 90px;">메인 페이지 이동</a>
-        <p style="position: absolute; bottom: 50px;">당일 접속 유저 : 500명</p>
-        <p style="position: absolute; bottom: 20px;">누적 접속 유저 : 50만명ㅋ</p>
+        <p style="position: absolute; bottom: 50px;">당일 접속 유저 : ${today}명</p>
+        <p style="position: absolute; bottom: 20px;">누적 접속 유저 : ${all}명</p>
     </div>
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">

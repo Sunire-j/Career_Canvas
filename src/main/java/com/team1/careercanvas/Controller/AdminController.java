@@ -29,10 +29,10 @@ public class AdminController {
 
     @GetMapping("/admin/member") // 개인회원관리
     public ModelAndView member(HttpSession session,
-            @RequestParam(required = false, defaultValue = "1") int postSort,
-            @RequestParam(required = false) String searchKey,
-            @RequestParam(required = false) String searchWord,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+                               @RequestParam(required = false, defaultValue = "1") int postSort,
+                               @RequestParam(required = false) String searchKey,
+                               @RequestParam(required = false) String searchWord,
+                               @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
         pvo.setSearchKey(searchKey);
@@ -47,14 +47,16 @@ public class AdminController {
         List<UserVO> list = mapper.getUserProfile(pvo);
         mav.addObject("uVO", list);
         mav.addObject("pVO", pvo);
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
         mav.setViewName("/admin/admin_member");
 
         return mav;
     }
 
-    @GetMapping("/admin/board") // 게시판 - 실시간 모니터링
+    @GetMapping("/admin/board") // 게시판 - 실시간 모니터링 리스트
     public ModelAndView board(HttpSession session,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+                              @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
         PagingVO pvo = new PagingVO();
@@ -64,17 +66,19 @@ public class AdminController {
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
-        List<BoardVO> list = mapper.getBoardList();
+        List<BoardVO> list = mapper.getBoardList(pvo);
         mav.addObject("bVO", list);
         mav.addObject("pVO", pvo);
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
         mav.setViewName("/admin/admin_board");
 
         return mav;
     }
 
-    @GetMapping("/admin/report") // 신고 게시글 관리
+    @GetMapping("/admin/report") // 신고 게시글 관리 리스트
     public ModelAndView report(HttpSession session,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+                               @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
         PagingVO pvo = new PagingVO();
@@ -84,9 +88,11 @@ public class AdminController {
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
-        List<ReportVO> list = mapper.getReportList();
+        List<ReportVO> list = mapper.getReportList(pvo);
         mav.addObject("rVO", list);
         mav.addObject("pVO", pvo);
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
         mav.setViewName("admin/report_board");
 
         return mav;
@@ -94,7 +100,7 @@ public class AdminController {
 
     @GetMapping("/admin/delete") // 삭제 신청 과제 리스트
     public ModelAndView assignment(HttpSession session,
-            @RequestParam(required = false, defaultValue = "1") int page) {
+                                   @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
         PagingVO pvo = new PagingVO();
@@ -104,9 +110,11 @@ public class AdminController {
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
-        List<SubjectVO> list = mapper.getDeleteList();
+        List<SubjectVO> list = mapper.getDeleteList(pvo);
         mav.addObject("sVO", list);
         mav.addObject("pVO", pvo);
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
         mav.setViewName("admin/delete_assignment");
 
         return mav;
@@ -266,41 +274,55 @@ public class AdminController {
     }
 
     @GetMapping("/admin/user/stats")
-    public ModelAndView userStats() {
+    public ModelAndView userStats(HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("member",mapper.getUserCount());
-        mav.addObject("company",mapper.getCompanyCount());
-        mav.addObject("newMember",mapper.getNewMember());
-        mav.addObject("accessor",mapper.getAccessor());
+
+        String name = mapper.getAdminName((String) session.getAttribute("LogId"));
+        mav.addObject("name", name);
+
+        mav.addObject("member", mapper.getUserCount());
+        mav.addObject("company", mapper.getCompanyCount());
+        mav.addObject("newMember", mapper.getNewMember());
+        mav.addObject("accessor", mapper.getAccessor());
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
         mav.setViewName("admin/admin_user_stats");
         return mav;
     }
 
     @GetMapping("/admin/board/stats")
-    public ModelAndView boardStats() {
+    public ModelAndView boardStats(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        String name = mapper.getAdminName((String) session.getAttribute("LogId"));
+        mav.addObject("name", name);
+
         mav.addObject("bVO", mapper.getBoardCount());
         mav.addObject("rVO", mapper.getReportCount());
         mav.addObject("today", mapper.getBoardToday());
         mav.addObject("month", mapper.getBoardMonth());
         mav.addObject("category", mapper.getBoardCategory());
-        System.out.println(mapper.getBoardMonth());
-        System.out.println(mapper.getBoardCategory());
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
         mav.setViewName("admin/admin_board_stats");
         return mav;
     }
 
     // 권혁준 작업
     @GetMapping("/admin/banner")
-    public ModelAndView banner(PagingVO pVO) {
+    public ModelAndView banner(PagingVO pVO, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         List<BannerVO> bVO = mapper.getBannerList();
         pVO.setOnePageRecord(10);
         pVO.setTotalRecord(mapper.getBannerAmount(pVO));
         pVO.setPage(pVO.getPage());
 
-        System.out.println(pVO);
+        String name = mapper.getAdminName((String) session.getAttribute("LogId"));
+        mav.addObject("name", name);
+
         mav.addObject("bannerVO", bVO);
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
         mav.setViewName("/admin/admin_banner");
         return mav;
     }
@@ -328,7 +350,7 @@ public class AdminController {
         if (!bannerimg.isEmpty()) {
             // 파일저장시작
             String extension = bannerimg.getOriginalFilename().substring(bannerimg.getOriginalFilename().lastIndexOf("."));
-            String newFileName = bvo.getBannerid() + "_" +extension;
+            String newFileName = bvo.getBannerid() + "_" + extension;
             String projectDir = new File("").getAbsolutePath();
             File directory = new File(projectDir + "/upload/bannerimg");
             if (!directory.exists()) {
