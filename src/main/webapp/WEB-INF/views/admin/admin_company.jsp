@@ -156,15 +156,48 @@
                         location.href=url;
                     }
                 }
+                $(function(){
+                    $("#postSort").change(function () {
+                        var sortValue = $(this).val();
+                        location.href = "${pageContext.servletContext.contextPath}/admin/company?postSort=" + sortValue;
+                    });
+
+                    $("#searchBtn").on('click', function () {
+                        location.href = "${pageContext.servletContext.contextPath}/admin/company?postSort=" + $("#postSort").val()
+                            + "&searchKey=" + $("#searchKey").val() + "&searchWord=" + $("#searchWord").val();
+                    });
+                });
+
             </script>
         </table>
         <div class="pagination-container">
             <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
+                <c:if test="${pVO.page==1}">
+                    <
+                </c:if>
+                <c:if test="${pVO.page>1}">
+                    <a href="${pageContext.servletContext.contextPath}/admin/company?page=${pVO.page-1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}"><</a>
+                </c:if>
+                <c:forEach var="pvo" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                    <c:if test="${pvo <= pVO.totalPage}">
+                        <a href="${pageContext.servletContext.contextPath}/admin/company?page=${pvo}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}">${pvo}</a>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${pVO.totalPage==pVO.page}">
+                    >
+                </c:if>
+                <c:if test="${pVO.totalPage>pVO.page}">
+                    <a href="${pageContext.servletContext.contextPath}/admin/company?page=${pVO.page+1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}">></a>
+                </c:if>
             </div>
+        </div>
+        <div class="search-container">
+            <select style="height:30px" name="searchKey" id="searchKey">
+                <option value="username">이름</option>
+                <option value="userid">아이디</option>
+            </select>
+            <input type="text" name="searchWord" id="searchWord" placeholder="검색어를 입력하세요." style="height: 30px"/>
+            <button id="searchBtn">검색</button>
         </div>
     </div>
 </div>

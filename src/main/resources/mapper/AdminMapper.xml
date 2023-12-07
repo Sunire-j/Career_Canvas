@@ -257,7 +257,7 @@
                 order by u.date desc
             </when>
             <when test="postSort==4">
-                order by c.isaccept desc;
+                order by c.isaccept desc
             </when>
         </choose>
 limit #{onePageRecord} offset #{offsetPoint}

@@ -148,18 +148,18 @@
                     <
                 </c:if>
                 <c:if test="${pVO.page>1}">
-                    <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page-1}"><</a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page-1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}"><</a>
                 </c:if>
                 <c:forEach var="pvo" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                     <c:if test="${pvo <= pVO.totalPage}">
-                        <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pvo}">${pvo}</a>
+                        <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pvo}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}">${pvo}</a>
                     </c:if>
                 </c:forEach>
                 <c:if test="${pVO.totalPage==pVO.page}">
                     >
                 </c:if>
                 <c:if test="${pVO.totalPage>pVO.page}">
-                    <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page+1}">></a>
+                    <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page+1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}">></a>
                 </c:if>
             </div>
         </div>

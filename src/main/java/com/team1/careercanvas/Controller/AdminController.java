@@ -392,7 +392,7 @@ public class AdminController {
         //mav에 넣기
 
         mav.addObject("cVO", list);
-        mav.addObject("pvo", pvo);
+        mav.addObject("pVO", pvo);
         mav.setViewName("/admin/admin_company");
 
         return mav;
