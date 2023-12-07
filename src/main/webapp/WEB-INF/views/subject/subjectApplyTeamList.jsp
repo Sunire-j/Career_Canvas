@@ -300,7 +300,7 @@
                     <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제</button>
                 </div>
                 </div>
-                <div class="btn-group">
+                <div class="btn-group" style="padding-left: 20px;">
                     <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
                     <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
                 </div>
@@ -418,7 +418,7 @@
             var checked = $("#category").val(${pVO.category});
             checked.change(function(){
                 var selectedValue = $(this).val();
-                window.location.href = "${pageContext.servletContext.contextPath}/subject?category=" + selectedValue;
+                window.location.href = "${pageContext.servletContext.contextPath}/subject/apply/team?category=" + selectedValue;
             });
         });
     </script>

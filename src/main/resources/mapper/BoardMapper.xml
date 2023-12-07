@@ -351,6 +351,13 @@
 
     <select id="getSubjectApplyCount" resultType="Integer">
         select count(applyid)
-        from subjectapply;
+        from subjectapply
+        where isteam=1;
+    </select>
+
+    <select id="getSubjectApplyTeamCount" resultType="Integer">
+        select count(applyid)
+        from subjectapply
+        where isteam=0;
     </select>
 </mapper>

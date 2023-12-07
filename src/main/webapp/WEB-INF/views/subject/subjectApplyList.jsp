@@ -299,20 +299,12 @@
                 <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject'" >기업과제</button>
                 <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제</button>
             </div>
-            <div class="btn-group">
+            </div>
+            <div class="btn-group" style="padding-left: 20px;">
                 <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
                 <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
             </div>
-            </div>
-            <script>
-                $(function(){
-                    var checked = $("#category").val(${pVO.category});
-                    checked.change(function(){
-                        var selectedValue = $(this).val();
-                        window.location.href = "${pageContext.servletContext.contextPath}/subject?category=" + selectedValue;
-                    });
-                });
-            </script>
+            
 
     <!-- 리스트 레이아웃 -->
     <div class="portfolio_content">
@@ -422,5 +414,14 @@
         </div>
         </article>
     </section>
+    <script>
+        $(function(){
+            var checked = $("#category").val(${pVO.category});
+            checked.change(function(){
+                var selectedValue = $(this).val();
+                window.location.href = "${pageContext.servletContext.contextPath}/subject/apply?category=" + selectedValue;
+            });
+        });
+    </script>
 </body>
 </html>
