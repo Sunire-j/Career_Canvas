@@ -4,6 +4,9 @@ import com.team1.careercanvas.mapper.BoardMapper;
 import com.team1.careercanvas.mapper.CommentMapper;
 import com.team1.careercanvas.vo.BoardVO;
 import com.team1.careercanvas.vo.PagingVO;
+import com.team1.careercanvas.vo.PofolVO;
+import com.team1.careercanvas.vo.SubjectVO;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -274,5 +277,41 @@ public class BoardController {
     @GetMapping("/mypage/sendMsgView")
     public String sendMsg() {
         return "users/mypage_sendMsgView";
+    }
+
+    // 권혁준 작업
+    @GetMapping("/subject")
+    public ModelAndView subject(PagingVO pVO) {
+        ModelAndView mav = new ModelAndView();
+        pVO.setOnePageRecord(12);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getSubjectListAmount());
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        List<SubjectVO> sVO = mapper.getSubjectList(pVO);
+
+        System.out.println(pVO + "!!!!  ");
+        mav.addObject("sVO", sVO);
+        mav.addObject("pVO", pVO);
+        mav.setViewName("/subject/subjectList");
+        return mav;
+    }
+
+    @GetMapping("/subject/apply")
+    public ModelAndView subjectApply(PagingVO pVO) {
+        ModelAndView mav = new ModelAndView();
+        pVO.setOnePageCount(12);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getSubjectApplyCount());
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        List<SubjectVO> SubjectVO = mapper.getSubjectApplyList(pVO);
+        System.out.println(SubjectVO);
+        mav.addObject("sVO", SubjectVO);
+        mav.addObject("pVO", pVO);
+        mav.setViewName("/subject/subjectApplyList");
+        return mav;
     }
 }

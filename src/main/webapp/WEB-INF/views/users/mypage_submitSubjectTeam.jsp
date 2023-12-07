@@ -240,6 +240,15 @@ file="../header_footer/header.jspf"%>
       .paging li {
         margin: 0 20px;
       }
+      .viewList {
+        width: 70%;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        column-gap: 20px;
+        row-gap: 10px;
+        margin: 0 auto;
+        margin-top: 50px;
+      }
     </style>
   </head>
   <body>
@@ -312,8 +321,8 @@ file="../header_footer/header.jspf"%>
       
 
       <!-- ajax View -->
-      <div class="ajaxView_wrapper">
-        <div class="container mt-3" style="text-align: center; display:flex; justify-content: center; gap: 20px;">
+      <div class="button" >
+        <div class="container mt-3" style="text-align: center; display:flex; gap: 20px; justify-content: center;" >
           <button
             class="btn btn-outline-primary sendMsg"
             onclick="location.href='${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo'"
@@ -323,27 +332,29 @@ file="../header_footer/header.jspf"%>
           </button>
           <button
             class="btn btn-outline-primary receiveMsg"
-            onclick="location.href='#'"
+            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/submitSubjectTeam'"
             style="width: 60px;"
           >
             팀
           </button>
         </div>
-      </div>
-      <div class="submitSubjectTeam" style="width: 61%; margin: 0 auto">
-        <c:forEach var="sVO" items="${sVO}">
-          <img
-            src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
-          />
-          <p>${sVO.subjecttitle}</p>
-        </c:forEach>
-      </div>
+      
+      <!-- DB리스트 -->
+   
+        
+          <div class="viewList">
+            <c:forEach var="sVO" items="${sVO}">
+              <div>
+                <img style="width: 170px; height: 170px;"
+                  src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
+                />
+                <p>${sVO.subjecttitle}</p>
+              </div>
+          </c:forEach>
+          </div>
 
       <!-- 페이징 -->
       <div class="paging_wrapper" style="margin: 0 auto;">
-        <c:if test="${pVO.totalRecord == 0 }">
-          <p style="text-align: center; margin-top: 20px;">제출한 과제가 없습니다</p>
-        </c:if>
         <c:if test="${pVO.totalRecord > 0 }">
         <ul class="paging">
           <!-- 이전 -->
@@ -398,7 +409,7 @@ file="../header_footer/header.jspf"%>
       <form
         class="input-group mb-3"
         style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
+        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectTeam"
         method="GET"
       >
         <input

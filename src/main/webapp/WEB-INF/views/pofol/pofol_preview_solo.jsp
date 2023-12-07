@@ -471,7 +471,7 @@
       $(function(){
         $('#category').val(${pVO.category});
             $('#category').change(function () {
-                selectedValue = $(this).val();
+                var selectedValue = $(this).val();
                 window.location.href = "${pageContext.servletContext.contextPath}/pofol_preview/?category=" + selectedValue;
                 
             });

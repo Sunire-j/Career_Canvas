@@ -3,6 +3,9 @@ package com.team1.careercanvas.mapper;
 import com.team1.careercanvas.vo.BoardVO;
 import com.team1.careercanvas.vo.CommentVO;
 import com.team1.careercanvas.vo.PagingVO;
+import com.team1.careercanvas.vo.PofolVO;
+import com.team1.careercanvas.vo.SubjectVO;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -45,4 +48,13 @@ public interface BoardMapper {
     int CheckValid(int postid, String userid);
 
     int GetLikeAmount(int postid);
+
+    // 권혁준 작업
+    List<SubjectVO> getSubjectList(PagingVO pVO);
+
+    List<SubjectVO> getSubjectApplyList(PagingVO pVo);
+
+    int getSubjectListAmount();
+
+    int getSubjectApplyCount();
 }
