@@ -514,7 +514,7 @@ public class UserController {
             pVO.setSearchWord("");
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
-        pVO.setOnePageRecord(4);
+        pVO.setOnePageRecord(12);
         pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(pofolmapper.getPofolCount(pVO));
 
@@ -758,15 +758,17 @@ public class UserController {
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
         pVO.setOnePageRecord(4);
-        pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(mapper.getSubjectTeamAmount(pVO));
+        pVO.setPage(pVO.getPage());
 
-        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam((String) session.getAttribute("LogId"), pVO);
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        List<SubmitSubjectVO> sVO = mapper.getSubmitSubjectTeam(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
+        System.out.println(sVO);
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);

@@ -170,9 +170,14 @@
     </select>
 
     <select id="getmyComment" parameterType="com.team1.careercanvas.vo.PagingVO" resultType="com.team1.careercanvas.vo.CommentVO">
-        select *
+        SELECT comment.commentid as commentid, 
+        comment.post_postid as post_postid,
+        post.posttitle as username, 
+        comment.commentcontent as commentcontent,
+        comment.date as date
         from comment
-        where user_userid = #{searchKey}
+        join post on comment.post_postid = post.postid
+        where comment.user_userid = #{searchKey}
         and isdelete = 0
         <if test="#{searchWord != ''}">       
             and commentcontent like concat('%', #{searchWord} ,'%')
@@ -206,4 +211,100 @@
         values (#{param1}, #{param2}, #{param3}, 1);
     </insert>
     
+<select id="getSubjectList" resultType="com.team1.careercanvas.vo.SubjectVO">
+		 SELECT s.subjecttitle AS subjecttitle,
+        s.subjectid AS subjectid,
+        u.username AS user_userid,
+        s.imgsrc AS imgsrc,
+        s.category as category,
+        u.profileimg
+    FROM subject s
+        JOIN user u ON s.user_userid = u.userid
+		<choose>
+			<when test="category == 0">
+				where 1=1
+			</when>
+			<when test="category == 1">
+				where s.category = "1"
+			</when>
+			<when test="category == 2">
+				where s.category = "2"
+			</when>
+			<when test="category == 3">
+				where s.category = "3"
+			</when>
+		</choose>	
+		<choose>
+			<when test="searchKey == 'all'">
+                AND (s.subjecttitle LIKE CONCAT('%', #{searchWord}, '%')
+				OR u.username LIKE CONCAT('%', #{searchWord}, '%')
+				or s.subjectcontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </when>
+			<when test="searchKey == 'title'">
+				and s.subjecttitle like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchKey == 'author'">
+				and u.username like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchKey == 'content'">
+				and s.subjectcontent like CONCAT('%', #{searchWord}, '%')
+			</when>
+		</choose>
+		limit #{onePageRecord} offset #{offsetPoint}
+	</select>
+
+    <select id="getSubjectApplyList" resultType="com.team1.careercanvas.vo.SubjectVO">
+		SELECT
+            sa.applyimg as imgsrc,
+            sa.applycontent as subjectcontent,
+            s.subjecttitle as subjecttitle,
+            s.category as category,
+            u.username as user_userid,
+            u.profileimg as profileimg
+        FROM subjectapply sa
+        LEFT JOIN subject s ON s.subjectid = sa.subject_subjectid
+        LEFT JOIN user u ON u.userid = sa.user_userid
+        WHERE 1=1
+        <choose>
+            <when test="category == 0">
+                AND 1=1
+            </when>
+            <when test="category == 1">
+                AND s.category = '1'
+            </when>
+            <when test="category == 2">
+                AND s.category = '2'
+            </when>
+            <when test="category == 3">
+                AND s.category = '3'
+            </when>
+        </choose>
+        <choose>
+            <when test="searchKey == 'all'">
+                AND (s.subjecttitle LIKE CONCAT('%', #{searchWord}, '%')
+                OR u.username LIKE CONCAT('%', #{searchWord}, '%')
+                OR sa.applycontent LIKE CONCAT('%', #{searchWord}, '%'))
+            </when>
+            <when test="searchKey == 'title'">
+                AND s.subjecttitle LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test="searchKey == 'author'">
+                AND u.username LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test="searchKey == 'content'">
+                AND sa.applycontent LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+        </choose>
+        LIMIT #{onePageRecord} OFFSET #{offsetPoint}
+	</select>
+
+    <select id="getSubjectListAmount" resultType="Integer">
+        select count(subjectid)
+        from subject;
+    </select>
+
+    <select id="getSubjectApplyCount" resultType="Integer">
+        select count(applyid)
+        from subjectapply;
+    </select>
 </mapper>

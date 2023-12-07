@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubjectVO {
     private int subjectid;
     private String subjecttitle;
@@ -12,5 +14,5 @@ public class SubjectVO {
     private String date;
     private String user_userid;
     private String imgsrc;
-    private String reason;
+    private int category;
 }

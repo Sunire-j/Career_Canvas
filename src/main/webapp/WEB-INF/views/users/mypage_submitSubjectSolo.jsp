@@ -216,12 +216,7 @@ file="../header_footer/header.jspf"%>
         margin-top: 80px;
         display: flex;
       }
-      .ajaxView_wrapper {
-        width: 100%;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-      }
+
       .userInterest span {
         margin-right: 5px;
       }
@@ -240,6 +235,15 @@ file="../header_footer/header.jspf"%>
       }
       .paging li {
         margin: 0 20px;
+      }
+      .viewList {
+        width: 70%;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        column-gap: 20px;
+        row-gap: 10px;
+        margin: 0 auto;
+        margin-top: 50px;
       }
       
     </style>
@@ -314,7 +318,7 @@ file="../header_footer/header.jspf"%>
       
 
       <!-- ajax View -->
-      <div class="ajaxView_wrapper">
+      <div class="button" >
         <div class="container mt-3" style="text-align: center; display:flex; gap: 20px; justify-content: center;" >
           <button
             class="btn btn-outline-primary sendMsg"
@@ -334,31 +338,26 @@ file="../header_footer/header.jspf"%>
       
       <!-- DB리스트 -->
    
-        <c:forEach var="sVO" items="${sVO}">
-          <div style="width: 70%; margin:0 auto;">
-            <img style="width: 170px; height: 170px;"
-              src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
-            />
-            <p>${sVO.subjecttitle}</p>
+        
+          <div class="viewList">
+            <c:forEach var="sVO" items="${sVO}">
+              <div>
+                <img style="width: 170px; height: 170px;"
+                  src="${pageContext.servletContext.contextPath}/upload${sVO.applyimg}"
+                />
+                <p>${sVO.subjecttitle}</p>
+              </div>
+          </c:forEach>
           </div>
-        </c:forEach>
+        
       
     </div>
 
       <!-- 페이징 -->
       <div class="paging_wrapper" style="margin: 0 auto;">
-        <c:if test="${pVO.totalRecord == 0 }">
-          <p style="text-align: center; margin-top: 20px;">제출한 과제가 없습니다</p>
-        </c:if>
-        <c:if test="${pVO.totalRecord > 0}">
+        <c:if test="${pVO.totalRecord > 0 }">
         <ul class="paging">
-          <!-- 토탈레코드 == 0 -->
-          <c:if test="${pVO.totalRecord == 0}">
-            작성된 글이 없습니다
-          </c:if>
-          <!-- 토틸레코드 > 0 -->
-          <c:if test="${pVO.totalRecord > 0}">
-            <!-- 이전 -->
+          <!-- 이전 -->
           <c:if test="${pVO.page == 1}">
             <li><input type="button" value="<" class="btn btn-outline-primary" disabled></li>
           </c:if>
@@ -402,12 +401,14 @@ file="../header_footer/header.jspf"%>
               </a>
             </li>
           </c:if>
-        </ul>     
+        </ul>
       </c:if>
-      
-        <form
+      </div>
+
+      <!-- 검색창 -->
+      <form
         class="input-group mb-3"
-        style="width: 70%; margin: 20px auto"
+        style="width: 60%; margin: 20px auto"
         action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
         method="GET"
       >
@@ -419,8 +420,6 @@ file="../header_footer/header.jspf"%>
         />
         <button class="btn btn-success" type="submit">Go</button>
       </form>
-      </div>
-    </c:if>
 
     </main>
   </body>

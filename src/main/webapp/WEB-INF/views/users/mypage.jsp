@@ -226,12 +226,6 @@
         .ajaxView {
             float: left;
         }
-
-        .ajaxContent {
-            width: 20%;
-            text-align: center;
-        }
-
         .ajaxContent img {
             width: 170px;
             height: 170px;
@@ -239,8 +233,10 @@
 
         .ajaxView_wrapper {
             width: 70%;
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            column-gap: 20px;
+            row-gap: 10px;
             margin: 0 auto;
             margin-top: 50px;
         }

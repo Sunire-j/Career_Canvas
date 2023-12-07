@@ -202,18 +202,26 @@
     </select>
     
     <select id="getSubmitSubjectTeam" resultType="com.team1.careercanvas.vo.SubmitSubjectVO">
-        SELECT sa.applyid as applyid, sa.applyimg as applyimg, s.subjecttitle as subjecttitle
-        FROM subjectcontributor sc
-        JOIN subjectapply sa ON sc.subjectapply_applyid = sa.applyid
-        JOIN subject s ON sa.subject_subjectid = s.subjectid
-        WHERE sc.user_userid = #{param1}
-        and sa.isteam = 0
+        SELECT subjectapply.applyimg as applyimg,
+        subject.subjecttitle
+        FROM subjectapply
+        JOIN subject ON subject.subjectid = subjectapply.subject_subjectid
+        WHERE subjectapply.user_userid = #{searchKey}
+        AND isteam = 0
+        
+        <if test="#{searchWord != ''}">
+            AND subject.subjecttitle LIKE CONCAT('%', #{searchWord}, '%')
+        </if>
     </select>
 
     <select id="getSubjectTeamAmount" resultType="Integer">
-        select count(subjectapply_applyid)
-        from subjectcontributor
-        where user_userid = #{searchKey}
+        select count(sa.subject_subjectid)
+        from subjectapply sa
+        join subject s on sa.subject_subjectid = s.subjectid
+        where sa.user_userid = #{searchKey} and isteam=0
+        <if test="#{searchWord != ''}">
+            and s.subjecttitle like concat('%', #{searchWord}, '%');
+        </if>
     </select>
 	
     <select id="getPofolAmount" resultType="Integer">

@@ -329,18 +329,9 @@ file="../header_footer/header.jspf"%>
                 <c:forEach var="cVO" items="${cVO}">
                   <tr>
                     <td>${cVO.commentid}</td>
-                    <c:if test="${cVO.post_postid eq 1}">
-                      <td>자유게시판</td>
-                    </c:if>
-                    <c:if test="${cVO.post_postid eq 2}">
-                      <td>질문게시판</td>
-                    </c:if>
-                    <c:if test="${cVO.post_postid eq 3}">
-                      <td>노하우게시판</td>
-                    </c:if>
-                    
+                    <td>${cVO.username}</td>
                     <c:if test="${cVO.isdelete eq 0}">
-                      <td>${cVO.commentcontent}</td>
+                      <td><a href="${pageContext.servletContext.contextPath}/board/view?no=${cVO.post_postid}">${cVO.commentcontent}</a></td>
                     </c:if>
                     <td>${cVO.date}</td>
                   </tr>
