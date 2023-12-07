@@ -325,7 +325,14 @@
                     <div class="profile_img">
                         <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}">
                     </div>
-
+                    <div>
+                        <p>관심분야</p>
+                        <div class="userInterest" style="display: flex; flex-wrap: wrap">
+                            <c:forEach var="interest" items="${interest}">
+                                <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+                            </c:forEach>
+                        </div>
+                    </div>
                     <div class="profile_info">
                         <div class="info_name"><b>${uVO.username }</b></div>
                         <div class="info_email">${uVO.useremail}</div>

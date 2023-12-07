@@ -32,6 +32,7 @@ public class ProfileController {
 	public ModelAndView profileInfo(@RequestParam("uid") String userid,
 									@RequestParam(required = false, defaultValue = "1")int page ) {
 		UserVO uservo = usermapper.getUserInfo(userid);
+
 		int pofolamount = pofolmapper.getpofolamount(userid);
 		int subjectamount = subjectmapper.getApplyamountSolo(userid);
 
@@ -46,6 +47,12 @@ public class ProfileController {
 		pvo.setSearchWord(userid);
 		
 		ModelAndView mav =new ModelAndView();
+
+		if(uservo.getInterest()!=null){
+			String[] interestArr = uservo.getInterest().split(",");
+			System.out.println("arr size : "+interestArr.length);
+			mav.addObject("interest", interestArr);
+		}
 		List<PofolVO> pofolvo = pofolmapper.getPofolInfo(pvo);
 		mav.addObject("uVO", uservo);
 		mav.addObject("pCount", pofolamount);
