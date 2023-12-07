@@ -127,6 +127,8 @@
             justify-content: center;
             height: 100px;
             align-items: center;
+            margin: 30px 0px;
+            font-size: 20px;
         }
 
         .top div {
@@ -152,20 +154,20 @@
         <a href="${pageContext.servletContext.contextPath}/admin/report"> 신고 게시글 관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/delete"> 과제 삭제 신청 목록 </a>
         <h3>배너관리</h3>
-        <a href=""> 배너 관리 </a>
+        <a href="${pageContext.servletContext.contextPath}/admin/banner"> 배너 관리 </a>
         <h3>통계</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/user/stats"> 유저 현황 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/board/stats"> 게시판 현황 </a>
         <a href="${pageContext.servletContext.contextPath}/" style="position: absolute; bottom: 90px;">메인 페이지 이동</a>
-        <p style="position: absolute; bottom: 50px;">당일 접속 유저 : 500명</p>
-        <p style="position: absolute; bottom: 20px;">누적 접속 유저 : 50만명ㅋ</p>
+        <p style="position: absolute; bottom: 50px;">당일 접속 유저 : ${today}명</p>
+        <p style="position: absolute; bottom: 20px;">누적 접속 유저 : ${all}명</p>
     </div>
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
         <div class="top">
-            <div>전체 게시글 : ${bVO}</div>
-            <div>오늘 업로드 된 게시글 : ${today}</div>
-            <div>신고 된 게시글 : ${rVO}</div>
+            <div class="container p-5 my-5 bg-primary text-white">전체 게시글 : ${bVO}</div>
+            <div class="container p-5 my-5 bg-primary text-white">오늘 업로드 된 게시글 : ${today}</div>
+            <div class="container p-5 my-5 bg-primary text-white">신고 된 게시글 : ${rVO}</div>
         </div>
         <div style="width: 50%; display: flex;  align-items: center">
             <canvas id="board_chart"></canvas>
