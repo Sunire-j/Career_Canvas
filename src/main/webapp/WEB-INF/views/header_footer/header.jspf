@@ -43,6 +43,7 @@
         }
         .headerstyle{
             width: 100%;
+            border-bottom: 3px solid #73351F;
         }
 
         .space {
@@ -89,14 +90,14 @@
         /* NavBar */
 
         .nav_wrapper {
+            display: grid;
             align-items: center;
         }
 
         .navBar, .infoGroup {
             display: flex;
             justify-content: center;
-
-            height: 50%;
+            align-items: center;
             padding: 0;
             margin: 0;
         }
@@ -231,7 +232,7 @@
 </head>
 <body>
     <header>
-        <div class="headerstyle" style="background: #F2F2F2; display: flex; justify-content: space-between; height: 120px;">
+        <div class="headerstyle" style="background: #CFBFA1; display: flex; justify-content: space-between; height: 120px;">
             <!-- Title -->
             <div class="title">
                 <a class="logo" href="${pageContext.servletContext.contextPath}/" style="margin-left: 50px; ">CAREER CANVAS</a>

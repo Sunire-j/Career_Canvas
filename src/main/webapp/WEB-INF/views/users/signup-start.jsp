@@ -41,7 +41,8 @@
         </div>
         <main class="container-main">
             <hr class="hr-styleset" style="padding-left: 20px; padding-right: 20px">
-            <div class="textbar">Career Canvas는 개인정보보호법 등 관련 법령상의 개인정보 보호 규정을 준수하며 사용자의 개인정보 보호에 최선을 다하고 있습니다.  Career Canvas은(는)  개인정보보호법 제15조 및 같은 법 제22조에 근거하여, 다음과 같이 수집․이용을 위하여 개인정보를 수집․이용하는데 동의를 받고자 합니다.
+            <div class="textbar" style="padding: 10px">Career Canvas는 개인정보보호법 등 관련 법령상의 개인정보 보호 규정을 준수하며 사용자의 개인정보 보호에 최선을 다하고 있습니다.  Career Canvas은(는)  개인정보보호법 제15조 및 같은 법 제22조에 근거하여, 다음과 같이 수집․이용을 위하여 개인정보를 수집․이용하는데 동의를 받고자 합니다.
+                <br>
                 <br>1. 개인정보의 수집․이용 목적
                 <br>2. 수집하는 개인정보의 항목
                 <br>3. 개인정보의 보유 및 이용 기간

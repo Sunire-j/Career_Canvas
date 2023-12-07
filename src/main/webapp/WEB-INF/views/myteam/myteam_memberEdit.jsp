@@ -11,6 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
     <style>
+        .container {
+            margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+        }
         p{
             margin: 0;
         }
@@ -148,6 +154,7 @@
             background-color: #e9ecef;
             padding: 10px;
             border-radius: 10px;
+            border: 1px solid #73351F;
 
         }
         .member_list{
@@ -229,6 +236,27 @@
             font-weight: bold;
             line-height: 80px;
             font-size: 1.2em;
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
         }
     </style>
     <script>
@@ -326,92 +354,97 @@
     </script>
 </head>
 <body>
-<main class="container">
-    <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+<main class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+    <div class="container-head"></div>
+    <div style="padding: 40px 40px 20px 40px">
+        <div class="mypartyvalue">
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+            <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+        </div>
+        <div class="mypartylist">
+            <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
+            <hr>
+        </div>
+        <ul class="party_list">
+                <c:forEach items="${pvo}" var="p">
+                    <li title="${p.partyid}" class="party_list_btn">
+                        <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
+                        <div class="party_list_name">
+                                ${p.partyname}
+                        </div>
+                    </li>
+                </c:forEach>
+            <li style="float: left">
+                <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
+                    <i class="fa-regular fa-square-plus fa-4x"></i><br/>
+                    <span style="font-weight: bold;">파티생성</span>
+                </button>
+            </li>
+        </ul>
+        <div class="choisvalue" style="margin-top: 30px;">
+            <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" >
+            <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
+            <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
+            <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" >
+        </div>
     </div>
-    <div class="mypartylist">
-        <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
-        <hr>
-    </div>
-    <ul class="party_list">
-            <c:forEach items="${pvo}" var="p">
-                <li title="${p.partyid}" class="party_list_btn">
-                    <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
-                    <div class="party_list_name">
-                            ${p.partyname}
-                    </div>
-                </li>
-            </c:forEach>
-        <li style="float: left">
-            <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
-                <i class="fa-regular fa-square-plus fa-4x"></i><br/>
-                <span style="font-weight: bold;">파티생성</span>
-            </button>
-        </li>
-    </ul>
-    <div class="choisvalue" style="margin-top: 30px;">
-        <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" >
-        <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
-        <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
-        <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" >
-    </div>
-    <hr>
 </main>
 
 <article>
-    <section class="teamView">
-        <p class="party_name" style="height: 50px">${partyvo.partyname}</p>
-        <p class="content_title">파티관리</p>
-        <div class="edit_category" style="display: flex;">
-            <form>
-                <input type="hidden" name="partyid" value="${partyvo.partyid}"/>
-                <button type="button" class="btn btn-outline-secondary" id="infoEdit_btn" style="margin-right: 20px;">정보수정</button>
-            </form>
-            <button type="button" class="btn btn-secondary">회원관리</button>
-        </div>
-        <hr style="width: 900px; margin: 0 auto"/>
-        <div class="edit_content">
-            <div class="member_edit">
-                <span style=" font-size: 1.3em; color: #495057;">파티원 관리</span>
-                <hr style="margin-top: 5px;"/>
-                <ul class="scrollBar">
-                    <c:forEach items="${memberList}" var="uvo" >
-                        <c:if test="${uvo.userid!=LogId}">
-                            <li>
-                                <div class="member_list">
-                                    <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}">
-                                    <p class="member_name">${uvo.username}</p>
-                                    <button class="member_del_btn" data-id="${uvo.userid}">제명 <i class="fa-regular fa-circle-xmark" style="color: #df0707;"></i></button>
-                                </div>
-                            </li>
-                        </c:if>
-                    </c:forEach>
-                </ul>
+    <section class="container" style="padding:0px; border-bottom: 3px solid #73351F;">
+        <div style="padding: 20px 20px 40px 20px">
+            <p class="party_name" style="height: 50px">${partyvo.partyname}</p>
+            <p class="content_title">파티관리</p>
+            <div class="edit_category" style="display: flex;">
+                <form>
+                    <input type="hidden" name="partyid" value="${partyvo.partyid}"/>
+                    <button type="button" class="btn btn-outline-secondary" id="infoEdit_btn" style="margin-right: 20px;">정보수정</button>
+                </form>
+                <button type="button" class="btn btn-secondary">회원관리</button>
             </div>
-            <div class="join_edit">
-                <span style=" font-size: 1.3em; color: #495057;">가입신청 목록</span>
-                <hr style="margin-top: 5px;"/>
-                <div>
+            <hr style="width: 900px; margin: 0 auto"/>
+            <div class="edit_content">
+                <div class="member_edit">
+                    <span style=" font-size: 1.3em; color: #495057;">파티원 관리</span>
+                    <hr style="margin-top: 5px;"/>
                     <ul class="scrollBar">
-                        <c:forEach items="${waitingList}" var="uvo" >
-                        <li>
-                            <div class="join_list">
-                                <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}">
-                                <div style="width: 460px;">
-                                    <div style="padding-left: 25px;"><a style="font-size: 1.3em;">${uvo.username}</a></div>
-                                    <div style="padding-left: 25px;"><!-- 추가로 내용이 들어갈 곳 --></div>
-                                </div>
-                                <button class="approve_btn" data-approveid="${uvo.userid}">승인 <i class="fa-regular fa-circle-check" style="color: #1ce70d;"></i></button>
-                                <button class="refuse_btn" data-refuseid="${uvo.userid}">거절 <i class="fa-regular fa-circle-xmark" style="color: #df0707;"></i></button>
-                            </div>
-                        </li>
+                        <c:forEach items="${memberList}" var="uvo" >
+                            <c:if test="${uvo.userid!=LogId}">
+                                <li>
+                                    <div class="member_list">
+                                        <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}">
+                                        <p class="member_name">${uvo.username}</p>
+                                        <button class="member_del_btn" data-id="${uvo.userid}">제명 <i class="fa-regular fa-circle-xmark" style="color: #df0707;"></i></button>
+                                    </div>
+                                </li>
+                            </c:if>
                         </c:forEach>
                     </ul>
                 </div>
+                <div class="join_edit">
+                    <span style=" font-size: 1.3em; color: #495057;">가입신청 목록</span>
+                    <hr style="margin-top: 5px;"/>
+                    <div>
+                        <ul class="scrollBar">
+                            <c:forEach items="${waitingList}" var="uvo" >
+                            <li>
+                                <div class="join_list">
+                                    <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}">
+                                    <div style="width: 460px;">
+                                        <div style="padding-left: 25px;"><a style="font-size: 1.3em;">${uvo.username}</a></div>
+                                        <div style="padding-left: 25px;"><!-- 추가로 내용이 들어갈 곳 --></div>
+                                    </div>
+                                    <button class="approve_btn" data-approveid="${uvo.userid}">승인 <i class="fa-regular fa-circle-check" style="color: #1ce70d;"></i></button>
+                                    <button class="refuse_btn" data-refuseid="${uvo.userid}">거절 <i class="fa-regular fa-circle-xmark" style="color: #df0707;"></i></button>
+                                </div>
+                            </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="container_bottom"></div>
     </section>
 </article>
 </body>

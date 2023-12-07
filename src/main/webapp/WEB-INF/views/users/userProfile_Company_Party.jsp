@@ -12,6 +12,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
         /*-----------------------------------------------*/
+        .container {
+            margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+        }
         * {
             padding: 0;
             margin: 0;
@@ -194,7 +200,7 @@
         .salutation {
             margin-top: 30px;
             height: 200px;
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid #73351F;
 
         }
 
@@ -202,7 +208,7 @@
         .salutation_name {
             height: 40px;
             width: 130px;
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid #73351F;
             font-size: 1.5em;
             font-weight: 700;
         }
@@ -284,41 +290,67 @@
         .pagination>li {
             margin-left: 10px;
         }
-
         .page-link {
             color: black;
             border-radius: 6px;
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
         }
     </style>
 </head>
 
 <body>
 <section>
-    <article>
-        <div class="profile">
-            <div class="profile_img">
-                <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}">
-            </div>
+    <article class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+        <div class="container-head"></div>
+        <div style="padding: 40px 40px 20px 40px">
+            <div class="profile">
+                <div class="profile_img">
+                    <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}">
+                </div>
 
-            <div class="profile_info">
-                <div class="info_name"><b>${uVO.username }</b></div>
-                <div class="info_email">${uVO.useremail}</div>
-                <div class="info_count">
-                    <div>포트폴리오</div>
-                    <div>${pCount}</div>
-                    <div>기업과제</div>
-                    <div>${sCount}</div>
+                <div class="profile_info">
+                    <div class="info_name"><b>${uVO.username }</b></div>
+                    <div class="info_email">${uVO.useremail}</div>
+                    <div class="info_count">
+                        <div>포트폴리오</div>
+                        <div>${pCount}</div>
+                        <div>기업과제</div>
+                        <div>${sCount}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="salutation">
+                <div class="salutation_name">
+                    소개 글
+                </div>
+                <div class="salutation_content">
+                    ${uVO.comment }
                 </div>
             </div>
         </div>
-        <div class="salutation">
-            <div class="salutation_name">
-                소개 글
-            </div>
-            <div class="salutation_content">
-                ${uVO.comment }
-            </div>
-        </div>
+    </article>
+    <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F;">
+        <div style="padding: 20px 40px 40px 40px">
         <div class="portfolio">
             <div class="portfolio_category">
                 <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
@@ -326,7 +358,7 @@
             </div>
             <div class="solo_party">
                 <div></div>
-                <div class="solo_party_btn">
+                <div class="solo_party_btn" style="margin-top: 50px">
                     <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
                     <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
                 </div>
@@ -369,7 +401,9 @@
                 </ul>
             </div>
         </div>
-    </article>
+        </div>
+        <div class="container_bottom"></div>
+    </div>
 </section>
 </body>
 </html>
