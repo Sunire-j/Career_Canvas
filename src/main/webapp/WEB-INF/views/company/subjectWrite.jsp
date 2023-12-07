@@ -180,16 +180,7 @@
                 }
             });
 
-            $("#hashtag").on('input blur',function(){
-                if(this.checkValidity()){
-                    $(this).siblings('[data-feedback="patternMismatch"]').hide();
-                    $(this).removeClass('is-invalid').addClass('is-valid');
-                }else{
-                    $(this).removeClass('is-valid').addClass('is-invalid');
-                    $(this).siblings('[data-feedback="patternMismatch"]').show();
 
-                }
-            });
             $('form').on('submit', function(e) {
                 var editorContent = editor.getData();
                 if(!editorContent) {
@@ -199,13 +190,6 @@
 
             });
 
-            $('.hashtag').on('change blur',function(){
-                if($(this).hasClass('is-invalid')){
-                    $(".submitbtn").prop('disabled',true);
-                }else{
-                    $(".submitbtn").prop('disabled',false);
-                }
-            })
         });
     </script>
 </head>
@@ -216,7 +200,6 @@
     </div>
     <form method="post" action="${pageContext.servletContext.contextPath}/subject/writeOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F" novalidate>
         <input type="hidden" id="content" name="postcontent">
-        <input type="hidden" name="boardcategory" value="${boardcat}"> <!-- 게시판 종류(0,1,2)등으로 처리 예정 -->
         <input type="text" style="width: 50%; height: 45px;" class="form-control" name="posttitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
         <span class="invalid-feedback">
             제목을 입력해 주세요. (30자 이내)
@@ -245,7 +228,6 @@
         <div style="padding: 10px">
     <div id="editor"></div>
         <div id="botContainer">
-
             <input type="submit"  class="btn btn-primary submitbtn" value="글등록" />
         </div>
     </div>
