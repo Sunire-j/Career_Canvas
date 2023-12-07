@@ -27,7 +27,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     >
       <div>
         보내는사람
-        <input class="form-control" type="text" value="musso" disabled />
+        <input class="form-control" type="text" value="${LogId}" disabled />
       </div>
       <div>
         받는사람

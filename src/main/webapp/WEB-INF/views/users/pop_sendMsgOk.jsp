@@ -2,5 +2,6 @@
 pageEncoding="UTF-8" %>
 <script>
   alert("전송되었습니다");
+  opener.parent.location.reload();
   window.close();
 </script>

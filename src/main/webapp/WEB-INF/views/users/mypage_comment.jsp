@@ -222,7 +222,7 @@ file="../header_footer/header.jspf"%>
       .table tr {
         text-align: center;
       }
-      
+
       .paging {
         display: flex;
         justify-content: center;
@@ -304,6 +304,7 @@ file="../header_footer/header.jspf"%>
       </div>
       <!-- ajax View -->
       <div class="ajaxView_wrapper">
+        <div style="width: 1000px; margin: 0 auto" class="mt-3">
           <table class="table">
             <thead class="table-dark">
               <tr>
@@ -314,21 +315,20 @@ file="../header_footer/header.jspf"%>
               </tr>
             </thead>
             <tbody>
+              <div class="ajaxContent">
                 <c:forEach var="cVO" items="${cVO}">
                   <tr>
                     <td>${cVO.commentid}</td>
-                    <td>${cVO.username}</td>
+                    <td style="max-width: 200px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis">${cVO.username}</td>
                     <c:if test="${cVO.isdelete eq 0}">
-                      <td style="overflow: hidden; 
-                      text-overflow: ellipsis; 
-                      white-space: nowrap;"><a href="${pageContext.servletContext.contextPath}/board/view?no=${cVO.post_postid}">${cVO.commentcontent}</a></td>
+                      <td><a style="display: inline-block; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis" href="${pageContext.servletContext.contextPath}/board/view?no=${cVO.post_postid}">${cVO.commentcontent}</a></td>
                     </c:if>
                     <td>${cVO.date}</td>
                   </tr>
                 </c:forEach>
+              </div>
             </tbody>
           </table>
-          
 
           <!-- 페이징  -->
           <div>
@@ -361,6 +361,7 @@ file="../header_footer/header.jspf"%>
               </c:if>
             </ul>
           </c:if>
+          </div>
         </div>
       </div>
       <form

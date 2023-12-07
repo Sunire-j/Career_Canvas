@@ -778,8 +778,8 @@ public class UserController {
     }
 
     @GetMapping("mypage/pop_sendMsg")
-    public String popSendMsg() {
-
+    public String popSendMsg(HttpSession session) {
+        String userid = (String) session.getAttribute("LogId");
         return "/users/pop_sendMsg";
     }
 

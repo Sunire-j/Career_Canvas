@@ -119,52 +119,10 @@
             height: 30px;
             line-height: 30px;
         }
-        /*
-        .navbar li:after{
-            position: absolute;
-            display: block;
-            width: calc(100% - 40px);
-            height: 5px;
-            background: #b8ff00;
-        }
-*/
         .userInfo.active {
             display: block;
             margin: 0;
             padding: 0;
-        }
-
-        /* Media Query */
-        @media screen and (max-width: 800px) {
-
-            .nav_wrapper {
-                display: none;
-                flex-direction: column;
-            }
-
-            .nav_wrapper.active {
-                display: flex;
-            }
-
-            .navBar, .infoGroup {
-                display: block;
-                padding: 0;
-                text-align: center;
-                align-items: center;
-            }
-
-            .hamberger {
-                display: inline;
-            }
-
-            .title {
-                justify-content: space-between;
-                margin-left: 30px;
-            }
-
-            .infoGroup > li:nth-child(2) {
-                display: none;
-            }
         }
 
         .button-container {
@@ -236,7 +194,6 @@
             <!-- Title -->
             <div class="title">
                 <a class="logo" href="${pageContext.servletContext.contextPath}/" style="margin-left: 50px; ">CAREER CANVAS</a>
-                <i class="fa-solid fa-bars hamberger"></i>
             </div>
             <!-- Nav -->
             <nav class="nav_wrapper">

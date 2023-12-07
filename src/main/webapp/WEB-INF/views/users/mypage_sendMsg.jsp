@@ -313,9 +313,9 @@ file="../header_footer/header.jspf"%>
         </ul>
       </div>
       
-      <div class="ajaxView_wrapper">
+      <div style="width: 900px; margin: 0 auto">
         <div class="container mt-3" style="text-align: center">
-          <button class="btn btn-outline-primary sendMsg" onclick="location.href='#'">보낸 쪽지함</button>
+          <button class="btn btn-outline-primary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'">보낸 쪽지함</button>
           <button
             class="btn btn-outline-primary receiveMsg"
             onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myReceiveMsg'"
@@ -329,7 +329,6 @@ file="../header_footer/header.jspf"%>
               <th>받는사람</th>
               <th>내용</th>
               <th>날짜</th>
-              <th>안읽은 쪽지</th>
             </tr>
           </thead>
           <tbody>
@@ -337,9 +336,8 @@ file="../header_footer/header.jspf"%>
               <c:forEach var="mVO" items="${mVO}">
                 <tr id="msgStyle">
                   <td>${mVO.user_userid1}</td>
-                  <td><a href="${pageContext.servletContext.contextPath}/mypage/sendMsgView">${mVO.content}</a></td>
+                  <td><a style="display: inline-block; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${mVO.content}</a></td>
                   <td>${mVO.date}</td>
-                  <td>${mVO.ischeck}</td>
                 </tr>
               </c:forEach>
             </div>

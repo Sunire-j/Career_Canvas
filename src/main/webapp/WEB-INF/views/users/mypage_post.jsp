@@ -321,8 +321,8 @@ file="../header_footer/header.jspf"%>
       </div>
       
       <!-- ajax View -->
-      <div class="ajaxView_wrapper">
-        <div class="container mt-3">
+      <div style="width: 1000px; margin: 0 auto">
+        <div style="width: 1000px!important;" class="mt-3">
           <table class="table">
             <thead class="table-dark">
               <tr>
