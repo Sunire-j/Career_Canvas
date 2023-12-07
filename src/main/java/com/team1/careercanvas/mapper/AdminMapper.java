@@ -9,13 +9,13 @@ import java.util.List;
 public interface AdminMapper {
     List<UserVO> getUserProfile(PagingVO pvo);
 
-    List<BoardVO> getBoardList();
+    List<BoardVO> getBoardList(PagingVO pvo);
 
-    List<ReportVO> getReportList();
+    List<ReportVO> getReportList(PagingVO pvo);
 
     String getAdminName(String username);
 
-    List<SubjectVO> getDeleteList();
+    List<SubjectVO> getDeleteList(PagingVO pvo);
 
     int deleteAssignment(int subjectid);
 
@@ -54,7 +54,8 @@ public interface AdminMapper {
     List<BoardVO> getBoardCategory();
     List<UserVO> getNewMember();
     List<UserVO> getAccessor();
-
+    int getTodayAccessor();
+    int getAllAccessor();
     // 권혁준작업
     List<BannerVO> getBannerList();
 
