@@ -57,4 +57,6 @@ public interface BoardMapper {
     int getSubjectListAmount();
 
     int getSubjectApplyCount();
+
+    List<SubjectVO> getSubjectApplyTeamList(PagingVO pVO);
 }
