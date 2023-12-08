@@ -165,7 +165,7 @@
 
 
         <div class="search-container">
-            <form action="${pageContext.request.contextPath}/board/wanted/" class="d-flex board-bottom" method="get">
+            <form action="${pageContext.request.contextPath}/party/wanted/" class="d-flex board-bottom" method="get">
                 <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
 
                     <option value="all">전체</option>
