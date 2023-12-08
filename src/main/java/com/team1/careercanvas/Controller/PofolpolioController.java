@@ -5,6 +5,7 @@ import com.team1.careercanvas.mapper.PofolMapper;
 import com.team1.careercanvas.vo.PartyVO;
 import com.team1.careercanvas.vo.PofolVO;
 import com.team1.careercanvas.vo.ReportVO;
+import com.team1.careercanvas.vo.UserVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class PofolpolioController {
@@ -39,6 +41,10 @@ public class PofolpolioController {
         if(pofolVO.getIsteam()==0){//파티일경우
             String partyname = partymapper.getPartyName(pofolVO.getPartyid());
             mav.addObject("partyname",partyname);
+            // 정인식 작업
+            List<UserVO> member = pofolmapper.getMemberList(pofolVO.getPartyid());
+            mav.addObject("member", member);
+            // 정인식 작업 끝
         }
 
         if(pofolVO==null){

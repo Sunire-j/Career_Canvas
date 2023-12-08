@@ -33,4 +33,23 @@
         order by subjectid desc
         limit #{onePageRecord} offset #{offsetPoint};
     </select>
+
+    <select id="SelectApply" resultType="com.team1.careercanvas.vo.ApplyVO">
+        select *
+        from subjectapply
+        where applyid = #{param1}
+    </select>
+    <select id="SelectSubject" resultType="com.team1.careercanvas.vo.SubjectVO">
+        select *
+        from subject
+        where subjectid = #{param1}
+    </select>
+
+    <select id="SelectsubjectMember" resultType="com.team1.careercanvas.vo.UserVO">
+        select *
+        from user
+                 join subjectcontributor
+                      on subjectcontributor.user_userid = user.userid
+        where subjectcontributor.subjectapply_applyid = #{param1};
+    </select>
 </mapper>

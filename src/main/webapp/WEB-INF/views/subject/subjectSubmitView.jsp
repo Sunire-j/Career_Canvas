@@ -175,6 +175,9 @@
         }
 
     </style>
+    <script>
+
+    </script>
 </head>
 <body>
 <article>
@@ -184,20 +187,17 @@
         </div>
 
         <div class="board_title">
-            ${Svo.subjecttitle}
+            ${svo.subjecttitle}
         </div>
     <div class="board_main">
         <div class="board_info">
             <div class="board_writer">
-                ${Svo.username}
-            </div>
-            <div class="board_date">
-                ${Svo.date}
+                ${avo.user_userid}
             </div>
         </div>
         <div class="board_content">
             <div class="content_text">
-                ${Svo.subjectcontent}
+                ${avo.applycontent}
             </div>
             <div class="content_recommend"
                  style="width: 100%; display : flex; justify-content: space-between; align-items: center">
@@ -221,34 +221,7 @@
 
 
 
-        <script>
-            function delSubject(){
-                if(${delcount>0}){
-                    alert("이미 삭제 신청을 하였습니다.\n삭제 신청은 한 번만 가능합니다.");
-                    return false;
-                }
-                var popupWidth = 600; // 팝업 창의 가로 크기
-                var popupHeight = 300; // 팝업 창의 세로 크기
-                var screenWidth = window.innerWidth; // 화면의 가로 크기
-                var screenHeight = window.innerHeight; // 화면의 세로 크기
 
-                var popupLeft = (screenWidth - popupWidth) / 2; // 팝업 창의 가로 위치
-                var popupTop = (screenHeight - popupHeight) / 2; // 팝업 창의 세로 위치
-
-                var popupUrl = '${pageContext.servletContext.contextPath}/subject/del?subjectid=${Svo.subjectid}';
-
-                window.open(popupUrl, '팝업', 'width=' + popupWidth +
-                                            ', height=' + popupHeight +
-                                            ', left=' + popupLeft +
-                                            ', top=' + popupTop);
-            }
-            function applySubject(){
-                var no = ${Svo.subjectid};
-                if(confirm("과제명 : ${Svo.subjecttitle} \n제출 하시겠습니까?")){
-                   location.href = '${pageContext.servletContext.contextPath}/subject/submit?subjectid='+no;
-                }
-            }
-        </script>
     </section>
 </article>
 <footer></footer>

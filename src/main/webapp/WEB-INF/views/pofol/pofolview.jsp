@@ -204,7 +204,7 @@
 
                     </c:if>
                     <c:if test="${pVO.isteam==0}">
-                        ${partyname}
+                         파티명 : ${partyname}&nbsp
                     </c:if>
                 </div>
                 <div class="board_view">
@@ -220,9 +220,29 @@
                     ${likeamount}
                 </div>
             </div>
+            <style>
+                .memberlist{
+                    display: flex;
+                }
+                .membername{
+                    margin: 0 5px;
+                }
+            </style>
+
             <div class="board_content">
                 <div class="content_text">
                     ${pVO.portfoliocontent}
+                </div>
+                <div class="memberlist" style="margin-left: 20px;">
+                    <c:if test="${pVO.isteam==0}">
+                        <div class="membername">
+                            참여 인원 :
+                            <c:forEach var="uvo" items="${member}">
+                                <a class="badge rounded-pill bg-primary" style="color: white;font-size: 15px;"
+                                   href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">${uvo.username}</a>
+                            </c:forEach>
+                        </div>
+                    </c:if>
                 </div>
                 <div class="content_recommend"
                      style="width: 100%; display : flex; justify-content: space-between; align-items: center">

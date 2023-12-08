@@ -43,6 +43,45 @@
         FROM subject_delapply
         WHERE subjectid = #{param1}
     </select>
+
+    <select id="SelectPartyList" resultType="com.team1.careercanvas.vo.PartyVO">
+        select *
+        from party
+        where user_userid = #{param1};
+    </select>
+
+    <select id="SelectMemberList" resultType="com.team1.careercanvas.vo.UserVO">
+        select *
+        from user
+                 join partymember
+                      on partymember.user_userid = user.userid
+        where partymember.party_partyid = #{param1} and partymember.status = 'done';
+    </select>
+
+    <insert id="InsertSubjectApply">
+        insert into subjectapply (subject_subjectid, applycontent, isteam, user_userid)
+        values (#{subject_subjectid}, #{applycontent}, #{isteam}, #{user_userid});
+        <selectKey keyProperty="applyid" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="Insertpartyid">
+        update subjectapply
+        set party_partyid=#{param2}
+        where applyid = #{param1}
+    </update>
+
+    <insert id="addApplyMember">
+        insert into subjectcontributor (subjectapply_applyid, user_userid)
+        values (#{param1}, #{param2})
+    </insert>
+
+    <update id="insertApplyImg">
+        update subjectapply
+        set applyimg=#{param1}
+        where applyid=#{param2}
+    </update>
 </mapper>
 
 
