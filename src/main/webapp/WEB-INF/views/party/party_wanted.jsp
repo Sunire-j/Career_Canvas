@@ -184,7 +184,7 @@
                 <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
                     <div class="pagination" style="display: flex">
                         <div class="paging">
-                            <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-center d-flex">
                             <c:if test="${pVO.page > 1}">
                                 <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'
                                 <c:if test="${pVO.searchWord!=''}">

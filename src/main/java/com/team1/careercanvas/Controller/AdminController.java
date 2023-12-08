@@ -27,6 +27,36 @@ public class AdminController {
         this.usermapper = usermapper;
     }
 
+    @GetMapping("/admin/home")
+    public ModelAndView home(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        PagingVO pvo = new PagingVO();
+        pvo.setOnePageRecord(5);
+        pvo.setPage(1);
+        pvo.setOffsetPoint(0);
+        pvo.setPostSort(4);
+
+        String name = mapper.getAdminName((String) session.getAttribute("LogId"));
+        mav.addObject("name", name);
+
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
+        mav.addObject("rToday", mapper.reportToday());
+        mav.addObject("newMember", mapper.todatNewMember());
+        List<BoardVO> board = mapper.getBoardList(pvo);
+        mav.addObject("bVO", board);
+
+        List<ReportVO> report = mapper.getReportList(pvo);
+        mav.addObject("rVO", report);
+
+        List<CompanyVO> company = mapper.getCompanyList(pvo);
+        mav.addObject("cVO", company);
+
+        mav.setViewName("/admin/admin_home");
+
+        return mav;
+    }
+
     @GetMapping("/admin/member") // 개인회원관리
     public ModelAndView member(HttpSession session,
                                @RequestParam(required = false, defaultValue = "1") int postSort,
@@ -207,6 +237,15 @@ public class AdminController {
                     session.setAttribute("msg", "삭제 실패했습니다.");
                     return "alert_page";
                 }
+            } else if (reporttype.equals("pp")) {
+                int Presult = mapper.deletePP(targetid);
+                if (Presult > 0) {
+                    System.out.println("포트폴리오 삭제 완료");
+                    return "redirect:/admin/report";
+                } else {
+                    session.setAttribute("msg", "삭제 실패했습니다.");
+                    return "alert_page";
+                }
             }
             // ---------------------------- 추가되면 여기다 작업
         } else {
@@ -217,23 +256,78 @@ public class AdminController {
     }
 
     @GetMapping("/report/delete/user") // 탈퇴 - 리포트 테이블에서 userid 뽑고, 리포트 앤드 보드 삭제 -> user테이블에서 삭제
-    public String reportDeleteUser(HttpSession session, int target_id) {
+    public String reportDeleteUser(HttpSession session, int target_id, String reporttype) {
         String userid = mapper.reporterUser(target_id);
+        System.out.println(reporttype);
         int Rresult = mapper.deleteReport(target_id);
-        int Bresult = mapper.deleteBoard(target_id);
-        int Uresult = mapper.deleteUser(userid);
-
-        if (Uresult > 0) {
-            if (Rresult > 0 && Bresult > 0) { // 삭제 성공
-                return "redirect:/admin/report";
-            } else { // 삭제 실패
-                session.setAttribute("msg", "삭제 실패했습니다.");
-                return "alert_page";
+        if (Rresult > 0) {
+            if (reporttype.equals("board")) {
+                int Bresult = mapper.deleteBoard(target_id);
+                if (Bresult > 0) {
+                    int Uresult = mapper.deleteUser(userid);
+                    if (Uresult > 0) {
+                        System.out.println("회원 탈퇴 완료");
+                        return "redirect:/admin/report";
+                    } else {
+                        session.setAttribute("msg", "회원 삭제 실패했습니다.");
+                        return "alert_page";
+                    }
+                }
+            } else if (reporttype.equals("comment")) {
+                int Cresult = mapper.deleteComment(target_id);
+                if (Cresult > 0) {
+                    int Uresult = mapper.deleteUser(userid);
+                    if (Uresult > 0) {
+                        System.out.println("회원 탈퇴 완료");
+                        return "redirect:/admin/report";
+                    } else {
+                        session.setAttribute("msg", "회원 삭제 실패했습니다.");
+                        return "alert_page";
+                    }
+                }
+            } else if (reporttype.equals("wanted")) {
+                int Wresult = mapper.deleteWanted(target_id);
+                if (Wresult > 0) {
+                    int Uresult = mapper.deleteUser(userid);
+                    if (Uresult > 0) {
+                        System.out.println("회원 탈퇴 완료");
+                        return "redirect:/admin/report";
+                    } else {
+                        session.setAttribute("msg", "회원 삭제 실패했습니다.");
+                        return "alert_page";
+                    }
+                }
+            } else if (reporttype.equals("wantedcomment")) {
+                int WCresult = mapper.deleteWantedComment(target_id);
+                if (WCresult > 0) {
+                    int Uresult = mapper.deleteUser(userid);
+                    if (Uresult > 0) {
+                        System.out.println("회원 탈퇴 완료");
+                        return "redirect:/admin/report";
+                    } else {
+                        session.setAttribute("msg", "회원 삭제 실패했습니다.");
+                        return "alert_page";
+                    }
+                }
+            } else if (reporttype.equals("pp")) {
+                int Presult = mapper.deletePP(target_id);
+                if (Presult > 0) {
+                    int Uresult = mapper.deleteUser(userid);
+                    if (Uresult > 0) {
+                        System.out.println("회원 탈퇴 완료");
+                        return "redirect:/admin/report";
+                    } else {
+                        session.setAttribute("msg", "회원 삭제 실패했습니다.");
+                        return "alert_page";
+                    }
+                }
             }
+            // ---------------------------- 추가되면 여기다 작업
         } else {
-            session.setAttribute("msg", "유저 삭제 실패했습니다.");
+            session.setAttribute("msg", "삭제 실패했습니다.");
             return "alert_page";
         }
+        return "redirect:/admin/report";
     }
 
     @GetMapping("/delete/user") // 강제 탈퇴 - 일반회원관리
@@ -329,9 +423,9 @@ public class AdminController {
 
     //조석훈 작업
     @GetMapping("/admin/banner/add")
-    public String banner_add(){
+    public String banner_add() {
         List<BannerVO> list = mapper.getBannerList();
-        if(list.size()>=10){
+        if (list.size() >= 10) {
             return "redirect:/admin/banner";
         }
         return "admin/admin_banner_add";
@@ -341,7 +435,7 @@ public class AdminController {
     public String banner_addOk(String startdate,
                                String deadline,
                                String owner,
-                               MultipartFile bannerimg){
+                               MultipartFile bannerimg) {
         BannerVO bvo = new BannerVO();
         bvo.setStartdate(startdate);
         bvo.setDeadline(deadline);
@@ -379,7 +473,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/banner/check")
-    public ModelAndView checkBanner(int bannerid){
+    public ModelAndView checkBanner(int bannerid) {
         ModelAndView mav = new ModelAndView();
 
         String bannerimg = mapper.getBannerImg(bannerid);
@@ -391,9 +485,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin/banner/delete")
-    public String delBanner(int bannerid, HttpSession session){
+    public String delBanner(int bannerid, HttpSession session) {
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
-        if(uvo.getUsertype()!=2){
+        if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
         }
@@ -415,26 +509,29 @@ public class AdminController {
 
         mav.addObject("cVO", list);
         mav.addObject("pVO", pvo);
+        mav.addObject("today", mapper.getTodayAccessor());
+        mav.addObject("all", mapper.getAllAccessor());
+
         mav.setViewName("/admin/admin_company");
 
         return mav;
     }
 
     @GetMapping("/admin/company/check")
-    public ModelAndView checkAuth(String uid){
+    public ModelAndView checkAuth(String uid) {
         ModelAndView mav = new ModelAndView();
 
         String imgsrc = mapper.getAuthimg(uid);
 
-        mav.addObject("imgsrc", imgsrc );
+        mav.addObject("imgsrc", imgsrc);
         mav.setViewName("admin/image_popup");
         return mav;
     }
 
     @GetMapping("/admin/company/accept")
-    public String acceptCompany(String uid, HttpSession session){
+    public String acceptCompany(String uid, HttpSession session) {
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
-        if(uvo.getUsertype()!=2){
+        if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
         }
@@ -445,9 +542,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin/company/deny")
-    public String denyCompany(String uid, HttpSession session){
+    public String denyCompany(String uid, HttpSession session) {
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
-        if(uvo.getUsertype()!=2){
+        if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
         }
@@ -457,9 +554,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin/company/forceDelete")
-    public String forceDelete(String uid, HttpSession session){
+    public String forceDelete(String uid, HttpSession session) {
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
-        if(uvo.getUsertype()!=2){
+        if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
             return "alert_page";
         }

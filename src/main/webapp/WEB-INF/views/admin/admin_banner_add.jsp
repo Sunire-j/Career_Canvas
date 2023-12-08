@@ -61,20 +61,11 @@
             vertical-align: middle;
         }
 
-        .pagination-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .pagination {
-            display: inline-block;
-        }
-
-        .btn {
-            color: white;
+        #sideBar a,
+        #sideBar a:visited,
+        #sideBar a:link {
+            color: black;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -95,6 +86,7 @@
             >
         </div>
         <hr/>
+        <h3><a href="${pageContext.servletContext.contextPath}/admin/home">관리자 홈</a></h3>
         <h3>회원관리</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/member"> 일반회원관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/company"> 기업회원관리 </a>

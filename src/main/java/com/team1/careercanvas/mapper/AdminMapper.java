@@ -33,6 +33,8 @@ public interface AdminMapper {
 
     int deleteUser(String userid);
 
+    int deletePP(int portfolioid);
+
     String getWriterUser(int postid);
 
     String reporterUser(int target_id);
@@ -42,6 +44,7 @@ public interface AdminMapper {
     int getUserCount();
 
     int getCompanyCount();
+
     int getBoardCount();
 
     int getReportCount();
@@ -51,11 +54,22 @@ public interface AdminMapper {
     int getBoardToday();
 
     List<BoardVO> getBoardMonth();
+
     List<BoardVO> getBoardCategory();
+
     List<UserVO> getNewMember();
+
     List<UserVO> getAccessor();
+
     int getTodayAccessor();
+
     int getAllAccessor();
+
+    int reportToday();
+
+    int todatNewMember();
+
+
     // 권혁준작업
     List<BannerVO> getBannerList();
 
@@ -64,15 +78,18 @@ public interface AdminMapper {
     //조석훈 작업
 
     int InsertBanner(BannerVO bvo);
+
     void InsertBannerimg(String imgsrc, int bannerid);
 
     String getBannerImg(int bannerid);
 
     void deleteBanner(int bannerid);
+
     List<CompanyVO> getCompanyList(PagingVO pvo);
 
     String getAuthimg(String userid);
 
     void acceptCompany(String userid);
+
     void denyCompany(String userid);
 }

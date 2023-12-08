@@ -132,13 +132,20 @@
             justify-content: center;
             height: 100px;
             align-items: center;
-            margin: 30px 0px;
+            margin: 30px 0;
             font-size: 20px;
         }
 
         .top div {
             flex: 1;
             text-align: center;
+        }
+
+        #sideBar a,
+        #sideBar a:visited,
+        #sideBar a:link {
+            color: black;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -151,6 +158,7 @@
                style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
+        <h3><a href="${pageContext.servletContext.contextPath}/admin/home">관리자 홈</a></h3>
         <h3>회원관리</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/member"> 일반회원관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/company"> 기업회원관리 </a>

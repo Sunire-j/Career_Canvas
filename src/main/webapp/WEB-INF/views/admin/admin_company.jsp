@@ -54,6 +54,13 @@
         .btn {
             color: white;
         }
+
+        #sideBar a,
+        #sideBar a:visited,
+        #sideBar a:link {
+            color: black;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -65,6 +72,7 @@
                style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
+        <h3><a href="${pageContext.servletContext.contextPath}/admin/home">관리자 홈</a></h3>
         <h3>회원관리</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/member"> 일반회원관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/company"> 기업회원관리 </a>
@@ -119,17 +127,19 @@
                     <td>${cvo.companyno}</td>
                     <td>
                         <c:if test="${cvo.isaccept==1}">
-                        대기중
+                            대기중
                         </c:if>
                         <c:if test="${cvo.isaccept==0}">
                             승인
                         </c:if>
-                        <button onclick="window.open('${pageContext.servletContext.contextPath}/admin/company/check?uid=${cvo.user_userid}')" type="button" class="btn btn-info btn-sm">증빙확인</button>
+                        <button onclick="window.open('${pageContext.servletContext.contextPath}/admin/company/check?uid=${cvo.user_userid}')"
+                                type="button" class="btn btn-info btn-sm">증빙확인
+                        </button>
                     </td>
                     <td>
                         <c:if test="${cvo.isaccept==1}">
-                        <button onclick="accept('${cvo.user_userid}')" type="button" class="btn btn-primary btn-sm">승인</button>
-                        <button onclick="deny('${cvo.user_userid}')" type="button" class="btn btn-danger btn-sm">거절</button>
+                            <button onclick="accept('${cvo.user_userid}')" type="button" class="btn btn-primary btn-sm">승인</button>
+                            <button onclick="deny('${cvo.user_userid}')" type="button" class="btn btn-danger btn-sm">거절</button>
                         </c:if>
                         <c:if test="${cvo.isaccept==0}">
                             <button onclick="forceDeleteCompany('${cvo.user_userid}')" type="button" class="btn btn-danger btn-sm">강제탈퇴</button>
@@ -138,25 +148,28 @@
                 </tr>
             </c:forEach>
             <script>
-                function accept(userid){
-                    var url = "${pageContext.servletContext.contextPath}/admin/company/accept?uid="+userid;
-                    if(confirm("정말 "+userid+"회원가입을 승인하시겠습니까?")){
-                        location.href=url;
+                function accept(userid) {
+                    var url = "${pageContext.servletContext.contextPath}/admin/company/accept?uid=" + userid;
+                    if (confirm("정말 " + userid + "회원가입을 승인하시겠습니까?")) {
+                        location.href = url;
                     }
                 }
-                function deny(userid){
-                    var url = "${pageContext.servletContext.contextPath}/admin/company/deny?uid="+userid;
-                    if(confirm("정말 "+userid+"회원가입을 거절하시겠습니까?")){
-                        location.href=url;
+
+                function deny(userid) {
+                    var url = "${pageContext.servletContext.contextPath}/admin/company/deny?uid=" + userid;
+                    if (confirm("정말 " + userid + "회원가입을 거절하시겠습니까?")) {
+                        location.href = url;
                     }
                 }
-                function forceDeleteCompany(userid){
-                    var url = "${pageContext.servletContext.contextPath}/admin/company/forceDelete?uid="+userid;
-                    if(confirm("정말"+userid+"회원을 강제탈퇴시키겠습니까?")){
-                        location.href=url;
+
+                function forceDeleteCompany(userid) {
+                    var url = "${pageContext.servletContext.contextPath}/admin/company/forceDelete?uid=" + userid;
+                    if (confirm("정말" + userid + "회원을 강제탈퇴시키겠습니까?")) {
+                        location.href = url;
                     }
                 }
-                $(function(){
+
+                $(function () {
                     $("#postSort").change(function () {
                         var sortValue = $(this).val();
                         location.href = "${pageContext.servletContext.contextPath}/admin/company?postSort=" + sortValue;

@@ -226,7 +226,7 @@
                     <li><a href="${pageContext.servletContext.contextPath}/subject">기업과제</a></li>
                     <li><a href="${pageContext.servletContext.contextPath}/board/free">커뮤니티</a></li>
                     <c:if test="${usertype==2}">
-                    <li><a href="${pageContext.servletContext.contextPath}/admin/member">관리자 페이지</a></li>
+                    <li><a href="${pageContext.servletContext.contextPath}/admin/home">관리자 페이지</a></li>
                     </c:if>
                 </ul>
                 </div>
