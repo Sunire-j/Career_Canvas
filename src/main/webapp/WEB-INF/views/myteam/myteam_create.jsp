@@ -11,6 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/6caf283963.js" crossorigin="anonymous"></script>
     <style>
+        .container {
+            margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+        }
         p{
             margin: 0;
         }
@@ -98,7 +104,7 @@
             width: 800px;
             display: flex;
             padding-bottom: 30px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 2px solid #73351F;
             margin-top: 40px;
         }
         .input_name{
@@ -162,6 +168,27 @@
             width: 100%;
             margin-top: 30px;
             margin-bottom: 30px;
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
         }
     </style>
     <script>
@@ -249,37 +276,41 @@
     </script>
 </head>
 <body>
-<main class="container">
-    <div class="mypartyvalue">
-        <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
-        <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+<main class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+    <div class="container-head"></div>
+    <div style="padding: 40px 40px 20px 40px">
+        <div class="mypartyvalue">
+            <input type="button" class="btn btn-outline-secondary partyvaluebutton1" value="파티 모집" onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
+            <input type="button" class="btn btn-secondary partyvaluebutton2" value="내 파티" onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
+        </div>
+        <div class="mypartylist">
+            <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
+            <hr>
+        </div>
+        <ul class="party_list">
+                <c:forEach items="${pvo}" var="p">
+                    <li title="${p.partyid}" class="party_list_btn">
+                        <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
+                        <div class="party_list_name">
+                                ${p.partyname}
+                        </div>
+                    </li>
+                </c:forEach>
+            <li style="float: left">
+                <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
+                    <i class="fa-regular fa-square-plus fa-4x"></i><br/>
+                    <span style="font-weight: bold;">파티생성</span>
+                </button>
+            </li>
+        </ul>
+            <div class="choisvalue" style="margin-top: 30px;height: 38px;"></div>
+        </div>
     </div>
-    <div class="mypartylist">
-        <p class="partylisttitle" style="font-weight: bold; font-size: 1.3em;">내 파티 목록</p>
-        <hr>
-    </div>
-    <ul class="party_list">
-            <c:forEach items="${pvo}" var="p">
-                <li title="${p.partyid}" class="party_list_btn">
-                    <img src="${pageContext.servletContext.contextPath}/upload${p.partyimage}" class="member_img">
-                    <div class="party_list_name">
-                            ${p.partyname}
-                    </div>
-                </li>
-            </c:forEach>
-        <li style="float: left">
-            <button class="new_party_btn" onclick="location.href='${pageContext.servletContext.contextPath}/party/create'">
-                <i class="fa-regular fa-square-plus fa-4x"></i><br/>
-                <span style="font-weight: bold;">파티생성</span>
-            </button>
-        </li>
-    </ul>
-    <div class="choisvalue" style="margin-top: 30px;height: 38px;"></div>
-    <hr>
 </main>
 
 <article>
-    <section class="teamView">
+    <section class="container" style="padding: 0px; border-bottom: 3px solid #73351F;">
+        <div style="padding: 20px 40px 40px 40px">
         <p style="font-size: 2em; font-weight: bold; margin-top: 50px; text-align: center;">파티 생성</p>
         <hr/>
         <form id="createFrm" action="${pageContext.servletContext.contextPath}/myteam/create" enctype="multipart/form-data" method="post">
@@ -324,6 +355,8 @@
                 <input type="submit" class="btn btn-secondary create_btn" disabled value="파티 생성" />
             </div>
         </form>
+        </div>
+        <div class="container_bottom"></div>
     </section>
 </article>
 </body>

@@ -217,18 +217,13 @@ file="../header_footer/header.jspf" %>
         height: 150px;
         border-radius: 30%;
       }
-      .btn-outline-primary {
+      .btn-primary, .btn-outline-primary, .btn-secondary, .btn-outline-secondary
+      ,.btn-info ,.btn-outline-info, .btn-danger ,.btn-outline-danger{
         font-size: 14px;
         padding: 2px 4px;
+        margin: 5px;
       }
-      .btn-secondary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
-      .btn-outline-secondary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
+
       .userIntro p {
         margin: 0px;
       }
@@ -260,7 +255,7 @@ file="../header_footer/header.jspf" %>
       /* Edit Area */
 
       .editFrm {
-        width: 50%;
+        width: 90%;
         margin: 0 auto;
         text-align: center;
       }
@@ -318,7 +313,7 @@ file="../header_footer/header.jspf" %>
       #previewImage {
         max-width: 50px; /* 이미지 최대 너비 지정 */
         max-height: 50px; /* 이미지 최대 높이 지정 */
-        border-radius: 50%;
+        border-radius: 30%;
       }
       input[type="checkbox"] {
         opacity: 0;
@@ -453,7 +448,7 @@ file="../header_footer/header.jspf" %>
 
         <div class="interest">
           <span>관심분야</span>
-          <div style="width: 60%; text-align: right;">
+          <div style="width: 80%;  text-align: right;">
             <label for="industry"
               ><span class="btn btn-outline-danger">산업디자인</span>
               <input type="hidden" name="color" value="danger"
@@ -514,6 +509,7 @@ file="../header_footer/header.jspf" %>
               class="checkbox"
               onclick="return checkedCount()"
             />
+            <br>
             <label for="uxui"
               ><span class="btn btn-outline-primary">UX/UI</span>
               <input type="hidden" name="color" value="primary"

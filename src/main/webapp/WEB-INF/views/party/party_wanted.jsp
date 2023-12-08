@@ -111,14 +111,15 @@
                 <h2 class="main-title" style="margin-top: 0px; font-weight: bold; font-size: 35px">파티홍보 게시판</h2>
             </div>
         </div>
-        <div class="d-flex" style="display: flex; padding: 5px; justify-content: center">
-            <div style="justify-content: center; text-align: center">
+        <div class="d-flex" style="display: flex; padding: 5px; justify-content: space-between">
+            <div style="width: 10%"></div>
+            <div style="justify-content: center; text-align: center; width: 30%">
             <input type="button" class="btn btn-secondary partyvaluebutton1" value="파티 모집"
                    onclick="location.href='${pageContext.servletContext.contextPath}/party/wanted'">
             <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티" style="margin-left: 20px;"
                    onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
             </div>
-            <select class="form-select" style="width: fit-content; margin-left: 820px" id="postSort" name="postSort">
+            <select class="form-select" style="width: 10%;" id="postSort" name="postSort">
                 <option value="1"
                         <c:if test="${pVO.postSort==1}">
                             selected
