@@ -38,6 +38,11 @@
         values (#{param1}, #{param2}, #{param3})
     </insert>
 
+    <select id="CountDelid" resultType="Integer">
+        SELECT COUNT(*) AS count
+        FROM subject_delapply
+        WHERE subjectid = #{param1}
+    </select>
 </mapper>
 
 

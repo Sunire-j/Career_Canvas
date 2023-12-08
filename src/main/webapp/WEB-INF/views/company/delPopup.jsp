@@ -24,6 +24,10 @@
     <script>
         $(function () {
             $("#delFrm").on("submit", function (){
+                if($(".delcontent").val()==""){
+                    alert("사유를 입력해주세요.");
+                    return false;
+                }
                 var subjectid=$("#subjectid").val();
                 var reason = $(".delcontent").val();
                 $.ajax({
@@ -34,6 +38,8 @@
                        reason : reason
                    }, success: function (r){
                        alert("삭제 신청이 완료되었습니다.");
+                       opener.parent.location.reload();
+                        window.close();
                     }, error:function (e){
                        console.log(e.printStackTrace());
                     }

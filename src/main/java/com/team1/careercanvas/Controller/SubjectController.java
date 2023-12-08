@@ -112,7 +112,14 @@ public class SubjectController {
         SubjectVO svo = mapper.SelectSubject(subjectid);
         mav.addObject("Svo", svo);
 
-
+        int delidCount = mapper.CountDelid(subjectid);
+        mav.addObject("delcount", delidCount);
+        // 기업회원 확인
+        if (!svo.getUser_userid().equals(logId)) {
+            mav.addObject("msg", "해당 기업회원만 신청 가능합니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
 
         mav.setViewName("company/subjectView");
         return mav;
@@ -127,12 +134,6 @@ public class SubjectController {
 
         SubjectVO svo = mapper.SelectSubject(subjectid);
         mav.addObject("Svo", svo);
-        // 기업회원 확인
-        if (!svo.getUser_userid().equals(logId)) {
-            mav.addObject("msg", "해당 기업회원만 신청 가능합니다.");
-            mav.setViewName("alert_page");
-            return mav;
-        }
 
         mav.setViewName("company/delPopup");
         return mav;

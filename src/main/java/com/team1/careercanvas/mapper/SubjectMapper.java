@@ -14,4 +14,6 @@ public interface SubjectMapper {
     SubjectVO SelectSubject(int subjectid);
 
     void Insertdelapply(int subjectid, String reason, String logId);
+
+    int CountDelid(int subjectid);
 }
