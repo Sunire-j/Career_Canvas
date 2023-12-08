@@ -27,7 +27,11 @@ file="../header_footer/header.jspf"%>
 
     <style>
       /* All */
-
+      .container {
+        margin: 0 auto;
+        border-left: 1px solid #73351F;
+        border-right: 1px solid #73351F;
+      }
       * {
         padding: 0;
         margin: 0;
@@ -129,10 +133,13 @@ file="../header_footer/header.jspf"%>
       .userInfo_wrapper {
         width: 100%;
         margin: 0 auto;
-        margin-top: 25px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        background: #f2f2f2;
+        padding: 20px;
+        border-radius: 30px;
+        border: 1px solid #73351F;
       }
       .userIntro {
         display: flex;
@@ -143,15 +150,24 @@ file="../header_footer/header.jspf"%>
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 2.5px solid #73351F;
         padding-bottom: 5px;
         margin-bottom: 20px;
       }
       .userIntro img {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
+        border-radius: 30%;
       }
       .btn-outline-primary {
+        font-size: 14px;
+        padding: 2px 4px;
+      }
+      .btn-secondary {
+        font-size: 14px;
+        padding: 2px 4px;
+      }
+      .btn-outline-secondary {
         font-size: 14px;
         padding: 2px 4px;
       }
@@ -194,17 +210,24 @@ file="../header_footer/header.jspf"%>
       .ajaxMenu {
         display: flex;
         margin: 0 auto;
-        width: 100%;
+        align-items: center;
         justify-content: space-around;
+        width: 1300px;
         background-color: white;
         height: 50px;
         line-height: 50px;
         border-radius: 10px;
         text-align: center;
+        border: 1px solid #73351F;
       }
-      .ajaxMenu a {
+      .ajaxMenu a{
         width: 20%;
-        color: black;
+        color: #0D0D0D;
+        transition: color 0.3s, background-color 0.3s;
+      }
+      .ajaxMenu a:hover {
+        color: #73351F;
+        font-weight : bold;
       }
       .ajaxView {
         float: left;
@@ -212,7 +235,7 @@ file="../header_footer/header.jspf"%>
       .ajaxContent {
         width: 50%;
         justify-content: center;
-        margin-top: 80px;
+        margin-top: 20px;
         display: flex;
       }
       .ajaxView_wrapper {
@@ -244,13 +267,36 @@ file="../header_footer/header.jspf"%>
       .msgStyle {
         color: red;
       }
+      .container_bottom{
+        display: flex;
+        background: #A69668;
+        height: 10px;
+        margin-top: 10px;
+      }
+      .hr-styleset{
+        border: 0;
+        border-top: 2.5px dashed #73351F ;
+        border-bottom: 1px dashed #D9D9D9;
+      }
+      .container-head{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #A69668;
+        height: 10px;
+      }
+      hr{
+        border-top: 2.5px solid #73351F ;
+      }
     </style>
   </head>
   <body>
     <!-- Main -->
 
     <!-- Mypage User Info -->
-    <main class="container">
+    <main  class="container" style="margin-top: 100px; border-top: 3px solid #73351F; padding: 0px; background: linear-gradient( to bottom, #D9C8A9 70%, #F2F2F2 );">
+      <div class="container-head"></div>
+      <div style="padding: 20px">
       <!-- Top  -->
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
@@ -264,7 +310,7 @@ file="../header_footer/header.jspf"%>
               <a href="${pageContext.servletContext.contextPath}/mypage_edit">
                 <input
                   type="button"
-                  class="btn btn-outline-primary"
+                  class="btn btn-outline-secondary"
                   value="수정"
                 />
               </a>
@@ -273,9 +319,8 @@ file="../header_footer/header.jspf"%>
           </div>
         </div>
         <!-- Interest -->
-
-        <div>
-          <p>관심분야</p>
+        <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
+          <p style="display: flex; justify-content: center; font-size: 1.5rem" >관심분야</p>
           <div class="userInterest" style="display: flex; flex-wrap: wrap">
             <c:forEach var="interest" items="${interest}">
               <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
@@ -283,7 +328,9 @@ file="../header_footer/header.jspf"%>
           </div>
         </div>
       </div>
-
+      </div>
+      </div>
+    </main>
       <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
           <li class="myPofol menu" id="myPofol">
@@ -312,12 +359,13 @@ file="../header_footer/header.jspf"%>
           </li>
         </ul>
       </div>
-      
+     <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F; background: #F2F2F2">
+      <div style="padding: 10px 40px 40px 40px">
       <div style="width: 900px; margin: 0 auto">
         <div class="mt-3" style="text-align: center">
-          <button class="btn btn-outline-primary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'">보낸 쪽지함</button>
+          <button class="btn btn-secondary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/mySendMsg'">보낸 쪽지함</button>
           <button
-            class="btn btn-outline-primary receiveMsg"
+            class="btn btn-outline-secondary receiveMsg"
             onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myReceiveMsg'"
           >
             받은 쪽지함
@@ -345,9 +393,9 @@ file="../header_footer/header.jspf"%>
         </table>
 
         <!-- 페이징 -->
-        <div style="margin: 0 auto;">
+        <div class="paging_wrapper" style="margin: 0 auto;">
           <c:if test="${pVO.totalRecord == 0}">
-            보낸 쪽지가 없습니다
+            <p style="width: 100%; text-align: center">보낸 쪽지가 없습니다</p>
           </c:if>
           <c:if test="${pVO.totalRecord > 0}">
           <ul class="paging">
@@ -400,7 +448,7 @@ file="../header_footer/header.jspf"%>
         </div>
       </div>
       <div style="width: 60%; text-align: right; margin:0 auto;">
-      <input type="button" value="쪽지보내기" class="btn btn-outline-primary" onclick="openPopup()">
+      <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
           <script>
             $(function(){
               var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -432,7 +480,10 @@ file="../header_footer/header.jspf"%>
       />
       <button class="btn btn-success" type="submit">Go</button>
     </form>
-    </main>
+      </div>
+       <div class="container_bottom"></div>
+     </div>
+    </div>
   </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>

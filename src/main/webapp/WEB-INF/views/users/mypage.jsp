@@ -29,7 +29,12 @@
 
     <style>
         /* All */
+        .container {
+            margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
 
+        }
         * {
             padding: 0;
             margin: 0;
@@ -142,10 +147,13 @@
         .userInfo_wrapper {
             width: 100%;
             margin: 0 auto;
-            margin-top: 25px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            background: #f2f2f2;
+            padding: 20px;
+            border-radius: 30px;
+            border: 1px solid #73351F;
         }
 
         .userIntro {
@@ -158,17 +166,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 2.5px solid #73351F;
             padding-bottom: 5px;
             margin-bottom: 20px;
         }
 
         .userIntro img {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
+            border-radius: 30%;
         }
-
         .btn-outline-primary {
+            font-size: 14px;
+            padding: 2px 4px;
+        }
+        .btn-outline-secondary {
             font-size: 14px;
             padding: 2px 4px;
         }
@@ -209,18 +221,25 @@
         .ajaxMenu {
             display: flex;
             margin: 0 auto;
-            width: 100%;
+            align-items: center;
             justify-content: space-around;
+            width: 1300px;
             background-color: white;
             height: 50px;
             line-height: 50px;
             border-radius: 10px;
             text-align: center;
+            border: 1px solid #73351F;
         }
 
-        .ajaxMenu a {
+        .ajaxMenu a{
             width: 20%;
-            color: black;
+            color: #0D0D0D;
+            transition: color 0.3s, background-color 0.3s;
+        }
+        .ajaxMenu a:hover {
+            color: #73351F;
+            font-weight : bold;
         }
 
         .ajaxView {
@@ -274,7 +293,27 @@
             width: 160px;
             height: 160px;
             border-radius: 40px;
-
+        }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
         }
     </style>
 </head>
@@ -282,42 +321,45 @@
 <!-- Main -->
 
 <!-- Mypage User Info -->
-<main class="container">
+<main  class="container" style="margin-top: 100px; border-top: 3px solid #73351F; padding: 0px; background: linear-gradient( to bottom, #D9C8A9 70%, #F2F2F2 );">
+    <div class="container-head"></div>
+    <div style="padding: 20px">
     <!-- Top  -->
-    <div class="userInfo_wrapper">
-        <!-- UserInfo Area -->
-        <div class="userIntro">
-            <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt=""/>
-            <div style="padding-left: 20px;">
-                <div class="userId">
-                    <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
-                        <span style="font-size: 1.5rem">${uVO.username }</span>
-                    </a>
-                    <a href="${pageContext.servletContext.contextPath}/mypage_edit">
-                        <input
-                                type="button"
-                                class="btn btn-outline-primary"
-                                value="수정"
-                        />
-                    </a>
+        <div class="userInfo_wrapper">
+            <!-- UserInfo Area -->
+            <div class="userIntro">
+                <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt=""/>
+                <div style="padding-left: 20px;">
+                    <div class="userId">
+                        <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
+                            <span style="font-size: 1.5rem">${uVO.username }</span>
+                        </a>
+                        <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+                            <input
+                                    type="button"
+                                    class="btn btn-outline-secondary"
+                                    value="수정"
+                            />
+                        </a>
+                    </div>
+                    <p>${uVO.comment }</p>
                 </div>
-                <p>${uVO.comment }</p>
             </div>
-        </div>
         <!-- Interest -->
-
-        <div>
-            <p>관심분야</p>
-            <div class="userInterest" style="display: flex; flex-wrap: wrap">
-                <c:if test="${not empty interest}">
-                    <c:forEach var="interest" items="${interest}">
-                        <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
-                    </c:forEach>
-                </c:if>
+            <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
+                <p style="display: flex; justify-content: center; font-size: 1.5rem" >관심분야</p>
+                <div class="userInterest" style="display: flex; flex-wrap: wrap">
+                    <c:if test="${not empty interest}">
+                        <c:forEach var="interest" items="${interest}">
+                            <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+                        </c:forEach>
+                    </c:if>
+                </div>
             </div>
         </div>
     </div>
-
+</div>
+</main>
     <!-- Center -->
     <!-- ajax -->
     <div class="ajaxMenu_wrapper">
@@ -350,143 +392,153 @@
             </li>
         </ul>
     </div>
-
+    <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F; background: #F2F2F2">
+    <div style="padding: 20px 40px 40px 40px">
     <!-- ajax View -->
-    <div style="margin: 0 auto; margin-top: 30px; ">
-        <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
-        <c:forEach var="list" items="${list}">
-            <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${list.portfolioid}">
-            <div class="img_C">
-                <img src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}" class="portfolio_img">
-                <!-- line 1 -->
-                <div class="content_info">
-                    <div class="content_category">
-                        <c:if test="${list.category==0}">
-                            분류없음
-                        </c:if>
-                        <c:if test="${list.category==1}">
-                            IT/개발
-                        </c:if>
-                        <c:if test="${list.category==2}">
-                            디자인
-                        </c:if>
-                        <c:if test="${list.category==3}">
-                            영상
-                        </c:if>
-                    </div>
-                    <div class="content_title">
-                            ${list.portfoliotitle}
+        <div style="margin: 0 auto; margin-top: 30px; ">
+            <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
+            <c:forEach var="list" items="${list}">
+                <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${list.portfolioid}">
+                <div class="img_C">
+                    <img src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}" class="portfolio_img">
+                    <!-- line 1 -->
+                    <div class="content_info">
+                        <div class="content_category">
+                            <c:if test="${list.category==0}">
+                                분류없음
+                            </c:if>
+                            <c:if test="${list.category==1}">
+                                IT/개발
+                            </c:if>
+                            <c:if test="${list.category==2}">
+                                디자인
+                            </c:if>
+                            <c:if test="${list.category==3}">
+                                영상
+                            </c:if>
+                        </div>
+                        <div class="content_title">
+                                ${list.portfoliotitle}
+                        </div>
                     </div>
                 </div>
-            </div>
-            </a>
-        </c:forEach>
-        </ul>
-    </div>
-    <!-- 페이징 -->
-    <c:if test="${pVO.totalRecord == 0}">
-        <p style="text-align: center;">작성된 포트폴리오가 없습니다</p>
-    </c:if>
-    <div class="paging" style="text-align: center; margin: 0 auto; text-align: center; width: 70%;">
-        <c:if test="${pVO.totalRecord > 0}">
+                </a>
+            </c:forEach>
+            </ul>
+        </div>
+        <!-- 페이징 스타일 1
+        <c:if test="${pVO.totalRecord == 0}">
+            <p style="text-align: center;">작성된 포트폴리오가 없습니다</p>
+        </c:if>
+        <div class="paging" style="text-align: center; margin: 0 auto; text-align: center; width: 70%;">
+            <c:if test="${pVO.totalRecord > 0}">
 
-            <c:if test="${pVO.page == 1}">
-                <input type="button" value="<" class="btn btn-outline-primary" disabled>
-            </c:if>
-            <c:if test="${pVO.page > 1}">
-
-                <a
-                        href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
-                ><input type="button" value="<" class="btn btn-outline-primary"></a
-                >
-
-            </c:if>
-
-            <c:forEach
-                    var="p"
-                    begin="${pVO.startPage}"
-                    end="${pVO.page + pVO.onePageCount -1}"
-            >
-                <c:if test="${p<=pVO.totalPage}">
+                <c:if test="${pVO.page == 1}">
+                    <input type="button" value="<" class="btn btn-outline-primary" disabled>
+                </c:if>
+                <c:if test="${pVO.page > 1}">
 
                     <a
-                            href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}<c:if test='${pVO.searchWord != null}'>&searchWord=${pVO.searchWord}</c:if>"
-                    >
-                        <button
-                                type="submit"
-                                class="btn btn-outline-primary"
-                                style="margin: 10px"
-                        >
-                                ${p}
-                        </button>
-                    </a
+                            href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page - 1}"
+                    ><input type="button" value="<" class="btn btn-outline-primary"></a
                     >
 
                 </c:if>
-            </c:forEach>
 
-            <c:if test="${pVO.page == pVO.totalPage}">
-                <input type="button" value=">" class="btn btn-outline-primary" disabled>
-            </c:if>
-            <c:if test="${pVO.page < pVO.totalPage}">
-
-                <a
-                        href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page + 1}"
-                > <input type="button" value=">" class="btn btn-outline-primary"></a
+                <c:forEach
+                        var="p"
+                        begin="${pVO.startPage}"
+                        end="${pVO.page + pVO.onePageCount -1}"
                 >
+                    <c:if test="${p<=pVO.totalPage}">
 
-            </c:if>
-            </ul>
-        </c:if>
-        <!-- 글쓰기 -->
-        <input
-                type="button"
-                class="btn btn-outline-primary"
-                value="글쓰기"
-                onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
-        />
-    </div>
+                        <a
+                                href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}<c:if test='${pVO.searchWord != null}'>&searchWord=${pVO.searchWord}</c:if>"
+                        >
+                            <button
+                                    type="submit"
+                                    class="btn btn-outline-primary"
+                                    style="margin: 10px"
+                            >
+                                    ${p}
+                            </button>
+                        </a
+                        >
 
+                    </c:if>
+                </c:forEach>
 
-    <!-- 페이징2 -->
-    <div>
-        <ul class="pagination">
-            <c:if test="${pVO.page==1}">
-                <li class="page-item"><a class="page-link">Previous</a></li>
-            </c:if>
-            <c:if test="${pVO.page>1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page-1}">Previous</a>
-                </li>
-            </c:if>
-            <c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount -1}">
-                <c:if test="${p <= pVO.totalPage}">
-                    <li class="page-item"><a class="page-link"
-                                             href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}">${p}</a>
-                    </li>
+                <c:if test="${pVO.page == pVO.totalPage}">
+                    <input type="button" value=">" class="btn btn-outline-primary" disabled>
                 </c:if>
-            </c:forEach>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
+                <c:if test="${pVO.page < pVO.totalPage}">
+
+                    <a
+                            href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page + 1}"
+                    > <input type="button" value=">" class="btn btn-outline-primary"></a
+                    >
+
+                </c:if>
+                </ul>
+            </c:if>
+            글쓰기 위치
+            <input
+                    type="button"
+                    class="btn btn-outline-primary"
+                    value="글쓰기"
+                    onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
+            />
+        </div>
+        -->
+                <!-- 페이징2 -->
+                <div style="display: flex; justify-content: center">
+                    <ul class="pagination">
+                        <c:if test="${pVO.page==1}">
+                            <li class="page-item"><a class="page-link">Previous</a></li>
+                        </c:if>
+                        <c:if test="${pVO.page>1}">
+                            <li class="page-item"><a class="page-link"
+                                                     href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${pVO.page-1}">Previous</a>
+                            </li>
+                        </c:if>
+                        <c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount -1}">
+                            <c:if test="${p <= pVO.totalPage}">
+                                <li class="page-item"><a class="page-link"
+                                                         href="${pageContext.servletContext.contextPath}/mypage/myPofol?page=${p}">${p}</a>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <input
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                value="글쓰기"
+                                onclick="location.href='${pageContext.servletContext.contextPath}/mypage/myPofol/write'"
+                        />
+                    </ul>
+                </div>
+
+
+                <!-- search -->
+                <form
+                        class="input-group mb-3"
+                        style="width: 70%; margin: 20px auto"
+                        action="${pageContext.servletContext.contextPath}/mypage/myPofol"
+                        method="GET"
+                >
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="searchWord"
+                            placeholder="Search"
+                    />
+                    <button class="btn btn-success" type="submit">Go</button>
+
+                </form>
+
+            </div>
+        <div class="container_bottom"></div>
     </div>
-
-
-    <!-- search -->
-    <form
-            class="input-group mb-3"
-            style="width: 70%; margin: 20px auto"
-            action="${pageContext.servletContext.contextPath}/mypage/myPofol"
-            method="GET"
-    >
-        <input
-                type="text"
-                class="form-control"
-                name="searchWord"
-                placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-    </form>
-</main>
 </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>
