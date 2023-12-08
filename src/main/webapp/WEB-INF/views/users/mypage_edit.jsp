@@ -70,6 +70,11 @@ file="../header_footer/header.jspf" %>
     </script>
     <style>
       /* All */
+      .container {
+        margin: 0 auto;
+        border-left: 1px solid #73351F;
+        border-right: 1px solid #73351F;
+      }
       * {
         padding: 0;
         margin: 0;
@@ -184,32 +189,45 @@ file="../header_footer/header.jspf" %>
 
       /* Mypage User Info */
       .userInfo_wrapper {
-        width: 75%;
+        width: 100%;
         margin: 0 auto;
-        margin-top: 25px;
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
+        background: #f2f2f2;
+        padding: 20px;
+        border-radius: 30px;
+        border: 1px solid #73351F;
       }
-
       .userIntro {
         display: flex;
         align-items: center;
         padding-bottom: 50px;
       }
-
       .userId {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 2.5px solid #73351F;
         padding-bottom: 5px;
         margin-bottom: 20px;
       }
-
       .userIntro img {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
+        border-radius: 30%;
+      }
+      .btn-outline-primary {
+        font-size: 14px;
+        padding: 2px 4px;
+      }
+      .btn-secondary {
+        font-size: 14px;
+        padding: 2px 4px;
+      }
+      .btn-outline-secondary {
+        font-size: 14px;
+        padding: 2px 4px;
       }
       .userIntro p {
         margin: 0px;
@@ -306,43 +324,67 @@ file="../header_footer/header.jspf" %>
         opacity: 0;
         position: absolute;
       }
+      .container_bottom{
+        display: flex;
+        background: #A69668;
+        height: 10px;
+        margin-top: 10px;
+      }
+       {
+        border: 0;
+        border-top: 2.5px dashed #73351F ;
+        border-bottom: 1px dashed #D9D9D9;
+      }
+      .container-head{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #A69668;
+        height: 10px;
+      }
+      hr{
+        border-top: 2.5px solid #73351F ;
+      }
     </style>
   </head>
   <body>
     <!-- Main -->
     <!-- Mypage User Info -->
-    <main class="container">
+    <main  class="container" style="margin-top: 100px; border-top: 3px solid #73351F; padding: 0px; background: linear-gradient( to bottom, #D9C8A9 70%, #F2F2F2 );">
+      <div class="container-head"></div>
+      <div style="padding: 20px">
       <!-- Top  -->
-      <div class="userInfo_wrapper">
-        <!-- UserInfo Area -->
-        <div class="userIntro">
-          <img
-            src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}"
-            alt=""
-          />
-          <div style="padding-left: 20px">
-            <div class="userId">
-              <a href="mypage.html"
-                ><span style="font-size: 1.5rem">${uVO.username }</span></a
-              >
-            </div><p>${uVO.comment }</p>
+        <div class="userInfo_wrapper">
+          <!-- UserInfo Area -->
+          <div class="userIntro">
+            <img
+              src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}"
+              alt=""
+            />
+            <div style="padding-left: 20px">
+              <div class="userId">
+                <a href="mypage.html"
+                  ><span style="font-size: 1.5rem">${uVO.username }</span></a
+                >
+              </div><p>${uVO.comment }</p>
+            </div>
           </div>
-        </div>
-        <!-- Interest -->
+          <!-- Interest -->
 
-        <div>
-          <p>관심분야</p>
-          <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <c:forEach var="interest" items="${interest}">
-              <span><input type="button" class="btn btn-outline-primary" value="${interest}"></span>
-            </c:forEach>
+          <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
+            <p style="display: flex; justify-content: center; font-size: 1.5rem" >관심분야</p>
+            <div class="userInterest" style="display: flex; flex-wrap: wrap">
+              <c:forEach var="interest" items="${interest}">
+                <span><input type="button" class="btn btn-outline-primary" value="${interest}"></span>
+              </c:forEach>
+            </div>
           </div>
         </div>
       </div>
-      <hr style="margin: 0 auto; margin-top: 95px; width: 800px" />
-
+    </main>
       <!-- Edit Area -->
-
+    <section class="container" style="padding: 0px; border-bottom: 3px solid #73351F; background: #F2F2F2">
+      <div style="padding: 10px 40px 40px 40px">
       <form
         class="editFrm"
         action="${pageContext.servletContext.contextPath}/mypageEditOk"
@@ -628,7 +670,11 @@ file="../header_footer/header.jspf" %>
           style="width: 100%; margin-top: 30px; height: 40px"
         />
       </form>
-    </main>
+      </div>
+      </div>
+      </div>
+      <div class="container_bottom"></div>
+    </section>
     <script>
       $(function () {
         // 닉네임유효성 함수
