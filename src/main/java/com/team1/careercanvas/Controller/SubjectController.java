@@ -1,7 +1,6 @@
 package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.SubjectMapper;
-import com.team1.careercanvas.vo.PofolVO;
 import com.team1.careercanvas.vo.SubjectVO;
 import com.team1.careercanvas.vo.UserVO;
 import org.springframework.stereotype.Controller;
@@ -115,11 +114,6 @@ public class SubjectController {
         int delidCount = mapper.CountDelid(subjectid);
         mav.addObject("delcount", delidCount);
         // 기업회원 확인
-        if (!svo.getUser_userid().equals(logId)) {
-            mav.addObject("msg", "해당 기업회원만 신청 가능합니다.");
-            mav.setViewName("alert_page");
-            return mav;
-        }
 
         mav.setViewName("company/subjectView");
         return mav;

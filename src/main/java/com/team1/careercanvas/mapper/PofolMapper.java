@@ -42,4 +42,7 @@ public interface PofolMapper {
 
 	int getTotalTeamPofol(PagingVO pVO);
 
+	//조석훈 작업
+	List<PofolVO> getPortfolioForHome();
+
 }

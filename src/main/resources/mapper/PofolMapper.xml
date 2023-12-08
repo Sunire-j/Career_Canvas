@@ -71,6 +71,24 @@
 		where portfolioid=#{param2}
 	</update>
 
+	<select id="getPortfolioForHome" resultType="com.team1.careercanvas.vo.PofolVO">
+		SELECT p.portfolioid as portfolioid,
+		       p.isteam as isteam ,
+		       u.username as username,
+		       p.portfoliotitle as portfoliotitle,
+		       p.category as category,
+			p.imgsrc as imgsrc,
+			p.partyid as partyid,
+			u.profileimg as profileimg,
+		       COUNT(pl.user_userid) AS likeCnt
+		FROM portpolio p
+				 LEFT JOIN portfoliolike pl ON p.portfolioid = pl.portpolio_portfolioid
+		left join user u on p.user_userid = u.userid
+		GROUP BY p.portfolioid
+		ORDER BY likeCnt DESC, p.portfolioid DESC
+		LIMIT 4;
+	</select>
+
 	<!-- 권혁준 작업 -->
 	<select id="getPublicSoloPofol" resultType="com.team1.careercanvas.vo.PofolVO">
 		select portpolio.portfoliotitle as portfoliotitle,

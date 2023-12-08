@@ -13,6 +13,7 @@ file="./header_footer/header.jspf" %>
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   </head>
   <body>
     <div class="container">
@@ -27,18 +28,11 @@ file="./header_footer/header.jspf" %>
       </p>
       <hr />
       <p>임시 페이지</p>
-      <a href="${pageContext.servletContext.contextPath}/findid">아이디 찾기</a>
-      <a href="${pageContext.servletContext.contextPath}/findpw"
-        >비밀번호 찾기</a
-      >
-      <a href="${pageContext.servletContext.contextPath}/login">로그인</a>
-      <a href="${pageContext.servletContext.contextPath}/myteam/main"
-        >마이팀-메인 페이지</a
-      >
       <a href="${pageContext.servletContext.contextPath}/subject/write"
         >기업과제-과제작성</a
       >
       <a href="${pageContext.servletContext.contextPath}/pofolview">포폴뷰</a>
+      <a href="${pageContext.servletContext.contextPath}/temp_home">홈화면 임시</a>
       <hr />
       <p>이 영역은 원래 get으로 접근 못하는 영역임.</p>
       <br />
