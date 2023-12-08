@@ -17,9 +17,27 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/super-build/ckeditor.js"></script>
     <style>
       .content {
-        max-width: 1000px;
+        width: 1200px;
         margin: 0 auto;
         margin-top: 70px;
+        background: #F2F2F2;
+        border-width: 3px 1px 3px 1px;
+        border-color: #73351F;
+        border-style: groove;
+      }
+      .content-header{
+        height: 100px;
+        width: 100%;
+        background: #A69668;
+        border-bottom: 2px solid #73351F;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      h3{
+
+        font-size: 40px;
+        font-weight: bold;
       }
 
       .ck-editor__editable {
@@ -41,6 +59,14 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
       input[type="radio"] {
         display: none;
       }
+
+      .container_bottom{
+        display: flex;
+        background: #A69668;
+        height: 10px;
+        margin-top: 10px;
+      }
+
     </style>
     <script>
       $(function () {
@@ -200,12 +226,16 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
     </script>
   </head>
   <body>
-    <div class="content">
-      <h3 style="margin-bottom: 30px">포트폴리오 작성</h3>
+  <div class="content">
+    <div class="content-header">
+      <h3>파티홍보 게시판 작성</h3>
+    </div>
+    <div style="background: #D9D9D9">
       <form
         method="post"
         action="${pageContext.servletContext.contextPath}/mypage/myPofol/writeOk"
         class="needs-validation writeform"
+        style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F"
         novalidate
       >
         <input type="hidden" id="content" name="postcontent" />
@@ -220,7 +250,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
           maxlength="30"
         />
         <div class="invalid-feedback">제목을 입력해 주세요. (30자 이내)</div>
-        <div style="padding: 20px 0">
+        <div>
           <div class="button-container">
             <label class="btn btn-outline-warning">
               <input type="radio" name="category" value="0" checked />
@@ -239,9 +269,11 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
               <span>영상음향</span>
             </label>
           </div>
+          </div>
         </div>
-        <div id="editor"></div>
 
+        <div style="padding: 10px">
+        <div id="editor"></div>
         <div id="botContainer">
           <div style="width: 50%" class="botContainer2">
             <input
@@ -264,6 +296,9 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         </div>
       </form>
     </div>
+    <div class="container_bottom"></div>
+  </div>
+  </div>
   </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>

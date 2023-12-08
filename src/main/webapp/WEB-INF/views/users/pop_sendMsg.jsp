@@ -19,7 +19,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       referrerpolicy="no-referrer"
     ></script>
   </head>
-  <body style="padding: 50px; background: #f0f0f0">
+  <body style="margin: 0 auto;width: 70%;height: 700px;padding: 50px; background: linear-gradient( to bottom, #D9C8A9 20%, #F2F2F2 );">
     <form
       method="post"
       action="${pageContext.servletContext.contextPath}/mypage/pop_sendMsgOk"
@@ -29,7 +29,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         보내는사람
         <input class="form-control" type="text" value="${LogId}" disabled />
       </div>
-      <div>
+      <div style="margin-top: 20px">
         받는사람
         <input
           id="receive_user"
@@ -41,23 +41,27 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div id="userCheck"></div>
         <input
           type="button"
-          class="btn btn-outline-primary"
+          class="btn btn-outline-secondary"
+          style="margin-top: 10px"
           value="받는사람 확인"
           onclick="checkReceiver()"
         />
       </div>
+      <div style="margin-top: 40px">
+        보낼 메세지
       <textarea
         class="form-control"
-        style="resize: none; margin-top: 40px"
+        style="resize: none;"
         rows="5"
         name="content"
         id="content"
         maxlength="80"
       ></textarea>
+      </div>
       <input
         type="submit"
         value="전송"
-        class="btn btn-outline-primary"
+        class="btn btn-outline-secondary"
         style="position: relative; float: right; margin-top: 20px"
       />
     </form>

@@ -69,13 +69,10 @@
             overflow: auto;
         }
 
-        li {
-            float: left;
-        }
-
         /* 파티 목록 리스트 */
         .party_list li{
             margin-right: 20px;
+            float: left;
         }
         .member_img{
             width: 70px;
