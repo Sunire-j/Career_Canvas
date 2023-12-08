@@ -1,5 +1,6 @@
 package com.team1.careercanvas.mapper;
 
+import com.team1.careercanvas.vo.CompanyVO;
 import com.team1.careercanvas.vo.PagingVO;
 import com.team1.careercanvas.vo.PofolVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -31,6 +32,8 @@ public interface PofolMapper {
 	int getpofollike(int pofolid);
 
 	int insertImg(String path, int pofolid);
+
+	CompanyVO companyprofile(String user_userid);
 
 	// 권혁준 작업
 

@@ -37,6 +37,10 @@
 		where portfolioid = #{param1};
 	</select>
 
+	<select id="companyprofile" resultType="com.team1.careercanvas.vo.CompanyVO">
+		select * from company
+		where user_userid = #{param1};
+	</select>
 	<select id="getpofollike" resultType="Integer">
 		select count(user_userid)
 		from portfoliolike
@@ -63,6 +67,7 @@
 		delete from portpolio
 		where portfolioid = #{param1};
 	</delete>
+
 
 <!--	조석훈 작업-->
 	<update id="insertImg">

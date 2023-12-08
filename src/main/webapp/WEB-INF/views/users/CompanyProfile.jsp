@@ -128,21 +128,10 @@
             padding: 0;
         }
 
-
         article {
             width: 1200px;
             margin: 0 auto;
             margin-top: 80PX;
-        }
-        .content>li{
-            /*width: 25%;*/
-            /*margin-top: 20px;*/
-            margin-bottom: 10px;
-        }
-        .content{
-            display: flex;
-            width: 1100px;
-            flex-wrap: wrap;
         }
 
         /* 프로필 정보 */
@@ -193,7 +182,7 @@
             margin-top: 5px;
             margin-left: 10px;
             font-size: 1.5em;
-            color: gray;
+            color: rgb(128, 128, 128);
         }
 
         .info_count>div {
@@ -228,28 +217,31 @@
 
         /* 포트폴리오 */
         .portfolio_category {
+            width: 150px;
             display: flex;
-            width: 300px;
-            margin: 0 auto;
-            margin-top: 30px;
-            align-items: center;
-            justify-content: center;
         }
 
         .portfolio_category>button {
-            margin-left: 10px;
         }
 
         .portfolio_content{
             margin: 0 auto;
             margin-top: 10px;
-        }
 
+        }
+        .portfolio_content>li{
+            float: left;
+        }
+        .img_C{
+            width:235px;
+            margin-left: 30px;
+        }
         .content img {
             width: 235px;
             height: 235px;
             border-radius: 30px;
 
+            margin-top: 30px;
         }
         .content_info{
             width: 330px;
@@ -258,12 +250,6 @@
             white-space: nowrap;
             font-weight: bold;                      
         }
-
-        .img_C{
-              width:235px;
-              margin-left: 30px;
-          }
-
         .content_category, .content_title{
             display: inline;
             height: 40px;
@@ -271,14 +257,20 @@
         }
         .content_category{
             height: 30px;
-            margin-top: 10px;
             margin-right: 10px;
             background-color: #ddd;
             border-radius: 5px;
             text-align: center;
             padding: 5px 5px 5px 10px;
         }
-     
+        .solo_party{
+            display: flex;
+            justify-content : space-between;
+        }
+
+        .solo_party_btn{
+
+        }
 
         /*페이지*/
         .portfolio_paging {
@@ -326,66 +318,52 @@
                 <div class="profile">
                     <div class="profile_img">
                         <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}">
-                    <div class="profile_info">
-                        <div class="info_name"><b>${uVO.username }</b></div>
-                        <div class="info_email">${uVO.useremail}</div>
-                        <div class="info_count">
-                            <div>포트폴리오</div>
-                            <div>${pCount}</div>
-                            <div>기업과제</div>
-                            <div>${sCount}</div>
+                        <div class="profile_info">
+                            <div class="info_name"><b>${uVO.username}</b></div>
+                            <div class="info_email">${uVO.useremail}</div>
+                            <div class="info_count">
+                                <div>기업과제</div>
+                                <div>${sCount}</div>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    <div id="interesting">
-                        <p style="margin-left: 158px; font-size: 1.2em;">관심분야</p>
-                    <div class="userInterest" style="display: flex; flex-wrap: wrap">
-                        <c:forEach var="interest" items="${interest}">
-                            <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
-                        </c:forEach>
-                    </div>
-                </div>
                 </div>
                 <div class="salutation">
                     <div class="salutation_name">
                         소개 글
                     </div>
                     <div class="salutation_content">
-                        ${uVO.comment }
+                        ${uVO.comment} 기업회원인지 아닌지 확인하는 과정 없음 과정 필요
                     </div>
                 </div>
             </div>
         </article>
         <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F;">
-            <div style="padding: 20px 40px 40px 40px">
+            <div style="padding: 20px 40px 20px 40px">
             <div class="portfolio">
                 <div class="portfolio_category">
-                    <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uVO.userid}'">포트폴리오</button>
-                    <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">기업과제</button>
+                    <p class="P" style="font-size: 2em; color: #696969">기업과제</p>
                 </div>
                 <div class="portfolio_content">
-                    <ul class="content">
-                        <c:forEach items="${pVO}" var="pVo">
+                    <ul class="content" style="width: 1200px; display: flex; flex-wrap: wrap">
+                        <c:forEach items="${sVO}" var="svo">
                         <li>
                             <div class="img_C">
-                                <img src="${pageContext.servletContext.contextPath}/upload${pVo.imgsrc}" class="portfolio_img">
+                                <img src="${pageContext.servletContext.contextPath}/upload${svo.imgsrc}" class="portfolio_img">
                                 <div class="content_info">
                                     <div class="content_category">
-                                        <c:if test="${pVo.category==0}">
-                                            분류없음
+                                        <c:if test="${svo.category==1}">
+                                            IT/프로그래밍
                                         </c:if>
-                                        <c:if test="${pVo.category==1}">
-                                            IT/개발
-                                        </c:if>
-                                        <c:if test="${pVo.category==2}">
+                                        <c:if test="${svo.category==2}">
                                             디자인
                                         </c:if>
-                                        <c:if test="${pVo.category==3}">
-                                            영상
+                                        <c:if test="${svo.category==3}">
+                                            영상음향
                                         </c:if>
                                     </div>
                                     <div class="content_title">
-                                        ${pVo.portfoliotitle}
+                                        ${svo.subjecttitle}
                                     </div>
                                 </div>
                             </div>
@@ -397,6 +375,9 @@
                     <div class="pagination" style="display: flex">
                         <div class="paging">
                             <ul class="pagination justify-content-center d-flex">
+                                <c:if test="${PagingVO.totalRecord==0}">
+                                    <p style="font-weight: bold; font-size: 1.2rem; text-align: center;">제시한 기업과제가 없습니다.</p>
+                                </c:if>
                                 <c:if test="${PagingVO.page > 1}">
                                     <li class="page-item"><a class="page-link" href="?page =${PagingVO.page - 1}&uid=${uVO.userid}"><
                                     </a></li>
