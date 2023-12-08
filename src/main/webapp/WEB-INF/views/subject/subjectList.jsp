@@ -390,6 +390,12 @@
                   </a>   
               </c:if>
           </div>
+            <c:if test="${usertype==1}">
+                <div style="width: 100%; overflow: auto; margin: 0 auto; margin-top: 10px">
+                    <button type="button" class="btn btn-secondary" style="float: right; margin-right: 50px"
+                            onclick="location.href='${pageContext.servletContext.contextPath}/subject/write'">글쓰기</button>
+                </div>
+            </c:if>
           <!-- 검색 -->
           <div style="width: 100%; text-align: center;">
             <div class="search-container" style="margin: 30px;">
