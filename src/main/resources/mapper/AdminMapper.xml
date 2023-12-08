@@ -174,6 +174,12 @@
         where userid = #{param1}
     </delete>
 
+    <delete id="deletePP">
+        delete
+        from portpolio
+        where portfolioid = #{param1}
+    </delete>
+
     <update id="deleteComment">
         update comment
         set commentcontent = '삭제된 댓글입니다.',
@@ -203,7 +209,19 @@
     <select id="reporterUser" resultType="String">
         select userid
         from report
-        where targetid = #{param1}
+        where targetid = #{param1} limit 1
+    </select>
+
+    <select id="reportToday" resultType="Integer">
+        select count(reportid)
+        from report
+        where date = curdate()
+    </select>
+
+    <select id="todatNewMember" resultType="Integer">
+        select count(userid)
+        from user
+        where date = curdate() and usertype != 2
     </select>
 
     <!-- 권혁준 작업 -->
@@ -236,32 +254,32 @@
     <select id="getBannerImg" resultType="String">
         select bannerimg
         from banner
-        where bannerid=#{param1}
+        where bannerid = #{param1}
     </select>
 
     <delete id="deleteBanner">
         delete
         from banner
-        where bannerid=#{param1}
+        where bannerid = #{param1}
     </delete>
 
     <select id="getCompanyList" resultType="com.team1.careercanvas.vo.CompanyVO">
         select c.user_userid as user_userid,
-               c.companyno as companyno,
-               c.isaccept as isaccept,
-               c.authimg as authimg,
-               u.username as companyname,
-               u.date as date
+        c.companyno as companyno,
+        c.isaccept as isaccept,
+        c.authimg as authimg,
+        u.username as companyname,
+        u.date as date
         from company c
         join user u on u.userid = c.user_userid
         <where>
             usertype=1
-        <if test="searchKey=='username'">
-        and u.username like concat('%', #{searchWord}, '%')
-        </if>
-        <if test="searchKey=='userid'">
-            and c.user_userid like concat('%',#{searchWord}, '%')
-        </if>
+            <if test="searchKey=='username'">
+                and u.username like concat('%', #{searchWord}, '%')
+            </if>
+            <if test="searchKey=='userid'">
+                and c.user_userid like concat('%',#{searchWord}, '%')
+            </if>
         </where>
         <choose>
             <when test="postSort==1">
@@ -274,10 +292,10 @@
                 order by u.date desc
             </when>
             <when test="postSort==4">
-                order by c.isaccept desc
+                order by c.isaccept desc, u.date desc
             </when>
         </choose>
-limit #{onePageRecord} offset #{offsetPoint}
+        limit #{onePageRecord} offset #{offsetPoint}
     </select>
 
     <select id="getAuthimg" resultType="String">
@@ -289,12 +307,12 @@ limit #{onePageRecord} offset #{offsetPoint}
     <update id="acceptCompany">
         update company
         set isaccept = 0
-        where user_userid=#{param1}
+        where user_userid = #{param1}
     </update>
 
     <delete id="denyCompany">
         delete
         from user
-        where userid=#{param1};
+        where userid = #{param1};
     </delete>
 </mapper>

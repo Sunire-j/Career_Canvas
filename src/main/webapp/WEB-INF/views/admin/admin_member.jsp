@@ -77,6 +77,13 @@
         .btn {
             color: white;
         }
+
+        #sideBar a,
+        #sideBar a:visited,
+        #sideBar a:link {
+            color: black;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -88,6 +95,7 @@
                style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
+        <h3><a href="${pageContext.servletContext.contextPath}/admin/home">관리자 홈</a></h3>
         <h3>회원관리</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/member"> 일반회원관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/company"> 기업회원관리 </a>
@@ -107,7 +115,7 @@
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
         <h1 style="padding: 15px;">회원관리-일반회원관리</h1>
-        <select style="height: 30px" name="postSort" id="postSort">
+        <select style="width: fit-content" class="form-select" name="postSort" id="postSort">
             <option value="1" <c:if test="${pVO.postSort==1}">
                 selected
             </c:if>>이름
@@ -134,7 +142,8 @@
                     <td>${uvo.userid}</td>
                     <td>${uvo.username}</td>
                     <td>${uvo.date}</td>
-                    <td><a class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">바로가기</a></td>
+                    <td><a class="btn btn-sm btn-primary"
+                           href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">바로가기</a></td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm deletion" id="deletion" title="${uvo.userid}">강제탈퇴</button>
                         <button type="button" class="btn btn-danger btn-sm" id="changeUsername" title="${uvo.userid}">닉네임 변경</button>
@@ -164,12 +173,12 @@
             </div>
         </div>
         <div class="search-container">
-            <select style="height:30px" name="searchKey" id="searchKey">
+            <select style="width: fit-content" class="form-select" name="searchKey" id="searchKey">
                 <option value="username">이름</option>
                 <option value="userid">아이디</option>
             </select>
-            <input type="text" name="searchWord" id="searchWord" placeholder="검색어를 입력하세요." style="height: 30px"/>
-            <button id="searchBtn">검색</button>
+            <input type="text" name="searchWord" class="form-control" id="searchWord" placeholder="검색어를 입력하세요." style="width: 200px"/>
+            <button id="searchBtn" class="btn btn-primary">검색</button>
         </div>
     </div>
 </div>

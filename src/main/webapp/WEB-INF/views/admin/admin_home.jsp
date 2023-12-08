@@ -1,33 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        $(function () {
-            $(".forevent").on('click', "#deletion", function () {
-                var del_target = $(this).attr("title");
-                var del_type = $(this).val();
-                location.href = "${pageContext.servletContext.contextPath}/report/delete?targetid=" + del_target + "&reporttype=" + del_type;
-            });
 
-            $(".forevent").on('click', "#dismiss", function () {
-                var dis_target = $(this).attr("title");
-                location.href = "${pageContext.servletContext.contextPath}/report/dismiss?targetid=" + dis_target;
-            });
-            // 부모속성,    이벤트이름, 실제로 클릭 된 자식, 이벤트 발생 시 호출함수
-            $(".forevent").on('click', "#deletionUser", function () {
-                var target_id = $(this).attr("title");
-                var del_type = $(this).val();
-                location.href = "${pageContext.servletContext.contextPath}/report/delete/user?target_id=" + target_id + "&reporttype=" + del_type;
-            });
-        });
     </script>
     <style>
         #sideBar {
@@ -52,27 +35,25 @@
         .table {
             width: 100%;
             text-align: center;
-            margin-top: 35px;
         }
 
         td {
             vertical-align: middle;
         }
 
-        .pagination-container {
+        .top {
+            width: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-top: 20px;
+            height: 100px;
+            align-items: center;
+            margin: 30px 0;
+            font-size: 20px;
+        }
+
+        .top div {
+            flex: 1;
             text-align: center;
-        }
-
-        .pagination {
-            display: inline-block;
-        }
-
-        .btn {
-            color: white;
         }
 
         #sideBar a,
@@ -111,7 +92,11 @@
     </div>
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
-        <h1 style="padding: 15px;">게시판관리-신고 게시글 관리</h1>
+        <div class="top">
+            <div class="container p-5 my-5 bg-primary text-white">오늘 신고된 게시글 : ${rToday}</div>
+            <div class="container p-5 my-5 bg-primary text-white">오늘 신규 가입자 : ${newMember}</div>
+        </div>
+        <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/report">최근 신고글 5</a></h5>
         <table class="table table-hover">
             <tr>
                 <th>번호</th>
@@ -120,7 +105,6 @@
                 <th>제목</th>
                 <th>작성자ID</th>
                 <th>게시글 확인</th>
-                <th>처분</th>
             </tr>
             <c:forEach var="rvo" items="${rVO}">
                 <tr class="forevent">
@@ -148,35 +132,79 @@
                                 </c:if>
                         </button>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm" id="deletionUser" title="${rvo.targetid}" value="${rvo.reporttype}">탈퇴
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" id="deletion" title="${rvo.targetid}" value="${rvo.reporttype}">삭제
-                        </button>
-                        <button type="button" class="btn btn-success btn-sm" id="dismiss" title="${rvo.targetid}">기각</button>
-                    </td>
                 </tr>
             </c:forEach>
         </table>
-        <div class="pagination-container">
-            <div class="pagination">
-                <c:if test="${pVO.page==1}">
-                    <
-                </c:if>
-                <c:if test="${pVO.page>1}">
-                    <a href="${pageContext.servletContext.contextPath}/admin/report?page=${pVO.page-1}"><</a>
-                </c:if>
-                <c:forEach var="pvo" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
-                    <c:if test="${pvo <= pVO.totalPage}">
-                        <a href="${pageContext.servletContext.contextPath}/admin/report?page=${pvo}">${pvo}</a>
-                    </c:if>
-                </c:forEach>
-                <c:if test="${pVO.totalPage==pVO.page}">
-                    >
-                </c:if>
-                <c:if test="${pVO.totalPage>pVO.page}">
-                    <a href="${pageContext.servletContext.contextPath}/admin/report?page=${pVO.page+1}">></a>
-                </c:if>
+        <div style="display: flex">
+            <div style="width: 50%">
+                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/board">최신 글 5</a></h5>
+                <table class="table table-hover">
+                    <tr>
+                        <th>글번호</th>
+                        <th>게시판 종류</th>
+                        <th>제목</th>
+                        <th>게시글 확인</th>
+                    </tr>
+                    <c:forEach var="bvo" items="${bVO}">
+                        <tr class="forevent">
+                            <td>${bvo.postid}</td>
+                            <td>
+                                <c:if test="${bvo.boardcategory==0}">
+                                    자유 게시판
+                                </c:if>
+                                <c:if test="${bvo.boardcategory==1}">
+                                    질문 게시판
+                                </c:if>
+                                <c:if test="${bvo.boardcategory==2}">
+                                    노하우 게시판
+                                </c:if>
+                            </td>
+                            <td>${bvo.posttitle}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm"
+                                        onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}')">이동
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+
+            <div style="width: 50%">
+                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/company">최신 글 5</a></h5>
+                <table class="table table-hover">
+                    <tr>
+                        <th>회원ID</th>
+                        <th>법인명</th>
+                        <th>사업자등록번호</th>
+                        <th>승인여부</th>
+                        <th>처분</th>
+                    </tr>
+                    <c:forEach items="${cVO}" var="cvo">
+                        <tr>
+                            <td>${cvo.user_userid}</td>
+                            <td>${cvo.companyname}</td>
+                            <td>${cvo.companyno}</td>
+                            <td>
+                                <c:if test="${cvo.isaccept==1}">
+                                    대기중
+                                </c:if>
+                                <c:if test="${cvo.isaccept==0}">
+                                    승인
+                                </c:if>
+                                <button onclick="window.open('${pageContext.servletContext.contextPath}/admin/company/check?uid=${cvo.user_userid}')"
+                                        type="button" class="btn btn-info btn-sm">증빙확인
+                                </button>
+                            </td>
+                            <td>
+                                <c:if test="${cvo.isaccept==1}">
+                                    <button onclick="accept('${cvo.user_userid}')" type="button" class="btn btn-primary btn-sm">승인</button>
+                                    <button onclick="deny('${cvo.user_userid}')" type="button" class="btn btn-danger btn-sm">거절</button>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </div>
         </div>
     </div>

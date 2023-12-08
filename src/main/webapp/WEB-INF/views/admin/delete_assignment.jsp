@@ -21,10 +21,15 @@
                 location.href = "${pageContext.servletContext.contextPath}/subject/dismiss?subjectid=" + target;
             });
 
-            $(".table").on('click', "#reason",function () {
+            $(".table").on('click', "#reason", function () {
                 var reason = $(this).parent().find('input[type="hidden"]').val();
                 alert(reason);
             });
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
         });
     </script>
     <style>
@@ -72,6 +77,13 @@
         .btn {
             color: white;
         }
+
+        #sideBar a,
+        #sideBar a:visited,
+        #sideBar a:link {
+            color: black;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -82,6 +94,7 @@
             <a href="${pageContext.servletContext.contextPath}/" style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
+        <h3><a href="${pageContext.servletContext.contextPath}/admin/home">관리자 홈</a></h3>
         <h3>회원관리</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/member"> 일반회원관리 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/company"> 기업회원관리 </a>
@@ -118,7 +131,9 @@
                     <td>${svo.date}</td>
                     <td>
                         대기중
-                        <button type="button" class="btn btn-info btn-sm" id="reason">사유</button>
+                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="${svo.reason}" data-bs-placement="right"
+                                id="reason">사유
+                        </button>
                         <input type="hidden" value="${svo.reason}"/>
                     </td>
                     <td>
