@@ -2,11 +2,10 @@ package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.BoardMapper;
 import com.team1.careercanvas.mapper.CommentMapper;
+import com.team1.careercanvas.vo.ApplyVO;
 import com.team1.careercanvas.vo.BoardVO;
 import com.team1.careercanvas.vo.PagingVO;
-import com.team1.careercanvas.vo.PofolVO;
 import com.team1.careercanvas.vo.SubjectVO;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -301,15 +300,15 @@ public class BoardController {
     @GetMapping("/subject/apply")
     public ModelAndView subjectApply(PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
-        pVO.setOnePageCount(12);
+        pVO.setOnePageRecord(12);
         pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(mapper.getSubjectApplyCount());
         if (pVO.getSearchWord() == null) {
             pVO.setSearchWord("");
         }
-        List<SubjectVO> SubjectVO = mapper.getSubjectApplyList(pVO);
+        List<ApplyVO> avo = mapper.getSubjectApplyList(pVO);
         System.out.println(pVO);
-        mav.addObject("sVO", SubjectVO);
+        mav.addObject("sVO", avo);
         mav.addObject("pVO", pVO);
         mav.setViewName("/subject/subjectApplyList");
         return mav;
@@ -318,13 +317,13 @@ public class BoardController {
     @GetMapping("/subject/apply/team")
     public ModelAndView subjectApplyTeam(PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
-        pVO.setOnePageCount(12);
+        pVO.setOnePageRecord(12);
         pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(mapper.getSubjectApplyTeamCount());
         if (pVO.getSearchWord() == null) {
             pVO.setSearchWord("");
         }
-        List<SubjectVO> SubjectVO = mapper.getSubjectApplyTeamList(pVO);
+        List<ApplyVO> SubjectVO = mapper.getSubjectApplyTeamList(pVO);
         System.out.println(pVO);
         mav.addObject("sVO", SubjectVO);
         mav.addObject("pVO", pVO);

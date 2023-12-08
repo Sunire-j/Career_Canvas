@@ -253,10 +253,11 @@
 		limit #{onePageRecord} offset #{offsetPoint}
 	</select>
 
-    <select id="getSubjectApplyList" resultType="com.team1.careercanvas.vo.SubjectVO">
+    <select id="getSubjectApplyList" resultType="com.team1.careercanvas.vo.ApplyVO">
 		SELECT
-            sa.applyimg as imgsrc,
-            sa.applycontent as subjectcontent,
+		    sa.applyid as applyid,
+            sa.applyimg as applyimg,
+            sa.applycontent as applycontent,
             s.subjecttitle as subjecttitle,
             s.category as category,
             u.username as user_userid,
@@ -298,14 +299,15 @@
         LIMIT #{onePageRecord} OFFSET #{offsetPoint}
 	</select>
 
-    <select id="getSubjectApplyTeamList" resultType="com.team1.careercanvas.vo.SubjectVO">
+    <select id="getSubjectApplyTeamList" resultType="com.team1.careercanvas.vo.ApplyVO">
 		SELECT
-            sa.applyimg as imgsrc,
-            sa.applycontent as subjectcontent,
+		    sa.applyid as applyid,
+            sa.applyimg as applyimg,
+            sa.applycontent as applycontent,
             s.subjecttitle as subjecttitle,
             s.category as category,
             p.partyname as user_userid,
-            u.profileimg as profileimg
+            p.partyimage as profileimg
         FROM subjectapply sa
         LEFT JOIN subject s ON s.subjectid = sa.subject_subjectid
         LEFT JOIN user u ON u.userid = sa.user_userid

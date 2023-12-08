@@ -15,4 +15,5 @@ public class ApplyVO {
     private String applyimg;
     private String subjecttitle;
     private int category;
+    private String profileimg;
 }
