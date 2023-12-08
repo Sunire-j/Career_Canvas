@@ -377,20 +377,22 @@
         <div style="margin-top: 50px"></div>
         <p style="text-align: center; font-weight: bold; font-size: 1.2rem">최근 기업과제</p>
         <div class="buttonGroup">
-            <button class="btn btn-outline-primary" type="button">웹/개발</button>
-            <button class="btn btn-outline-primary" type="button">
-                사진/음향
+            <button class="btn btn-outline-primary" id="subject_IT" type="button">IT/개발</button>
+            <button class="btn btn-outline-primary" id="subject_Design" type="button">
+                디자인
             </button>
-            <button class="btn btn-outline-primary" type="button">
-                등등ㅋㅋ
+            <button class="btn btn-outline-primary" id="subject_movie_sound" type="button">
+                영상/음향
             </button>
         </div>
 
-<%--        여기 내부변수 바꿔줘야함--%>
         <ul class="content d-flex mt-3">
-            <c:forEach items="${plist}" var="p">
+            <c:if test="${slist.size()==0}">
+                <p>업로드 된 기업과제가 없습니다.</p>
+            </c:if>
+            <c:forEach items="${slist}" var="p">
                 <li>
-                    <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${p.portfolioid}">
+                    <a href="${pageContext.servletContext.contextPath}/subject/view?no=${p.subjectid}">
                         <div class="img_C">
                             <img src="${pageContext.servletContext.contextPath}/upload${p.imgsrc}"
                                  class="portfolio_img">
@@ -411,7 +413,7 @@
                                     </c:if>
                                 </div>
                                 <div class="content_title">
-                                        ${p.portfoliotitle}
+                                        ${p.subjecttitle}
                                 </div>
                             </div>
                             <!-- line 2 -->
@@ -421,12 +423,6 @@
                                          style="width:20px; height:20px;" alt="">
                                     <span style="margin-left:10px; width: 118px;white-space: nowrap;
                                     overflow: hidden; text-overflow: ellipsis;">${p.username}</span>
-                                </div>
-                                <div class="iconGroup">
-                                    <i class="fa-solid fa-eye" style="color: #0d0d0d;"></i>
-                                    <span>${p.view}</span>
-                                    <i class="fa-solid fa-heart" style="color: #0d0d0d;"></i>
-                                    <span>${p.likeCnt}</span>
                                 </div>
                             </div>
                         </div>

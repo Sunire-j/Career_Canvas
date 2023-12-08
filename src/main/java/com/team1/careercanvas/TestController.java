@@ -1,11 +1,9 @@
 package com.team1.careercanvas;
 
-import com.team1.careercanvas.mapper.AdminMapper;
-import com.team1.careercanvas.mapper.PartyMapper;
-import com.team1.careercanvas.mapper.PofolMapper;
-import com.team1.careercanvas.mapper.UserMapper;
+import com.team1.careercanvas.mapper.*;
 import com.team1.careercanvas.vo.BannerVO;
 import com.team1.careercanvas.vo.PofolVO;
+import com.team1.careercanvas.vo.SubjectVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,12 +17,14 @@ public class TestController {
     private final PofolMapper pofolmapper;
     private final AdminMapper adminMapper;
     private final PartyMapper partyMapper;
-    public TestController(UserMapper usermapper, PofolMapper pofolmapper, AdminMapper adminMapper, PartyMapper partyMapper) {
+    private final SubjectMapper subjectMapper;
+    public TestController(UserMapper usermapper, PofolMapper pofolmapper, AdminMapper adminMapper, PartyMapper partyMapper, SubjectMapper subjectMapper) {
         this.usermapper = usermapper;
         this.pofolmapper = pofolmapper;
 
         this.adminMapper = adminMapper;
         this.partyMapper = partyMapper;
+        this.subjectMapper = subjectMapper;
     }
 
     @GetMapping("/temp_home")
@@ -45,6 +45,10 @@ public class TestController {
             }
         }
         mav.addObject("plist",plist);
+
+        //3. 최신기업과제 초기(무조건 날짜 최근순)
+        List<SubjectVO> slist = subjectMapper.getSubjectForHome();
+        mav.addObject("slist", slist);
 
         mav.setViewName("home");
         return mav;

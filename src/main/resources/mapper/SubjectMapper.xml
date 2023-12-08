@@ -43,6 +43,19 @@
         FROM subject_delapply
         WHERE subjectid = #{param1}
     </select>
+<!--    조석훈-->
+    <select id="getSubjectForHome" resultType="com.team1.careercanvas.vo.SubjectVO">
+         select s.subjectid as subjectid,
+                s.subjecttitle as subjecttitle,
+                s.imgsrc as imgsrc,
+                s.category as category,
+                u.username as username,
+                u.profileimg as profileimg
+        from subject s
+        join user u on u.userid = s.user_userid
+         order by s.date desc
+         limit 4;
+    </select>
 
     <select id="SelectPartyList" resultType="com.team1.careercanvas.vo.PartyVO">
         select *

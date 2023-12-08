@@ -20,6 +20,7 @@ public interface SubjectMapper {
     void Insertdelapply(int subjectid, String reason, String logId);
 
     int CountDelid(int subjectid);
+    List<SubjectVO> getSubjectForHome();
 
     List<PartyVO> SelectPartyList(String logId);
 
