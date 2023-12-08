@@ -21,4 +21,16 @@
         select count(applyid) from subjectapply
         where user_userid = #{param1} and isteam=1;
     </select>
+    <select id="getSubjectAmount" resultType="Integer">
+        select count(subjectid)
+        from subject
+        where user_userid = #{param1};
+    </select>
+    <select id="getSubjectList" resultType="com.team1.careercanvas.vo.SubjectVO">
+        select *
+        from subject
+        where user_userid=#{searchWord}
+        order by subjectid desc
+        limit #{onePageRecord} offset #{offsetPoint};
+    </select>
 </mapper>

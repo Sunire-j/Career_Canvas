@@ -1,17 +1,15 @@
 package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.ApplyMapper;
-import com.team1.careercanvas.vo.ApplyVO;
-import com.team1.careercanvas.vo.PagingVO;
+import com.team1.careercanvas.vo.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team1.careercanvas.mapper.PofolMapper;
 import com.team1.careercanvas.mapper.UserMapper;
-import com.team1.careercanvas.vo.PofolVO;
-import com.team1.careercanvas.vo.UserVO;
 
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class ProfileController {
 	private final UserMapper usermapper;
 	private final PofolMapper pofolmapper;
 	private final ApplyMapper subjectmapper;
-	
+
 	public ProfileController(UserMapper usermapper, PofolMapper pofolmapper, ApplyMapper subjectmapper) {
 		this.usermapper = usermapper;
 		this.pofolmapper = pofolmapper;
@@ -82,6 +80,13 @@ public class ProfileController {
 		List<ApplyVO> subjectvo = subjectmapper.getApplyInfo(pvo);//<-
 
 		ModelAndView mav = new ModelAndView();
+
+		if(uservo.getInterest()!=null){
+			String[] interestArr = uservo.getInterest().split(",");
+			System.out.println("arr size : "+interestArr.length);
+			mav.addObject("interest", interestArr);
+		}
+
 		mav.addObject("pCount", pofolamount);
 		mav.addObject("sVO", subjectvo);
 		mav.addObject("uVO", uservo);
@@ -101,6 +106,13 @@ public class ProfileController {
 		int subjectamount = subjectmapper.getApplyamountSolo(userid);
 
 		ModelAndView mav = new ModelAndView();
+
+		if(uservo.getInterest()!=null){
+			String[] interestArr = uservo.getInterest().split(",");
+			System.out.println("arr size : "+interestArr.length);
+			mav.addObject("interest", interestArr);
+		}
+
 		mav.addObject("pCount", pofolamount);
 		mav.addObject("sVO", subjectvo);
 		mav.addObject("uVO", uservo);
@@ -108,5 +120,31 @@ public class ProfileController {
 		mav.setViewName("users/userProfile_Company_Party");
 		return mav;
 	}
+	@GetMapping("/profile/biz")
+	public ModelAndView companyprofile(@RequestParam("uid") String userid,
+									   @RequestParam(required = false, defaultValue = "1")int page){
 
+		UserVO uservo = usermapper.getUserInfo(userid);
+		int subjectamount = subjectmapper.getSubjectAmount(userid);
+
+		PagingVO pvo = new PagingVO();
+
+		pvo.setOnePageRecord(12);
+		pvo.setPage(page);
+		pvo.setTotalRecord(subjectamount);
+		pvo.setSearchWord(userid);
+
+		List<SubjectVO> subjectvo = subjectmapper.getSubjectList(pvo);
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("uVO", uservo);
+		mav.addObject("sCount", subjectamount);
+		mav.addObject("sVO", subjectvo);
+		mav.addObject("PagingVO",pvo);
+
+
+		mav.setViewName("/users/CompanyProfile");
+		return mav;
+	}
 }

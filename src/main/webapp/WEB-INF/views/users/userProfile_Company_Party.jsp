@@ -128,13 +128,6 @@
             padding: 0;
         }
 
-        .content>li{
-            width: 25%;
-            margin-top: 30px;
-        }
-
-
-
         article {
             width: 1200px;
             margin: 0 auto;
@@ -145,6 +138,8 @@
         /* 이미지, 이름, 이메일, 작성한 글 수*/
         .profile {
             height: 160px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .profile_img {
@@ -155,7 +150,7 @@
             width: 160px;
             height: 160px;
             border-radius: 40px;
-
+            margin-bottom: 90px;
         }
 
         .profile_info {
@@ -265,7 +260,6 @@
         }
         .content_category{
             height: 30px;
-            margin-left: 40px;
             margin-right: 10px;
             background-color: #ddd;
             border-radius: 5px;
@@ -326,16 +320,23 @@
             <div class="profile">
                 <div class="profile_img">
                     <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}">
+                    <div class="profile_info">
+                        <div class="info_name"><b>${uVO.username }</b></div>
+                        <div class="info_email">${uVO.useremail}</div>
+                        <div class="info_count">
+                            <div>포트폴리오</div>
+                            <div>${pCount}</div>
+                            <div>기업과제</div>
+                            <div>${sCount}</div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="profile_info">
-                    <div class="info_name"><b>${uVO.username }</b></div>
-                    <div class="info_email">${uVO.useremail}</div>
-                    <div class="info_count">
-                        <div>포트폴리오</div>
-                        <div>${pCount}</div>
-                        <div>기업과제</div>
-                        <div>${sCount}</div>
+                <div id="interesting">
+                    <p style="margin-left: 158px; font-size: 1.2em;">관심분야</p>
+                    <div class="userInterest" style="display: flex; flex-wrap: wrap">
+                        <c:forEach var="interest" items="${interest}">
+                            <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
@@ -358,7 +359,7 @@
             </div>
             <div class="solo_party">
                 <div></div>
-                <div class="solo_party_btn" style="margin-top: 50px">
+                <div class="solo_party_btn" style="margin-top: 20px">
                     <button class="btn btn-outline-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/solo?uid=${uVO.userid}'">개인</button>
                     <button class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/profile/subject/party?uid=${uVO.userid}'">파티</button>
                 </div>

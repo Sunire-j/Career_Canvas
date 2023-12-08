@@ -33,6 +33,7 @@ file="./header_footer/header.jspf" %>
       >
       <a href="${pageContext.servletContext.contextPath}/pofolview">포폴뷰</a>
       <a href="${pageContext.servletContext.contextPath}/temp_home">홈화면 임시</a>
+        <a href="${pageContext.servletContext.contextPath}/profile/biz?">기업프로필</a>
       <hr />
       <p>이 영역은 원래 get으로 접근 못하는 영역임.</p>
       <br />
