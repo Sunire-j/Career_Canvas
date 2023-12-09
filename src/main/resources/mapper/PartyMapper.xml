@@ -107,7 +107,7 @@
 
     <select id="GetWantedList" resultType="com.team1.careercanvas.vo.WantedVO">
         select pw.wantedid as wantedid,
-               pw.user_userid as user_userid,
+               u.username as user_userid,
                pw.date as date,
                pw.view as view,
                pw.wantedtitle as wantedtitle,
@@ -116,17 +116,18 @@
         from partywanted pw
         join party p on pw.party_partyid = p.partyid
         left join wantedcomment wc on pw.wantedid = wc.partywanted_wantedid
+        left join user u on u.userid = pw.user_userid
         <where>
             <if test="searchKey == 'all'">
                 pw.wantedtitle like CONCAT('%', #{searchWord}, '%')
-                or pw.user_userid like CONCAT('%', #{searchWord}, '%')
+                or u.username like CONCAT('%', #{searchWord}, '%')
                 or pw.wantedcontent like CONCAT('%', #{searchWord}, '%')
             </if>
             <if test="searchKey == 'title'">
                 pw.wantedtitle LIKE CONCAT('%', #{searchWord}, '%')
             </if>
             <if test="searchKey == 'author'">
-                pw.user_userid LIKE CONCAT('%', #{searchWord}, '%')
+                u.username LIKE CONCAT('%', #{searchWord}, '%')
             </if>
             <if test="searchKey == 'content'">
                 pw.wantedcontent LIKE CONCAT('%', #{searchWord}, '%')
@@ -175,7 +176,20 @@
     </select>
 
     <select id="GetWantedView" resultType="com.team1.careercanvas.vo.WantedVO">
-        select * from partywanted where wantedid = #{param1}
+        select u.username as username,
+               pw.wantedid as wantedid,
+               p.partyname as partyname,
+               pw.wantedtitle as wantedtitle,
+               pw.wantedcontent as wantedcontent,
+               pw.party_partyid as party_partyid,
+               pw.user_userid as user_userid,
+               pw.date as date,
+               pw.view as view
+            from partywanted pw
+        join user u on pw.user_userid = u.userid
+        left join party p on p.partyid = pw.party_partyid
+        where wantedid = #{param1}
+
     </select>
 
     <select id="commentLoad" resultType="com.team1.careercanvas.vo.CommentVO">

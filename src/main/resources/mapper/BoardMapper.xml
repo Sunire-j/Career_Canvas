@@ -11,7 +11,7 @@
         FROM post
         LEFT JOIN postlike ON post.postid = postlike.post_postid
         LEFT JOIN comment ON post.postid = comment.post_postid
-        left join user on post.user_userid = user.userid
+        LEFT JOIN user ON post.user_userid = user.userid
         <where>
             boardcategory=#{boardcategory}
             <if test="searchKey == 'all'">
@@ -89,7 +89,11 @@
     </select>
 
     <select id="getPostWithCat" resultType="com.team1.careercanvas.vo.BoardVO">
-        select * from post
+        SELECT post.postid, post.posttitle, user.username as user_userid, post.date, post.views, COUNT(postlike.user_userid) AS likeAmount, count(comment.commentid) as commentAmount
+        FROM post
+        LEFT JOIN postlike ON post.postid = postlike.post_postid
+        LEFT JOIN comment ON post.postid = comment.post_postid
+        LEFT JOIN user ON post.user_userid = user.userid
         <where>
             boardcategory=#{boardcategory} and category=#{category}
             <if test="searchKey == 'all'">
