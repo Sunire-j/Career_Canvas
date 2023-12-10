@@ -2,7 +2,10 @@ package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.ApplyMapper;
 import com.team1.careercanvas.mapper.SubjectMapper;
-import com.team1.careercanvas.vo.*;
+import com.team1.careercanvas.vo.ApplyVO;
+import com.team1.careercanvas.vo.PartyVO;
+import com.team1.careercanvas.vo.SubjectVO;
+import com.team1.careercanvas.vo.UserVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,7 +91,7 @@ public class SubjectController {
             String newFileName = userid + "." + extension;
 
             String projectDir = new File("").getAbsolutePath();
-            File directory = new File(projectDir + "/upload/pofolimg");
+            File directory = new File(projectDir + "/upload/subjectimg");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -98,7 +101,7 @@ public class SubjectController {
             outputStream.write(data);
             outputStream.close();
 
-            String pathfordb = "/pofolimg/" + newFileName;
+            String pathfordb = "/subjectimg/" + newFileName;
             // 여기서 db에 path만 넣어주면 됨.
             int dbresult = mapper.insertSubjectImg(pathfordb, svo.getSubjectid());
 
