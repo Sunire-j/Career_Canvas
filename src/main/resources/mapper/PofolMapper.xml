@@ -117,6 +117,7 @@
 	<select id="getPublicSoloPofol" resultType="com.team1.careercanvas.vo.PofolVO">
 		select portpolio.portfoliotitle as portfoliotitle,
 		portpolio.portfoliocontent as portfoliocontent,
+		portpolio.portfolioid as portfolioid,
 		portpolio.ispublic as ispublic,
 		portpolio.category as category,
 		portpolio.imgsrc as imgsrc,
@@ -178,6 +179,7 @@
 		select portpolio.portfoliotitle as portfoliotitle,
 		portpolio.portfoliocontent as portfoliocontent,
 		portpolio.ispublic as ispublic,
+		portpolio.portfolioid as portfolioid,
 		portpolio.category as category,
 		portpolio.imgsrc as imgsrc,
 		count(portfoliolike.user_userid) as likeCnt,

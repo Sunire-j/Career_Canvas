@@ -138,9 +138,19 @@
 
     <!--  정인식 작업 ( 글 내용 보기 )  -->
     <select id="SelectBoardView" resultType="com.team1.careercanvas.vo.BoardVO">
-        select *
-        from post
-        where postid = #{param1}
+        select p.user_userid as user_userid,
+               p.category as category,
+               p.boardcategory as boardcategory,
+               p.date as date,
+               p.hashtag as hashtag,
+               p.postcontent as postcontent,
+               p.postid as postid,
+               p.posttitle as posttitle,
+               p.views as views,
+               u.username as username
+        from post p
+        left join user u on p.user_userid = u.userid
+        where p.postid = #{param1}
     </select>
     <update id="ViewsCount">
         update post

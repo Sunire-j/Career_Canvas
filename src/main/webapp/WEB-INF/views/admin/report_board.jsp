@@ -127,7 +127,7 @@
                     <td>${rvo.reportid}</td>
                     <td>${rvo.user_userid}</td>
                     <td>${rvo.reporttype}</td>
-                    <td>${rvo.title}</td>
+                    <td style="max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${rvo.title}</td>
                     <td>${rvo.userid}</td>
                     <td>
                         <button type="button" class="btn btn-info btn-sm"

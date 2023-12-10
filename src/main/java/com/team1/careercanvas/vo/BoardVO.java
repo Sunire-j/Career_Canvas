@@ -19,4 +19,5 @@ public class BoardVO {
     private int views;
     private int likeAmount;
     private int commentAmount;
+    private String username;
 }

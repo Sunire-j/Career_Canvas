@@ -203,7 +203,7 @@
     <div class="board_main">
         <div class="board_info">
             <div class="board_writer">
-                ${bvo.user_userid}
+                ${bvo.username}
             </div>
             <div class="board_date">
                 ${bvo.date}

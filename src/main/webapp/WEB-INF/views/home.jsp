@@ -314,8 +314,7 @@
     </button>
 </div>
 <div class="container">
-    <main class="container">
-        <div style="margin-top: 50px"></div>
+    <main class="container" style="padding-top: 50px; padding-bottom: 100px; background: white">
         <p style="text-align: center; font-weight: bold; font-size: 1.2rem">인기 포트폴리오</p>
         <div class="buttonGroup">
             <button class="btn btn-outline-primary portfolio" id="portfolio_IT" type="button">IT/개발</button>

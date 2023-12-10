@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../header_footer/header.jspf" %>
 <!DOCTYPE html>
@@ -151,7 +151,7 @@
             float: left;
         }
 
-        .profile_img>img {
+        .profile_img > img {
             width: 160px;
             height: 160px;
             border-radius: 40px;
@@ -190,7 +190,7 @@
             color: gray;
         }
 
-        .info_count>div {
+        .info_count > div {
             margin-top: 10px;
             display: inline-block;
             margin-left: 10px;
@@ -227,11 +227,11 @@
             margin-top: 30px;
         }
 
-        .portfolio_category>button {
+        .portfolio_category > button {
             margin-left: 10px;
         }
 
-        .portfolio_content{
+        .portfolio_content {
             margin: 0 auto;
             margin-top: 10px;
         }
@@ -242,25 +242,27 @@
             border-radius: 30px;
 
         }
-        .content_info{
+
+        .content_info {
             width: 330px;
-            overflow: hidden; 
-            text-overflow: ellipsis; 
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
-            font-weight: bold;                      
+            font-weight: bold;
         }
 
-        .img_C{
-              width:235px;
-              margin-left: 30px;
-          }
+        .img_C {
+            width: 235px;
+            margin-left: 30px;
+        }
 
-        .content_category, .content_title{
+        .content_category, .content_title {
             display: inline;
             height: 40px;
             line-height: 40px;
         }
-        .content_category{
+
+        .content_category {
             height: 30px;
             margin-top: 10px;
             margin-right: 10px;
@@ -269,7 +271,7 @@
             text-align: center;
             padding: 5px 5px 5px 10px;
         }
-     
+
 
         /*페이지*/
         .portfolio_paging {
@@ -277,7 +279,7 @@
             margin: 0 auto;
         }
 
-        .pagination>li {
+        .pagination > li {
             margin-left: 10px;
         }
 
@@ -285,197 +287,212 @@
             color: black;
             border-radius: 6px;
         }
-        .container_bottom{
+
+        .container_bottom {
             display: flex;
             background: #A69668;
             height: 10px;
             margin-top: 10px;
         }
-        .hr-styleset{
+
+        .hr-styleset {
             border: 0;
-            border-top: 2.5px dashed #73351F ;
+            border-top: 2.5px dashed #73351F;
             border-bottom: 1px dashed #D9D9D9;
         }
-        .container-head{
+
+        .container-head {
             display: flex;
             justify-content: center;
             align-items: center;
             background: #A69668;
             height: 10px;
         }
-        hr{
-            border-top: 2.5px solid #73351F ;
+
+        hr {
+            border-top: 2.5px solid #73351F;
         }
     </style>
 </head>
 
 <body>
-    <section>
-        <article class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
-            <div class="container-head"></div>
-            <div style="padding: 20px 40px 20px 40px">
-                <div class="portfolio">
-                    <h1>포트폴리오</h1>
-                    <div style="display: flex; padding: 5px 20px 20px 0px; gap:10px;">
-                      <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
-                          <option value="1"
-                                  <c:if test="${pVO.postSort==1}">
-                                      selected
-                                  </c:if>
-                          >최신순
-                          </option>
-                          <option value="2" <c:if test="${pVO.postSort==2}">
-                              selected
-                          </c:if>>조회순
-                          </option>
-                          <option value="3" <c:if test="${pVO.postSort==3}">
-                              selected
-                          </c:if>>추천순
-                          </option>
-                      </select>
-                      <select class="form-select" style="width: fit-content;" name="category" id="category">
-                          <option value="0">카테고리</option>
-                          <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
-                          <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
-                          <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
-                      </select>
-                        <button class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview'">개인</button>
-                        <button class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview/team'">팀</button>
-                    </div>
+<section>
+    <article class="container"
+             style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+        <div class="container-head"></div>
+        <div style="padding: 20px 40px 20px 40px">
+            <div class="portfolio">
+                <h1>포트폴리오</h1>
+                <div style="display: flex; padding: 5px 20px 20px 0px; gap:10px;">
+                    <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+                        <option value="1"
+                                <c:if test="${pVO.postSort==1}">
+                                    selected
+                                </c:if>
+                        >최신순
+                        </option>
+                        <option value="2" <c:if test="${pVO.postSort==2}">
+                            selected
+                        </c:if>>조회순
+                        </option>
+                        <option value="3" <c:if test="${pVO.postSort==3}">
+                            selected
+                        </c:if>>추천순
+                        </option>
+                    </select>
+                    <select class="form-select" style="width: fit-content;" name="category" id="category">
+                        <option value="0">카테고리</option>
+                        <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
+                        <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
+                        <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
+                    </select>
+                    <button class="btn btn-outline-secondary"
+                            onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview'">개인
+                    </button>
+                    <button class="btn btn-secondary"
+                            onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview/team'">팀
+                    </button>
                 </div>
             </div>
-        </article>
-        <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F;">
-            <div style="padding: 20px 40px 40px 40px">
-                <div class="portfolio_content">
-                    <ul class="content">
-                        <c:forEach items="${pofolVO}" var="p">
+        </div>
+    </article>
+    <div class="container" style="padding: 0px; border-bottom: 3px solid #73351F;">
+        <div style="padding: 20px 40px 40px 40px">
+            <div class="portfolio_content">
+                <ul class="content">
+                    <c:forEach items="${pofolVO}" var="p">
                         <li>
-                            <div class="img_C">
-                                <img src="${pageContext.servletContext.contextPath}/upload${p.imgsrc}" class="portfolio_img">
-                                <!-- line 1 -->
-                                <div class="content_info">
-                                    <div class="content_category">
-                                        <c:if test="${p.category==0}">
-                                            분류없음
-                                        </c:if>
-                                        <c:if test="${p.category==1}">
-                                            IT/개발
-                                        </c:if>
-                                        <c:if test="${p.category==2}">
-                                            디자인
-                                        </c:if>
-                                        <c:if test="${p.category==3}">
-                                            영상
-                                        </c:if>
+                            <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${p.portfolioid}">
+                                <div class="img_C">
+                                    <img src="${pageContext.servletContext.contextPath}/upload${p.imgsrc}"
+                                         class="portfolio_img">
+                                    <!-- line 1 -->
+                                    <div class="content_info">
+                                        <div class="content_category">
+                                            <c:if test="${p.category==0}">
+                                                분류없음
+                                            </c:if>
+                                            <c:if test="${p.category==1}">
+                                                IT/개발
+                                            </c:if>
+                                            <c:if test="${p.category==2}">
+                                                디자인
+                                            </c:if>
+                                            <c:if test="${p.category==3}">
+                                                영상
+                                            </c:if>
+                                        </div>
+                                        <div class="content_title">
+                                                ${p.portfoliotitle}
+                                        </div>
                                     </div>
-                                    <div class="content_title">
-                                        ${p.portfoliotitle}
-                                    </div>
-                                </div>
-                                <!-- line 2 -->
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                  <div style="display: flex; align-items: center;">
-                                    <img src="${pageContext.servletContext.contextPath}/upload${p.profileimg}" style="width:20px; height:20px;" alt="">
-                                    <span style="margin-left:10px; width: 118px;white-space: nowrap;
+                                    <!-- line 2 -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="${pageContext.servletContext.contextPath}/upload${p.profileimg}"
+                                                 style="width:20px; height:20px;" alt="">
+                                            <span style="margin-left:10px; width: 118px;white-space: nowrap;
                                     overflow: hidden; text-overflow: ellipsis;">${p.username}</span>
-                                  </div>
-                                  <div class="iconGroup">
-                                    <i class="fa-solid fa-eye" style="color: #0d0d0d;"></i>
-                                    <span>${p.view}</span>
-                                    <i class="fa-solid fa-heart" style="color: #0d0d0d;"></i>
-                                    <span>${p.likeCnt}</span>
-                                  </div>
+                                        </div>
+                                        <div class="iconGroup">
+                                            <i class="fa-solid fa-eye" style="color: #0d0d0d;"></i>
+                                            <span>${p.view}</span>
+                                            <i class="fa-solid fa-heart" style="color: #0d0d0d;"></i>
+                                            <span>${p.likeCnt}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <!-- 페이징 -->
-                <div style="text-align: center; width: 100%; margin:20px;">
+                    </c:forEach>
+                </ul>
+            </div>
+            <!-- 페이징 -->
+            <div style="text-align: center; width: 100%; margin:20px;">
                 <div>
-                  <c:if test="${pVO.totalRecord == 0}"> 
-                    작성된 게시글이 없습니다
-                  </c:if>
-                  <c:if test="${pVO.totalRecord > 0}">
-                    <!-- 이전 -->
-                    <c:if test="${pVO.page == 1}">
-                      <input type="button" value="<" class="btn btn-outline-primary" disabled>
+                    <c:if test="${pVO.totalRecord == 0}">
+                        작성된 게시글이 없습니다
                     </c:if>
-                    <c:if test="${pVO.page > 1}">
-                        <a
-                        href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page - 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
-                          <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
+                    <c:if test="${pVO.totalRecord > 0}">
+                        <!-- 이전 -->
+                        <c:if test="${pVO.page == 1}">
+                            <input type="button" value="<" class="btn btn-outline-primary" disabled>
+                        </c:if>
+                        <c:if test="${pVO.page > 1}">
+                            <a
+                                    href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page - 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
+                                    <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
                         >
-                        <input type="button" value="<" class="btn btn-outline-primary">
-                        </a>
-                    </c:if>
+                        <input type=" button" value="<" class="btn btn-outline-primary">
+                            </a>
+                        </c:if>
                     </c:if>
                     <!-- 1,2,3,4,5 -->
                     <c:forEach
-                      var="p"
-                      begin="${pVO.startPage}"
-                      end="${pVO.startPage + pVO.onePageCount - 1}"
+                            var="p"
+                            begin="${pVO.startPage}"
+                            end="${pVO.startPage + pVO.onePageCount - 1}"
                     >
-                      <c:if test="${p <= pVO.totalPage}">
-                          <a
-                          href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${p}&searchWord=${pVO.searchWord}&category=${pVO.category}&postSort=${pVO.postSort}">
-                            <input type="button" value="${p}" class="btn btn-outline-primary">
-                          </a>
-                      </c:if>
+                        <c:if test="${p <= pVO.totalPage}">
+                            <a
+                                    href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${p}&searchWord=${pVO.searchWord}&category=${pVO.category}&postSort=${pVO.postSort}">
+                                <input type="button" value="${p}" class="btn btn-outline-primary">
+                            </a>
+                        </c:if>
                     </c:forEach>
 
                     <!-- 다음 -->
 
                     <c:if test="${pVO.page == pVO.totalPage}">
-                      <input type="button" value=">" class="btn btn-outline-primary" disabled>
+                        <input type="button" value=">" class="btn btn-outline-primary" disabled>
                     </c:if>
                     <c:if test="${pVO.page < pVO.totalPage}">
                         <a
-                          href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page + 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
+                                href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page + 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
                         >
-                        <input type="button" value=">" class="btn btn-outline-primary">
+                            <input type="button" value=">" class="btn btn-outline-primary">
                         </a>
                     </c:if>
                 </div>
-              </div>
+            </div>
 
-                <!-- 검색 -->
-                <div style="width: 100%; text-align: center;">
+            <!-- 검색 -->
+            <div style="width: 100%; text-align: center;">
                 <div class="search-container">
-                  <form action="${pageContext.servletContext.contextPath}/pofol_preview/team" class="d-flex board-bottom" method="get">
-                      <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
-                          <option value="all">전체</option>
-                          <option value="title">제목</option>
-                          <option value="author">작성자</option>
-                          <option value="content">글내용</option>
-                      </select>
-                      <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요" style="margin-right: 10px">
-                      <input type="submit" class="btn btn-secondary" value="검색">
-                      <input type="hidden" name="category" value="${pVO.category}"/>
-                  </form>
-              </div>
+                    <form action="${pageContext.servletContext.contextPath}/pofol_preview/team"
+                          class="d-flex board-bottom" method="get">
+                        <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
+                            <option value="all">전체</option>
+                            <option value="title">제목</option>
+                            <option value="author">작성자</option>
+                            <option value="content">글내용</option>
+                        </select>
+                        <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요"
+                               style="margin-right: 10px">
+                        <input type="submit" class="btn btn-secondary" value="검색">
+                        <input type="hidden" name="category" value="${pVO.category}"/>
+                    </form>
+                </div>
             </div>
-            </div>
-            <div class="container_bottom"></div>
         </div>
-        </div>
-    </section>
-    <script>
-      $(function(){
+        <div class="container_bottom"></div>
+    </div>
+    </div>
+</section>
+<script>
+    $(function () {
         $('#category').val(${pVO.category});
-            $('#category').change(function () {
-                selectedValue = $(this).val();
-                window.location.href = "${pageContext.servletContext.contextPath}/pofol_preview/team?category=" + selectedValue;
-                
-            });
-            $("#postSort").change(function () {
-                var sortvalue = $(this).val();
-                window.location.href = "${pageContext.servletContext.contextPath}/pofol_preview/team?category=${pVO.category}&postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
-            });
-      });
-    </script>
+        $('#category').change(function () {
+            selectedValue = $(this).val();
+            window.location.href = "${pageContext.servletContext.contextPath}/pofol_preview/team?category=" + selectedValue;
+
+        });
+        $("#postSort").change(function () {
+            var sortvalue = $(this).val();
+            window.location.href = "${pageContext.servletContext.contextPath}/pofol_preview/team?category=${pVO.category}&postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
+        });
+    });
+</script>
 </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>
