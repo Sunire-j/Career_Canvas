@@ -252,4 +252,16 @@
         set interest = #{param2}
         where userid = #{param1};
     </update>
+
+    <select id="SelectSubjectForMypage" resultType="com.team1.careercanvas.vo.SubjectVO">
+        select s.subjectid as subjectid,
+        s.subjecttitle as subjecttitle,
+        s.date as date,
+        u.username as username,
+        s.imgsrc as imgsrc,
+        s.category as category
+        from subject s
+        join user u on s.user_userid = u.userid
+        where s.user_userid = #{searchKey};
+    </select>
 </mapper>

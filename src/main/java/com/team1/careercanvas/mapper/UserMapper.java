@@ -82,4 +82,6 @@ public interface UserMapper {
 
     int saveInterest(String LogId, String str);
 
+    List<SubjectVO> SelectSubjectForMypage(PagingVO pVO);
+
 }
