@@ -759,7 +759,7 @@ public class UserController {
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
         pVO.setOnePageRecord(12);
-        pVO.setTotalRecord(mapper.getSubjectTeamAmount(pVO));//이거 다시 계산해줘야함 쿼리문 새로 ㄱㄱ
+        pVO.setTotalRecord(mapper.getSubjectTeamAmount(pVO));// 이거 다시 계산해줘야함 쿼리문 새로 ㄱㄱ
         pVO.setPage(pVO.getPage());
 
         pVO.setSearchKey((String) session.getAttribute("LogId"));
@@ -823,6 +823,20 @@ public class UserController {
             mav.setViewName("alert_page");
         }
 
+        return mav;
+    }
+
+    @GetMapping("/mypage/biz")
+    public ModelAndView mypagebiz(HttpSession session, PagingVO pVO) {
+        ModelAndView mav = new ModelAndView();
+
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        List<SubjectVO> sVO = mapper.SelectSubjectForMypage(pVO);
+        System.out.println(sVO);
+        mav.addObject("uVO", uVO);
+        mav.addObject("sVO", sVO);
+        mav.setViewName("/users/mypage_company");
         return mav;
     }
 }
