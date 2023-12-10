@@ -318,15 +318,18 @@
         <div style="margin-top: 50px"></div>
         <p style="text-align: center; font-weight: bold; font-size: 1.2rem">인기 포트폴리오</p>
         <div class="buttonGroup">
-            <button class="btn btn-outline-primary" type="button">웹/개발</button>
-            <button class="btn btn-outline-primary" type="button">
-                사진/음향
+            <button class="btn btn-outline-primary portfolio" id="portfolio_IT" type="button">IT/개발</button>
+            <button class="btn btn-outline-primary portfolio" id="portfolio_Design" type="button">
+                디자인
             </button>
-            <button class="btn btn-outline-primary" type="button">
-                등등ㅋㅋ
+            <button class="btn btn-outline-primary portfolio" id="portfolio_move_sound" type="button">
+                영상/음향
             </button>
         </div>
-        <ul class="content d-flex mt-3">
+        <ul class="content d-flex mt-3" id="home-portfolio-list">
+            <c:if test="${plist.size()==0}">
+                <p>업로드 된 포트폴리오가 없습니다.</p>
+            </c:if>
             <c:forEach items="${plist}" var="p">
                 <li>
                     <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${p.portfolioid}">
@@ -377,16 +380,16 @@
         <div style="margin-top: 50px"></div>
         <p style="text-align: center; font-weight: bold; font-size: 1.2rem">최근 기업과제</p>
         <div class="buttonGroup">
-            <button class="btn btn-outline-primary" id="subject_IT" type="button">IT/개발</button>
-            <button class="btn btn-outline-primary" id="subject_Design" type="button">
+            <button class="btn btn-outline-primary subject" id="subject_IT" type="button">IT/개발</button>
+            <button class="btn btn-outline-primary subject" id="subject_Design" type="button">
                 디자인
             </button>
-            <button class="btn btn-outline-primary" id="subject_movie_sound" type="button">
+            <button class="btn btn-outline-primary subject" id="subject_movie_sound" type="button">
                 영상/음향
             </button>
         </div>
 
-        <ul class="content d-flex mt-3">
+        <ul class="content d-flex mt-3" id="home-subject-list">
             <c:if test="${slist.size()==0}">
                 <p>업로드 된 기업과제가 없습니다.</p>
             </c:if>
@@ -433,6 +436,199 @@
     </main>
 </div>
 
+<script>
+    $(function () {
+        $("#subject_IT").on('click', function () {
+            if ($(this).hasClass('btn-primary')) {
+                $(this).removeClass('btn-primary').addClass('btn-outline-primary');
+                loadnewSubject(0);
+            } else {
+                $(".subject").removeClass('btn-primary').addClass('btn-outline-primary');
+                $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+                loadnewSubject(1);
+            }
+        });
+
+        $("#subject_Design").on('click', function () {
+            if ($(this).hasClass('btn-primary')) {
+                $(this).removeClass('btn-primary').addClass('btn-outline-primary');
+                loadnewSubject(0);
+            } else {
+                $(".subject").removeClass('btn-primary').addClass('btn-outline-primary');
+                $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+                loadnewSubject(2);
+            }
+        });
+
+        $("#subject_movie_sound").on('click', function () {
+            if ($(this).hasClass('btn-primary')) {
+                $(this).removeClass('btn-primary').addClass('btn-outline-primary');
+                loadnewSubject(0);
+            } else {
+                $(".subject").removeClass('btn-primary').addClass('btn-outline-primary');
+                $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+                loadnewSubject(3);
+            }
+        });
+
+        function loadnewSubject(category) {
+            $("#home-subject-list").empty();
+            //ajax로 db에서 리스트 새로 뽑아와야함
+            $.ajax({
+                url: "${pageContext.servletContext.contextPath}/home/loadsubject",
+                data: {
+                    category: category
+                },
+                type: 'post',
+                success: function (r) {
+                    var tag = "";
+                    if (r.length == 0) {
+                        tag += "<p style='text-align: center; width: 100%'>업로드 된 기업과제가 없습니다.</p>";
+                    } else {
+                        for (var i = 0; i < r.length; i++) {
+                            tag += `
+                            <li>
+                    <a href="${pageContext.servletContext.contextPath}/subject/view?no=` + r[i].subjectid + `">
+                        <div class="img_C">
+                            <img src="${pageContext.servletContext.contextPath}/upload` + r[i].imgsrc + `"
+                                 class="portfolio_img">
+                            <div class="content_info">
+                                <div class="content_category">`
+                            if (r[i].category == 0) {
+                                tag += "분류없음";
+                            } else if (r[i].category == 1) {
+                                tag += "IT/개발";
+                            } else if (r[i].category == 2) {
+                                tag += "디자인";
+                            } else if (r[i].category == 3) {
+                                tag += "영상/음향";
+                            }
+                            tag += ` </div>
+                                <div class="content_title">
+                                        ` + r[i].subjecttitle + `
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center;">
+                                    <img src="${pageContext.servletContext.contextPath}/upload` + r[i].profileimg + `"
+                                         style="width:20px; height:20px;" alt="">
+                                    <span style="margin-left:10px; width: 118px;white-space: nowrap;
+                                    overflow: hidden; text-overflow: ellipsis;">` + r[i].username + `</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                           `;
+
+                        }
+                    }
+                    $("#home-subject-list").append(tag);
+                }
+            });
+        }
+
+        $("#portfolio_IT").on('click', function(){
+            if ($(this).hasClass('btn-primary')) {
+                $(this).removeClass('btn-primary').addClass('btn-outline-primary');
+                loadNewPortfolio(0);
+            } else {
+                $(".portfolio").removeClass('btn-primary').addClass('btn-outline-primary');
+                $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+                loadNewPortfolio(1);
+            }
+        });
+
+        $("#portfolio_Design").on('click', function(){
+            if ($(this).hasClass('btn-primary')) {
+                $(this).removeClass('btn-primary').addClass('btn-outline-primary');
+                loadNewPortfolio(0);
+            } else {
+                $(".portfolio").removeClass('btn-primary').addClass('btn-outline-primary');
+                $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+                loadNewPortfolio(2);
+            }
+        });
+
+        $("#portfolio_move_sound").on('click', function(){
+            if ($(this).hasClass('btn-primary')) {
+                $(this).removeClass('btn-primary').addClass('btn-outline-primary');
+                loadNewPortfolio(0);
+            } else {
+                $(".portfolio").removeClass('btn-primary').addClass('btn-outline-primary');
+                $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+                loadNewPortfolio(3);
+            }
+        });
+
+        function loadNewPortfolio(category){
+            $("#home-portfolio-list").empty();
+            $.ajax({
+                url : "${pageContext.servletContext.contextPath}/home/loadPortfolio",
+                data:{
+                    category:category
+                },
+                type: 'post',
+                success:function(r){
+                    console.log(r);
+                    var tag = "";
+                    if(r.length==0){
+                        tag+="<p style='text-align: center; width: 100%'>업로드 된 포트폴리오가 없습니다.</p>"//여기서부터 해야함
+                    }else{
+                        for(var i =0; i<r.length; i++){
+                            console.log(r.length);
+                            tag+=`
+                        <li>
+                    <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=`+r[i].portfolioid+`">
+                        <div class="img_C">
+                            <img src="${pageContext.servletContext.contextPath}/upload`+r[i].imgsrc+`"
+                                 class="portfolio_img">
+                            <div class="content_info">
+                                <div class="content_category">
+                        `;
+                            if (r[i].category == 0) {
+                                tag += "분류없음";
+                            } else if (r[i].category == 1) {
+                                tag += "IT/개발";
+                            } else if (r[i].category == 2) {
+                                tag += "디자인";
+                            } else if (r[i].category == 3) {
+                                tag += "영상/음향";
+                            }
+                            tag+=`
+                            </div>
+                                <div class="content_title">
+                                        `+r[i].portfoliotitle+`
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center;">
+                                    <img src="${pageContext.servletContext.contextPath}/upload`+r[i].profileimg+`"
+                                         style="width:20px; height:20px;" alt="">
+                                    <span style="margin-left:10px; width: 118px;white-space: nowrap;
+                                    overflow: hidden; text-overflow: ellipsis;">`+r[i].username+`</span>
+                                </div>
+                                <div class="iconGroup">
+                                    <i class="fa-solid fa-eye" style="color: #0d0d0d;"></i>
+                                    <span>`+r[i].view+`</span>
+                                    <i class="fa-solid fa-heart" style="color: #0d0d0d;"></i>
+                                    <span>`+r[i].likeCnt+`</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                            `
+                        }
+                        console.log(tag);
+                    }
+                    $("#home-portfolio-list").append(tag);
+                }
+            });
+        }
+
+    })
+</script>
 </body>
 </html>
 <%@include file="./header_footer/footer.jspf" %>

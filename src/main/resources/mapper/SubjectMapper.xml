@@ -95,6 +95,20 @@
         set applyimg=#{param1}
         where applyid=#{param2}
     </update>
+
+    <select id="getSubjectForHomeWithCat" resultType="com.team1.careercanvas.vo.SubjectVO">
+        select s.subjectid as subjectid,
+               s.subjecttitle as subjecttitle,
+               s.imgsrc as imgsrc,
+               s.category as category,
+               u.username as username,
+               u.profileimg as profileimg
+        from subject s
+                 join user u on u.userid = s.user_userid
+        where s.category=#{param1}
+        order by s.date desc
+        limit 4;
+    </select>
 </mapper>
 
 

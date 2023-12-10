@@ -6,6 +6,8 @@ import com.team1.careercanvas.vo.PofolVO;
 import com.team1.careercanvas.vo.SubjectVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -52,6 +54,30 @@ public class TestController {
 
         mav.setViewName("home");
         return mav;
+    }
+
+    @PostMapping("/home/loadsubject")
+    @ResponseBody
+    public List<SubjectVO> loadNewSubject(int category){
+        //카테고리는 0,1,2,3으로 들어올거임
+        //그거 맞춰서 4개만 뽑아다주면 됨
+        List<SubjectVO> list = subjectMapper.getSubjectForHomeWithCat(category);
+        return list;
+    }
+
+    @PostMapping("/home/loadPortfolio")
+    @ResponseBody
+    public List<PofolVO> loadNewPortfolio(int category){
+        List<PofolVO> list = pofolmapper.getPortfolioForHomeWithCat(category);
+        for(PofolVO templist : list){
+            if(templist.getIsteam()==0){
+                //파티명으로 이름 바꿔줘야함
+                templist.setUsername(partyMapper.myteamSelect(templist.getPartyid()).getPartyname());
+                //파티이미지로 이미지도 바꿔줌
+                templist.setProfileimg(partyMapper.myteamSelect(templist.getPartyid()).getPartyimage());
+            }
+        }
+        return list;
     }
 
 

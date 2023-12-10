@@ -32,4 +32,5 @@ public interface SubjectMapper {
     void addApplyMember(int getApplyid, String member);
 
     int insertApplyImg(String pathfordb, int Applyid);
+    List<SubjectVO> getSubjectForHomeWithCat(int category);
 }

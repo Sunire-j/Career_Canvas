@@ -49,6 +49,8 @@ public interface PofolMapper {
 	//조석훈 작업
 	List<PofolVO> getPortfolioForHome();
 
+	List<PofolVO> getPortfolioForHomeWithCat(int category);
+
 	// 정인식 작업
 	List<UserVO> getMemberList(int partyid);
 	// 정인식 작업 끝
