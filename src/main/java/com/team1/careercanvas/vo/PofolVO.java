@@ -21,4 +21,5 @@ public class PofolVO {
 	private int likeCnt;
 	private String username;
 	private String profileimg;
+
 }

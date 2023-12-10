@@ -45,6 +45,12 @@ public class ProfileController {
 		
 		ModelAndView mav =new ModelAndView();
 
+		if(uservo.getUsertype()==1){
+
+			mav.setViewName("redirect:/profile/biz?uid="+userid);
+
+			return mav;
+		}
 		if(uservo.getInterest()!=null){
 			String[] interestArr = uservo.getInterest().split(",");
 			System.out.println("arr size : "+interestArr.length);
@@ -83,6 +89,13 @@ public class ProfileController {
 
 		ModelAndView mav = new ModelAndView();
 
+		if(uservo.getUsertype()==1){
+
+			mav.setViewName("redirect:/profile/biz?uid="+userid);
+
+			return mav;
+		}
+
 		if(uservo.getInterest()!=null){
 			String[] interestArr = uservo.getInterest().split(",");
 			System.out.println("arr size : "+interestArr.length);
@@ -116,6 +129,13 @@ public class ProfileController {
 
 		ModelAndView mav = new ModelAndView();
 
+		if(uservo.getUsertype()==1){
+
+			mav.setViewName("redirect:/profile/biz?uid="+userid);
+
+			return mav;
+		}
+
 		if(uservo.getInterest()!=null){
 			String[] interestArr = uservo.getInterest().split(",");
 			System.out.println("arr size : "+interestArr.length);
@@ -148,6 +168,13 @@ public class ProfileController {
 		List<SubjectVO> subjectvo = subjectmapper.getSubjectList(pvo);
 
 		ModelAndView mav = new ModelAndView();
+
+		if(uservo.getUsertype()!=1){
+
+			mav.setViewName("redirect:/profile/portfolio?uid="+userid);
+
+			return mav;
+		}
 
 		mav.addObject("uVO", uservo);
 		mav.addObject("sCount", subjectamount);
