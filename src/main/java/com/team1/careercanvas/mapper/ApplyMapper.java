@@ -22,4 +22,6 @@ public interface ApplyMapper {
 
     SubjectVO SelectSubject(int subjectid);
     List<UserVO> SelectsubjectMember(int applyid);
+    List<ApplyVO> getApplyInfoTeam(PagingVO pvo);
+    int getApplyAmountTeam(String userid);
 }

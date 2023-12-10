@@ -13,7 +13,7 @@
             subjectapply.user_userid as user_userid,
             subjectapply.applyimg as applyimg
         from subjectapply
-                 join subject on subject.subjectid=subjectapply.subject_subjectid
+        left join subject on subject.subjectid=subjectapply.subject_subjectid
         where subjectapply.user_userid=#{searchWord} and subjectapply.isteam=1
         limit #{onePageRecord} offset #{offsetPoint}
     </select>
@@ -51,5 +51,29 @@
                  join subjectcontributor
                       on subjectcontributor.user_userid = user.userid
         where subjectcontributor.subjectapply_applyid = #{param1};
+    </select>
+
+    <select id="getApplyInfoTeam" resultType="com.team1.careercanvas.vo.ApplyVO">
+        select
+            subject.subjecttitle as subjecttitle,
+            subject.category as category,
+            subjectapply.applyid as applyid,
+            subjectapply.subject_subjectid as subject_subjectid,
+            subjectapply.applycontent as applycontent,
+            subjectapply.isteam as isteam,
+            subjectapply.party_partyid as party_partyid,
+            subjectapply.user_userid as user_userid,
+            subjectapply.applyimg as applyimg
+        from subjectapply
+                 left join subject on subject.subjectid=subjectapply.subject_subjectid
+        left join subjectcontributor sc on subjectapply.applyid = sc.subjectapply_applyid
+        where sc.user_userid=#{searchWord} and subjectapply.isteam=0
+        limit #{onePageRecord} offset #{offsetPoint}
+    </select>
+
+    <select id="getApplyAmountTeam" resultType="Integer">
+        select count(subjectapply_applyid)
+        from subjectcontributor
+        where user_userid = #{param1}
     </select>
 </mapper>
