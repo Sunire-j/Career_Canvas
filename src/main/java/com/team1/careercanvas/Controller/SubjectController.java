@@ -267,11 +267,14 @@ public class SubjectController {
         ApplyVO avo = applymapper.SelectApply(applyid);
         mav.addObject("avo", avo);
 
+        String partyname = applymapper.getPartyname(avo.getParty_partyid());
+
         SubjectVO svo = applymapper.SelectSubject(avo.getSubject_subjectid());
         mav.addObject("svo", svo);
 
         List<UserVO> member = applymapper.SelectsubjectMember(applyid);
         mav.addObject("member", member);
+        mav.addObject("partyname", partyname);
 
         mav.setViewName("subject/subjectSubmitView");
         return mav;

@@ -76,4 +76,10 @@
         from subjectcontributor
         where user_userid = #{param1}
     </select>
+
+    <select id="getPartyname" resultType="String">
+        select partyname
+        from party
+        where partyid = #{param1}
+    </select>
 </mapper>
