@@ -79,7 +79,8 @@ public class PartyController {
         List<PartyVO> partylist = mapper.getMineParty((String) session.getAttribute("LogId"));
         if (partylist.size() == 0) {
             mav.addObject("msg", "파티장만 글 작성이 가능합니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
             return mav;
         }
         mav.addObject("pVO", partylist);
@@ -192,7 +193,8 @@ public class PartyController {
         //파티가 존재하는지 확인
         if(no==0){
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
             return mav;
         }
         int count = mapper.CheckpartyId(no);
@@ -200,7 +202,8 @@ public class PartyController {
 
         if(count==0){
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
             return mav;
         }
 
@@ -215,7 +218,8 @@ public class PartyController {
         }
         if(temp==0){
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
             return mav;
         }
 
@@ -266,14 +270,17 @@ public class PartyController {
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack",1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
             return mav;
         }
         List<PartyVO> vo = mapper.SelectPartyList(logId);
 
         if (vo.isEmpty()) {
             mav.addObject("msg", "가입한 파티가 없습니다.");
-            mav.setViewName("myteam/party_empty_alert");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
             return mav;
         }
 
@@ -299,7 +306,6 @@ public class PartyController {
             }
             System.out.println(temp);
             if(temp==-1){
-                //partymember X
                 mav.addObject("msg", "잘못된 접근입니다.");
                 mav.setViewName("alert_page");
                 return mav;
