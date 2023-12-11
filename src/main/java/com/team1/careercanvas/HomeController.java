@@ -98,12 +98,6 @@ public class HomeController {
         return list;
     }
 
-
-    @GetMapping("/test")
-    public String test(){
-        return "users/mypage";
-    }
-
     @GetMapping("/createCookie")
     @ResponseBody
     public String CreateCookie(HttpServletResponse response,

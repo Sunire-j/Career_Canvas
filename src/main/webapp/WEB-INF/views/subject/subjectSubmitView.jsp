@@ -243,7 +243,7 @@
                             <a style="height: fit-content; margin-right: 10px" class=" btn btn-outline-danger btn-sm"
                                id="report_post">게시글 신고</a>
                         </c:if>
-                        <c:if test="${LogId==pVO.user_userid}">
+                        <c:if test="${LogId==avo.user_userid}">
                             <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">게시글
                                 삭제</a>
                         </c:if>
@@ -258,16 +258,16 @@
 
             $("#del_post").on('click', function () {
                 if (confirm("정말 글을 삭제하시겠습니까?")) {
-                    var target_id = ${pVO.portfolioid};
+                    var target_id = ${avo.applyid};
                     $.ajax({
-                        url: "${pageContext.servletContext.contextPath}/pofol/postdel",
+                        url: "${pageContext.servletContext.contextPath}/subject/applydel",
                         data: {
-                            pofolid: target_id
+                            applyid: target_id
                         },
                         type: 'post',
                         success: function (result) {
                             alert("삭제되었습니다.");
-                            location.href = "${pageContext.servletContext.contextPath}/pofol_preview";
+                            location.href = "${pageContext.servletContext.contextPath}/subject/apply";
                         },
                         error: function (error) {
                             console.log(error.responseText);
@@ -275,14 +275,14 @@
                     });
                 }
             });
+
             $("#report_post").on('click', function () {
                 if (confirm("정말 글을 신고하시겠습니까?")) {
                     $.ajax({
-                        url: "${pageContext.servletContext.contextPath}/pofol/pofol_report",
+                        url: "${pageContext.servletContext.contextPath}/subject/applyreport",
                         data: {
-                            target_id:${pVO.portfolioid},
-                            target_userid: '${pVO.user_userid}',
-                            target_title: '${pVO.portfoliotitle}'
+                            target_id:${avo.applyid},
+                            target_userid: '${avo.user_userid}'
                         },
                         type: 'post',
                         success: function (result) {

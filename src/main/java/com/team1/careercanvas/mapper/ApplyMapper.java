@@ -27,4 +27,7 @@ public interface ApplyMapper {
 
     List<ApplyVO> getApplyInfoTeam(PagingVO pvo);
     int getApplyAmountTeam(String userid);
+
+    String getSubjectApplyName(int id);
+    void deleteApply(int id);
 }

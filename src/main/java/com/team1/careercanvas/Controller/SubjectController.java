@@ -1,11 +1,9 @@
 package com.team1.careercanvas.Controller;
 
+import com.team1.careercanvas.mapper.AdminMapper;
 import com.team1.careercanvas.mapper.ApplyMapper;
 import com.team1.careercanvas.mapper.SubjectMapper;
-import com.team1.careercanvas.vo.ApplyVO;
-import com.team1.careercanvas.vo.PartyVO;
-import com.team1.careercanvas.vo.SubjectVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +28,12 @@ public class SubjectController {
     private final SubjectMapper mapper;
 
     private final ApplyMapper applymapper;
+    private final AdminMapper adminMapper;
 
-    public SubjectController(SubjectMapper mapper, ApplyMapper applymapper) {
+    public SubjectController(SubjectMapper mapper, ApplyMapper applymapper, AdminMapper adminMapper) {
         this.mapper = mapper;
         this.applymapper = applymapper;
+        this.adminMapper = adminMapper;
     }
 
     @GetMapping("/subject/write")
@@ -278,5 +278,27 @@ public class SubjectController {
 
         mav.setViewName("subject/subjectSubmitView");
         return mav;
+    }
+
+    @PostMapping("/subject/applyreport")
+    @ResponseBody
+    public String reportApply(int target_id, String target_userid, String target_title, HttpSession session){
+        String userid = (String)session.getAttribute("LogId");
+        ReportVO rvo = new ReportVO();
+        rvo.setTargetid(target_id);
+        rvo.setUser_userid(userid);
+        rvo.setUserid(target_userid);
+        //타이틀이 vo안에 없음. 백에서 셀렉트 하고 직접 넣어줘야함
+        String title = applymapper.getSubjectApplyName(target_id);
+        rvo.setTitle(title);
+        adminMapper.reportApply(rvo);
+        return "";
+    }
+
+    @PostMapping("/subject/applydel")
+    @ResponseBody
+    public String deleteApply(int applyid){
+        applymapper.deleteApply(applyid);
+        return "";
     }
 }

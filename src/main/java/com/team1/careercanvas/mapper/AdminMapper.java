@@ -92,4 +92,6 @@ public interface AdminMapper {
     void acceptCompany(String userid);
 
     void denyCompany(String userid);
+
+    void reportApply(ReportVO rvo);
 }

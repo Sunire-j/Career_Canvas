@@ -315,4 +315,9 @@
         from user
         where userid = #{param1};
     </delete>
+
+    <insert id="reportApply">
+        insert into report(reporttype, targetid, user_userid, title, userid)
+        values('subject', #{targetid}, #{user_userid}, #{title}, #{userid})
+    </insert>
 </mapper>
