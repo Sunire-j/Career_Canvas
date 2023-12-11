@@ -180,6 +180,10 @@
             font-size: 14px;
             padding: 2px 4px;
         }
+        .btn-outline-secondary {
+            font-size: 14px;
+            padding: 2px 4px;
+        }
 
         .userIntro p {
             margin: 0px;
@@ -334,10 +338,10 @@
                 <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt=""/>
                 <div style="padding-left: 20px;">
                     <div class="userId">
-                        <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
+                        <a href="${pageContext.servletContext.contextPath}/mypage/biz">
                             <span style="font-size: 1.5rem">${uVO.username }</span>
                         </a>
-                        <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+                        <a href="${pageContext.servletContext.contextPath}/mypage/biz/edit">
                             <input
                                     type="button"
                                     class="btn btn-outline-secondary"
@@ -348,48 +352,26 @@
                     <p>${uVO.comment }</p>
                 </div>
             </div>
-        <!-- Interest -->
-            <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
-                <p style="display: flex; justify-content: center; font-size: 1.5rem" >관심분야</p>
-                <div class="userInterest" style="display: flex; flex-wrap: wrap">
-                    <c:if test="${not empty interest}">
-                        <c:forEach var="interest" items="${interest}">
-                            <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
-                        </c:forEach>
-                    </c:if>
-                </div>
-            </div>
         </div>
     </div>
-</div>
 </main>
     <!-- Center -->
     <!-- ajax -->
     <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
             <li class="myPofol menu" id="myPofol menu">
-                <a href="${pageContext.servletContext.contextPath}/mypage/myPofol"
-                >나의 포트폴리오</a
+                <a href="${pageContext.servletContext.contextPath}/mypage/biz"
+                >나의과제</a
                 >
             </li>
             <li class="submitTask menu" id="submitTask">
                 <a
-                        href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-                >제출한 과제</a
+                        href="${pageContext.servletContext.contextPath}/mypage/biz/apply"
+                >받은과제물</a
                 >
             </li>
             <li class="myPost menu" id="myPost menu">
-                <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
-                >나의 게시글</a
-                >
-            </li>
-            <li class="myComment menu" id="myComment menu">
-                <a href="${pageContext.servletContext.contextPath}/mypage/myComment"
-                >나의 댓글</a
-                >
-            </li>
-            <li class="myNote menu" id="myNote menu">
-                <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+                <a href="${pageContext.servletContext.contextPath}/mypage/biz/sendMsg"
                 >쪽지함</a
                 >
             </li>
@@ -400,28 +382,28 @@
     <!-- ajax View -->
         <div style="margin: 0 auto; margin-top: 30px; ">
             <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
-            <c:forEach var="list" items="${list}">
-                <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${list.portfolioid}">
+            <c:forEach var="svo" items="${sVO}">
+                <a href="${pageContext.servletContext.contextPath}/mypage/biz?subjectid=${svo.subjectid}">
                 <div class="img_C">
-                    <img src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}" class="portfolio_img">
+                    <img src="${pageContext.servletContext.contextPath}/upload${svo.imgsrc}" class="portfolio_img">
                     <!-- line 1 -->
                     <div class="content_info">
                         <div class="content_category">
-                            <c:if test="${list.category==0}">
+                            <c:if test="${svo.category==0}">
                                 분류없음
                             </c:if>
-                            <c:if test="${list.category==1}">
+                            <c:if test="${svo.category==1}">
                                 IT/개발
                             </c:if>
-                            <c:if test="${list.category==2}">
+                            <c:if test="${svo.category==2}">
                                 디자인
                             </c:if>
-                            <c:if test="${list.category==3}">
+                            <c:if test="${svo.category==3}">
                                 영상
                             </c:if>
                         </div>
                         <div class="content_title">
-                                ${list.portfoliotitle}
+                                ${svo.subjecttitle}
                         </div>
                     </div>
                 </div>
@@ -429,6 +411,7 @@
             </c:forEach>
             </ul>
         </div>
+
         <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
             <div class="pagination" style="display: flex">
                 <div class="paging">
@@ -488,13 +471,12 @@
                 </div>
             </div>
         </div>
-       
-       
+
       <!-- 검색창 -->
       <form
         class="input-group mb-3"
         style="width: 60%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
+        action="${pageContext.servletContext.contextPath}/mypage/biz"
         method="GET"
       >
         <input
@@ -505,6 +487,8 @@
         />
         <button class="btn btn-success" type="submit">Go</button>
       </form>
+
+        
 
             </div>
         <div class="container_bottom"></div>

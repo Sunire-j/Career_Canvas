@@ -38,7 +38,7 @@ public class SubjectController {
     }
 
     @GetMapping("/subject/write")
-    public ModelAndView subjectWrite(HttpSession session){
+    public ModelAndView subjectWrite(HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         String logId = (String) session.getAttribute("LogId");
@@ -63,10 +63,9 @@ public class SubjectController {
 
     @PostMapping("/subject/writeOk")
     public String subjectWriteOk(HttpSession session,
-                                 @RequestParam("posttitle") String title,
-                                 @RequestParam("postcontent") String content,
-                                 @RequestParam("category") int category
-                                 )throws IOException {
+            @RequestParam("posttitle") String title,
+            @RequestParam("postcontent") String content,
+            @RequestParam("category") int category) throws IOException {
         String logId = (String) session.getAttribute("LogId");
 
         SubjectVO svo = new SubjectVO();
@@ -113,7 +112,7 @@ public class SubjectController {
 
     @GetMapping("subject/view")
     public ModelAndView subjectView(HttpSession session,
-                                    @RequestParam("no") int subjectid){
+            @RequestParam("no") int subjectid) {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
 
@@ -129,14 +128,13 @@ public class SubjectController {
         int delidCount = mapper.CountDelid(subjectid);
         mav.addObject("delcount", delidCount);
 
-
         mav.setViewName("company/subjectView");
         return mav;
     }
 
     @GetMapping("subject/del")
     public ModelAndView subjectdel(HttpSession session,
-                             int subjectid){
+            int subjectid) {
         ModelAndView mav = new ModelAndView();
 
         String logId = (String) session.getAttribute("LogId");
@@ -167,8 +165,8 @@ public class SubjectController {
     @PostMapping("subject/delOk")
     @ResponseBody
     public int subjectdelOk(HttpSession session,
-                            @RequestParam("subjectid") int subjectid,
-                            @RequestParam("reason") String reason){
+            @RequestParam("subjectid") int subjectid,
+            @RequestParam("reason") String reason) {
         String logId = (String) session.getAttribute("LogId");
 
         mapper.Insertdelapply(subjectid, reason, logId);
@@ -178,7 +176,7 @@ public class SubjectController {
 
     @GetMapping("subject/submit")
     public ModelAndView subjectSubmit(HttpSession session,
-                                      @RequestParam("subjectid") int subjectid){
+            @RequestParam("subjectid") int subjectid) {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
         String logStatus = (String) session.getAttribute("logStatus");
@@ -226,12 +224,12 @@ public class SubjectController {
 
     @PostMapping("subject/submitwriteOk")
     public String submutWriteOk(HttpSession session,
-                                @RequestParam("subjectid") int subjectid,
-                                @RequestParam("postcontent") String content,
-                                @RequestParam("isteam") int isteam,
-                                @RequestParam(value = "partyid", required = false) int partyid,
-                                @RequestParam(value = "member",required = false) String[] member,
-                                HttpServletResponse response) throws IOException {
+            @RequestParam("subjectid") int subjectid,
+            @RequestParam("postcontent") String content,
+            @RequestParam("isteam") int isteam,
+            @RequestParam(value = "partyid", required = false) int partyid,
+            @RequestParam(value = "member", required = false) String[] member,
+            HttpServletResponse response) throws IOException {
 
         String logId = (String) session.getAttribute("LogId");
 
@@ -243,9 +241,9 @@ public class SubjectController {
         avo.setUser_userid(logId);
         int result = mapper.InsertSubjectApply(avo);
 
-        if(isteam==0){
+        if (isteam == 0) {
             mapper.Insertpartyid(avo.getApplyid(), partyid);
-            for(int i = 0; i<member.length;i++){
+            for (int i = 0; i < member.length; i++) {
                 mapper.addApplyMember(avo.getApplyid(), member[i]);
             }
         }
@@ -280,27 +278,29 @@ public class SubjectController {
             int dbresult = mapper.insertApplyImg(pathfordb, avo.getApplyid());
         }
 
-        if(result>0){
+        if (result > 0) {
             String alertMessage = "제출 완료 하였습니다.";
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");
-            response.getWriter().println("<script>alert('" + alertMessage + "'); location.href='view?no=" + subjectid + "';</script>");
+            response.getWriter().println(
+                    "<script>alert('" + alertMessage + "'); location.href='view?no=" + subjectid + "';</script>");
             response.getWriter().flush();
             response.getWriter().close();
-        }else{
+        } else {
             String alertMessage = "제출 실패 하였습니다.";
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");
-            response.getWriter().println("<script>alert('" + alertMessage + "'); location.href='view?no=" + subjectid + "';</script>");
+            response.getWriter().println(
+                    "<script>alert('" + alertMessage + "'); location.href='view?no=" + subjectid + "';</script>");
             response.getWriter().flush();
             response.getWriter().close();
         }
         return null;
-        //return "redirect:view?no="+subjectid;
+        // return "redirect:view?no="+subjectid;
     }
 
     @GetMapping("subject/applyView")
-    public ModelAndView subjectApplyView(@RequestParam("applyid") int applyid){
+    public ModelAndView subjectApplyView(@RequestParam("applyid") int applyid) {
         ModelAndView mav = new ModelAndView();
 
         //int temp = applymapper.
@@ -334,13 +334,13 @@ public class SubjectController {
 
     @PostMapping("/subject/applyreport")
     @ResponseBody
-    public String reportApply(int target_id, String target_userid, String target_title, HttpSession session){
-        String userid = (String)session.getAttribute("LogId");
+    public String reportApply(int target_id, String target_userid, String target_title, HttpSession session) {
+        String userid = (String) session.getAttribute("LogId");
         ReportVO rvo = new ReportVO();
         rvo.setTargetid(target_id);
         rvo.setUser_userid(userid);
         rvo.setUserid(target_userid);
-        //타이틀이 vo안에 없음. 백에서 셀렉트 하고 직접 넣어줘야함
+        // 타이틀이 vo안에 없음. 백에서 셀렉트 하고 직접 넣어줘야함
         String title = applymapper.getSubjectApplyName(target_id);
         rvo.setTitle(title);
         adminMapper.reportApply(rvo);
@@ -349,7 +349,7 @@ public class SubjectController {
 
     @PostMapping("/subject/applydel")
     @ResponseBody
-    public String deleteApply(int applyid){
+    public String deleteApply(int applyid) {
         applymapper.deleteApply(applyid);
         return "";
     }

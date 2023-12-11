@@ -58,7 +58,7 @@ public class PofolController {
         pVO.setCategory(pVO.getCategory());
 
         List<PofolVO> pofolVO = mapper.getPublicTeamPofol(pVO);
-        System.out.println(pofolVO.size());
+        System.out.println(pofolVO);
         mav.addObject("pVO", pVO);
         mav.addObject("pofolVO", pofolVO);
         mav.setViewName("/pofol/pofol_preview_team");

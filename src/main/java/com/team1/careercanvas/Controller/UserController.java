@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.team1.careercanvas.mapper.BoardMapper;
+import com.team1.careercanvas.mapper.PartyMapper;
 import com.team1.careercanvas.mapper.PofolMapper;
 import com.team1.careercanvas.mapper.UserMapper;
 import com.team1.careercanvas.vo.*;
@@ -39,11 +40,14 @@ public class UserController {
     private final UserMapper mapper;
     private final PofolMapper pofolmapper;
     private final BoardMapper boardmapper;
+    private final PartyMapper partymapper;
 
-    public UserController(UserMapper mapper, PofolMapper pofolmapper, BoardMapper boardmapper) {
+    public UserController(UserMapper mapper, PofolMapper pofolmapper, BoardMapper boardmapper,
+            PartyMapper partymapper) {
         this.mapper = mapper;
         this.pofolmapper = pofolmapper;
         this.boardmapper = boardmapper;
+        this.partymapper = partymapper;
     }
 
     @GetMapping("/findpw")
@@ -400,8 +404,12 @@ public class UserController {
             return mav;
         }
 
-        UserVO result = mapper.getUserInfo(logId);
-        mav.addObject("uVO", result);
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
+        mav.addObject("uVO", uVO);
         mav.setViewName("users/mypage_edit");
         return mav;
     }
@@ -522,6 +530,10 @@ public class UserController {
 
         list = pofolmapper.getPofol(pVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getUsertype() == 1) {
+            mav.setViewName("redirect:/mypage/biz");
+            return mav;
+        }
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
@@ -541,7 +553,7 @@ public class UserController {
 
         if (logStatus != "Y" && logId == null) {
             session.setAttribute("msg", "로그인 후 이용 가능합니다.");
-            session.setAttribute("isBack",1);
+            session.setAttribute("isBack", 1);
             session.setAttribute("alert_page", "login");
             return "improve_alert";
         }
@@ -549,9 +561,9 @@ public class UserController {
         UserVO uVO = mapper.getUserInfo(logId);
         int usertype = uVO.getUsertype();
 
-        if(usertype == 1){
+        if (usertype == 1) {
             session.setAttribute("msg", "일반 회원만 작성 가능합니다.");
-            session.setAttribute("isBack",0);
+            session.setAttribute("isBack", 0);
             return "improve_alert";
         }
 
@@ -656,7 +668,7 @@ public class UserController {
             pVO.setSearchWord("");
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
-        pVO.setOnePageRecord(5);
+        pVO.setOnePageRecord(10);
         pVO.setTotalRecord(boardmapper.getmyCommentCount(pVO));
         pVO.setPage(pVO.getPage());
         List<CommentVO> cVO = new ArrayList<CommentVO>();
@@ -749,7 +761,7 @@ public class UserController {
             pVO.setSearchWord("");
         }
         pVO.setSearchKey((String) session.getAttribute("LogId"));
-        pVO.setOnePageRecord(4);
+        pVO.setOnePageRecord(12);
         pVO.setPage(pVO.getPage());
         pVO.setTotalRecord(mapper.getSubjectSoloAmount(pVO));
 
@@ -804,7 +816,7 @@ public class UserController {
 
         if (logStatus != "Y" && userid == null) {
             session.setAttribute("msg", "로그인 후 이용 가능합니다.");
-            session.setAttribute("isBack",1);
+            session.setAttribute("isBack", 1);
             session.setAttribute("alert_page", "login");
             return "improve_alert";
         }
@@ -862,19 +874,156 @@ public class UserController {
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.addObject("isBack",1);
+            mav.addObject("isBack", 1);
             mav.addObject("alert_page", "login");
             mav.setViewName("improve_alert");
             return mav;
         }
 
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+
         pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(12);
+        pVO.setTotalRecord(mapper.getMySubectAmountForMypage(pVO));
+        pVO.setPage(pVO.getPage());
+
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getUsertype() == 0) {
+            mav.setViewName("redirect:/mypage/myPofol");
+            return mav;
+        }
         List<SubjectVO> sVO = mapper.SelectSubjectForMypage(pVO);
-        System.out.println(sVO);
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
+
+        System.out.println(pVO);
+        mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
-        mav.setViewName("/users/mypage_company");
+        mav.setViewName("/users/mypage_biz");
+
         return mav;
     }
+
+    @GetMapping("mypage/biz/apply")
+    public ModelAndView apply(HttpSession session, PagingVO pVO) {
+        ModelAndView mav = new ModelAndView();
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(12);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getApplyAmountForMypage(pVO));
+        List<ApplyVO> aVO = mapper.SelectApplySubjectForMypage(pVO);
+        for (ApplyVO templist : aVO) {
+            if (templist.getIsteam() == 0) {
+                // 파티명으로 이름 바꿔줘야함
+                templist.setUser_userid(partymapper.myteamSelect(templist.getParty_partyid()).getPartyname());
+                // 파티이미지로 이미지도 바꿔줌
+                templist.setProfileimg(partymapper.myteamSelect(templist.getParty_partyid()).getPartyimage());
+            }
+        }
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
+        mav.addObject("pVO", pVO);
+        mav.addObject("aVO", aVO);
+        mav.addObject("uVO", uVO);
+        mav.setViewName("/users/mypage_biz_apply");
+        return mav;
+    }
+
+    @GetMapping("/mypage/biz/sendMsg")
+    public ModelAndView bizSendMsg(HttpSession session, PagingVO pVO) {
+
+        ModelAndView mav = new ModelAndView();
+        if (!session.getAttribute("LogStatus").equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setTotalRecord(mapper.getTotalSendMsg(pVO));
+        pVO.setOnePageRecord(10);
+        pVO.setPage(pVO.getPage());
+
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
+        List<MessageVO> mVO = new ArrayList<MessageVO>();
+        mVO = mapper.getSendMsg(pVO);
+        mav.addObject("uVO", uVO);
+        mav.addObject("pVO", pVO);
+        mav.addObject("mVO", mVO);
+
+        mav.setViewName("/users/mypage_biz_sendMsg");
+        return mav;
+
+    }
+
+    @GetMapping("mypage/biz/receiveMsg")
+    public ModelAndView bizReceiveMsg(HttpSession session, PagingVO pVO) {
+
+        ModelAndView mav = new ModelAndView();
+        if (!session.getAttribute("LogStatus").equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            mav.setViewName("alert_page");
+            return mav;
+        }
+        if (pVO.getSearchWord() == null) {
+            pVO.setSearchWord("");
+        }
+
+        pVO.setSearchKey((String) session.getAttribute("LogId"));
+        pVO.setOnePageRecord(10);
+        pVO.setPage(pVO.getPage());
+        pVO.setTotalRecord(mapper.getTotalReceiveMsg(pVO));
+
+        List<MessageVO> mVO = new ArrayList<MessageVO>();
+        mVO = mapper.getReceiveMsg(pVO);
+        UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
+        if (uVO.getInterest() != null) {
+            String[] interestArr = uVO.getInterest().split(",");
+            mav.addObject("interest", interestArr);
+        }
+
+        mav.addObject("mVO", mVO);
+        mav.addObject("uVO", uVO);
+        mav.addObject("pVO", pVO);
+        System.out.println(pVO);
+
+        mav.setViewName("/users/mypage_biz_receiveMsg");
+        return mav;
+    }
+
+    @GetMapping("mypage/biz/edit")
+    public ModelAndView mypageBizEdit(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("logStatus");
+        if (logStatus != "Y" && logId == null) {
+            mav.setViewName("redirect:/");
+            return mav;
+        }
+
+        UserVO uVO = mapper.getUserInfo(logId);
+
+        mav.addObject("uVO", uVO);
+        mav.setViewName("users/mypage_biz_edit");
+        return mav;
+    }
+
 }

@@ -263,6 +263,48 @@
         s.category as category
         from subject s
         join user u on s.user_userid = u.userid
-        where s.user_userid = #{searchKey};
+        where s.user_userid = #{searchKey}
+        <if test="searchWord != ''">
+            and s.subjecttitle like concat('%',#{searchWord},'%')
+        </if>
+        order by s.subjectid desc
+        limit #{onePageRecord} offset #{offsetPoint};
+    </select>
+
+    <select id="SelectApplySubjectForMypage" resultType="com.team1.careercanvas.vo.ApplyVO">
+        SELECT sa.applyid as applyid,
+        sa.isteam as isteam,
+        p.partyid as party_partyid,
+        u.username as user_userid,
+        sa.applyimg as applyimg,
+        s.subjecttitle as subjecttitle,
+        s.category as category,
+        u.profileimg as profileimg
+        FROM subjectapply sa
+        LEFT JOIN user u ON sa.user_userid = u.userid
+        LEFT JOIN party p ON p.partyid = sa.party_partyid
+        LEFT JOIN subject s ON s.subjectid = sa.subject_subjectid
+        where s.user_userid = #{searchKey}
+        <if test="searchWord != ''">
+            and u.username like concat('%',#{searchWord},'%')
+        </if>
+        order by sa.applyid desc
+        limit #{onePageRecord} offset #{offsetPoint};
+    </select>
+
+    <select id="getMySubectAmountForMypage" resultType="Integer">
+        select count(subjectid)
+        from subject
+        where user_userid = #{searchKey}
+        <if test="searchWord != ''">
+            and subjecttitle like concat('%', #{searchWord}, '%');
+        </if>
+    </select>
+
+    <select id="getApplyAmountForMypage" resultType="Integer">
+        select count(sa.applyid)
+        from subjectapply sa
+        LEFT join subject s on sa.subject_subjectid = s.subjectid
+        where s.user_userid = #{searchKey}
     </select>
 </mapper>

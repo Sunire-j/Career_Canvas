@@ -315,6 +315,13 @@
         hr{
             border-top: 2.5px solid #73351F ;
         }
+        .content_info {
+            width: 230px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -334,7 +341,7 @@
                         <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                             <span style="font-size: 1.5rem">${uVO.username }</span>
                         </a>
-                        <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+                        <a href="${pageContext.servletContext.contextPath}/mypage/biz/edit">
                             <input
                                     type="button"
                                     class="btn btn-outline-secondary"
@@ -345,17 +352,7 @@
                     <p>${uVO.comment }</p>
                 </div>
             </div>
-        <!-- Interest -->
-            <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
-                <p style="display: flex; justify-content: center; font-size: 1.5rem" >관심분야</p>
-                <div class="userInterest" style="display: flex; flex-wrap: wrap">
-                    <c:if test="${not empty interest}">
-                        <c:forEach var="interest" items="${interest}">
-                            <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
-                        </c:forEach>
-                    </c:if>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
@@ -371,12 +368,12 @@
             </li>
             <li class="submitTask menu" id="submitTask">
                 <a
-                        href="${pageContext.servletContext.contextPath}/mypage/biz"
+                        href="${pageContext.servletContext.contextPath}/mypage/biz/apply"
                 >받은과제물</a
                 >
             </li>
             <li class="myPost menu" id="myPost menu">
-                <a href="${pageContext.servletContext.contextPath}/mypage/biz"
+                <a href="${pageContext.servletContext.contextPath}/mypage/biz/sendMsg"
                 >쪽지함</a
                 >
             </li>
@@ -387,28 +384,28 @@
     <!-- ajax View -->
         <div style="margin: 0 auto; margin-top: 30px; ">
             <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
-            <c:forEach var="list" items="${list}">
-                <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${list.portfolioid}">
+            <c:forEach var="avo" items="${aVO}">
+                <a href="${pageContext.servletContext.contextPath}/mypage/biz/apply?subjectid=${avo.applyid}">
                 <div class="img_C">
-                    <img src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}" class="portfolio_img">
+                    <img src="${pageContext.servletContext.contextPath}/upload${avo.applyimg}" class="portfolio_img">
                     <!-- line 1 -->
                     <div class="content_info">
                         <div class="content_category">
-                            <c:if test="${list.category==0}">
+                            <c:if test="${avo.category==0}">
                                 분류없음
                             </c:if>
-                            <c:if test="${list.category==1}">
+                            <c:if test="${avo.category==1}">
                                 IT/개발
                             </c:if>
-                            <c:if test="${list.category==2}">
+                            <c:if test="${avo.category==2}">
                                 디자인
                             </c:if>
-                            <c:if test="${list.category==3}">
+                            <c:if test="${avo.category==3}">
                                 영상
                             </c:if>
                         </div>
                         <div class="content_title">
-                                ${list.portfoliotitle}
+                                ${avo.user_userid}
                         </div>
                     </div>
                 </div>
@@ -417,38 +414,82 @@
             </ul>
         </div>
 
-        <!-- ajax View -->
-        <div style="margin: 0 auto; margin-top: 30px; ">
-            <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
-            <c:forEach var="list" items="${uVO}">
-                <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=${uVO.portfolioid}">
-                <div class="img_C">
-                    <img src="${pageContext.servletContext.contextPath}/upload${list.imgsrc}" class="portfolio_img">
-                    <!-- line 1 -->
-                    <div class="content_info">
-                        <div class="content_category">
-                            <c:if test="${list.category==0}">
-                                분류없음
-                            </c:if>
-                            <c:if test="${list.category==1}">
-                                IT/개발
-                            </c:if>
-                            <c:if test="${list.category==2}">
-                                디자인
-                            </c:if>
-                            <c:if test="${list.category==3}">
-                                영상
-                            </c:if>
-                        </div>
-                        <div class="content_title">
-                                ${list.portfoliotitle}
-                        </div>
-                    </div>
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+            <div class="pagination" style="display: flex">
+                <div class="paging">
+                    <c:if test="${pVO.page > 1}">
+                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                        <c:if test="${pVO.category !=''}">
+                                +'&category=${pVO.category}'
+                        </c:if>
+                        <c:if test="${pVO.searchWord!=''}">
+                                +'&searchKey=${pVO.searchKey}'
+                                +'&searchWord=${pVO.searchWord}'
+                        </c:if>
+                        <c:if test="${pVO.postSort!=''}">
+                                +'&postSort=${pVO.postSort}'
+                        </c:if>
+                                "><
+                        </button>
+                    </c:if>
+                    <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                        <c:if test="${i <= pVO.totalPage}">
+                            <c:choose>
+                                <c:when test="${i != pVO.page}">
+                                    <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                    <c:if test="${pVO.category !=''}">
+                                            +'&category=${pVO.category}'
+                                    </c:if>
+                                    <c:if test="${pVO.searchWord!=''}">
+                                            +'&searchKey=${pVO.searchKey}'
+                                            +'&searchWord=${pVO.searchWord}'
+                                    </c:if>
+                                    <c:if test="${pVO.postSort!=''}">
+                                            +'&postSort=${pVO.postSort}'
+                                    </c:if>
+                                            ">${i}</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${pVO.page < pVO.totalPage}">
+                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+                        <c:if test="${pVO.category !=''}">
+                                +'&category=${pVO.category}'
+                        </c:if>
+                        <c:if test="${pVO.searchWord!=''}">
+                                +'&searchKey=${pVO.searchKey}'
+                                +'&searchWord=${pVO.searchWord}'
+                        </c:if>
+                        <c:if test="${pVO.postSort!=''}">
+                                +'&postSort=${pVO.postSort}'
+                        </c:if>
+                                ">>
+                        </button>
+                    </c:if>
                 </div>
-                </a>
-            </c:forEach>
-            </ul>
+            </div>
         </div>
+
+      <!-- 검색창 -->
+      <form
+        class="input-group mb-3"
+        style="width: 60%; margin: 20px auto"
+        action="${pageContext.servletContext.contextPath}/mypage/biz/apply"
+        method="GET"
+      >
+        <input
+          type="text"
+          class="form-control"
+          name="searchWord"
+          placeholder="Search"
+        />
+        <button class="btn btn-success" type="submit">Go</button>
+      </form>
+
         
 
             </div>

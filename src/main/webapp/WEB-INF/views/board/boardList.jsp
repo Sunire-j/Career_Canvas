@@ -196,7 +196,9 @@
                 <div style="width: 50%; text-align: left; padding: 0 20px;" class="list"><a
                         href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">${bvo.posttitle}</a>
                 </div>
-                <div style="width: 12%" class="list"><a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}">${bvo.username}</a></div>
+                <div style="width: 12%; overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;" class="list"><a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}">${bvo.username}</a></div>
                 <div style="width: 7%" class="list">${bvo.views}</div>
                 <div style="width: 7%" class="list">${bvo.commentAmount}</div>
                 <div style="width: 7%" class="list">${bvo.likeAmount}</div>
