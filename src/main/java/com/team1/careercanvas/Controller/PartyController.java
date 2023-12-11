@@ -294,9 +294,7 @@ public class PartyController {
         List<PartyVO> vo = mapper.SelectPartyList(logId);
 
         if (vo.isEmpty()) {
-            mav.addObject("msg", "가입한 파티가 없습니다.");
-            mav.addObject("isBack",0);
-            mav.setViewName("improve_alert");
+            mav.setViewName("myteam/party_empty_alert");
             return mav;
         }
 
