@@ -1,8 +1,6 @@
 .board-container{
     border-bottom: 3px solid #73351F;
-    border-top: 2px solid #73351F;
-    border-left: 1px solid #73351F;
-    border-right: 1px solid #73351F;
+    border-top: 1px solid #73351F;
     background: #F2F2F2;
 }
 .board-container-set{

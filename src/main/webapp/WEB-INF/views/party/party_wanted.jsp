@@ -88,6 +88,27 @@
         .pagination a:hover:not(.active) {
             background-color: #ddd;
         }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
+        hr{
+            border-top: 2.5px solid #73351F ;
+        }
     </style>
 
     <script>
@@ -103,7 +124,8 @@
 <body>
 <div class="container">
     <div class="container-top">
-        <div class="container-head" style="height: 80px; border-bottom: 2px solid #73351F">
+        <div class="container-head"></div>
+        <div class="container-title" style="background:#F2F2F2 ;height: 80px; border-bottom: 1px solid #73351F; display: flex; align-items: center; justify-content: center">
             <div class="mypartyvalue">
                 <h2 class="main-title" style="margin-top: 0px; font-weight: bold; font-size: 35px">파티홍보 게시판</h2>
             </div>
@@ -116,7 +138,7 @@
             <input type="button" class="btn btn-outline-secondary partyvaluebutton2" value="내 파티" style="margin-left: 20px;"
                    onclick="location.href='${pageContext.servletContext.contextPath}/myteam/main'">
             </div>
-            <select class="form-select" style="width: 10%;" id="postSort" name="postSort">
+            <select class="form-select" style="width: 10%;border: 1px solid #73351F ;" id="postSort" name="postSort">
                 <option value="1"
                         <c:if test="${pVO.postSort==1}">
                             selected
@@ -182,9 +204,8 @@
                 <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
                     <div class="pagination" style="display: flex">
                         <div class="paging">
-                            <ul class="pagination justify-content-center d-flex">
                             <c:if test="${pVO.page > 1}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page - 1}'
+                                <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
                                 <c:if test="${pVO.searchWord!=''}">
                                         +'&searchKey=${pVO.searchKey}'
                                         +'&searchWord=${pVO.searchWord}'
@@ -193,30 +214,30 @@
                                         +'&postSort=${pVO.postSort}'
                                 </c:if>
                                         "><
-                                </a></li>
+                                </button>
                             </c:if>
                             <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                                 <c:if test="${i <= pVO.totalPage}">
                                     <c:choose>
                                         <c:when test="${i != pVO.page}">
-                                                    <li class="page-item"><a class="page-link" href='?page=${i}'
-                                            <c:if test="${pVO.searchWord!=''}">
-                                                    +'&searchKey=${pVO.searchKey}'
-                                                    +'&searchWord=${pVO.searchWord}'
-                                            </c:if>
-                                            <c:if test="${pVO.postSort!=''}">
-                                                    +'&postSort=${pVO.postSort}'
-                                            </c:if>
-                                                    ">${i}</a></li>
+                                <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                <c:if test="${pVO.searchWord!=''}">
+                                        +'&searchKey=${pVO.searchKey}'
+                                        +'&searchWord=${pVO.searchWord}'
+                                </c:if>
+                                <c:if test="${pVO.postSort!=''}">
+                                        +'&postSort=${pVO.postSort}'
+                                </c:if>
+                                        ">${i}</button>
                                         </c:when>
                                         <c:otherwise>
-                                <li class="page-item"><a class="page-link active" href="">${i}</a></li>
+                                            <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>
                             </c:forEach>
                             <c:if test="${pVO.page < pVO.totalPage}">
-                                <li class="page-item"><a class="page-link" href="'?page=${pVO.page + 1}'
+                                <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
                                 <c:if test="${pVO.searchWord!=''}">
                                         +'&searchKey=${pVO.searchKey}'
                                         +'&searchWord=${pVO.searchWord}'
@@ -225,9 +246,8 @@
                                         +'&postSort=${pVO.postSort}'
                                 </c:if>
                                         ">>
-                                </a></li>
+                                </button>
                             </c:if>
-                            </ul>
                         </div>
                     </div>
                 </div>
