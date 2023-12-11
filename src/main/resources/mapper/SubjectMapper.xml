@@ -109,6 +109,12 @@
         order by s.date desc
         limit 4;
     </select>
+
+    <select id="getUserInfo" resultType="com.team1.careercanvas.vo.UserVO">
+        select *
+        from user
+        where userid=#{param1}
+    </select>
 </mapper>
 
 

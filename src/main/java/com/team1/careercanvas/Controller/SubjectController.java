@@ -4,6 +4,7 @@ import com.team1.careercanvas.mapper.AdminMapper;
 import com.team1.careercanvas.mapper.ApplyMapper;
 import com.team1.careercanvas.mapper.SubjectMapper;
 import com.team1.careercanvas.vo.*;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,6 +120,12 @@ public class SubjectController {
         SubjectVO svo = mapper.SelectSubject(subjectid);
         mav.addObject("Svo", svo);
 
+        if(svo==null){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
         int delidCount = mapper.CountDelid(subjectid);
         mav.addObject("delcount", delidCount);
 
@@ -133,10 +140,26 @@ public class SubjectController {
         ModelAndView mav = new ModelAndView();
 
         String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("logStatus");
+
+        if (logStatus != "Y" && logId == null) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         SubjectVO svo = mapper.SelectSubject(subjectid);
         mav.addObject("Svo", svo);
 
+        String delid = svo.getUser_userid();
+
+        if(logId != delid){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
         mav.setViewName("company/delPopup");
         return mav;
     }
@@ -162,12 +185,28 @@ public class SubjectController {
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack",1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
             return mav;
         }
 
         SubjectVO svo = mapper.SelectSubject(subjectid);
         mav.addObject("Svo", svo);
+        UserVO uvo = mapper.getUserInfo(logId);
+        int usertype = uvo.getUsertype();
+        if(usertype==1){
+            mav.addObject("msg", "일반 회원만 작성 가능합니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        if(svo==null){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         // 파티 목록
         List<PartyVO> partyvo = mapper.SelectPartyList(logId);
@@ -264,13 +303,26 @@ public class SubjectController {
     public ModelAndView subjectApplyView(@RequestParam("applyid") int applyid){
         ModelAndView mav = new ModelAndView();
 
+        //int temp = applymapper.
+
         ApplyVO avo = applymapper.SelectApply(applyid);
+
+        if(avo == null){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
+
         mav.addObject("avo", avo);
 
         String partyname = applymapper.getPartyname(avo.getParty_partyid());
 
         SubjectVO svo = applymapper.SelectSubject(avo.getSubject_subjectid());
         mav.addObject("svo", svo);
+
+
 
         List<UserVO> member = applymapper.SelectsubjectMember(applyid);
         mav.addObject("member", member);

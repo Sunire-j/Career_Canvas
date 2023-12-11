@@ -27,7 +27,16 @@ public class ProfileController {
 	@GetMapping("/profile/portfolio")
 	public ModelAndView profileInfo(@RequestParam("uid") String userid,
 									@RequestParam(required = false, defaultValue = "1")int page ) {
+		ModelAndView mav =new ModelAndView();
+
 		UserVO uservo = usermapper.getUserInfo(userid);
+
+		if(uservo==null){
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("isBack",0);
+			mav.setViewName("improve_alert");
+			return mav;
+		}
 
 		int pofolamount = pofolmapper.getpofolamount(userid);
 		int subjectamount = subjectmapper.getApplyamountSolo(userid);
@@ -43,7 +52,7 @@ public class ProfileController {
 		pvo.setTotalRecord(pofolamount);
 		pvo.setSearchWord(userid);
 		
-		ModelAndView mav =new ModelAndView();
+
 
 		if(uservo.getUsertype()==1){
 
@@ -70,9 +79,19 @@ public class ProfileController {
 	@GetMapping("/profile/subject/solo")
 	public ModelAndView Subject_solo(@RequestParam("uid")String userid,
 									 @RequestParam(required = false, defaultValue = "1")int page){
+
+		ModelAndView mav = new ModelAndView();
+
 		UserVO uservo = usermapper.getUserInfo(userid);
 		int pofolamount = pofolmapper.getpofolamount(userid);
 		int subjectamount = subjectmapper.getApplyamountSolo(userid);
+
+		if(uservo==null){
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("isBack",0);
+			mav.setViewName("improve_alert");
+			return mav;
+		}
 
 		PagingVO pvo = new PagingVO();
 
@@ -87,7 +106,7 @@ public class ProfileController {
 
 		List<ApplyVO> subjectvo = subjectmapper.getApplyInfo(pvo);//<-
 
-		ModelAndView mav = new ModelAndView();
+
 
 		if(uservo.getUsertype()==1){
 
@@ -128,7 +147,12 @@ public class ProfileController {
 		subjectamount+=subjectmapper.getApplyAmountTeam(userid);
 
 		ModelAndView mav = new ModelAndView();
-
+		if(uservo==null){
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("isBack",0);
+			mav.setViewName("improve_alert");
+			return mav;
+		}
 		if(uservo.getUsertype()==1){
 
 			mav.setViewName("redirect:/profile/biz?uid="+userid);
@@ -154,9 +178,16 @@ public class ProfileController {
 	@GetMapping("/profile/biz")
 	public ModelAndView companyprofile(@RequestParam("uid") String userid,
 									   @RequestParam(required = false, defaultValue = "1")int page){
-
+		ModelAndView mav = new ModelAndView();
 		UserVO uservo = usermapper.getUserInfo(userid);
 		int subjectamount = subjectmapper.getSubjectAmount(userid);
+
+		if(uservo==null){
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("isBack",0);
+			mav.setViewName("improve_alert");
+			return mav;
+		}
 
 		PagingVO pvo = new PagingVO();
 
@@ -167,7 +198,7 @@ public class ProfileController {
 
 		List<SubjectVO> subjectvo = subjectmapper.getSubjectList(pvo);
 
-		ModelAndView mav = new ModelAndView();
+
 
 		if(uservo.getUsertype()!=1){
 
