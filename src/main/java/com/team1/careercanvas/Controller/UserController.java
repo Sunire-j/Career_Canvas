@@ -535,7 +535,26 @@ public class UserController {
     }
 
     @GetMapping("mypage/myPofol/write")
-    public String pofolWrite() {
+    public String pofolWrite(HttpSession session) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("logStatus");
+
+        if (logStatus != "Y" && logId == null) {
+            session.setAttribute("msg", "로그인 후 이용 가능합니다.");
+            session.setAttribute("isBack",1);
+            session.setAttribute("alert_page", "login");
+            return "improve_alert";
+        }
+
+        UserVO uVO = mapper.getUserInfo(logId);
+        int usertype = uVO.getUsertype();
+
+        if(usertype == 1){
+            session.setAttribute("msg", "일반 회원만 작성 가능합니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         return "users/mypage_pofolWrite";
     }
 
@@ -781,6 +800,14 @@ public class UserController {
     @GetMapping("mypage/pop_sendMsg")
     public String popSendMsg(HttpSession session) {
         String userid = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("logStatus");
+
+        if (logStatus != "Y" && userid == null) {
+            session.setAttribute("msg", "로그인 후 이용 가능합니다.");
+            session.setAttribute("isBack",1);
+            session.setAttribute("alert_page", "login");
+            return "improve_alert";
+        }
         return "/users/pop_sendMsg";
     }
 
@@ -829,6 +856,17 @@ public class UserController {
     @GetMapping("/mypage/biz")
     public ModelAndView mypagebiz(HttpSession session, PagingVO pVO) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("logStatus");
+
+        if (logStatus != "Y" && logId == null) {
+            mav.addObject("msg", "로그인 후 이용가능합니다.");
+            mav.addObject("isBack",1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         pVO.setSearchKey((String) session.getAttribute("LogId"));
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));

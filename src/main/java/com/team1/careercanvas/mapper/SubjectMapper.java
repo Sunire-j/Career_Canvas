@@ -33,4 +33,6 @@ public interface SubjectMapper {
 
     int insertApplyImg(String pathfordb, int Applyid);
     List<SubjectVO> getSubjectForHomeWithCat(int category);
+
+    UserVO getUserInfo(String logId);
 }
