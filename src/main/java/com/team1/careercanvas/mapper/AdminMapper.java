@@ -35,6 +35,8 @@ public interface AdminMapper {
 
     int deletePP(int portfolioid);
 
+    int deleteSubject(int applyid);
+
     String getWriterUser(int postid);
 
     String reporterUser(int target_id);

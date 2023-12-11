@@ -96,7 +96,7 @@
             <div class="container p-5 my-5 bg-primary text-white">오늘 신고된 게시글 : ${rToday}</div>
             <div class="container p-5 my-5 bg-primary text-white">오늘 신규 가입자 : ${newMember}</div>
         </div>
-        <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/report">최근 신고글 5</a></h5>
+        <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/report">최근 신고글</a></h5>
         <table class="table table-hover">
             <tr>
                 <th>번호</th>
@@ -130,6 +130,9 @@
                                 <c:if test="${rvo.reporttype=='pp'}">
                                     onclick="window.open('${pageContext.servletContext.contextPath}/pofolview?pofolid=${rvo.targetid}')">이동
                                 </c:if>
+                                <c:if test="${rvo.reporttype=='subject'}">
+                                    onclick="window.open('${pageContext.servletContext.contextPath}/subject/applyView?applyid=${rvo.targetid}')">이동
+                                </c:if>
                         </button>
                     </td>
                 </tr>
@@ -137,7 +140,7 @@
         </table>
         <div style="display: flex">
             <div style="width: 50%">
-                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/board">최신 글 5</a></h5>
+                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/board">최신 글</a></h5>
                 <table class="table table-hover">
                     <tr>
                         <th>글번호</th>
@@ -171,7 +174,7 @@
             </div>
 
             <div style="width: 50%">
-                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/company">최신 글 5</a></h5>
+                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/company">승인 대기중인 기업 목록</a></h5>
                 <table class="table table-hover">
                     <tr>
                         <th>회원ID</th>

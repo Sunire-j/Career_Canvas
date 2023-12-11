@@ -196,7 +196,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/report/delete") // 삭제 버튼 클릭 이벤트
+    @GetMapping("/report/delete") // 신고된 글 삭제 버튼 클릭 이벤트
     public String deleteReport(HttpSession session, int targetid, String reporttype) {
         System.out.println(reporttype);
         int Rresult = mapper.deleteReport(targetid);
@@ -241,6 +241,15 @@ public class AdminController {
                 int Presult = mapper.deletePP(targetid);
                 if (Presult > 0) {
                     System.out.println("포트폴리오 삭제 완료");
+                    return "redirect:/admin/report";
+                } else {
+                    session.setAttribute("msg", "삭제 실패했습니다.");
+                    return "alert_page";
+                }
+            }else if(reporttype.equals("subject")){
+                int Sresult = mapper.deleteSubject(targetid);
+                if(Sresult>0){
+                    System.out.println("제출한 과제 삭제 완료");
                     return "redirect:/admin/report";
                 } else {
                     session.setAttribute("msg", "삭제 실패했습니다.");
