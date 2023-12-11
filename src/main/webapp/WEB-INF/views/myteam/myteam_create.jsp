@@ -342,14 +342,14 @@
             <div class="create_objective">
                 <a style="line-height: 40px; padding-left: 10px;">파티 목표</a>
                 <input type="text" class="input_objective" name="input_objective" maxlength="80"
-                       placeholder="N글자 이내로 생성할 파티의 목표를 입력해주세요."/>
+                       placeholder="80글자 이내로 생성할 파티의 목표를 입력해주세요."/>
             </div>
 
             <!-- 파티 소개 -->
             <div class="create_intro">
                 <a style="line-height: 40px; padding-left: 10px;">파티 소개</a>
                 <input type="text" class="input_intro" name="input_intro" maxlength="80"
-                       placeholder="N글자 이내로 간단한 파티 소개 내용을 입력해주세요." />
+                       placeholder="80글자 이내로 간단한 파티 소개 내용을 입력해주세요." />
             </div>
             <div class="party_create_btn">
                 <input type="submit" class="btn btn-secondary create_btn" disabled value="파티 생성" />
