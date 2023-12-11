@@ -397,6 +397,7 @@
             });
 
             $(".comment_write_ok").on('click', function () {
+                //공백검사 해주고 내용 없으면 빠꾸
                 sendMessage();
             });
 
@@ -408,6 +409,11 @@
             });
 
             function sendMessage(){
+                if($(".comment_content").val()==""){
+                    alert("내용을 입력해주세요");
+                    $(".comment_content").focus();
+                    return false;
+                }
                 let str = {
                     party_partyid: partyid,
                     user_userid: "${LogId}",
