@@ -244,7 +244,7 @@
         }
 
         .content_info {
-            width: 330px;
+            width: 230px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

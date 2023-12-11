@@ -22,10 +22,12 @@
             padding: 0;
             margin: 0;
         }
-
         .container {
-            max-width: 1200px;
             margin: 0 auto;
+            border-left: 1px solid #73351F;
+            border-right: 1px solid #73351F;
+            background: #F2F2F2;
+            width:1200px;
         }
 
         .space {
@@ -134,7 +136,7 @@
 
         .content {
             display: flex;
-            width: 1200px;
+            width: 1100px;
             flex-wrap: wrap;
         }
 
@@ -241,7 +243,7 @@
         }
 
         .content_info {
-            width: 330px;
+            width: 230px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -284,41 +286,52 @@
             color: black;
             border-radius: 6px;
         }
+        .container_bottom{
+            display: flex;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+        .hr-styleset{
+            border: 0;
+            border-top: 2.5px dashed #73351F ;
+            border-bottom: 1px dashed #D9D9D9;
+        }
+        .container-head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #A69668;
+            height: 10px;
+        }
     </style>
 </head>
 <body>
-<section>
-    <article>
-        <div class="portfolio">
-            <h1>포트폴리오</h1>
-            <p>내용채우기</p>
-            <div class="contenttitle" style="display: flex; padding: 5px 20px 20px 20px; gap: 10px;">
+    <section>
+        <article class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+            <div class="container-head"></div>
+            <div style="padding: 20px 40px 20px 40px">
+            <div class="portfolio">
+                <h1>포트폴리오</h1>
+                <div class="contenttitle" style="display: flex; padding: 5px 20px 20px 20px; gap: 10px;">
                 <select class="form-select" style="width: fit-content;" name="category" id="category">
                     <option value="0">카테고리</option>
                     <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
                     <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
                     <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
                 </select>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary"
-                            onclick="location.href='${pageContext.servletContext.contextPath}/subject'">기업과제
-                    </button>
-                    <button type="button" class="btn btn-primary"
-                            onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제
-                    </button>
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject'" >기업과제</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
                 </div>
             </div>
-            <div class="btn-group" style="padding-left: 20px;">
-                <button type="button" class="btn btn-primary"
-                        onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인
-                </button>
-                <button type="button" class="btn btn-primary"
-                        onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀
-                </button>
-            </div>
+        </article>
 
             <!-- 리스트 레이아웃 -->
-            <div class="portfolio_content">
+            <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F;">
+        <div style="padding: 20px 40px 40px 40px">
+    <div class="portfolio_content">
                 <ul class="content">
                     <c:forEach items="${sVO}" var="svo">
                         <li>
@@ -361,83 +374,93 @@
                 </ul>
             </div>
 
-            <!-- 페이징 -->
-            <div class="paging_wrapper" style="text-align: center;">
-                <c:if test="${pVO.totalRecord == 0}">
-                    작성된 게시글이 없습니다
-                </c:if>
-                <c:if test="${pVO.totalRecord > 0}">
-                    <!-- 이전 -->
-                    <c:if test="${pVO.page == 1}">
-                        <input type="button" value="<" class="btn btn-outline-primary" disabled>
-                    </c:if>
-                    <c:if test="${pVO.page > 1}">
-
-                        <a
-                                href="${pageContext.servletContext.contextPath}/subject/apply/team?page=${pVO.page - 1}
-                     <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
-                        >
-                            <input type="button" value="<" class="btn btn-outline-primary">
-                        </a>
-
-                    </c:if>
-                </c:if>
-                <!-- 1,2,3,4,5 -->
-                <c:forEach
-                        var="p"
-                        begin="${pVO.startPage}"
-                        end="${pVO.startPage + pVO.onePageCount - 1}"
-                >
-                    <c:if test="${p <= pVO.totalPage}">
-
-                        <a
-                                href="${pageContext.servletContext.contextPath}/subject/apply/team?page=${p}&searchWord=${pVO.searchWord}">
-                            <input type="button" value="${p}" class="btn btn-outline-primary">
-                        </a>
-
-                    </c:if>
-                </c:forEach>
-
-                <!-- 다음 -->
-                <c:if test="${pVO.page == pVO.totalPage}">
-                    <input type="button" value=">" class="btn btn-outline-primary" disabled>
-                </c:if>
-                <c:if test="${pVO.page < pVO.totalPage}">
-                    <a
-                            href="${pageContext.servletContext.contextPath}/subject/apply/team?page=${pVO.page + 1}"
-                    >
-                        <input type="button" value=">" class="btn btn-outline-primary">
-                    </a>
-                </c:if>
-            </div>
-            <!-- 검색 -->
-            <div style="width: 100%; text-align: center;">
-                <div class="search-container" style="margin: 30px;">
-                    <form action="${pageContext.servletContext.contextPath}/subject/apply/team"
-                          class="d-flex board-bottom" method="get">
-                        <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
-                            <option value="all">전체</option>
-                            <option value="title">제목</option>
-                            <option value="author">작성자</option>
-                            <option value="content">글내용</option>
-                        </select>
-                        <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요"
-                               style="margin-right: 10px">
-                        <input type="submit" class="btn btn-secondary" value="검색">
-                        <input type="hidden" name="category" value="${pVO.category}"/>
-                    </form>
+            <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+                <div class="pagination" style="display: flex">
+                    <div class="paging">
+                        <c:if test="${pVO.page > 1}">
+                            <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                            <c:if test="${pVO.category !=''}">
+                                    +'&category=${pVO.category}'
+                            </c:if>
+                            <c:if test="${pVO.searchWord!=''}">
+                                    +'&searchKey=${pVO.searchKey}'
+                                    +'&searchWord=${pVO.searchWord}'
+                            </c:if>
+                            <c:if test="${pVO.postSort!=''}">
+                                    +'&postSort=${pVO.postSort}'
+                            </c:if>
+                                    "><
+                            </button>
+                        </c:if>
+                        <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                            <c:if test="${i <= pVO.totalPage}">
+                                <c:choose>
+                                    <c:when test="${i != pVO.page}">
+                                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                        <c:if test="${pVO.category !=''}">
+                                                +'&category=${pVO.category}'
+                                        </c:if>
+                                        <c:if test="${pVO.searchWord!=''}">
+                                                +'&searchKey=${pVO.searchKey}'
+                                                +'&searchWord=${pVO.searchWord}'
+                                        </c:if>
+                                        <c:if test="${pVO.postSort!=''}">
+                                                +'&postSort=${pVO.postSort}'
+                                        </c:if>
+                                                ">${i}</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${pVO.page < pVO.totalPage}">
+                            <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+                            <c:if test="${pVO.category !=''}">
+                                    +'&category=${pVO.category}'
+                            </c:if>
+                            <c:if test="${pVO.searchWord!=''}">
+                                    +'&searchKey=${pVO.searchKey}'
+                                    +'&searchWord=${pVO.searchWord}'
+                            </c:if>
+                            <c:if test="${pVO.postSort!=''}">
+                                    +'&postSort=${pVO.postSort}'
+                            </c:if>
+                                    ">>
+                            </button>
+                        </c:if>
+                    </div>
                 </div>
             </div>
-    </article>
-</section>
-<script>
-    $(function () {
-        var checked = $("#category").val(${pVO.category});
-        checked.change(function () {
-            var selectedValue = $(this).val();
-            window.location.href = "${pageContext.servletContext.contextPath}/subject/apply/team?category=" + selectedValue;
+          <!-- 검색 -->
+          <div style="width: 100%; text-align: center;">
+            <div class="search-container" style="margin: 30px;">
+              <form action="${pageContext.servletContext.contextPath}/subject/apply/team" class="d-flex board-bottom" method="get">
+                  <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
+                      <option value="all">전체</option>
+                      <option value="title">제목</option>
+                      <option value="author">작성자</option>
+                      <option value="content">글내용</option>
+                  </select>
+                  <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요" style="margin-right: 10px">
+                  <input type="submit" class="btn btn-secondary" value="검색">
+                  <input type="hidden" name="category" value="${pVO.category}"/>
+              </form>
+          </div>
+        </div>
+        </div>
+        <div class="container_bottom"></div>
+          </div>
+    </section>
+    <script>
+        $(function(){
+            var checked = $("#category").val(${pVO.category});
+            checked.change(function(){
+                var selectedValue = $(this).val();
+                window.location.href = "${pageContext.servletContext.contextPath}/subject/apply/team?category=" + selectedValue;
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>

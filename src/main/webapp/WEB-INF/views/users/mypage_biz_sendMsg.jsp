@@ -235,23 +235,17 @@ file="../header_footer/header.jspf"%>
       .ajaxContent {
         width: 50%;
         justify-content: center;
-        margin-top: 10px;
+        margin-top: 20px;
         display: flex;
       }
       .ajaxView_wrapper {
-        margin: 0 auto;
         width: 64%;
+        margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
-        text-align: center;
       }
       .userInterest span {
         margin-right: 5px;
-      }
-      .table {
-        table-layout: fixed;
-        width:100%;
-
       }
       .table th,
       .table tr {
@@ -265,9 +259,13 @@ file="../header_footer/header.jspf"%>
       .paging {
         display: flex;
         justify-content: center;
+
       }
       .paging li {
         margin: 0 20px;
+      }
+      .msgStyle {
+        color: red;
       }
       .container_bottom{
         display: flex;
@@ -303,13 +301,13 @@ file="../header_footer/header.jspf"%>
       <div class="userInfo_wrapper">
         <!-- UserInfo Area -->
         <div class="userIntro">
-          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt=""/>
+          <img src="${pageContext.servletContext.contextPath}/upload${uVO.profileimg}" alt="" />
           <div style="padding-left: 20px;">
             <div class="userId">
               <a href="${pageContext.servletContext.contextPath}/mypage/myPofol">
                 <span style="font-size: 1.5rem">${uVO.username }</span>
               </a>
-              <a href="${pageContext.servletContext.contextPath}/mypage_edit">
+              <a href="${pageContext.servletContext.contextPath}/mypage/biz/edit">
                 <input
                   type="button"
                   class="btn btn-outline-secondary"
@@ -320,171 +318,159 @@ file="../header_footer/header.jspf"%>
             <p>${uVO.comment }</p>
           </div>
         </div>
-        <!-- Interest -->
-
-        <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
-          <p style="display: flex; justify-content: center; font-size: 1.5rem" >관심분야</p>
-          <div class="userInterest" style="display: flex; flex-wrap: wrap">
-            <c:forEach var="interest" items="${interest}">
-              <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
-            </c:forEach>
-          </div>
-        </div>
       </div>
       </div>
       </div>
     </main>
-      <!-- Center -->
-      <!-- ajax -->
       <div class="ajaxMenu_wrapper">
         <ul class="ajaxMenu">
-          <li class="myPofol menu" id="myPofol menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myPofol"
-              >나의 포트폴리오</a
+          <li class="myPofol menu" id="myPofol">
+            <a href="${pageContext.servletContext.contextPath}/mypage/biz"
+              >나의과제</a
             >
           </li>
           <li class="submitTask menu" id="submitTask">
             <a
-              href="${pageContext.servletContext.contextPath}/mypage/submitSubjectSolo"
-              >제출한 과제</a
+              href="${pageContext.servletContext.contextPath}/mypage/biz/apply"
+              >받은과제물</a
             >
           </li>
-          <li class="myPost menu" id="myPost menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myPost"
-              >나의 게시글</a
-            >
-          </li>
-          <li class="myComment menu" id="myComment menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/myComment"
-              >나의 댓글</a
-            >
-          </li>
-          <li class="myNote menu" id="myNote menu">
-            <a href="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+          <li class="myPost menu" id="myPost">
+            <a href="${pageContext.servletContext.contextPath}/mypage/biz/sendMsg"
               >쪽지함</a
             >
           </li>
         </ul>
       </div>
-      <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F; background: #F2F2F2">
+     <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F; background: #F2F2F2">
       <div style="padding: 10px 40px 40px 40px">
-      <!-- ajax View -->
-      <div style="width: 1000px; margin: 0 auto">
-        <div style="width: 1000px!important;" class="mt-3">
-          <table class="table">
-            <thead class="table-dark">
-              <tr>
-                <th class="col-sm-1">번호</th>
-                <th class="col-sm-2">카테고리</th>
-                <th class="col-sm-3">제목</th>
-                <th class="col-sm-2">작성일시</th>
-                <th class="col-sm-1">조회수</th>
-              </tr>
-            </thead>
-            <tbody>
-              <div class="ajaxContent">
-                <c:forEach var="bVO" items="${bVO}">
-                  <tr>
-                    <td>${bVO.postid}</td>
-                    <c:if test="${bVO.boardcategory eq 0}">
-                      <td>자유게시판</td>
-                    </c:if>
-                    <c:if test="${bVO.boardcategory eq 1}">
-                      <td>질문게시판</td>
-                    </c:if>
-                    <c:if test="${bVO.boardcategory eq 2}">
-                      <td>노하우게시판</td>
-                    </c:if>
-                    <td style="white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;"><a
-                      href="${pageContext.servletContext.contextPath}/board/view?no=${bVO.postid}">${bVO.posttitle}</a></td>
-                    <td>${bVO.date}</td>
-                    <td>${bVO.views}</td>
-                  </tr>
-                </c:forEach>
-              </div>
-            </tbody>
-          </table>
-          <!-- 페이징 -->
-          <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
-            <div class="pagination" style="display: flex">
-                <div class="paging">
-                    <c:if test="${pVO.page > 1}">
-                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
-                        <c:if test="${pVO.category !=''}">
-                                +'&category=${pVO.category}'
-                        </c:if>
-                        <c:if test="${pVO.searchWord!=''}">
-                                +'&searchKey=${pVO.searchKey}'
-                                +'&searchWord=${pVO.searchWord}'
-                        </c:if>
-                        <c:if test="${pVO.postSort!=''}">
-                                +'&postSort=${pVO.postSort}'
-                        </c:if>
-                                "><
-                        </button>
-                    </c:if>
-                    <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
-                        <c:if test="${i <= pVO.totalPage}">
-                            <c:choose>
-                                <c:when test="${i != pVO.page}">
-                                    <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
-                                    <c:if test="${pVO.category !=''}">
-                                            +'&category=${pVO.category}'
-                                    </c:if>
-                                    <c:if test="${pVO.searchWord!=''}">
-                                            +'&searchKey=${pVO.searchKey}'
-                                            +'&searchWord=${pVO.searchWord}'
-                                    </c:if>
-                                    <c:if test="${pVO.postSort!=''}">
-                                            +'&postSort=${pVO.postSort}'
-                                    </c:if>
-                                            ">${i}</button>
-                                </c:when>
-                                <c:otherwise>
-                                    <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:if>
-                    </c:forEach>
-                    <c:if test="${pVO.page < pVO.totalPage}">
-                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
-                        <c:if test="${pVO.category !=''}">
-                                +'&category=${pVO.category}'
-                        </c:if>
-                        <c:if test="${pVO.searchWord!=''}">
-                                +'&searchKey=${pVO.searchKey}'
-                                +'&searchWord=${pVO.searchWord}'
-                        </c:if>
-                        <c:if test="${pVO.postSort!=''}">
-                                +'&postSort=${pVO.postSort}'
-                        </c:if>
-                                ">>
-                        </button>
-                    </c:if>
-                </div>
+      <div style="width: 900px; margin: 0 auto">
+        <div class="mt-3" style="text-align: center">
+          <button class="btn btn-secondary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/biz/sendMsg'">보낸 쪽지함</button>
+          <button
+            class="btn btn-outline-secondary receiveMsg"
+            onclick="location.href='${pageContext.servletContext.contextPath}/mypage/biz/receiveMsg'"
+          >
+            받은 쪽지함
+          </button>
+        </div>
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th>받는사람</th>
+              <th>내용</th>
+              <th>날짜</th>
+            </tr>
+          </thead>
+          <tbody>
+            <div class="ajaxContent">
+              <c:forEach var="mVO" items="${mVO}">
+                <tr id="msgStyle">
+                  <td>${mVO.user_userid1}</td>
+                  <td><a style="display: inline-block; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="${mVO.content}">${mVO.content}</a></td>
+                  <td>${mVO.date}</td>
+                </tr>
+              </c:forEach>
             </div>
-        </div>
-        </div>
+          </tbody>
+        </table>
+
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+          <div class="pagination" style="display: flex">
+              <div class="paging">
+                  <c:if test="${pVO.page > 1}">
+                      <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                      <c:if test="${pVO.category !=''}">
+                              +'&category=${pVO.category}'
+                      </c:if>
+                      <c:if test="${pVO.searchWord!=''}">
+                              +'&searchKey=${pVO.searchKey}'
+                              +'&searchWord=${pVO.searchWord}'
+                      </c:if>
+                      <c:if test="${pVO.postSort!=''}">
+                              +'&postSort=${pVO.postSort}'
+                      </c:if>
+                              "><
+                      </button>
+                  </c:if>
+                  <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                      <c:if test="${i <= pVO.totalPage}">
+                          <c:choose>
+                              <c:when test="${i != pVO.page}">
+                                  <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                  <c:if test="${pVO.category !=''}">
+                                          +'&category=${pVO.category}'
+                                  </c:if>
+                                  <c:if test="${pVO.searchWord!=''}">
+                                          +'&searchKey=${pVO.searchKey}'
+                                          +'&searchWord=${pVO.searchWord}'
+                                  </c:if>
+                                  <c:if test="${pVO.postSort!=''}">
+                                          +'&postSort=${pVO.postSort}'
+                                  </c:if>
+                                          ">${i}</button>
+                              </c:when>
+                              <c:otherwise>
+                                  <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
+                              </c:otherwise>
+                          </c:choose>
+                      </c:if>
+                  </c:forEach>
+                  <c:if test="${pVO.page < pVO.totalPage}">
+                      <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+                      <c:if test="${pVO.category !=''}">
+                              +'&category=${pVO.category}'
+                      </c:if>
+                      <c:if test="${pVO.searchWord!=''}">
+                              +'&searchKey=${pVO.searchKey}'
+                              +'&searchWord=${pVO.searchWord}'
+                      </c:if>
+                      <c:if test="${pVO.postSort!=''}">
+                              +'&postSort=${pVO.postSort}'
+                      </c:if>
+                              ">>
+                      </button>
+                  </c:if>
+              </div>
+          </div>
       </div>
+      </div>
+      <div style="width: 60%; text-align: right; margin:0 auto;">
+      <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
+          <script>
+            $(function(){
+              var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+              var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+              })
+            });
+            function openPopup(){
+
+              var left = (window.innerWidth - 700) / 2;
+              var top = (window.innerHeight - 600) / 2;
+              var popSize = `toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,location=no,width=700, height=600, top=${top},left=${left}`;
+              window.open('${pageContext.servletContext.contextPath}/mypage/pop_sendMsg','SendMsg',popSize);
+            }
+          </script>
+      </div>
+      <!-- 검색창 -->
       <form
-        class="input-group mb-3"
-        style="width: 63%; margin: 20px auto"
-        action="${pageContext.servletContext.contextPath}/mypage/myPost"
-        method="GET"
-      >
-        <input
-          type="text"
-          class="form-control"
-          name="searchWord"
-          placeholder="Search"
-        />
-        <button class="btn btn-success" type="submit">Go</button>
-      </form>
+      class="input-group mb-3"
+      style="width: 60%; margin: 20px auto"
+      action="${pageContext.servletContext.contextPath}/mypage/mySendMsg"
+      method="GET"
+    >
+      <input
+        type="text"
+        class="form-control"
+        name="searchWord"
+        placeholder="Search"
+      />
+      <button class="btn btn-success" type="submit">Go</button>
+    </form>
       </div>
-        <div class="container_bottom"></div>
-      </div>
+       <div class="container_bottom"></div>
+     </div>
     </div>
   </body>
 </html>

@@ -52,9 +52,6 @@
             margin-top: 20px;
         }
 
-        .board-container {
-        }
-
         .search-box {
             width: 150px;
             display: inline-block;

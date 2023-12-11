@@ -84,4 +84,10 @@ public interface UserMapper {
 
     List<SubjectVO> SelectSubjectForMypage(PagingVO pVO);
 
+    List<ApplyVO> SelectApplySubjectForMypage(PagingVO pVO);
+
+    int getMySubectAmountForMypage(PagingVO pVO);
+
+    int getApplyAmountForMypage(PagingVO pVO);
+
 }

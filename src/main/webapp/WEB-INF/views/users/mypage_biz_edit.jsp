@@ -367,12 +367,6 @@ file="../header_footer/header.jspf" %>
           <!-- Interest -->
 
           <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
-            <p style="display: flex; justify-content: center; font-size: 1.5rem" >관심분야</p>
-            <div class="userInterest" style="display: flex; flex-wrap: wrap">
-              <c:forEach var="interest" items="${interest}">
-                <span><input type="button" class="btn btn-outline-primary" value="${interest}"></span>
-              </c:forEach>
-            </div>
           </div>
         </div>
       </div>
@@ -397,9 +391,9 @@ file="../header_footer/header.jspf" %>
               type="text"
               name="nickName"
               id="nickName"
-              pattern="^[a-zA-Z0-9가-힣]{2,12}$"
-              required
               value="${uVO.username }"
+              style="background-color: #ddd;"
+              readonly
             />
             <div id="nicknameResult"></div>
           </div>
@@ -446,169 +440,6 @@ file="../header_footer/header.jspf" %>
           </div>
         </div>
 
-        <div class="interest">
-          <span>관심분야</span>
-          <div style="width: 80%;  text-align: right;">
-            <label for="industry"
-              ><span class="btn btn-outline-danger">산업디자인</span>
-              <input type="hidden" name="color" value="danger"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="industry"
-              value="산업디자인"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="character"
-              ><span class="btn btn-outline-danger">캐릭터&일러스트</span>
-              <input type="hidden" name="color" value="danger"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="character"
-              value="캐릭터&일러스트"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="calligraphy"
-              ><span class="btn btn-outline-danger">캘리그라피</span>
-              <input type="hidden" name="color" value="danger"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="calligraphy"
-              value="캘리그라피"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="architecture"
-              ><span class="btn btn-outline-danger">공간&건축</span>
-              <input type="hidden" name="color" value="danger"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="architecture"
-              value="공간&건축"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="fassion"
-              ><span class="btn btn-outline-danger">패션디자인</span>
-              <input type="hidden" name="color" value="danger"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="fassion"
-              value="패션디자인"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <br>
-            <label for="uxui"
-              ><span class="btn btn-outline-primary">UX/UI</span>
-              <input type="hidden" name="color" value="primary"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="uxui"
-              value="UX/UI"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="mobile"
-              ><span class="btn btn-outline-primary">모바일개발</span>
-              <input type="hidden" name="color" value="primary"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="mobile"
-              value="모바일개발"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="web"
-              ><span class="btn btn-outline-primary">웹개발</span>
-              <input type="hidden" name="color" value="primary"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="web"
-              value="웹개발"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="program"
-              ><span class="btn btn-outline-primary">프로그램</span>
-              <input type="hidden" name="color" value="primary"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="program"
-              value="프로그램"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="ai"
-              ><span class="btn btn-outline-primary">인공지능</span>
-              <input type="hidden" name="color" value="primary"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="ai"
-              value="인공지능"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="picture"
-              ><span class="btn btn-outline-info">사진</span>
-              <input type="hidden" name="color" value="info"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="picture"
-              value="사진"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="sound"
-              ><span class="btn btn-outline-info">음향</span>
-              <input type="hidden" name="color" value="info"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="sound"
-              value="음향"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-            <label for="video"
-              ><span class="btn btn-outline-info">영상</span>
-              <input type="hidden" name="color" value="info"
-            /></label>
-            <input
-              type="checkbox"
-              name="interest"
-              id="video"
-              value="영상"
-              class="checkbox"
-              onclick="return checkedCount()"
-            />
-          </div>
-        </div>
-
         <div class="profileImg">
           <div class="profilebox" style="align-items: center">
             <div class="profiletext">프로필이미지</div>
@@ -648,17 +479,16 @@ file="../header_footer/header.jspf" %>
         <div class="comment" style="text-align: left">
           <span>소개글</span>
           <div>
-              <textarea
-                  name="comment"
-                  class="form-control"
-                  style="resize: none; margin: 20px 0px"
-                  id="comment"
-                  cols="30"
-                  rows="5"
-                  maxlength="30"
-              >${uVO.comment}</textarea>
+            <textarea
+              name="comment"
+              class="form-control"
+              style="resize: none; margin: 20px 0px"
+              id="comment"
+              cols="30"
+              rows="5"
+            >${uVO.comment}</textarea>
           </div>
-      </div>
+        </div>
         <p onclick="leave()">탈퇴하기</p>
         <input
           type="submit"
@@ -673,62 +503,11 @@ file="../header_footer/header.jspf" %>
       <div class="container_bottom"></div>
     </section>
     <script>
-      $(function () {
-        // 닉네임유효성 함수
-        $("#nickName").on("input blur", function () {
-          var $this = $(this);
-          if (this.checkValidity()) {
-            $(this).removeClass("is-invalid").addClass("invalid");
-            $.ajax({
-              url: "${pageContext.servletContext.contextPath}/nickNameCheck",
-              type: "POST",
-              data: {
-                nickname: $(this).val(),
-              },
-              success: function (rsp) {
-                if (rsp == 0) {
-                  $("#nicknameResult").html("사용 가능한 닉네임 입니다");
-                }
-                if (rsp == 1) {
-                  $("#nicknameResult").html("이미 가입된 닉네임 입니다");
-                }
-              },
-              error: function (e) {
-                console.log(e.responseText);
-              },
-            });
-          } else {
-            console.log("!!!!!!!!!!!!!!!" + $this.val());
-            if ($this.val() == "") {
-              $("#nicknameResult").text("닉네임 입력하세요");
-            } else {
-              $("#nicknameResult").text("형식을 확인하세요");
-            }
-          }
-        });
-        $(".checkbox").on("change", function () {
-          if (this.checked) {
-            var color = $(this).prev("label").find("span").next().val();
-            $(this)
-              .prev("label")
-              .find("span")
-              .addClass("btn-" + color)
-              .removeClass("btn-outline-" + color);
-          } else {
-            var color = $(this).prev("label").find("span").next().val();
-            $(this)
-              .prev("label")
-              .find("span")
-              .addClass("btn-outline-" + color)
-              .removeClass("btn-" + color);
-          }
-        });
-      }); // $(function() 끝
-
       // 폼체크 함수
       function frmCheck() {
         let password = $("#password").val();
         let passwordCheck = $("#passwordCheck").val();
+
         if (passwordCheck) {
           if (password != passwordCheck) {
             alert("비밀번호를 확인하세요");
@@ -744,28 +523,7 @@ file="../header_footer/header.jspf" %>
           location.href =
             "${pageContext.servletContext.contextPath}/mypage/leave";
         }
-      }
-      
-      function checkedCount() {
-        var checkedCount = 0;
-
-        var checkboxes = document.getElementsByName("interest");
-        for(var i=0; i<checkboxes.length; i++){
-          if(checkboxes[i].checked){
-            checkedCount++;
-          }
-        }
-
-        if(checkedCount > 3){
-          alert("관심분야는 3개를 초과할 수 없습니다");
-          return false;
-          };
-
-          return true;
-        }
-        
-      
-        
+      }    
     </script>
   </body>
 </html>
