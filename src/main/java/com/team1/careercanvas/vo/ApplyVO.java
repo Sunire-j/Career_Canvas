@@ -16,4 +16,5 @@ public class ApplyVO {
     private String subjecttitle;
     private int category;
     private String profileimg;
+    private String username;
 }

@@ -162,7 +162,7 @@
                            href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">바로가기</a></td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm deletion" id="deletion" title="${uvo.userid}">강제탈퇴</button>
-                        <button type="button" class="btn btn-danger btn-sm" id="changeUsername" title="${uvo.userid}">닉네임 변경</button>
+                        <button type="button" style="color: black" class="btn btn-warning btn-sm" id="changeUsername" title="${uvo.userid}">닉네임 변경</button>
                     </td>
                 </tr>
             </c:forEach>

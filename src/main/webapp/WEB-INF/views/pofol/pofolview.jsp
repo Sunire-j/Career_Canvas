@@ -197,7 +197,7 @@
         <div class="board_main">
             <div class="board_info">
                 <div class="board_writer">
-                    ${pVO.user_userid}
+                    <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${pVO.user_userid}">${pVO.username}</a>
                 </div>
                 <div class="board_date">
                     <c:if test="${pVO.isteam==1}">

@@ -146,7 +146,7 @@
                     <td style="max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${rvo.title}</td>
                     <td>${rvo.userid}</td>
                     <td>
-                        <button type="button" class="btn btn-info btn-sm"
+                        <button type="button" class="btn btn-primary btn-sm"
                                 <c:if test="${rvo.reporttype=='board'}">
                                     onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}')">이동
                                 </c:if>
@@ -170,7 +170,7 @@
                     <td>
                         <button type="button" class="btn btn-danger btn-sm" id="deletionUser" title="${rvo.targetid}" value="${rvo.reporttype}">탈퇴
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm" id="deletion" title="${rvo.targetid}" value="${rvo.reporttype}">삭제
+                        <button type="button" style="color: black" class="btn btn-warning btn-sm" id="deletion" title="${rvo.targetid}" value="${rvo.reporttype}">삭제
                         </button>
                         <button type="button" class="btn btn-success btn-sm" id="dismiss" title="${rvo.targetid}">기각</button>
                     </td>

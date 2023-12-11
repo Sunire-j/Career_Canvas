@@ -37,8 +37,15 @@
     </select>
 
     <select id="SelectApply" resultType="com.team1.careercanvas.vo.ApplyVO">
-        select *
-        from subjectapply
+        select sa.applyid as applyid,
+               sa.subject_subjectid as subject_subjectid,
+               sa.applycontent as applycontent,
+               sa.isteam as isteam,
+               sa.party_partyid as party_partyid,
+               sa.user_userid as user_userid,
+               u.username as username
+        from subjectapply sa
+        left join user u on u.userid=sa.user_userid
         where applyid = #{param1}
     </select>
     <select id="SelectSubject" resultType="com.team1.careercanvas.vo.SubjectVO">

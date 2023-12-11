@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class HomeController {
     public ModelAndView home() {
         ModelAndView mav = new ModelAndView();
         // 1. 배너이미지 불러오기
-        List<BannerVO> list = adminMapper.getBannerList();
+        List<BannerVO> list = adminMapper.getBannerListForHome();
         mav.addObject("banner", list);
         // 2.인기포트폴리오 초기(1순위 따봉, 2순위 날짜 최근순으로)
         List<PofolVO> plist = pofolmapper.getPortfolioForHome();

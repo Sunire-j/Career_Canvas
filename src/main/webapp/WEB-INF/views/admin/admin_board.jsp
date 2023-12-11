@@ -145,12 +145,12 @@
                     </td>
                     <td>${bvo.posttitle}</td>
                     <td>
-                        <button type="button" class="btn btn-info btn-sm"
+                        <button type="button" class="btn btn-primary btn-sm"
                                 onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}')">이동
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-sm" id="deletion" title="${bvo.postid}">강제삭제</button>
+                        <button type="button" style="color: black" class="btn btn-warning btn-sm" id="deletion" title="${bvo.postid}">강제삭제</button>
                         <button type="button" class="btn btn-danger btn-sm" id="userDeletion" title="${bvo.postid}">강제탈퇴</button>
                     </td>
                 </tr>

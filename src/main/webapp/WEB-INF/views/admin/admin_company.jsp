@@ -149,7 +149,7 @@
                             승인
                         </c:if>
                         <button onclick="window.open('${pageContext.servletContext.contextPath}/admin/company/check?uid=${cvo.user_userid}')"
-                                type="button" class="btn btn-info btn-sm">증빙확인
+                                type="button" class="btn btn-primary btn-sm">증빙확인
                         </button>
                     </td>
                     <td>

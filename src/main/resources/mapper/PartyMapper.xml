@@ -107,7 +107,8 @@
 
     <select id="GetWantedList" resultType="com.team1.careercanvas.vo.WantedVO">
         select pw.wantedid as wantedid,
-               u.username as user_userid,
+               u.username as username,
+               pw.user_userid as user_userid,
                pw.date as date,
                pw.view as view,
                pw.wantedtitle as wantedtitle,

@@ -198,29 +198,11 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             $(this).addClass("is-valid").removeClass("is-invalid");
           }
         });
-
-        $("#hashtag").on("input blur", function () {
-          if (this.checkValidity()) {
-            $(this).siblings('[data-feedback="patternMismatch"]').hide();
-            $(this).removeClass("is-invalid").addClass("is-valid");
-          } else {
-            $(this).removeClass("is-valid").addClass("is-invalid");
-            $(this).siblings('[data-feedback="patternMismatch"]').show();
-          }
-        });
         $("form").on("submit", function (e) {
           var editorContent = editor.getData();
           if (!editorContent) {
             e.preventDefault();
             alert("글 내용을 입력해 주세요.");
-          }
-        });
-
-        $(".hashtag").on("change blur", function () {
-          if ($(this).hasClass("is-invalid")) {
-            $(".submitbtn").prop("disabled", true);
-          } else {
-            $(".submitbtn").prop("disabled", false);
           }
         });
       });
@@ -285,17 +267,6 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         <div id="editor"></div>
         <div id="botContainer">
           <div style="width: 50%" class="botContainer2">
-            <input
-              type="text"
-              class="form-control hashtag"
-              name="hashtag"
-              id="hashtag"
-              pattern="(#[\w가-힣]+ )*(#[\w가-힣]+ )?#[\w가-힣]+"
-              placeholder="#태그는 공백으로 구분해 주세요. (예 : #샤롯데 #오페라의유령)"
-            />
-            <div class="invalid-feedback" data-feedback="patternMismatch">
-              해쉬태그 형식에 맞지 않습니다.
-            </div>
           </div>
           <input
             type="submit"

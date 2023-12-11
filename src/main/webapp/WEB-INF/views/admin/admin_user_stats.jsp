@@ -178,8 +178,8 @@
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%">
         <div class="top">
-            <div class="container p-5 my-5 bg-primary text-white">일반회원 : ${member}</div>
-            <div class="container p-5 my-5 bg-primary text-white">기업회원 : ${company}</div>
+            <div class="container p-5 my-5 bg-secondary text-white">일반회원 : ${member}</div>
+            <div class="container p-5 my-5 bg-secondary text-white">기업회원 : ${company}</div>
         </div>
         <div style="width: 50%; display: flex; margin-top:75px">
             <canvas id="accessor"></canvas>

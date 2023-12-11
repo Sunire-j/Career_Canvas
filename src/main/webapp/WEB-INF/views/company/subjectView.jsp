@@ -189,7 +189,7 @@
     <div class="board_main">
         <div class="board_info">
             <div class="board_writer">
-                ${Svo.username}
+                <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${Svo.user_userid}">${Svo.username}</a>
             </div>
             <div class="board_date">
                 ${Svo.date}

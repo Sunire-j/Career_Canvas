@@ -87,6 +87,8 @@ public interface AdminMapper {
 
     void deleteBanner(int bannerid);
 
+    List<BannerVO> getBannerListForHome();
+
     List<CompanyVO> getCompanyList(PagingVO pvo);
 
     String getAuthimg(String userid);

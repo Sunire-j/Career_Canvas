@@ -377,6 +377,7 @@ public class UserController {
                         session.setAttribute("LogStatus", "Y");
                         session.setAttribute("LogId", userid);
                         session.setAttribute("usertype", usertype);
+                        session.setAttribute("Logusername", userInDB.getUsername());
                         session.setAttribute("LogImg", userInDB.getProfileimg());
                         return "redirect:/";
                     }

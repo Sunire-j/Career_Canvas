@@ -93,8 +93,8 @@
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
         <div class="top">
-            <div class="container p-5 my-5 bg-primary text-white">오늘 신고된 게시글 : ${rToday}</div>
-            <div class="container p-5 my-5 bg-primary text-white">오늘 신규 가입자 : ${newMember}</div>
+            <div class="container p-5 my-5 bg-secondary text-white">오늘 신고된 게시글 : ${rToday}</div>
+            <div class="container p-5 my-5 bg-secondary text-white">오늘 신규 가입자 : ${newMember}</div>
         </div>
         <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/report">최근 신고글</a></h5>
         <table class="table table-hover">
@@ -114,7 +114,7 @@
                     <td>${rvo.title}</td>
                     <td>${rvo.userid}</td>
                     <td>
-                        <button type="button" class="btn btn-info btn-sm"
+                        <button type="button" class="btn btn-dark btn-sm"
                                 <c:if test="${rvo.reporttype=='board'}">
                                     onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${rvo.targetid}')">이동
                                 </c:if>
@@ -164,7 +164,7 @@
                             </td>
                             <td>${bvo.posttitle}</td>
                             <td>
-                                <button type="button" class="btn btn-info btn-sm"
+                                <button type="button" class="btn btn-dark btn-sm"
                                         onclick="window.open('${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}')">이동
                                 </button>
                             </td>
@@ -196,7 +196,7 @@
                                     승인
                                 </c:if>
                                 <button onclick="window.open('${pageContext.servletContext.contextPath}/admin/company/check?uid=${cvo.user_userid}')"
-                                        type="button" class="btn btn-info btn-sm">증빙확인
+                                        type="button" class="btn btn-dark btn-sm">증빙확인
                                 </button>
                             </td>
                             <td>

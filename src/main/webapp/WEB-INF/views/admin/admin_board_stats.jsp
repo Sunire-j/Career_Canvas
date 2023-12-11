@@ -176,9 +176,9 @@
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
     <div style="margin-left: 250px; width: 100%; height: 100%">
         <div class="top">
-            <div class="container p-5 my-5 bg-primary text-white">전체 게시글 : ${bVO}</div>
-            <div class="container p-5 my-5 bg-primary text-white">오늘 업로드 된 게시글 : ${today}</div>
-            <div class="container p-5 my-5 bg-primary text-white">신고 된 게시글 : ${rVO}</div>
+            <div class="container p-5 my-5 bg-secondary text-white">전체 게시글 : ${bVO}</div>
+            <div class="container p-5 my-5 bg-secondary text-white">오늘 업로드 된 게시글 : ${today}</div>
+            <div class="container p-5 my-5 bg-secondary text-white">신고 된 게시글 : ${rVO}</div>
         </div>
         <div style="width: 50%; display: flex;  align-items: center">
             <canvas id="board_chart"></canvas>

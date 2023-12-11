@@ -333,7 +333,7 @@
                         소개 글
                     </div>
                     <div class="salutation_content">
-                        ${uVO.comment} 기업회원인지 아닌지 확인하는 과정 없음 과정 필요
+                        ${uVO.comment}
                     </div>
                 </div>
             </div>

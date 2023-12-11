@@ -204,7 +204,7 @@
         <div class="board_main">
             <div class="board_info">
                 <div class="board_writer">
-                    ${avo.user_userid}
+                    <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${avo.user_userid}">${avo.username}</a>
                 </div>
                 <div class="board_date">
                     <c:if test="${avo.isteam==1}">

@@ -312,7 +312,7 @@
             <div class="container-head"></div>
             <div style="padding: 20px 40px 20px 40px">
             <div class="portfolio">
-                <h1>포트폴리오</h1>
+                <h1>제출과제-팀</h1>
                 <div class="contenttitle" style="display: flex; padding: 5px 20px 20px 20px; gap: 10px;">
                 <select class="form-select" style="width: fit-content;" name="category" id="category">
                     <option value="0">카테고리</option>

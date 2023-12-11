@@ -204,7 +204,7 @@
     <div class="board_main">
         <div class="board_info">
             <div class="board_writer">
-                ${wvo.username}
+                <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${wvo.user_userid}">${wvo.username}</a>
             </div>
             <div class="board_date">
                 ${wvo.date}

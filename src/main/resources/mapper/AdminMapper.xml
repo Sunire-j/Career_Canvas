@@ -251,6 +251,14 @@
         </selectKey>
     </insert>
 
+    <select id="getBannerListForHome" resultType="com.team1.careercanvas.vo.BannerVO">
+        SELECT *
+        FROM banner
+        WHERE CURDATE() BETWEEN startdate AND deadline
+        ORDER BY deadline DESC;
+
+    </select>
+
     <update id="InsertBannerimg">
         update banner
         set bannerimg=#{param1}
