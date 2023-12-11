@@ -270,6 +270,7 @@
 				and s.subjectcontent like CONCAT('%', #{searchWord}, '%')
 			</when>
 		</choose>
+        order by s.subjectid desc
 		limit #{onePageRecord} offset #{offsetPoint}
 	</select>
 
@@ -316,6 +317,7 @@
                 AND sa.applycontent LIKE CONCAT('%', #{searchWord}, '%')
             </when>
         </choose>
+        order by sa.applyid desc
         LIMIT #{onePageRecord} OFFSET #{offsetPoint}
 	</select>
 
@@ -363,6 +365,7 @@
                 AND sa.applycontent LIKE CONCAT('%', #{searchWord}, '%')
             </when>
         </choose>
+        order by sa.applyid desc
         LIMIT #{onePageRecord} OFFSET #{offsetPoint}
 	</select>
 

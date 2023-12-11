@@ -4,7 +4,6 @@ import com.team1.careercanvas.mapper.AdminMapper;
 import com.team1.careercanvas.mapper.ApplyMapper;
 import com.team1.careercanvas.mapper.SubjectMapper;
 import com.team1.careercanvas.vo.*;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -227,9 +226,11 @@ public class SubjectController {
             @RequestParam("subjectid") int subjectid,
             @RequestParam("postcontent") String content,
             @RequestParam("isteam") int isteam,
-            @RequestParam(value = "partyid", required = false) int partyid,
+            @RequestParam(value = "partyid", required = false, defaultValue = "0") int partyid,
             @RequestParam(value = "member", required = false) String[] member,
             HttpServletResponse response) throws IOException {
+
+        System.out.println();
 
         String logId = (String) session.getAttribute("LogId");
 
