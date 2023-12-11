@@ -426,7 +426,7 @@ file="../header_footer/header.jspf"%>
         <div style="margin: 0 auto; margin-top: 30px; ">
           <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
             <c:forEach var="svo" items="${sVO}">
-              <a href="${pageContext.servletContext.contextPath}/#${svo.applyid}">
+              <a href="${pageContext.servletContext.contextPath}/subject/applyView?applyid=${svo.applyid}">
                 <div class="img_C">
                   <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}" class="portfolio_img">
                   <!-- line 1 -->

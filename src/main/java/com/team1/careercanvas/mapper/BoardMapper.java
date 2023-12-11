@@ -8,6 +8,8 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
+    int CheckForBoardView(int id);
+
     int deletePost(int postid);
 
     void InsertNewPost(BoardVO vo);

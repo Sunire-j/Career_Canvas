@@ -10,7 +10,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         alert("${msg}");
-        location.href="${pageContext.servletContext.contextPath}/${alert_page}";
+        if(${isBack == 0}){
+            history.go(-1);
+        }else{
+            location.href="${pageContext.servletContext.contextPath}/${alert_page}";
+        }
+
     </script>
 </head>
 </html>

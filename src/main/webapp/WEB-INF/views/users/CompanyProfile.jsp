@@ -348,6 +348,7 @@
                     <ul class="content" style="width: 1200px; display: flex; flex-wrap: wrap">
                         <c:forEach items="${sVO}" var="svo">
                         <li>
+                            <a href="${pageContext.servletContext.contextPath}/subject/view?no=${svo.subjectid}">
                             <div class="img_C">
                                 <img src="${pageContext.servletContext.contextPath}/upload${svo.imgsrc}" class="portfolio_img">
                                 <div class="content_info">
@@ -367,6 +368,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </li>
                         </c:forEach>
                     </ul>

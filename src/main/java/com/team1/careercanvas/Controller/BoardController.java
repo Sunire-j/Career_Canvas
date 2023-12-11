@@ -185,13 +185,18 @@ public class BoardController {
     }
 
     @GetMapping("/board/free/write")
-    public String boardfreewrite(HttpSession session) {
+    public ModelAndView boardfreewrite(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
         if (session.getAttribute("LogStatus") == null || session.getAttribute("LogStatus").equals("N")) {
-            session.setAttribute("msg", "잘못된 접근입니다.");
-            return "alert_page";
+            mav.addObject("msg", "로그인 후 이용가능합니다.");
+            mav.addObject("isBack",1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("alert_page");
+            return mav;
         }
         session.setAttribute("boardcat", 0);
-        return "board/boardWrite";
+        mav.setViewName("board/boardWrite");
+        return mav;
     }
 
     @GetMapping("/board/ask/write")
@@ -247,6 +252,14 @@ public class BoardController {
     @GetMapping("/board/view")
     public ModelAndView boardView(@RequestParam("no") int postid) {
         ModelAndView mav = new ModelAndView();
+        int checkForBoardView = mapper.CheckForBoardView(postid);
+        System.out.println(checkForBoardView);
+        if(checkForBoardView==0){
+            mav.setViewName("improve_alert");
+            mav.addObject("msg","삭제됐거나, 존재하지 않은 게시글입니다.");
+            mav.addObject("isBack", 0);
+            return mav;
+        }
         mapper.ViewsCount(postid); // 조회수 증가
         BoardVO vo = mapper.SelectBoardView(postid);
         int like = mapper.GetLikeAmount(postid);

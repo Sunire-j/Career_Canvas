@@ -332,10 +332,10 @@
                     </div>
                 </div>
                 <div id="interesting">
-                    <p style="margin-left: 158px; font-size: 1.2em;">관심분야</p>
+                    <p style="text-align : right;font-size: 1.2em;">관심분야</p>
                     <div class="userInterest" style="display: flex; flex-wrap: wrap">
                         <c:forEach var="interest" items="${interest}">
-                            <span><input class="btn btn-outline-primary" type="button" value="${interest}"></span>
+                            <span><input class="btn btn-outline-primary btn-sm" style="margin-left: 10px" type="button" value="${interest}"></span>
                         </c:forEach>
                     </div>
                 </div>
@@ -345,7 +345,7 @@
                     소개 글
                 </div>
                 <div class="salutation_content">
-                    ${uVO.comment }
+                    ${uVO.comment}
                 </div>
             </div>
         </div>
@@ -369,6 +369,7 @@
                 <ul class="content" style="width: 1200px; display: flex; flex-wrap: wrap">
                     <c:forEach items="${sVO}" var="svo">
                         <li>
+                            <a href="${pageContext.servletContext.contextPath}/subject/applyView?applyid=${svo.applyid}">
                             <div class="img_C">
                                 <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}" class="portfolio_img">
                                 <div class="content_info">
@@ -388,6 +389,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </li>
                     </c:forEach>
                 </ul>

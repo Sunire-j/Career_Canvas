@@ -319,11 +319,12 @@
         </div>
 
 
-            <!-- 리스트 레이아웃 -->
-            <div class="portfolio_content">
-                <ul class="content">
-                    <c:forEach items="${sVO}" var="svo">
-                        <li>
+        <!-- 리스트 레이아웃 -->
+        <div class="portfolio_content">
+            <ul class="content">
+                <c:forEach items="${sVO}" var="svo">
+                    <li>
+                        <a href="${pageContext.servletContext.contextPath}/subject/applyView?applyid=${svo.applyid}">
                             <div class="img_C">
                                 <img src="${pageContext.servletContext.contextPath}/upload${svo.applyimg}"
                                      class="portfolio_img">
@@ -357,78 +358,79 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-
-            <!-- 페이징 -->
-            <div class="paging_wrapper" style="text-align: center;">
-                <c:if test="${pVO.totalRecord == 0}">
-                    작성된 게시글이 없습니다
-                </c:if>
-                <c:if test="${pVO.totalRecord > 0}">
-                    <!-- 이전 -->
-                    <c:if test="${pVO.page == 1}">
-                        <input type="button" value="<" class="btn btn-outline-primary" disabled>
-                    </c:if>
-                    <c:if test="${pVO.page > 1}">
-
-                        <a
-                                href="${pageContext.servletContext.contextPath}/subject/apply?page=${pVO.page - 1}
-                     <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
-                        >
-                            <input type="button" value="<" class="btn btn-outline-primary">
                         </a>
-
-                    </c:if>
-                </c:if>
-                <!-- 1,2,3,4,5 -->
-                <c:forEach
-                        var="p"
-                        begin="${pVO.startPage}"
-                        end="${pVO.startPage + pVO.onePageCount - 1}"
-                >
-                    <c:if test="${p <= pVO.totalPage}">
-
-                        <a
-                                href="${pageContext.servletContext.contextPath}/subject/apply?page=${p}&searchWord=${pVO.searchWord}">
-                            <input type="button" value="${p}" class="btn btn-outline-primary">
-                        </a>
-
-                    </c:if>
+                    </li>
                 </c:forEach>
+            </ul>
+        </div>
 
-                <!-- 다음 -->
-                <c:if test="${pVO.page == pVO.totalPage}">
-                    <input type="button" value=">" class="btn btn-outline-primary" disabled>
+        <!-- 페이징 -->
+        <div class="paging_wrapper" style="text-align: center;">
+            <c:if test="${pVO.totalRecord == 0}">
+                작성된 게시글이 없습니다
+            </c:if>
+            <c:if test="${pVO.totalRecord > 0}">
+                <!-- 이전 -->
+                <c:if test="${pVO.page == 1}">
+                    <input type="button" value="<" class="btn btn-outline-primary" disabled>
                 </c:if>
-                <c:if test="${pVO.page < pVO.totalPage}">
+                <c:if test="${pVO.page > 1}">
+
                     <a
-                            href="${pageContext.servletContext.contextPath}/subject/apply?page=${pVO.page + 1}"
+                            href="${pageContext.servletContext.contextPath}/subject/apply?page=${pVO.page - 1}
+                     <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
                     >
-                        <input type="button" value=">" class="btn btn-outline-primary">
+                        <input type="button" value="<" class="btn btn-outline-primary">
                     </a>
+
                 </c:if>
+            </c:if>
+            <!-- 1,2,3,4,5 -->
+            <c:forEach
+                    var="p"
+                    begin="${pVO.startPage}"
+                    end="${pVO.startPage + pVO.onePageCount - 1}"
+            >
+                <c:if test="${p <= pVO.totalPage}">
+
+                    <a
+                            href="${pageContext.servletContext.contextPath}/subject/apply?page=${p}&searchWord=${pVO.searchWord}">
+                        <input type="button" value="${p}" class="btn btn-outline-primary">
+                    </a>
+
+                </c:if>
+            </c:forEach>
+
+            <!-- 다음 -->
+            <c:if test="${pVO.page == pVO.totalPage}">
+                <input type="button" value=">" class="btn btn-outline-primary" disabled>
+            </c:if>
+            <c:if test="${pVO.page < pVO.totalPage}">
+                <a
+                        href="${pageContext.servletContext.contextPath}/subject/apply?page=${pVO.page + 1}"
+                >
+                    <input type="button" value=">" class="btn btn-outline-primary">
+                </a>
+            </c:if>
+        </div>
+        <!-- 검색 -->
+        <div style="width: 100%; text-align: center;">
+            <div class="search-container" style="margin: 30px;">
+                <form action="${pageContext.servletContext.contextPath}/subject/apply" class="d-flex board-bottom"
+                      method="get">
+                    <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
+                        <option value="all">전체</option>
+                        <option value="title">제목</option>
+                        <option value="author">작성자</option>
+                        <option value="content">글내용</option>
+                    </select>
+                    <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요"
+                           style="margin-right: 10px">
+                    <input type="submit" class="btn btn-secondary" value="검색">
+                    <input type="hidden" name="category" value="${pVO.category}"/>
+                </form>
             </div>
-            <!-- 검색 -->
-            <div style="width: 100%; text-align: center;">
-                <div class="search-container" style="margin: 30px;">
-                    <form action="${pageContext.servletContext.contextPath}/subject/apply" class="d-flex board-bottom"
-                          method="get">
-                        <select class="form-select" style="width: fit-content; margin-right: 10px" name="searchKey">
-                            <option value="all">전체</option>
-                            <option value="title">제목</option>
-                            <option value="author">작성자</option>
-                            <option value="content">글내용</option>
-                        </select>
-                        <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요"
-                               style="margin-right: 10px">
-                        <input type="submit" class="btn btn-secondary" value="검색">
-                        <input type="hidden" name="category" value="${pVO.category}"/>
-                    </form>
-                </div>
-            </div>
+        </div>
     </article>
 </section>
 <script>

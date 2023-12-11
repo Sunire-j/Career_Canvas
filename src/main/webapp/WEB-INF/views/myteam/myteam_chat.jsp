@@ -86,7 +86,7 @@
         /* 채팅 */
         .chat_list {
             width: 1000px;
-            height: 700px;
+            height: 680px;
             overflow: auto;
             margin: 0 auto;
             overflow-y: scroll;

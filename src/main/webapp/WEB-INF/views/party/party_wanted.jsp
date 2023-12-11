@@ -142,8 +142,8 @@
                 <div id="title" style="width: 40%; text-align: left; padding: 0 20px;" class="list">제목
                 </div>
                 <div id="user" style="width: 12%" class="list">작성자</div>
-                <div id="view" style="width: 7%" class="list">조회수</div>
-                <div id="comment" style="width: 7%" class="list">댓글</div>
+                <div id="view" style="width: 7%" class="list"><i class="fa-solid fa-eye" style="color: #0d0d0d;"></i></div>
+                <div id="comment" style="width: 7%" class="list"><i class="fa-regular fa-comment-dots" style="color: #0d0d0d;"></i></div>
                 <div id="date" style="width: 20%" class="list">게시일</div>
             </div>
         </div>

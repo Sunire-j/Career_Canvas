@@ -7,7 +7,7 @@
     </insert>
 
     <select id="getPost" resultType="com.team1.careercanvas.vo.BoardVO">
-        SELECT post.postid, post.posttitle, user.username as user_userid, post.date, post.views, COUNT(postlike.user_userid) AS likeAmount, count(comment.commentid) as commentAmount
+        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid,  post.date, post.views, COUNT(postlike.user_userid) AS likeAmount, count(comment.commentid) as commentAmount
         FROM post
         LEFT JOIN postlike ON post.postid = postlike.post_postid
         LEFT JOIN comment ON post.postid = comment.post_postid
@@ -89,7 +89,7 @@
     </select>
 
     <select id="getPostWithCat" resultType="com.team1.careercanvas.vo.BoardVO">
-        SELECT post.postid, post.posttitle, user.username as user_userid, post.date, post.views, COUNT(postlike.user_userid) AS likeAmount, count(comment.commentid) as commentAmount
+        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid, post.date, post.views, COUNT(postlike.user_userid) AS likeAmount, count(comment.commentid) as commentAmount
         FROM post
         LEFT JOIN postlike ON post.postid = postlike.post_postid
         LEFT JOIN comment ON post.postid = comment.post_postid
@@ -135,6 +135,11 @@
         insert into report(reporttype, targetid, user_userid, title, userid)
         values('board', #{param1}, #{param4}, #{param3}, #{param2});
     </insert>
+
+    <select id="CheckForBoardView" resultType="Integer">
+        select count(postid) from post
+        where postid=#{param1};
+    </select>
 
     <!--  정인식 작업 ( 글 내용 보기 )  -->
     <select id="SelectBoardView" resultType="com.team1.careercanvas.vo.BoardVO">

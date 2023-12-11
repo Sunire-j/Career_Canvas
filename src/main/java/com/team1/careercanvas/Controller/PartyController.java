@@ -55,7 +55,7 @@ public class PartyController {
         ModelAndView mav = new ModelAndView();
         PagingVO pvo = new PagingVO();
 
-        pvo.setOnePageRecord(10);
+        pvo.setOnePageRecord(15);
         pvo.setPage(page);
         if (searchWord != null || searchWord != "") {
             pvo.setSearchKey(searchKey);
@@ -641,7 +641,7 @@ public class PartyController {
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mav.addObject("pvo",vo);
         pagingvo.setSearchWord(String.valueOf(partyid));
-        System.out.println(pagingvo.toString());
+        System.out.println(pagingvo);
 
         List<PofolVO> pofolvo = mapper.SelectPofolList(pagingvo);
         mav.addObject("Povo", pofolvo);

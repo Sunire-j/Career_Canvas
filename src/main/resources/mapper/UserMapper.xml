@@ -204,7 +204,8 @@
     <select id="getSubmitSubjectTeam" resultType="com.team1.careercanvas.vo.ApplyVO">
         SELECT subjectapply.applyimg as applyimg,
         subject.subjecttitle as subjecttitle,
-        subject.category as category
+        subject.category as category,
+        subjectapply.applyid as applyid
         FROM subjectapply
         JOIN subject ON subject.subjectid = subjectapply.subject_subjectid
         left join subjectcontributor sc on subjectapply.subject_subjectid = sc.subjectapply_applyid
