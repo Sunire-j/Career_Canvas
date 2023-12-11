@@ -191,7 +191,7 @@ public class BoardController {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
             mav.addObject("isBack",1);
             mav.addObject("alert_page", "login");
-            mav.setViewName("alert_page");
+            mav.setViewName("improve_alert");
             return mav;
         }
         session.setAttribute("boardcat", 0);
@@ -200,23 +200,33 @@ public class BoardController {
     }
 
     @GetMapping("/board/ask/write")
-    public String boardaskwrite(HttpSession session) {
+    public ModelAndView boardaskwrite(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
         if (session.getAttribute("LogStatus") == null || session.getAttribute("LogStatus").equals("N")) {
-            session.setAttribute("msg", "잘못된 접근입니다.");
-            return "alert_page";
+            mav.addObject("msg", "로그인 후 이용가능합니다.");
+            mav.addObject("isBack",1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
+            return mav;
         }
         session.setAttribute("boardcat", 1);
-        return "board/boardWrite";
+        mav.setViewName("board/boardWrite");
+        return mav;
     }
 
     @GetMapping("/board/tip/write")
-    public String boardtipwrite(HttpSession session) {
+    public ModelAndView boardtipwrite(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
         if (session.getAttribute("LogStatus") == null || session.getAttribute("LogStatus").equals("N")) {
-            session.setAttribute("msg", "잘못된 접근입니다.");
-            return "alert_page";
+            mav.addObject("msg", "로그인 후 이용가능합니다.");
+            mav.addObject("isBack",1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
+            return mav;
         }
         session.setAttribute("boardcat", 2);
-        return "board/boardWrite";
+        mav.setViewName("improve_alert");
+        return mav;
     }
 
     @PostMapping("/board/writeOk")
@@ -271,19 +281,26 @@ public class BoardController {
 
     // 정인식 작업 ( 글 내용 추천 수 )
     @GetMapping("/board/like")
-    public String postlike(@RequestParam("no") int postid, HttpSession session) {
+    public ModelAndView postlike(@RequestParam("no") int postid, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
         if (session.getAttribute("LogStatus") == null || !session.getAttribute("LogStatus").equals("Y")) {
-            session.setAttribute("msg", "로그인 후 추천이 가능합니다.");
-            return "alert_page";
+            mav.addObject("msg", "로그인 후 추천이 가능합니다.");
+            mav.addObject("isBack", 1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
+            return mav;
         }
         int result = mapper.CheckValid(postid, (String) session.getAttribute("LogId"));
         if (result == 1) {
-            session.setAttribute("msg", "추천은 한번만 가능합니다.");
-            return "alert_page";
+            mav.addObject("msg", "추천은 한번만 가능합니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
         }
         mapper.LikeCount(postid, (String) session.getAttribute("LogId"));
 
-        return "redirect:/board/view?no=" + postid;
+        mav.setViewName("redirect:/board/view?no=" + postid);
+        return mav;
     }
 
     @GetMapping("/mypage/sendMsgView")

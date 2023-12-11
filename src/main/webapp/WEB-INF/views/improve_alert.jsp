@@ -9,12 +9,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        alert("${msg}");
-        if(${isBack == 0}){
-            history.go(-1);
-        }else{
-            location.href="${pageContext.servletContext.contextPath}/${alert_page}";
-        }
+        $(function(){
+            alert("${msg}");
+            var isBack = ${isBack}
+            if(isBack==0){
+                history.go(-1);
+            }else{
+                location.href="${pageContext.servletContext.contextPath}/${alert_page}";
+            }
+        });
+
 
     </script>
 </head>
