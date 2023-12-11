@@ -263,7 +263,7 @@
             $("memo_list").empty();
             $.ajax({
                 url: "${pageContext.servletContext.contextPath}/memoListView",
-                type: "GET",
+                type: "post",
                 data: {
                     no: no
                 }, success: function (result) {
@@ -293,7 +293,7 @@
                 no = $(this).attr('title');
                 $.ajax({
                     url: "${pageContext.servletContext.contextPath}/myteamView",
-                    type: "GET",
+                    type: "post",
                     data: {
                         no: no
                     },
@@ -310,7 +310,7 @@
                 });
                 $.ajax({
                     url: "${pageContext.servletContext.contextPath}/memberList",
-                    type: "GET",
+                    type: "post",
                     data: {
                         no: no
                     },

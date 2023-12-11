@@ -18,8 +18,6 @@
                 location.href="${pageContext.servletContext.contextPath}/${alert_page}";
             }
         });
-
-
     </script>
 </head>
 </html>
