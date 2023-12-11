@@ -337,7 +337,7 @@
                 var memoWriteForm = $(
                     "<li class='memo_item'><div class='memo'><div class='postit yellow'><form id='frm'>"+
                     "<button type='submit' class='memo_write_ok_btn'  id='memo_write_ok_btn' style='float: right;'><i class='fa-solid fa-plus' style='float: right; padding: 5px'></i></button>"+
-                    "<textarea class='memo_content' id='memoWriteForm' maxlength='80' placeholder='50자 미만의 내용을 입력하세요.'></textarea>"+
+                    "<textarea class='memo_content' id='memoWriteForm' maxlength='80' placeholder='80자 미만의 내용을 입력하세요.'></textarea>"+
                     "</form></div></div></li>"
                 )
                 $("#memo_list").prepend(memoWriteForm);
