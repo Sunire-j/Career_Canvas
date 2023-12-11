@@ -65,13 +65,29 @@
         .pagination-container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 20px;
             text-align: center;
         }
 
         .pagination {
             display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 6px 12px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
         }
 
         .btn {
@@ -151,28 +167,35 @@
                 </tr>
             </c:forEach>
         </table>
-        <div class="pagination-container">
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
             <div class="pagination">
                 <c:if test="${pVO.page==1}">
-                    <
+                    <button class="btn btn-secondary"><</button>
                 </c:if>
                 <c:if test="${pVO.page>1}">
-                    <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page-1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}"><</a>
+                    <button class="btn btn-secondary"
+                            onclick="location.href='${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page-1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}'">
+                        <
+                    </button>
                 </c:if>
                 <c:forEach var="pvo" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                     <c:if test="${pvo <= pVO.totalPage}">
-                        <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pvo}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}">${pvo}</a>
+                        <button class="btn btn-secondary"
+                                onclick="location.href='${pageContext.servletContext.contextPath}/admin/member?page=${pvo}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}'">${pvo}</button>
                     </c:if>
                 </c:forEach>
                 <c:if test="${pVO.totalPage==pVO.page}">
-                    >
+                    <button class="btn btn-secondary">></button>
                 </c:if>
                 <c:if test="${pVO.totalPage>pVO.page}">
-                    <a href="${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page+1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}">></a>
+                    <button class="btn btn-secondary"
+                            onclick="location.href='${pageContext.servletContext.contextPath}/admin/member?page=${pVO.page+1}&postSort=${pVO.postSort}&SearchKey=${pVO.searchKey}&SearchWord=${pVO.searchWord}'">
+                        >
+                    </button>
                 </c:if>
             </div>
         </div>
-        <div class="search-container">
+        <div class="search-container" style="display: flex">
             <select style="width: fit-content" class="form-select" name="searchKey" id="searchKey">
                 <option value="username">이름</option>
                 <option value="userid">아이디</option>

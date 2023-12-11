@@ -132,7 +132,7 @@
             justify-content: center;
             height: 100px;
             align-items: center;
-            margin: 30px 0;
+            margin-bottom: 30px;
             font-size: 20px;
         }
 
@@ -176,7 +176,7 @@
         <p style="position: absolute; bottom: 20px;">누적 접속 유저 : ${all}명</p>
     </div>
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
-    <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
+    <div style="margin-left: 250px; width: 100%; height: 100%">
         <div class="top">
             <div class="container p-5 my-5 bg-primary text-white">일반회원 : ${member}</div>
             <div class="container p-5 my-5 bg-primary text-white">기업회원 : ${company}</div>

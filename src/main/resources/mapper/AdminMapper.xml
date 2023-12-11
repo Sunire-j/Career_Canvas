@@ -180,6 +180,12 @@
         where portfolioid = #{param1}
     </delete>
 
+    <delete id="deleteSubject">
+        delete
+        from subjectapply
+        where applyid = #{param1}
+    </delete>
+
     <update id="deleteComment">
         update comment
         set commentcontent = '삭제된 댓글입니다.',

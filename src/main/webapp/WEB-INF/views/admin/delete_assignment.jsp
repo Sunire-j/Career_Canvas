@@ -65,13 +65,29 @@
         .pagination-container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 20px;
             text-align: center;
         }
 
         .pagination {
             display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 6px 12px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
         }
 
         .btn {
@@ -143,24 +159,27 @@
                 </tr>
             </c:forEach>
         </table>
-        <div class="pagination-container">
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
             <div class="pagination">
                 <c:if test="${pVO.page==1}">
-                    <
+                    <button class="btn btn-secondary"><</button>
                 </c:if>
                 <c:if test="${pVO.page>1}">
                     <a href="${pageContext.servletContext.contextPath}/admin/delete?page=${pVO.page-1}"><</a>
                 </c:if>
                 <c:forEach var="pvo" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
                     <c:if test="${pvo <= pVO.totalPage}">
-                        <a href="${pageContext.servletContext.contextPath}/admin/delete?page=${pvo}">${pvo}</a>
+                        <button class="btn btn-secondary"
+                                onclick="location.href='${pageContext.servletContext.contextPath}/admin/delete?page=${pvo}'">${pvo}</button>
                     </c:if>
                 </c:forEach>
                 <c:if test="${pVO.totalPage==pVO.page}">
-                    >
+                    <button class="btn btn-secondary">></button>
                 </c:if>
                 <c:if test="${pVO.totalPage>pVO.page}">
-                    <a href="${pageContext.servletContext.contextPath}/admin/delete?page=${pVO.page+1}">></a>
+                    <button class="btn btn-secondary"
+                            onclick="location.href='${pageContext.servletContext.contextPath}/admin/delete?page=${pVO.page+1}'">>
+                    </button>
                 </c:if>
             </div>
         </div>

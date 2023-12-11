@@ -95,7 +95,10 @@
                 }
                 piechart = new Chart(document.getElementById("board_pie"), {
                     type: 'pie',
-                    data: data
+                    data: data,
+                    options: {
+                        responsive: false
+                    }
                 });
             }
 
@@ -127,7 +130,7 @@
             justify-content: center;
             height: 100px;
             align-items: center;
-            margin: 30px 0;
+            margin-bottom: 30px;
             font-size: 20px;
         }
 
@@ -171,7 +174,7 @@
         <p style="position: absolute; bottom: 20px;">누적 접속 유저 : ${all}명</p>
     </div>
     <!-- 관리자 페이지 만드실 때 margin-left 여기 참고하시면 됩니다 -->
-    <div style="margin-left: 250px; width: 100%; height: 100%; padding: 20px;">
+    <div style="margin-left: 250px; width: 100%; height: 100%">
         <div class="top">
             <div class="container p-5 my-5 bg-primary text-white">전체 게시글 : ${bVO}</div>
             <div class="container p-5 my-5 bg-primary text-white">오늘 업로드 된 게시글 : ${today}</div>
@@ -179,7 +182,7 @@
         </div>
         <div style="width: 50%; display: flex;  align-items: center">
             <canvas id="board_chart"></canvas>
-            <canvas id="board_pie"></canvas>
+            <canvas id="board_pie" style="width: 500px; height: 500px; margin-left:100px"></canvas>
         </div>
     </div>
 </div>
