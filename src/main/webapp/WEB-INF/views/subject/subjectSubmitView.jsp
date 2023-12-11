@@ -23,36 +23,42 @@
             width: 1200px;
             margin: 0 auto;
             margin-top: 30PX;
-            border: 1px #73351F solid;
-            background: #D9D9D9;
-            padding: 40px;
+            border-width: 3px 1px 3px 1px;
+            border-style: solid;
+            border-color: #73351F;;
+            background: #F2F2F2;
         }
 
         .board_category {
             background-color: #ddd;
-            width: 150px;
+            width: 170px;
             text-align: center;
             border-radius: 10px;
         }
 
         .board_title {
-            margin-top: 20px;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            height: 80px;
             font-size: 2em;
             font-weight: bold;
-            margin-bottom: 20px;
-
+            border-bottom: 2px solid #73351F;
+            padding-left: 20px;
+            background: #A69668;
         }
 
         /* 게시물 정보( 작성자, 날짜, 조회수, 추천수) */
-        .board_main{
+        .board_main {
             border-bottom: 3px solid #73351F;
             border-top: 3px solid #73351F;
             border-left: 1px solid #73351F;
             border-right: 1px solid #73351F;
         }
+
         .board_info {
             display: flex;
-            background:  #D9C8A9;
+            background: #D9C8A9;
             align-items: center;
             height: 30px;
         }
@@ -60,12 +66,13 @@
         .board_writer {
             display: flex;
             padding-right: 10px;
-            border-right: 1px solid darkgray;
+
             text-align: center;
         }
 
         .board_date {
             padding-left: 10px;
+            border-left: 1px solid darkgray;
 
         }
 
@@ -74,13 +81,13 @@
         }
 
         .board_view {
-            width: 60px;
+            width: 70px;
             text-align: center;
             margin: auto 0 0 auto;
         }
 
         .board_recommend {
-            width: 60px;
+            width: 70px;
             text-align: center;
         }
 
@@ -112,9 +119,6 @@
             width: 90%;
             height: 100px;
             min-height: 100px;
-            margin-left: 3px;
-            margin-bottom: 3px;
-            margin-top: 3px;
         }
 
         .comment_write_ok {
@@ -123,20 +127,22 @@
         }
 
         /* 댓글 리스트 */
-        .comment_main{
+        .comment_main {
 
         }
-        .comment_list{
-            background:  #A69668;
+
+        .comment_list {
 
         }
+
         .comment_list li {
             float: none;
         }
+
         .comment_list_content {
-            padding-top: 10px;
-            padding-bottom: 10px;
+            background: #A69668;
             border: 0.5px #73351F solid;
+            margin-bottom: 5px;
         }
 
         .list_img {
@@ -152,77 +158,147 @@
         .comment_writer {
             padding: 0 5px;
         }
-        .reply_content{
+
+        .reply_content {
             background: #D9D9D9;
-            margin-bottom: 15px;
+            display: flex;
         }
-        .reply_content > div {
-            display: inline-block;
-        }
+
 
         .reply {
+
             padding: 10px;
             width: 85%;
-            height: 50px;
         }
 
-
-        /* IE9 이하를 위한 css */
-        input::placeholder{
+        .container_bottom {
             display: flex;
-            text-align: center;
-            align-items: center;
+            background: #A69668;
+            height: 10px;
+            margin-top: 10px;
+        }
+
+        .reply_btn {
+            display: flex;
+            align-items: flex-start;
+            width: fit-content;
+        }
+         .memberlist{
+             display: flex;
+         }
+        .membername{
+            margin: 0 5px;
         }
 
     </style>
-    <script>
-
-    </script>
 </head>
 <body>
 <article>
-    <section>
-        <div class="board_category">
-            기업과제
+    <div class="board_title" style="text-align: center">
+       과제명 : ${svo.subjecttitle}
+    </div>
+    <section style="padding: 20px;">
+        <div class="board_category" style="margin-bottom: 20px">
+            기업과제 제출 게시판
         </div>
+        <div class="board_main">
+            <div class="board_info">
+                <div class="board_writer">
+                    ${avo.user_userid}
+                </div>
+                <div class="board_date">
+                    <c:if test="${avo.isteam==1}">
 
-        <div class="board_title">
-            ${svo.subjecttitle}
-        </div>
-    <div class="board_main">
-        <div class="board_info">
-            <div class="board_writer">
-                ${avo.user_userid}
-            </div>
-        </div>
-        <div class="board_content">
-            <div class="content_text">
-                ${avo.applycontent}
-            </div>
-            <div class="content_recommend"
-                 style="width: 100%; display : flex; justify-content: space-between; align-items: center">
-                <div></div>
-                <button type="button" style="color: white" onclick="applySubject()"
-                   class="btn btn-primary"><i class="fa-solid fa-hand"></i>&nbsp제출</button>
-                <div class="d-flex">
-                    <c:if test="${LogId==Svo.user_userid}">
-                        <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post" onclick="delSubject()">삭제 신청</a>
-<%--                        onclick="location.href='${pageContext.servletContext.contextPath}/subject/del?subjectid=${Svo.subjectid}'--%>
                     </c:if>
+                    <c:if test="${avo.isteam==0}">
+                         파티명 : ${partyname}&nbsp
+                    </c:if>
+                </div>
+
+            </div>
+
+            <div class="board_content">
+                <div class="content_text">
+                    ${avo.applycontent}
+                </div>
+                <div class="memberlist" style="margin-left: 20px;">
+                    <c:if test="${avo.isteam==0}">
+                        <div class="membername">
+                            참여 인원 :
+                            <c:forEach var="uvo" items="${member}">
+                                <a class="badge rounded-pill bg-primary" style="color: white;font-size: 15px;"
+                                   href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">${uvo.username}</a>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                </div>
+                <div class="content_recommend"
+                     style="width: 100%; display : flex; justify-content: space-between; align-items: center">
+                    <div></div>
+                    <button type="button" class="btn btn-success" onclick="location.href='${pageContext.servletContext.contextPath}/subject/view?no=${avo.subject_subjectid}'" >
+                        해당 기업과제 공고보기
+                    </button>
+                    <div class="d-flex" style="margin-right: 10px;">
+                        <c:if test="${LogStatus=='Y'}">
+                            <a style="height: fit-content; margin-right: 10px" class=" btn btn-outline-danger btn-sm"
+                               id="report_post">게시글 신고</a>
+                        </c:if>
+                        <c:if test="${LogId==pVO.user_userid}">
+                            <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">게시글
+                                삭제</a>
+                        </c:if>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-
-            <div style="height: 30px; margin: 0px; background: #D9C8A9;">
-            </div>
-        </div>
-    </div>
-
-
-
-
     </section>
+    <hr style="border: 2px dashed #73351F">
+    <script>
+        $(function () {
+
+            $("#del_post").on('click', function () {
+                if (confirm("정말 글을 삭제하시겠습니까?")) {
+                    var target_id = ${pVO.portfolioid};
+                    $.ajax({
+                        url: "${pageContext.servletContext.contextPath}/pofol/postdel",
+                        data: {
+                            pofolid: target_id
+                        },
+                        type: 'post',
+                        success: function (result) {
+                            alert("삭제되었습니다.");
+                            location.href = "${pageContext.servletContext.contextPath}/pofol_preview";
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                        }
+                    });
+                }
+            });
+            $("#report_post").on('click', function () {
+                if (confirm("정말 글을 신고하시겠습니까?")) {
+                    $.ajax({
+                        url: "${pageContext.servletContext.contextPath}/pofol/pofol_report",
+                        data: {
+                            target_id:${pVO.portfolioid},
+                            target_userid: '${pVO.user_userid}',
+                            target_title: '${pVO.portfoliotitle}'
+                        },
+                        type: 'post',
+                        success: function (result) {
+                            alert("신고되었습니다");
+                        },
+                        error: function (error) {
+                            console.log(error.responseText);
+                        }
+
+                    });
+                }
+
+            });
+        });
+    </script>
+    <div class="container_bottom"></div>
 </article>
 <footer></footer>
 </body>
