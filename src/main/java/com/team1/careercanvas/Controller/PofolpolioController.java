@@ -2,9 +2,7 @@ package com.team1.careercanvas.Controller;
 
 import com.team1.careercanvas.mapper.PartyMapper;
 import com.team1.careercanvas.mapper.PofolMapper;
-import com.team1.careercanvas.vo.PartyVO;
 import com.team1.careercanvas.vo.PofolVO;
-import com.team1.careercanvas.vo.ReportVO;
 import com.team1.careercanvas.vo.UserVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +30,20 @@ public class PofolpolioController {
                                   @RequestParam(required = false, defaultValue = "0") int pofolid){
         ModelAndView mav = new ModelAndView();
         if(pofolid==0){
-            session.setAttribute("msg","잘못된 접근입니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("msg","잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        //포폴이 진짜 있는지 확인
+        PofolVO pofolVO = pofolmapper.getPofolall(pofolid);
+        if(pofolVO==null){
+            mav.addObject("msg","삭제되거나 존재하지 않은 포트폴리오입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
             return mav;
         }
 
-        PofolVO pofolVO = pofolmapper.getPofolall(pofolid);
         if(pofolVO.getIsteam()==0){//파티일경우
             String partyname = partymapper.getPartyName(pofolVO.getPartyid());
             mav.addObject("partyname",partyname);
@@ -45,12 +51,6 @@ public class PofolpolioController {
             List<UserVO> member = pofolmapper.getMemberList(pofolVO.getPartyid());
             mav.addObject("member", member);
             // 정인식 작업 끝
-        }
-
-        if(pofolVO==null){
-            session.setAttribute("msg","잘못된 접근입니다.");
-            mav.setViewName("alert_page");
-            return mav;
         }
 
         //추천수조회
@@ -63,23 +63,28 @@ public class PofolpolioController {
         return mav;
     }
     @GetMapping("/pofol/like")
-    public String pofollike (HttpSession session, int no){
-        if(session.getAttribute("LogId")==null){
-            session.setAttribute("msg", "잘못된 접근입니다.");
+    public ModelAndView pofollike (HttpSession session, int no){
+        ModelAndView mav = new ModelAndView();
 
-            return "alert_page";
+        if(session.getAttribute("LogId")==null){
+            mav.addObject("msg", "로그인 후 추천이 가능합니다.");
+            mav.addObject("isBack",1);
+            mav.addObject("login");
+            return mav;
         }
         String userid = (String) session.getAttribute("LogId");
 
         int result = pofolmapper.isLike(no, userid);
         if(result == 1){
-            session.setAttribute("msg", "추천은 한번만 가능합니다.");
-
-            return "alert_page";
+            mav.addObject("msg", "추천은 한번만 가능합니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
         }
         pofolmapper.pofolLike(no, userid);
 
-        return "redirect:/pofolview?pofolid="+no;
+        mav.setViewName("redirect:/pofolview?pofolid="+no);
+        return mav;
     }
     @PostMapping("/pofol/pofol_report")
     @ResponseBody
