@@ -465,10 +465,12 @@
                         },
                         type:'post',
                         success:function(result){
-                           if(result==0){
-                               alert("신청되었습니다.");
-                           }else{
+                           if(result==1){
                                alert("이미 신청하였거나 가입된 파티입니다.");
+                           }else if(result==2){
+                               alert("일반 회원만 신청 가능합니다.");
+                           }else{
+                               alert("신청되었습니다.");
                            }
 
                         },

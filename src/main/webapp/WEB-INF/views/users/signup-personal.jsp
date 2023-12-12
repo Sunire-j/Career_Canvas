@@ -297,9 +297,9 @@
                 <li>
                     <div>
                         <input type="text" name="userNickName" class="form-control" placeholder="닉네임"
-                               pattern="^[a-zA-Z0-9가-힣]{2,12}$" required/>
+                               pattern="^[a-zA-Z0-9가-힣]{2,8}$" required/>
                         <div class="invalid-feedback">닉네임을 입력해주세요.</div>
-                        <div class="invalid-feedback" data-feedback="patternMismatch">2~12자리, 한글, 영문, 숫자만
+                        <div class="invalid-feedback" data-feedback="patternMismatch">2~8자리, 한글, 영문, 숫자만
                             사용해주세요.
                         </div>
                         <div class="invalid-feedback" data-feedback="duplicate">중복된 닉네임입니다.</div>

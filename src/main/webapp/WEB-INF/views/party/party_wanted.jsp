@@ -109,6 +109,12 @@
         hr{
             border-top: 2.5px solid #73351F ;
         }
+
+        .wandtedtitle, .wantedusername{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 
     <script>
@@ -197,7 +203,7 @@
                     <option value="content">글내용</option>
                     <option value="partyname">파티명</option>
                 </select>
-                <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요" style="margin-right: 10px">
+                <input type="text" class="form-control" name="searchWord"  maxlength="30" placeholder="검색어를 입력하세요" style="margin-right: 10px">
                 <input type="submit" class="btn btn-secondary" value="검색">
             </form>
         </div>

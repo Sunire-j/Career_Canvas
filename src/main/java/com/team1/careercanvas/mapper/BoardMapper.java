@@ -43,6 +43,7 @@ public interface BoardMapper {
     void ViewsCount(int postid);
 
     void LikeCount(int postid, String userid);
+    void MinusViewsCount(int postid);
 
     int CheckValid(int postid, String userid);
 

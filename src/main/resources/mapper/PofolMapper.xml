@@ -264,6 +264,13 @@
 					  on partymember.user_userid = user.userid
 		where partymember.party_partyid = #{param1} and partymember.status = 'done';
 	</select>
+
+	<update id="ViewsCount">
+		update portpolio
+		set view = portpolio.view+1
+		where portfolioid = #{param1}
+
+	</update>
 	<!-- 정인식 작업 끝 -->
 
 	<select id="getPartyList" resultType="com.team1.careercanvas.vo.PartyVO">

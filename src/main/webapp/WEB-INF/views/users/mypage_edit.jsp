@@ -397,7 +397,7 @@ file="../header_footer/header.jspf" %>
               type="text"
               name="nickName"
               id="nickName"
-              pattern="^[a-zA-Z0-9가-힣]{2,12}$"
+              pattern="^[a-zA-Z0-9가-힣]{2,8}$"
               required
               value="${uVO.username }"
             />
