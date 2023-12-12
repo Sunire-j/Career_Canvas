@@ -71,6 +71,10 @@
     <script>
         $(function(){
 
+            const origincontent = '${bvo.postcontent}';
+            $("#wantedcontent").val(origincontent);
+
+
             let editor;
             CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
                     toolbar: {
@@ -201,7 +205,7 @@
     </div>
     <div style="background: #D9D9D9">
     <form method="post" action="${pageContext.servletContext.contextPath}/party/wanted/editOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F" novalidate>
-        <input type="hidden" id="wantedcontent" name="wantedcontent" value="${wvo.wantedcontent}">
+        <input type="hidden" id="wantedcontent" name="wantedcontent">
         <input type="hidden" name="wantedid" value="${wvo.wantedid}">
         <input type="text" style="width: 40%" class="form-control" name="wantedtitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30" value="${wvo.wantedtitle}">
         <div class="invalid-feedback">

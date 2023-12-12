@@ -139,6 +139,7 @@
         });
     </script>
 </head>
+<body>
 <div class="container">
     <div class="container-top">
         <div class="container-head"></div>
@@ -196,36 +197,35 @@
 
     <div class="board-container">
         <div class="board-container-set">
-        <div class="board-header">
-            <div class="header-row">
-                <div id="num" style="width: 7%" class="list">번호</div>
-                <div id="title" style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목
+            <div class="board-header">
+                <div class="header-row">
+                    <div id="num" style="width: 7%" class="list">번호</div>
+                    <div id="title" style="width: 50%; text-align: left; padding: 0 20px;" class="list">제목</div>
+                    <div id="user" style="width: 12%" class="list">작성자</div>
+                    <div id="view" style="width: 7%" class="list"><i class="fa-solid fa-eye" style="color: #0d0d0d;"></i></div>
+                    <div id="comment" style="width: 7%" class="list"><i class="fa-regular fa-comment-dots" style="color: #0d0d0d;"></i></div>
+                    <div id="like" style="width: 7%" class="list"><i class="fa-solid fa-heart" style="color: #0d0d0d;"></i></div>
+                    <div id="date" style="width: 10%" class="list">게시일</div>
                 </div>
-                <div id="user" style="width: 12%" class="list">작성자</div>
-                <div id="view" style="width: 7%" class="list"><i class="fa-solid fa-eye" style="color: #0d0d0d;"></i></div>
-                <div id="comment" style="width: 7%" class="list"><i class="fa-regular fa-comment-dots" style="color: #0d0d0d;"></i></div>
-                <div id="like" style="width: 7%" class="list"><i class="fa-solid fa-heart" style="color: #0d0d0d;"></i></div>
-                <div id="date" style="width: 10%" class="list">게시일</div>
             </div>
+            <hr class="hr-styleset">
+            <c:forEach items="${bVO}" var="bvo">
+                <div class="board-row">
+                    <div style="width: 7%" class="list">${bvo.postid}</div>
+                    <div style="width: 50%; text-align: left; padding: 0 20px;" class="list"><a
+                            href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">${bvo.posttitle}</a>
+                    </div>
+                    <div style="width: 12%; overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;" class="list"><a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}">${bvo.username}</a></div>
+                    <div style="width: 7%" class="list">${bvo.views}</div>
+                    <div style="width: 7%" class="list">${bvo.commentAmount}</div>
+                    <div style="width: 7%" class="list">${bvo.likeAmount}</div>
+                    <div style="width: 10%" class="list">${bvo.date}</div>
+                </div>
+                <hr class="hr-styleset">
+            </c:forEach>
         </div>
-            <hr class="hr-styleset">
-        <c:forEach items="${bVO}" var="bvo">
-            <div class="board-row">
-                <div style="width: 7%" class="list">${bvo.postid}</div>
-                <div style="width: 50%; text-align: left; padding: 0 20px;" class="list"><a
-                        href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">${bvo.posttitle}</a>
-                </div>
-                <div style="width: 12%; overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;" class="list"><a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}">${bvo.username}</a></div>
-                <div style="width: 7%" class="list">${bvo.views}</div>
-                <div style="width: 7%" class="list">${bvo.commentAmount}</div>
-                <div style="width: 7%" class="list">${bvo.likeAmount}</div>
-                <div style="width: 10%" class="list">${bvo.date}</div>
-            </div>
-            <hr class="hr-styleset">
-        </c:forEach>
-
 
         <div class="search-container">
             <form action="${pageContext.request.contextPath}/board/${boardcat}" class="d-flex board-bottom" method="get">
@@ -307,8 +307,9 @@
             </div>
             <a style="margin-top: 20px; color: white" href="${pageContext.servletContext.contextPath}/board/${boardcat}/write" class="btn btn-secondary">글 작성</a>
         </div>
-        </div>
+
         <div class="container_bottom"></div>
+    </div>
     </div>
 </div>
 </body>

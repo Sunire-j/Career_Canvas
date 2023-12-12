@@ -292,6 +292,14 @@
 		where portfolioid = #{param1}
 
 	</update>
+
+	<select id="getSelectMemberList" resultType="com.team1.careercanvas.vo.UserVO">
+		select *
+		from user
+		join pofolcont
+		on pofolcont.userid = user.userid
+		where portfolioid = #{param1}
+	</select>
 	<!-- 정인식 작업 끝 -->
 
 	<select id="getPartyList" resultType="com.team1.careercanvas.vo.PartyVO">

@@ -43,6 +43,9 @@ public class PofolController {
 
         // Sort
         pVO.setPostSort(pVO.getPostSort());
+        if(pVO.getPostSort()==0){
+            pVO.setPostSort(1);
+        }
         pVO.setCategory(pVO.getCategory());
 
         List<PofolVO> pofolVO = mapper.getPublicSoloPofol(pVO);
@@ -65,6 +68,9 @@ public class PofolController {
 
         // Sort
         pVO.setPostSort(pVO.getPostSort());
+        if(pVO.getPostSort()==0){
+            pVO.setPostSort(1);
+        }
         pVO.setCategory(pVO.getCategory());
 
         List<PofolVO> pofolVO = mapper.getPublicTeamPofol(pVO);
