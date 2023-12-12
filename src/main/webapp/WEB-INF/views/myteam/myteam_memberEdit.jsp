@@ -147,15 +147,16 @@
             overflow-y: auto;
             overflow-x: hidden;
         }
-        .member_edit li{
-            width: 240px;
+        .member_edit li {
+            margin-left: 30px;
+            float: left;
+            width: 330px;
             margin-right: 10px;
             margin-bottom: 10px;
             background-color: #e9ecef;
             padding: 10px;
             border-radius: 10px;
             border: 1px solid #73351F;
-
         }
         .member_list{
             display: flex;
@@ -166,9 +167,10 @@
             height: 60px;
             border-radius: 15px;
         }
-        .member_list>p{
-            width: 100px;
-            padding-left: 20px;
+        .member_list>p {
+            padding: 0 10px;
+            text-align: center;
+            width: 180px;
             font-size: 1.2em;
             height: 60px;
             line-height: 60px;

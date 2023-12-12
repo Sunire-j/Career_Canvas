@@ -308,6 +308,7 @@ public class SubjectController {
 
         ApplyVO avo = applymapper.SelectApply(applyid);
 
+
         if(avo == null){
             mav.addObject("msg", "잘못된 접근입니다.");
             mav.addObject("isBack",0);
@@ -324,6 +325,9 @@ public class SubjectController {
         mav.addObject("svo", svo);
 
 
+        UserVO uvo = mapper.getUserInfo(avo.getUser_userid());
+        String username = uvo.getUsername();
+        mav.addObject("username", username);
 
         List<UserVO> member = applymapper.SelectsubjectMember(applyid);
         mav.addObject("member", member);
