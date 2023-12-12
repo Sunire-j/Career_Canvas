@@ -115,6 +115,7 @@
         from user
         where userid=#{param1}
     </select>
+
 </mapper>
 
 

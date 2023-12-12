@@ -354,6 +354,12 @@
         set imgsrc=#{param1}
         where portfolioid=#{param2}
     </update>
+
+    <select id="SelectmemberStatus" resultType="String">
+        select status
+        from partymember
+        where party_partyid = #{param1} and user_userid = #{param2}
+    </select>
     <!-- 정인식 작업 끝 -->
 
 </mapper>

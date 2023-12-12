@@ -461,7 +461,12 @@
                         },
                         type:'post',
                         success:function(result){
-                           alert("신청되었습니다.");
+                           if(result==0){
+                               alert("신청되었습니다.");
+                           }else{
+                               alert("이미 신청하였거나 가입된 파티입니다.");
+                           }
+
                         },
                         error:function (error){
                            console.log(error.responseText);

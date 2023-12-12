@@ -191,8 +191,13 @@ public class PartyController {
     @ResponseBody
     public int applyParty(HttpSession session, int partyid) {
         String uid = (String) session.getAttribute("LogId");
+        String status =  mapper.SelectmemberStatus(partyid, uid);
+        System.out.println(status);
+        if(status!=null){
+            return 1;
+        }
         int result = mapper.applyParty(uid, partyid);
-        return result;
+        return 0;
     }
 
     @GetMapping("myteam/chat")
