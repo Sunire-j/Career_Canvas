@@ -239,7 +239,7 @@
             <div class="comment_write">
                 <input type="hidden" id="wantedid" name="wantedid" value="${wvo.wantedid}">
                 <textarea class="comment_content" placeholder="욕설, 비방, 비아냥, 음란, 사행성, 스팸, 광고 댓글은 필터링 또는 삭제됩니다."
-                          style="resize: none;" maxlength='80'></textarea>
+                          style="resize: none;"></textarea>
                 <button type="button" class="btn btn-secondary comment_write_ok" style="border-radius: 0%; margin: 3px 3px 3px 0px; padding: 0px;"> 댓글 등록</button>
             </div>
             <div style="height: 30px; margin: 0px; background: #D9C8A9;">

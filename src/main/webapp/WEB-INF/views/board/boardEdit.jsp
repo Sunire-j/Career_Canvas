@@ -68,7 +68,7 @@
 
             const initCategory = ${bvo.category};
             const radio = $(".button-container input[name='category'][value='" + initCategory + "']");
-            radio.parent().removeClass('btn-outline-secondary').addClass('btn-secondary');
+            radio.parent().removeClass('btn-outline-dark').addClass('btn-dark');
 
             let editor;
             CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
@@ -166,9 +166,9 @@
             //
 
             $('.button-container input[type="radio"]').change(function(){
-                $('.button-container label').removeClass('btn-secondary').addClass('btn-outline-secondary');
+                $('.button-container label').removeClass('btn-dark').addClass('btn-outline-dark');
                 if($(this).is(':checked')){
-                    $(this).parent().removeClass('btn-outline-secondary').addClass('btn-secondary');
+                    $(this).parent().removeClass('btn-outline-dark').addClass('btn-dark');
                 }
             });
             $('#title').on('input blur', function() {
@@ -219,7 +219,7 @@
 
             <div>
                 <div class="button-container">
-                    <label class="btn btn-outline-secondary">
+                    <label class="btn btn-outline-dark">
                         <input type="radio" name="category" value="0"
                         <c:if test="${bvo.category==0}">
                                checked
@@ -227,7 +227,7 @@
                         >
                         <span>선택안함</span>
                     </label>
-                    <label class="btn btn-outline-secondary">
+                    <label class="btn btn-outline-dark">
                         <input type="radio" name="category" value="1"
                         <c:if test="${bvo.category==1}">
                                checked
@@ -235,7 +235,7 @@
                         >
                         <span>IT/프로그래밍</span>
                     </label>
-                    <label class="btn btn-outline-secondary">
+                    <label class="btn btn-outline-dark">
                         <input type="radio" name="category" value="2"
 
                         <c:if test="${bvo.category==2}">
@@ -243,7 +243,7 @@
                         </c:if>>
                         <span>디자인</span>
                     </label>
-                    <label class="btn btn-outline-secondary">
+                    <label class="btn btn-outline-dark">
                         <input type="radio" name="category" value="3"
                         <c:if test="${bvo.category==3}">
                                checked

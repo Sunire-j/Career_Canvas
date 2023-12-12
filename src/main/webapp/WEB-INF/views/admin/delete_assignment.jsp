@@ -147,7 +147,7 @@
                     <td>${svo.date}</td>
                     <td>
                         대기중
-                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="${svo.reason}" data-bs-placement="right"
+                        <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="tooltip" title="${svo.reason}" data-bs-placement="right"
                                 id="reason">사유
                         </button>
                         <input type="hidden" value="${svo.reason}"/>

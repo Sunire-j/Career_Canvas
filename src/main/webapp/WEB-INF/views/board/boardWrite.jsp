@@ -162,9 +162,9 @@
             //
 
             $('.button-container input[type="radio"]').change(function(){
-                $('.button-container label').removeClass('btn-secondary').addClass('btn-outline-secondary');
+                $('.button-container label').removeClass('btn-dark').addClass('btn-outline-dark');
                 if($(this).is(':checked')){
-                    $(this).parent().removeClass('btn-outline-secondary').addClass('btn-secondary');
+                    $(this).parent().removeClass('btn-outline-dark').addClass('btn-dark');
                 }
             });
             $('#title').on('input blur', function() {
@@ -179,16 +179,6 @@
                 }
             });
 
-            $("#hashtag").on('input blur',function(){
-                if(this.checkValidity()){
-                    $(this).siblings('[data-feedback="patternMismatch"]').hide();
-                    $(this).removeClass('is-invalid').addClass('is-valid');
-                }else{
-                    $(this).removeClass('is-valid').addClass('is-invalid');
-                    $(this).siblings('[data-feedback="patternMismatch"]').show();
-
-                }
-            });
             $('form').on('submit', function(e) {
                 var editorContent = editor.getData();
                 if(!editorContent) {
@@ -198,13 +188,6 @@
 
             });
 
-            $('.hashtag').on('change blur',function(){
-                if($(this).hasClass('is-invalid')){
-                    $(".submitbtn").prop('disabled',true);
-                }else{
-                    $(".submitbtn").prop('disabled',false);
-                }
-            })
         });
     </script>
 </head>
@@ -234,19 +217,19 @@
 
         <div>
             <div class="button-container">
-                <label class="btn btn-outline-secondary">
+                <label class="btn btn-outline-dark">
                     <input type="radio" name="category" value="0" checked>
                     <span>선택안함</span>
                 </label>
-                <label class="btn btn-outline-secondary">
+                <label class="btn btn-outline-dark">
                     <input type="radio" name="category" value="1">
                     <span>IT/프로그래밍</span>
                 </label>
-                <label class="btn btn-outline-secondary">
+                <label class="btn btn-outline-dark">
                     <input type="radio" name="category" value="2">
                     <span>디자인</span>
                 </label>
-                <label class="btn btn-outline-secondary">
+                <label class="btn btn-outline-dark">
                     <input type="radio" name="category" value="3">
                     <span>영상음향</span>
                 </label>

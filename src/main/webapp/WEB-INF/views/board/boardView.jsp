@@ -205,10 +205,9 @@
         <div class="board_main">
             <div class="board_info">
                 <div class="board_writer">
-                    <a
+                    <a style="margin-left: 10px;"
                             href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}"
-                    >${bvo.username}</a
-                    >
+                    >${bvo.username}</a>
                 </div>
                 <div class="board_date">${bvo.date}</div>
                 <div class="board_view">조회수</div>
@@ -233,7 +232,7 @@
                             class="btn btn-primary"
                     ><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a
                     >
-                    <div class="d-flex" style="margin-right: 10px; width: 300px">
+                    <div class="d-flex" style="margin-right: 10px; width: 300px; justify-content: flex-end">
                         <c:if test="${LogStatus=='Y'}">
                             <a
                                     style="height: fit-content; margin-right: 10px"
@@ -268,7 +267,6 @@
                             class="comment_content"
                             placeholder="욕설, 비방, 비아냥, 음란, 사행성, 스팸, 광고 댓글은 필터링 또는 삭제됩니다."
                             style="resize: none"
-                            maxlength="30"
                     ></textarea>
                     <button
                             type="button"
