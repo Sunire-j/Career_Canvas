@@ -325,7 +325,7 @@
                                 var marginLeft = comment.depth == 1 ? '70px' : '10px';
                                 var htmltag = '<li style="margin-left: ' + marginLeft + '"><div class="comment_list_content"><img src = ${pageContext.servletContext.contextPath}/upload' + comment.profileimg + ' class="list_img"><a href ="${pageContext.servletContext.contextPath}/profile/portfolio?uid=' + comment.user_userid + '" "class="comment_writer">';
                                 htmltag += comment.username + '</a> &nbsp<div style="font-size: 12px" class="comment_date">(' + comment.date + ')</div>&nbsp;'
-                                if(${LogStatus=='Y'}){
+                                if('${LogId}'==comment.user_userid){
                                     htmltag+='<div id="commentedit" title="'+result[i].commentid+'" style="cursor: pointer; display: inline-block; font-size: 14px; color: white" >수정</div>';
                                 }
                                     htmltag+='<div class="reply_content"><div class="reply">' + comment.commentcontent;

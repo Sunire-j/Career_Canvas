@@ -17,4 +17,6 @@ public interface CommentMapper {
     String getContent(int targetid);
     int replyReport(ReportVO rvo);
     void UpdatePostComment(int id, String content);
+
+    void UpdateWantedComment(int id ,String content);
 }

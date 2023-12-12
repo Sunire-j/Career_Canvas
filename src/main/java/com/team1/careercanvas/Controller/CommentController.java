@@ -39,6 +39,13 @@ public class CommentController {
         return 1;
     }
 
+    @PostMapping("/comment/editcommentWanted")
+    @ResponseBody
+    public int editWantedComment(int commentid, String commentcontent){
+        commentMapper.UpdateWantedComment(commentid,commentcontent);
+        return 1;
+    }
+
     @PostMapping("/commentWriteHead")
     @ResponseBody
     public int replyWrite(int postid, String content, HttpSession session,
