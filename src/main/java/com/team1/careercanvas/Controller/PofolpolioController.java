@@ -12,6 +12,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -115,7 +124,7 @@ public class PofolpolioController {
                                     @RequestParam("posttitle") String title,
                                     @RequestParam("postcontent") String content,
                                     @RequestParam(value = "member", required = false) String[] member,
-                                    int portfolioid){
+                                    int portfolioid) throws IOException {
 
         ModelAndView mav = new ModelAndView();
         //파티의 경우
@@ -134,10 +143,56 @@ public class PofolpolioController {
             pofolmapper.updatePofol(pofolVO);
         }
 
+
+
         //여기에서 썸네일 처리 한번 해줘야함
         //썸네일 있으면 다 자르고 확인하고 업데이트까지
         //그럼 날짜를 붙여줘야함
+        if (content.contains("<img src=")) {
+            int index = content.indexOf("<img src=");
+            String first = content.substring(index + 10);
+            String second = first.substring(0, first.indexOf("\""));// mime 포함 src내 전체 코드
+            String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+            String mimeType = second.split(",")[0].split(";")[0].split(":")[1];
+            String base64Data = second.split(",")[1];
 
+            String extension = mimeType.split("/")[1];
+
+            byte[] data = Base64.getDecoder().decode(base64Data);
+
+            String userid = String.valueOf(pofolVO.getPortfolioid());
+            String newFileName = userid + "_"+currentTime+ "." + extension;
+
+            String projectDir = new File("").getAbsolutePath();
+            File directory = new File(projectDir + "/upload/pofolimg");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            Path path = Paths.get(directory.getAbsolutePath(), newFileName);
+            OutputStream outputStream = new FileOutputStream(path.toString());
+            outputStream.write(data);
+            outputStream.close();
+
+            String oldFileName = pofolmapper.getOldImg(pofolVO.getPortfolioid());//수정해야함
+            if (oldFileName != null || (!oldFileName.equals("") && !oldFileName.equals("/pofolimg/staticpofolimg.png"))) {
+                File fileToDelete = new File(directory, oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
+                boolean result = fileToDelete.delete();
+
+                if (result) {
+                    System.out.println("파일 삭제 성공");
+                } else {
+                    System.out.println("파일 삭제 실패");
+                }
+            }
+
+            String pathfordb = "/pofolimg/" + newFileName;
+            // 여기서 db에 path만 넣어주면 됨.
+            pofolmapper.updateImg(pathfordb, pofolVO.getPortfolioid());
+
+        }else{
+            pofolmapper.updateImg("/pofolimg/staticpofolimg.png", pofolVO.getPortfolioid());
+        }
 
         mav.setViewName("redirect:/pofolview?pofolid="+pofolVO.getPortfolioid());
         return mav;

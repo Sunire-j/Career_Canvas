@@ -188,6 +188,10 @@ file="../header_footer/header.jspf" %>
         align-items: flex-start;
         width: fit-content;
       }
+
+      figure img{
+        max-width: 1116px;
+      }
     </style>
   </head>
   <body>

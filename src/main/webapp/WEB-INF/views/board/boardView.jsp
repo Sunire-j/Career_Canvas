@@ -190,6 +190,10 @@
             width: fit-content;
             margin-top: 7.5px;
         }
+
+        figure img{
+            max-width: 1116px;
+        }
     </style>
 </head>
 <body>

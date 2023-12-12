@@ -86,6 +86,20 @@
 		where portfolioid=#{param2}
 	</update>
 
+	<select id="getOldImg" resultType="String">
+		select imgsrc
+		from portpolio
+		where portfolioid=#{param1}
+	</select>
+
+	<update id="updateImg">
+		update portpolio
+		set imgsrc=#{param1}
+		where portfolioid=#{param2}
+	</update>
+
+
+
 	<update id="updatePofol" parameterType="com.team1.careercanvas.vo.PofolVO">
 		update portpolio
 		set portfoliotitle=#{portfoliotitle},

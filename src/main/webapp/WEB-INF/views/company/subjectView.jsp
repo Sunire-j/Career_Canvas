@@ -35,6 +35,10 @@ file="../header_footer/header.jspf" %>
         background: #f2f2f2;
       }
 
+      figure img{
+        max-width: 1116px;
+      }
+
       .board_category {
         background-color: #ddd;
         width: 145px;

@@ -53,6 +53,9 @@ public interface PofolMapper {
 	void updatePofol(PofolVO pvo);
 
 	void deletePofolCont(PofolVO pvo);
+	String getOldImg(int pid);
+
+	void updateImg(String path, int pid);
 	// 정인식 작업
 	List<UserVO> getMemberList(int partyid);
 

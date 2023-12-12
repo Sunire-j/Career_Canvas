@@ -194,6 +194,9 @@ file="../header_footer/header.jspf" %>
       .membername {
         margin: 0 5px;
       }
+      figure img{
+        max-width: 1116px;
+      }
     </style>
   </head>
   <body>
