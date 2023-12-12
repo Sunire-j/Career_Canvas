@@ -48,7 +48,7 @@ public class PofolpolioController {
             String partyname = partymapper.getPartyName(pofolVO.getPartyid());
             mav.addObject("partyname",partyname);
             // 정인식 작업
-            List<UserVO> member = pofolmapper.getMemberList(pofolVO.getPartyid());
+            List<UserVO> member = pofolmapper.getSelectMemberList(pofolid);
             mav.addObject("member", member);
             // 정인식 작업 끝
         }
@@ -141,10 +141,14 @@ public class PofolpolioController {
     public ModelAndView pofollike (HttpSession session, int no){
         ModelAndView mav = new ModelAndView();
 
-        if(session.getAttribute("LogId")==null){
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("logStatus");
+
+        if(logStatus != "Y"&&logId==null){
             mav.addObject("msg", "로그인 후 추천이 가능합니다.");
             mav.addObject("isBack",1);
-            mav.addObject("login");
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
             return mav;
         }
         String userid = (String) session.getAttribute("LogId");

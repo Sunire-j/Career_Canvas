@@ -36,6 +36,13 @@ public class CommentController {
     @ResponseBody
     public int replyWrite(int postid, String content, HttpSession session,
                           @RequestParam(required = false, defaultValue = "0") int target_parent) {
+
+        String logStatus = (String) session.getAttribute("LogStatus");
+        System.out.println(logStatus);
+
+        if(logStatus==null || !logStatus.equals("Y")){
+            return -1;
+        }
         CommentVO vo = new CommentVO();
         vo.setPost_postid(postid);
         vo.setCommentcontent(content);

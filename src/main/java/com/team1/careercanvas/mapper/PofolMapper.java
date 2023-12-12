@@ -57,6 +57,8 @@ public interface PofolMapper {
 	List<UserVO> getMemberList(int partyid);
 
 	void ViewsCount(int pofolid);
+
+	List<UserVO> getSelectMemberList(int pofolid);
 	// 정인식 작업 끝
 
 	List<PartyVO> getPartyList(String logId);

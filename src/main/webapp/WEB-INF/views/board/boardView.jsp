@@ -425,6 +425,11 @@
                             },
                             type: 'post',
                             success: function (result) {
+                                console.log(result);
+                                if(result==-1){
+                                    alert("로그인 후 이용 가능합니다.");
+                                }
+
                                 commentList();
                                 $(".comment_content").val("");
                             },

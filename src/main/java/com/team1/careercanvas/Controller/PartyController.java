@@ -178,6 +178,11 @@ public class PartyController {
     @ResponseBody
     public int commentWrite(HttpSession session,
             CommentVO cvo) {
+        String logStatus = (String) session.getAttribute("logStatus");
+        String logid = (String) session.getAttribute("LogId");
+        if(logid==null && logStatus != "Y"){
+            return -1;
+        }
         cvo.setUser_userid((String) session.getAttribute("LogId"));
         cvo.setDepth(0);
         if (cvo.getTarget_parent() > 0) {
@@ -241,7 +246,15 @@ public class PartyController {
     public int applyParty(HttpSession session, int partyid) {
         String uid = (String) session.getAttribute("LogId");
         String status =  mapper.SelectmemberStatus(partyid, uid);
+        String logStatus = (String) session.getAttribute("logStatus");
         System.out.println(status);
+        List<PartyVO> vo = mapper.SelectPartyList(uid);
+        if(uid==null && logStatus!="Y"){
+            return 4;
+        }
+        if(vo.size()>5){
+            return 3;
+        }
         if(status!=null){
             return 1;
         }
@@ -251,6 +264,8 @@ public class PartyController {
         if(usertype==1){
             return 2;
         }
+
+
 
         int result = mapper.applyParty(uid, partyid);
         return 0;
