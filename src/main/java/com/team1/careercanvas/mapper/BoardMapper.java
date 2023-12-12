@@ -10,6 +10,8 @@ public interface BoardMapper {
 
     int CheckForBoardView(int id);
 
+    void UpdatePost(BoardVO bvo);
+
     int deletePost(int postid);
 
     void InsertNewPost(BoardVO vo);

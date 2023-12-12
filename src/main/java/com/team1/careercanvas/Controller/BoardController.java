@@ -258,6 +258,55 @@ public class BoardController {
         return result;
     }
 
+    @GetMapping("/board/edit")
+    public ModelAndView boardEdit(@RequestParam("no") int postid,
+                                  HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        String userid = (String) session.getAttribute("LogId");
+        int checkForBoardView = mapper.CheckForBoardView(postid);
+        if(checkForBoardView==0){
+            mav.setViewName("improve_alert");
+            mav.addObject("msg","삭제됐거나, 존재하지 않은 게시글입니다.");
+            mav.addObject("isBack", 0);
+            return mav;
+        }
+        BoardVO vo = mapper.SelectBoardView(postid);
+
+        if (session.getAttribute("LogStatus") == null || !session.getAttribute("LogStatus").equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack", 0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
+        if(!vo.getUser_userid().equals(userid)){
+            mav.setViewName("improve_alert");
+            mav.addObject("msg","잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            return mav;
+        }
+        System.out.println(vo.getCategory());
+
+        mav.addObject("bvo", vo);
+        mav.setViewName("board/boardEdit");
+        return mav;
+    }
+
+    @PostMapping("/board/editOK")
+    public String boardEditOK(HttpSession session, BoardVO vo) {
+        vo.setUser_userid((String) session.getAttribute("LogId"));
+        System.out.println(vo.getPostid());
+        mapper.UpdatePost(vo);
+        if (vo.getBoardcategory() == 0) {
+            return "redirect:/board/free";
+        } else if (vo.getBoardcategory() == 1) {
+            return "redirect:/board/ask";
+        } else if (vo.getBoardcategory() == 2) {
+            return "redirect:/board/tip";
+        }
+        return "404pages";
+    }
+
     // 정인식 작업 ( 글 내용보기 )
     @GetMapping("/board/view")
     public ModelAndView boardView(@RequestParam("no") int postid) {

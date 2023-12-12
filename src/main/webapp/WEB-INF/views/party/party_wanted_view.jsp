@@ -461,7 +461,6 @@
                         },
                         type:'post',
                         success:function(result){
-                           console.log(result);
                            alert("신청되었습니다.");
                         },
                         error:function (error){

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team1.careercanvas.mapper.BoardMapper">
+
+    <update id="UpdatePost" parameterType="com.team1.careercanvas.vo.BoardVO">
+        update post
+        set posttitle=#{posttitle},
+            postcontent=#{postcontent},
+            category=#{category}
+        where postid=#{postid}
+    </update>
+
     <insert id="InsertNewPost">
         insert into post (posttitle, postcontent, boardcategory, category, hashtag, user_userid)
         VALUES (#{posttitle}, #{postcontent}, #{boardcategory}, #{category}, #{hashtag}, #{user_userid})
