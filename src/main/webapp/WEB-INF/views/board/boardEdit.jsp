@@ -66,6 +66,9 @@
     <script>
         $(function(){
 
+            const origincontent = '${bvo.postcontent}';
+            $("#content").val(origincontent);
+
             const initCategory = ${bvo.category};
             const radio = $(".button-container input[name='category'][value='" + initCategory + "']");
             radio.parent().removeClass('btn-outline-dark').addClass('btn-dark');
@@ -210,7 +213,7 @@
     <div style="background: #D9D9D9">
         <form method="post" action="${pageContext.servletContext.contextPath}/board/editOK" class="needs-validation writeform" style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F" novalidate>
             <input type="hidden" value="${bvo.postid}" name="postid">
-            <input type="hidden" id="content" name="postcontent" value="${bvo.postcontent}">
+            <input type="hidden" id="content" name="postcontent">
             <input type="hidden" name="boardcategory" value="${bvo.boardcategory}"> <!-- 게시판 종류(0,1,2)등으로 처리 예정 -->
             <input type="text" style="width: 50%; height: 45px;" class="form-control" name="posttitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30" value="${bvo.posttitle}">
             <span class="invalid-feedback">

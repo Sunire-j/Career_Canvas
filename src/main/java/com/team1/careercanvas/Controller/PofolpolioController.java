@@ -133,6 +133,12 @@ public class PofolpolioController {
         }else{
             pofolmapper.updatePofol(pofolVO);
         }
+
+        //여기에서 썸네일 처리 한번 해줘야함
+        //썸네일 있으면 다 자르고 확인하고 업데이트까지
+        //그럼 날짜를 붙여줘야함
+
+
         mav.setViewName("redirect:/pofolview?pofolid="+pofolVO.getPortfolioid());
         return mav;
     }
