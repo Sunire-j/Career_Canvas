@@ -1,10 +1,6 @@
 package com.team1.careercanvas.mapper;
 
-import com.team1.careercanvas.vo.CompanyVO;
-import com.team1.careercanvas.vo.PagingVO;
-import com.team1.careercanvas.vo.PartyVO;
-import com.team1.careercanvas.vo.PofolVO;
-import com.team1.careercanvas.vo.UserVO;
+import com.team1.careercanvas.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -52,6 +48,11 @@ public interface PofolMapper {
 
 	List<PofolVO> getPortfolioForHomeWithCat(int category);
 
+	List<UserVO> getMemberListForEdit(int partyid);
+
+	void updatePofol(PofolVO pvo);
+
+	void deletePofolCont(PofolVO pvo);
 	// 정인식 작업
 	List<UserVO> getMemberList(int partyid);
 

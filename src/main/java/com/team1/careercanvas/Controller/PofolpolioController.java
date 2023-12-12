@@ -67,23 +67,73 @@ public class PofolpolioController {
     @GetMapping("/portfolio/edit")
     public ModelAndView pofolEdit(HttpSession session, int no){
         ModelAndView mav = new ModelAndView();
-
+        String logStatus = (String) session.getAttribute("LogStatus");
+        //로그인상태확인
+        if(logStatus==null){
+            mav.addObject("msg", "로그인 후 가능합니다.");
+            mav.addObject("isBack",1);
+            mav.addObject("alert_page","login");
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         PofolVO pofolVO = pofolmapper.getPofolall(no);
+        //포폴주인 맞는지 확인해야함
+
+        String LogId = (String) session.getAttribute("LogId");
+        if(!pofolVO.getUser_userid().equals(LogId)){
+            mav.addObject("msg","잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         //파티랑 솔로랑 viewname을 바꿔서 보내줘야함
         //파티를 먼저하자
         if(pofolVO.getIsteam()==0){
             String partyname = partymapper.getPartyName(pofolVO.getPartyid());
             mav.addObject("partyname",partyname);
-            List<UserVO> member = pofolmapper.getMemberList(pofolVO.getPartyid());
-            mav.addObject("member", member);
+            List<UserVO> member = pofolmapper.getMemberList(pofolVO.getPartyid());//기존멤버
+            mav.addObject("memberList", member);
+            List<UserVO> originmember = pofolmapper.getMemberListForEdit(pofolVO.getPortfolioid());//참여멤버
+            mav.addObject("originmember", originmember);
+            System.out.println(originmember);
             //준비물 끝
-            mav.addObject("pofolVO", pofolVO);
-            mav.setViewName("myteam/myteam_pofol_edit");
-            return mav;
-        }
 
+
+            mav.setViewName("myteam/myteam_pofol_edit");
+        }else{
+            //개인은 그냥 바로 가면 끝임
+            mav.setViewName("users/mypage_pofolEdit");
+        }
+        mav.addObject("pofolVO", pofolVO);
+        return mav;
+    }
+
+    @PostMapping("/portfolio/pofolEditOk")
+    public ModelAndView pofolEditOk(HttpSession session,
+                                    @RequestParam("posttitle") String title,
+                                    @RequestParam("postcontent") String content,
+                                    @RequestParam(value = "member", required = false) String[] member,
+                                    int portfolioid){
+
+        ModelAndView mav = new ModelAndView();
+        //파티의 경우
+        PofolVO pofolVO = pofolmapper.getPofolall(portfolioid);
+        pofolVO.setPortfoliotitle(title);
+        pofolVO.setPortfoliocontent(content);
+        if(pofolVO.getIsteam()==0){
+            //내용을 먼저 수정시키고
+            pofolmapper.updatePofol(pofolVO);
+            //멤버날리고 새로 추가
+            pofolmapper.deletePofolCont(pofolVO);
+            for (int i = 0; i < member.length; i++) {
+                partymapper.addPofolMember(pofolVO.getPortfolioid(), member[i]);
+            }
+        }else{
+            pofolmapper.updatePofol(pofolVO);
+        }
+        mav.setViewName("redirect:/pofolview?pofolid="+pofolVO.getPortfolioid());
         return mav;
     }
 

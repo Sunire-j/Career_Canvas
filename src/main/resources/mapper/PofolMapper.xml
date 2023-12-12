@@ -86,6 +86,27 @@
 		where portfolioid=#{param2}
 	</update>
 
+	<update id="updatePofol" parameterType="com.team1.careercanvas.vo.PofolVO">
+		update portpolio
+		set portfoliotitle=#{portfoliotitle},
+		    portfoliocontent=#{portfoliocontent}
+		where portfolioid=#{portfolioid};
+	</update>
+
+	<delete id="deletePofolCont">
+		delete
+		from pofolcont
+		where portfolioid=#{portfolioid};
+	</delete>
+
+
+	<select id="getMemberListForEdit" resultType="com.team1.careercanvas.vo.UserVO">
+		SELECT u.userid AS userid, u.username AS username
+		FROM pofolcont p
+				 JOIN user u ON p.userid = u.userid
+		WHERE p.portfolioid = #{param1};
+	</select>
+
 	<select id="getPortfolioForHome" resultType="com.team1.careercanvas.vo.PofolVO">
 		SELECT p.portfolioid as portfolioid,
 		       p.isteam as isteam ,

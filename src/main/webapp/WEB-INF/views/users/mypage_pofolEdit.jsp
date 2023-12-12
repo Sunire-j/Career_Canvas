@@ -1,7 +1,5 @@
-<%@ page import="com.team1.careercanvas.vo.UserVO" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
-         pageEncoding="UTF-8" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+pageEncoding="UTF-8" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %> <%@include file="../header_footer/header.jspf" %>
 <!DOCTYPE html>
 <html>
@@ -36,13 +34,16 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         justify-content: center;
         align-items: center;
       }
-      .ck-editor__editable {
-        height: 400px;
-      }
       h3{
+
         font-size: 40px;
         font-weight: bold;
       }
+
+      .ck-editor__editable {
+        height: 400px;
+      }
+
       #editor {
         width: 100%;
         height: 600px;
@@ -58,15 +59,19 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
       input[type="radio"] {
         display: none;
       }
+
       .container_bottom{
         display: flex;
         background: #A69668;
         height: 10px;
         margin-top: 10px;
       }
+
     </style>
     <script>
       $(function () {
+        var origincontent = '${pofolVO.portfoliocontent}';
+        $("#content").val(origincontent);
         let editor;
         CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
           toolbar: {
@@ -172,11 +177,16 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
           });
         //
 
-        $('.check-container input[type="checkbox"]').change(function () {
-          $(this)
-                  .parent()
-                  .toggleClass("btn-success", $(this).is(":checked"))
-                  .toggleClass("btn-outline-success", !$(this).is(":checked"));
+        $('.button-container input[type="radio"]').change(function () {
+          $(".button-container label")
+            .removeClass("btn-warning")
+            .addClass("btn-outline-warning");
+          if ($(this).is(":checked")) {
+            $(this)
+              .parent()
+              .removeClass("btn-outline-warning")
+              .addClass("btn-warning");
+          }
         });
         $("#title").on("input blur", function () {
           var title = $(this).val();
@@ -189,6 +199,16 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             $(this).addClass("is-valid").removeClass("is-invalid");
           }
         });
+
+        $("#hashtag").on("input blur", function () {
+          if (this.checkValidity()) {
+            $(this).siblings('[data-feedback="patternMismatch"]').hide();
+            $(this).removeClass("is-invalid").addClass("is-valid");
+          } else {
+            $(this).removeClass("is-valid").addClass("is-invalid");
+            $(this).siblings('[data-feedback="patternMismatch"]').show();
+          }
+        });
         $("form").on("submit", function (e) {
           var editorContent = editor.getData();
           if (!editorContent) {
@@ -196,81 +216,71 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             alert("글 내용을 입력해 주세요.");
           }
         });
+
+        $(".hashtag").on("change blur", function () {
+          if ($(this).hasClass("is-invalid")) {
+            $(".submitbtn").prop("disabled", true);
+          } else {
+            $(".submitbtn").prop("disabled", false);
+          }
+        });
       });
     </script>
   </head>
   <body>
-    <div class="content">
-      <div class="content-header">
-        <h3>포트폴리오 수정</h3>
-      </div>
-        <form
-          method="post"
-          style=""
-          action="${pageContext.servletContext.contextPath}/portfolio/pofolEditOk"
-          class="needs-validation writeform"
-          novalidate
-        >
-          <div style="background: #D9D9D9; padding: 20px; border-bottom: 2px solid #73351F">
-            <input type="hidden" name="portfolioid" value="${pofolVO.portfolioid}">
-          <input type="hidden" id="content" name="postcontent" value="${pofolVO.portfoliocontent}"/>
-          <input
-            type="text"
-            style="width: 40%;"
-            class="form-control"
-            name="posttitle"
-            id="title"
-            placeholder="제목을 입력해 주세요."
-            required
-            maxlength="30"
-            value="${pofolVO.portfoliotitle}"
-          />
-          <div class="invalid-feedback">제목을 입력해 주세요. (30자 이내)</div>
-          <div style="padding: 20px 0">
-            <div class="button-container">
-              <c:if test="${pofolVO.category==1||pofolVO.category==2||pofolVO.category==3}">
-                <c:if test="${pofolVO.category==1}">
-                  <label class="btn btn-dark">
-                    <input type="radio" name="category" value="1" checked readonly/>
-                    <span>IT/프로그래밍</span>
-                  </label>
-                </c:if>
-                <c:if test="${pofolVO.category==2}">
-                  <label class="btn btn-dark">
-                    <input type="radio" name="category" value="2" checked readonly/>
-                    <span>디자인</span>
-                  </label>
-                </c:if>
-                <c:if test="${pofolVO.category==3}">
-                  <label class="btn btn-dark">
-                    <input type="radio" name="category" value="3" checked readonly/>
-                    <span>영상음향</span>
-                  </label>
-                </c:if>
-              </c:if>
-            </div>
-          </div>
-          <div class="check-container" style="margin: 10px 0;">
-            <c:forEach items="${memberList}" var="uvo" >
-                <label class="btn btn-outline-success">
-                  <input type="checkbox" name="member" value="${uvo.userid}" />
-                  <span>${uvo.username}</span>
+  <div class="content">
+    <div class="content-header">
+      <h3>포트폴리오 작성</h3>
+    </div>
+    <div style="background: #D9D9D9">
+      <form
+        method="post"
+        action="${pageContext.servletContext.contextPath}/portfolio/pofolEditOk"
+        class="needs-validation writeform"
+        style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F"
+        novalidate
+      >
+        <input type="hidden" id="content" name="postcontent"/>
+        <input type="hidden" name="portfolioid" value="${pofolVO.portfolioid}">
+        <input
+          type="text"
+          style="width: 40%"
+          class="form-control"
+          name="posttitle"
+          id="title"
+          placeholder="제목을 입력해 주세요."
+          required
+          maxlength="30"
+          value="${pofolVO.portfoliotitle}"
+        />
+        <div class="invalid-feedback">제목을 입력해 주세요. (30자 이내)</div>
+        <div>
+          <div class="button-container">
+            <c:if test="${pofolVO.category==1||pofolVO.category==2||pofolVO.category==3}">
+              <c:if test="${pofolVO.category==1}">
+                <label class="btn btn-dark">
+                  <input type="radio" name="category" value="1" checked readonly/>
+                  <span>IT/프로그래밍</span>
                 </label>
-            </c:forEach>
-            <script>
-              <%
-              List<UserVO> originmember = (List<UserVO>) request.getAttribute("originmember");
-              for(UserVO user : originmember){
-              %>
-              $("label span").filter(function() {
-                return $(this).text() === '<%=user.getUsername()%>';
-              }).parent().removeClass('btn-outline-success').addClass('btn-success')
-                      .find("input[type='checkbox']").prop('checked', true);
-              <% }%>
-            </script>
+              </c:if>
+              <c:if test="${pofolVO.category==2}">
+                <label class="btn btn-dark">
+                  <input type="radio" name="category" value="2" checked readonly/>
+                  <span>디자인</span>
+                </label>
+              </c:if>
+              <c:if test="${pofolVO.category==3}">
+                <label class="btn btn-dark">
+                  <input type="radio" name="category" value="3" checked readonly/>
+                  <span>영상음향</span>
+                </label>
+              </c:if>
+            </c:if>
+          </div>
           </div>
         </div>
-      <div style="background: #F2F2F2; padding: 10px">
+
+        <div style="padding: 10px">
         <div id="editor">${pofolVO.portfoliocontent}</div>
         <div id="botContainer">
           <div style="width: 50%" class="botContainer2">
@@ -281,10 +291,11 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             value="글등록"
           />
         </div>
-      </div>
       </form>
-      <div class="container_bottom"></div>
     </div>
+    <div class="container_bottom"></div>
+  </div>
+  </div>
   </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>

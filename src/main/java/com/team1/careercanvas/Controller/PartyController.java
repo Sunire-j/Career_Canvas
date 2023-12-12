@@ -92,6 +92,7 @@ public class PartyController {
     }
 
 
+
     @GetMapping("/party/wanted")
     public ModelAndView partywanted(HttpSession session,
             @RequestParam(required = false, defaultValue = "1") int page,

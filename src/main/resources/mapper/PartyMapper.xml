@@ -296,6 +296,7 @@
         from party
         where partyid=#{param1}
     </select>
+
     <!--조석훈 끝-->
 
     <!-- 정인식 작업 -->
