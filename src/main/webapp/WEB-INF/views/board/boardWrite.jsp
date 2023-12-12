@@ -240,9 +240,6 @@
     <div id="editor"></div>
         <div id="botContainer">
             <div style="width: 50%" class="botContainer2">
-            <input type="text" class="form-control hashtag" name="hashtag" id="hashtag" pattern="(#[\w가-힣]+ )*(#[\w가-힣]+ )?#[\w가-힣]+" placeholder="#태그는 공백으로 구분해 주세요. (예 : #샤롯데 #오페라의유령)"/>
-            <div class="invalid-feedback" data-feedback="patternMismatch">해쉬태그 형식에 맞지 않습니다.
-            </div>
             </div>
             <input type="submit"  class="btn btn-primary submitbtn" value="글등록" />
         </div>

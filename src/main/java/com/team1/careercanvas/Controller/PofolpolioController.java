@@ -62,6 +62,30 @@ public class PofolpolioController {
         mav.setViewName("pofol/pofolview");
         return mav;
     }
+
+    @GetMapping("/portfolio/edit")
+    public ModelAndView pofolEdit(HttpSession session, int no){
+        ModelAndView mav = new ModelAndView();
+
+
+        PofolVO pofolVO = pofolmapper.getPofolall(no);
+
+        //파티랑 솔로랑 viewname을 바꿔서 보내줘야함
+        //파티를 먼저하자
+        if(pofolVO.getIsteam()==0){
+            String partyname = partymapper.getPartyName(pofolVO.getPartyid());
+            mav.addObject("partyname",partyname);
+            List<UserVO> member = pofolmapper.getMemberList(pofolVO.getPartyid());
+            mav.addObject("member", member);
+            //준비물 끝
+            mav.addObject("pofolVO", pofolVO);
+            mav.setViewName("myteam/myteam_pofol_edit");
+            return mav;
+        }
+
+        return mav;
+    }
+
     @GetMapping("/pofol/like")
     public ModelAndView pofollike (HttpSession session, int no){
         ModelAndView mav = new ModelAndView();

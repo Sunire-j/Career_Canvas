@@ -197,23 +197,25 @@
     <div class="board_title">${bvo.posttitle}</div>
     <section style="padding: 20px">
         <div class="d-flex">
-        <div class="board_category" style="margin-bottom: 20px">
-            <c:if test="${bvo.boardcategory==0}"> 자유 </c:if>
-            <c:if test="${bvo.boardcategory==1}"> 질문 </c:if>
-            <c:if test="${bvo.boardcategory==2}"> 노하우 </c:if>
-            게시판
-        </div>
-        <div style="background: black; width: 90px; margin-left : 10px;text-align: center; color: white; border-radius: 10px; margin-bottom: 20px">
-            <c:if test="${bvo.category==1}">
-                IT/개발
+            <div class="board_category" style="margin-bottom: 20px">
+                <c:if test="${bvo.boardcategory==0}"> 자유 </c:if>
+                <c:if test="${bvo.boardcategory==1}"> 질문 </c:if>
+                <c:if test="${bvo.boardcategory==2}"> 노하우 </c:if>
+                게시판
+            </div>
+            <c:if test="${bvo.category==1 || bvo.category==2 || bvo.category==3}">
+                <div style="background: black; width: 90px; margin-left : 10px;text-align: center; color: white; border-radius: 10px; margin-bottom: 20px">
+                    <c:if test="${bvo.category==1}">
+                        IT/개발
+                    </c:if>
+                    <c:if test="${bvo.category==2}">
+                        디자인
+                    </c:if>
+                    <c:if test="${bvo.category==3}">
+                        영상/음향
+                    </c:if>
+                </div>
             </c:if>
-            <c:if test="${bvo.category==2}">
-                디자인
-            </c:if>
-            <c:if test="${bvo.category==3}">
-                영상/음향
-            </c:if>
-        </div>
         </div>
         <div class="board_main">
             <div class="board_info">

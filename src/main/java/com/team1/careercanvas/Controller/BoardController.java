@@ -225,7 +225,7 @@ public class BoardController {
             return mav;
         }
         session.setAttribute("boardcat", 2);
-        mav.setViewName("improve_alert");
+        mav.setViewName("board/boardWrite");
         return mav;
     }
 

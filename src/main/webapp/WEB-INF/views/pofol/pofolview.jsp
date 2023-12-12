@@ -91,7 +91,7 @@ file="../header_footer/header.jspf" %>
       .board_view {
         width: 70px;
         text-align: center;
-        margin: auto 0 0 auto;
+        margin: 0 0 0 auto;
       }
 
       .board_recommend {
@@ -194,19 +194,34 @@ file="../header_footer/header.jspf" %>
     <article>
       <div class="board_title">${pVO.portfoliotitle}</div>
       <section style="padding: 20px">
+        <div class="d-flex">
         <div class="board_category" style="margin-bottom: 20px">
           포트폴리오 게시판
         </div>
+        <c:if test="${pVO.category==1 || pVO.category==2 || pVO.category==3}">
+        <div style="background: black; width: 90px; margin-left : 10px;text-align: center; color: white; border-radius: 10px; margin-bottom: 20px">
+          <c:if test="${pVO.category==1}">
+            IT/개발
+          </c:if>
+          <c:if test="${pVO.category==2}">
+            디자인
+          </c:if>
+          <c:if test="${pVO.category==3}">
+            영상/음향
+          </c:if>
+        </div>
+        </c:if>
+        </div>
         <div class="board_main">
           <div class="board_info">
-            <div class="board_writer">
+            <div style="margin-left: 10px" class="board_writer">
+              작성자&nbsp;:&nbsp;
               <a
                 href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${pVO.user_userid}"
                 >${pVO.username}</a
               >
             </div>
             <div class="board_date">
-              <c:if test="${pVO.isteam==1}"> </c:if>
               <c:if test="${pVO.isteam==0}"> 파티명 : ${partyname}&nbsp </c:if>
             </div>
             <div class="board_view">조회수</div>
@@ -233,7 +248,7 @@ file="../header_footer/header.jspf" %>
                   참여 인원 :
                   <c:forEach var="uvo" items="${member}">
                     <a
-                      class="badge rounded-pill bg-primary"
+                      class="badge rounded-pill bg-secondary"
                       style="color: white; font-size: 15px"
                       href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}"
                       >${uvo.username}</a
@@ -251,20 +266,20 @@ file="../header_footer/header.jspf" %>
                 align-items: center;
               "
             >
-              <div></div>
+              <div style="width: 158px"></div>
               <a
                 style="color: white"
                 href="${pageContext.servletContext.contextPath}/pofol/like?no=${pVO.portfolioid}"
                 class="btn btn-primary"
                 ><i class="fa-solid fa-thumbs-up"></i>&nbsp추천</a
               >
-              <div class="d-flex" style="margin-right: 10px">
+              <div class="d-flex" style="margin-right: 10px; justify-content: flex-end">
                 <c:if test="${LogStatus=='Y'}">
                   <a
                     style="height: fit-content; margin-right: 10px"
                     class="btn btn-outline-danger btn-sm"
                     id="report_post"
-                    >게시글 신고</a
+                    >신고</a
                   >
                 </c:if>
                 <c:if test="${LogId==pVO.user_userid}">
@@ -272,8 +287,10 @@ file="../header_footer/header.jspf" %>
                     style="height: fit-content"
                     class="btn btn-outline-danger btn-sm"
                     id="del_post"
-                    >게시글 삭제</a
+                    >삭제</a
                   >
+                  <a href="${pageContext.servletContext.contextPath}/portfolio/edit?no=${pVO.portfolioid}"
+                          style="height: fit-content; margin-left: 10px" class="btn btn-outline-dark btn-sm">수정</a>
                 </c:if>
               </div>
             </div>
