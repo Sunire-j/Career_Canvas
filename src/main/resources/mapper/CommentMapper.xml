@@ -19,6 +19,12 @@
         order by target_parent asc, commentid asc;
     </select>
 
+    <update id="UpdatePostComment">
+        update comment
+        set commentcontent=#{param2}
+        where commentid=#{param1}
+    </update>
+
     <insert id="replyInsert" parameterType="com.team1.careercanvas.vo.CommentVO">
         insert into comment(post_postid, commentcontent, user_userid, depth
         <if test="target_parent != null">, target_parent</if>)

@@ -177,13 +177,13 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
 
         $('.button-container input[type="radio"]').change(function () {
           $(".button-container label")
-            .removeClass("btn-warning")
-            .addClass("btn-outline-warning");
+            .removeClass("btn-dark")
+            .addClass("btn-outline-dark");
           if ($(this).is(":checked")) {
             $(this)
               .parent()
-              .removeClass("btn-outline-warning")
-              .addClass("btn-warning");
+              .removeClass("btn-outline-dark")
+              .addClass("btn-dark");
           }
         });
         $("#title").on("input blur", function () {
@@ -252,19 +252,19 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         <div class="invalid-feedback">제목을 입력해 주세요. (30자 이내)</div>
         <div>
           <div class="button-container">
-            <label class="btn btn-outline-warning">
+            <label class="btn btn-outline-dark">
               <input type="radio" name="category" value="0" checked />
               <span>선택안함</span>
             </label>
-            <label class="btn btn-outline-warning">
+            <label class="btn btn-outline-dark">
               <input type="radio" name="category" value="1" />
               <span>IT/프로그래밍</span>
             </label>
-            <label class="btn btn-outline-warning">
+            <label class="btn btn-outline-dark">
               <input type="radio" name="category" value="2" />
               <span>디자인</span>
             </label>
-            <label class="btn btn-outline-warning">
+            <label class="btn btn-outline-dark">
               <input type="radio" name="category" value="3" />
               <span>영상음향</span>
             </label>

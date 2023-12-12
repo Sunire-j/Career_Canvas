@@ -324,7 +324,11 @@
                                 var comment = result[i];
                                 var marginLeft = comment.depth == 1 ? '70px' : '10px';
                                 var htmltag = '<li style="margin-left: ' + marginLeft + '"><div class="comment_list_content"><img src = ${pageContext.servletContext.contextPath}/upload' + comment.profileimg + ' class="list_img"><a href ="${pageContext.servletContext.contextPath}/profile/portfolio?uid=' + comment.user_userid + '" "class="comment_writer">';
-                                htmltag += comment.username + '</a> &nbsp<div style="font-size: 12px" class="comment_date">(' + comment.date + ')</div><div class="reply_content"><div class="reply">' + comment.commentcontent;
+                                htmltag += comment.username + '</a> &nbsp<div style="font-size: 12px" class="comment_date">(' + comment.date + ')</div>&nbsp;'
+                                if(${LogStatus=='Y'}){
+                                    htmltag+='<div id="commentedit" title="'+result[i].commentid+'" style="cursor: pointer; display: inline-block; font-size: 14px; color: white" >수정</div>';
+                                }
+                                    htmltag+='<div class="reply_content"><div class="reply">' + comment.commentcontent;
                                 htmltag += '</div><div class="reply_btn">';
                                 htmltag += '<input type="hidden" id="commentidForReply" value="' + comment.commentid + '"/>'
                                 if (comment.depth == 0) {
@@ -516,6 +520,43 @@
                                 }
                             });
                         }
+                    });
+
+                    $(".comment_list_real").on('click', '#commentedit', function() {
+                        var $this = $(this);
+                        var replyDiv = $(this).parents('li').find('.reply');
+                        var originalText = replyDiv.text();
+                        var editid=$(this).attr('title');
+
+                        if($(this).text()=='완료'){
+                            //여기는 완료하는 부분
+                            var textarea = $(this).parents('li').find('textarea.reply');
+                            if(textarea.val()==""){
+                                console.log("내용 입력 후 시도");
+                            }
+                            //여기서 ajax처리해주고 commentList다시 실행하면 끝임
+                            $.ajax({
+                                url:"${pageContext.servletContext.contextPath}/comment/editcomment",
+                                data:{
+                                    commentid : editid,
+                                    commentcontent : textarea.val()
+                                },
+                                type:'post',
+                                success:function(result){
+                                    console.log(result);
+                                    commentList();
+                                }
+                            });
+                            return false;
+                        }
+
+                        var textarea = $('<textarea/>', {
+                            'class': 'reply',
+                            'text': originalText
+                        });
+
+                        replyDiv.replaceWith(textarea);
+                        $(this).text('완료');
                     });
                 });
             </script>
