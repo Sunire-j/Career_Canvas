@@ -176,6 +176,11 @@
         insert into postlike(user_userid, post_postid)
         VALUES (#{param2}, #{param1})
     </insert>
+    <update id="MinusViewsCount">
+        update post
+        set views=post.views -1
+        where postid = #{param1}
+    </update>
 
     <!-- 권혁준 작업 -->
     <select id="getmyPost" resultType="com.team1.careercanvas.vo.BoardVO">

@@ -97,6 +97,8 @@ public interface PartyMapper {
     int insertPofolImg(String pathfordb, int Portfolioid);
 
     String SelectmemberStatus(int partyid, String uid);
+
+    int getUsertype(String uid);
     // 정인식 작업 끝
 
 }

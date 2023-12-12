@@ -347,7 +347,7 @@ public class BoardController {
             return mav;
         }
         mapper.LikeCount(postid, (String) session.getAttribute("LogId"));
-
+        mapper.MinusViewsCount(postid);
         mav.setViewName("redirect:/board/view?no=" + postid);
         return mav;
     }

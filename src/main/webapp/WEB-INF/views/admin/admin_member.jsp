@@ -200,7 +200,7 @@
                 <option value="username">이름</option>
                 <option value="userid">아이디</option>
             </select>
-            <input type="text" name="searchWord" class="form-control" id="searchWord" placeholder="검색어를 입력하세요." style="width: 200px"/>
+            <input type="text" name="searchWord" class="form-control" id="searchWord" maxlength="80" placeholder="검색어를 입력하세요." style="width: 200px"/>
             <button id="searchBtn" class="btn btn-primary">검색</button>
         </div>
     </div>

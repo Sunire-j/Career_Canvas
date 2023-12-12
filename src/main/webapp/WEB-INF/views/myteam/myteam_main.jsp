@@ -135,6 +135,7 @@
             overflow: auto;
         }
         .member_list li{
+            width: 70px;
             margin-right: 20px;
             float: left;
         }
@@ -147,6 +148,9 @@
             text-align: center;
             font-size: 15px;
             font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         /* 메모 */
         .party_memo{
@@ -474,10 +478,12 @@
                     <ul class="member_list" id="member_list">
                         <c:forEach var="uvo" items="${memberList}">
                             <li>
-                                <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}" class="member_img">
-                                <div class="member_name">
-                                        ${uvo.username}
-                                </div>
+                                <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">
+                                    <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}" class="member_img">
+                                    <div class="member_name" title="${uvo.username}">
+                                            ${uvo.username}
+                                    </div>
+                                </a>
                             </li>
                         </c:forEach>
                     </ul>

@@ -367,6 +367,12 @@
         from partymember
         where party_partyid = #{param1} and user_userid = #{param2}
     </select>
+
+    <select id="getUsertype" resultType="Integer">
+        select usertype
+        from user
+        where userid=#{param1}
+    </select>
     <!-- 정인식 작업 끝 -->
 
 </mapper>

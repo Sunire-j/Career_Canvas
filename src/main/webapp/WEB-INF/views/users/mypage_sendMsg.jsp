@@ -483,6 +483,7 @@ file="../header_footer/header.jspf"%>
         class="form-control"
         name="searchWord"
         placeholder="Search"
+        maxlength="30"
       />
       <button class="btn btn-success" type="submit">Go</button>
     </form>

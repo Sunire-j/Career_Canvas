@@ -244,6 +244,13 @@ public class PartyController {
         if(status!=null){
             return 1;
         }
+
+        int usertype = mapper.getUsertype(uid);
+
+        if(usertype==1){
+            return 2;
+        }
+
         int result = mapper.applyParty(uid, partyid);
         return 0;
     }

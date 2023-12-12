@@ -52,7 +52,8 @@ public class PofolpolioController {
             mav.addObject("member", member);
             // 정인식 작업 끝
         }
-
+        // 조회수 증가
+        pofolmapper.ViewsCount(pofolid);
         //추천수조회
         int thumbsup = pofolmapper.getpofollike(pofolid);
 
