@@ -136,7 +136,7 @@
         }
         .member_list li{
             margin-right: 20px;
-
+            float: left;
         }
         .member_img{
             width: 70px;

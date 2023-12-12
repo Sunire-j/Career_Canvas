@@ -476,7 +476,7 @@
                             <option value="author">작성자</option>
                             <option value="content">글내용</option>
                         </select>
-                        <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요"
+                        <input type="text" class="form-control" name="searchWord" placeholder="검색어를 입력하세요" maxlength="80"
                                style="margin-right: 10px">
                         <input type="submit" class="btn btn-secondary" value="검색">
                         <input type="hidden" name="category" value="${pVO.category}"/>
