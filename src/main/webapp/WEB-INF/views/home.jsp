@@ -569,13 +569,11 @@
                 },
                 type: 'post',
                 success:function(r){
-                    console.log(r);
                     var tag = "";
                     if(r.length==0){
                         tag+="<p style='text-align: center; width: 100%'>업로드 된 포트폴리오가 없습니다.</p>"//여기서부터 해야함
                     }else{
                         for(var i =0; i<r.length; i++){
-                            console.log(r.length);
                             tag+=`
                         <li>
                     <a href="${pageContext.servletContext.contextPath}/pofolview?pofolid=`+r[i].portfolioid+`">
@@ -619,7 +617,6 @@
                 </li>
                             `
                         }
-                        console.log(tag);
                     }
                     $("#home-portfolio-list").append(tag);
                 }

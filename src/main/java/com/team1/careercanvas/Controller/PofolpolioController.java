@@ -106,7 +106,6 @@ public class PofolpolioController {
             mav.addObject("memberList", member);
             List<UserVO> originmember = pofolmapper.getMemberListForEdit(pofolVO.getPortfolioid());//참여멤버
             mav.addObject("originmember", originmember);
-            System.out.println(originmember);
             //준비물 끝
 
 
@@ -178,12 +177,6 @@ public class PofolpolioController {
             if (oldFileName != null || (!oldFileName.equals("") && !oldFileName.equals("/pofolimg/staticpofolimg.png"))) {
                 File fileToDelete = new File(directory, oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
                 boolean result = fileToDelete.delete();
-
-                if (result) {
-                    System.out.println("파일 삭제 성공");
-                } else {
-                    System.out.println("파일 삭제 실패");
-                }
             }
 
             String pathfordb = "/pofolimg/" + newFileName;

@@ -40,8 +40,6 @@
                        alert("삭제 신청이 완료되었습니다.");
                        opener.parent.location.reload();
                         window.close();
-                    }, error:function (e){
-                       console.log(e.printStackTrace());
                     }
                 });
             });

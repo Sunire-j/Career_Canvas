@@ -35,7 +35,6 @@ public class AdminController {
         pvo.setPage(1);
         pvo.setOffsetPoint(0);
         pvo.setPostSort(4);
-
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
@@ -198,13 +197,11 @@ public class AdminController {
 
     @GetMapping("/report/delete") // 신고된 글 삭제 버튼 클릭 이벤트
     public String deleteReport(HttpSession session, int targetid, String reporttype) {
-        System.out.println(reporttype);
         int Rresult = mapper.deleteReport(targetid);
         if (Rresult > 0) {
             if (reporttype.equals("board")) {
                 int Bresult = mapper.deleteBoard(targetid);
                 if (Bresult > 0) {
-                    System.out.println("게시글 삭제 완료");
                     return "redirect:/admin/report";
                 } else {
                     session.setAttribute("msg", "글 삭제 실패했습니다.");
@@ -213,7 +210,6 @@ public class AdminController {
             } else if (reporttype.equals("comment")) {
                 int Cresult = mapper.deleteComment(targetid);
                 if (Cresult > 0) {
-                    System.out.println("댓글 삭제 완료");
                     return "redirect:/admin/report";
                 } else {
                     session.setAttribute("msg", "삭제 실패했습니다.");
@@ -222,7 +218,6 @@ public class AdminController {
             } else if (reporttype.equals("wanted")) {
                 int Wresult = mapper.deleteWanted(targetid);
                 if (Wresult > 0) {
-                    System.out.println("파티 모집글 삭제 완료");
                     return "redirect:/admin/report";
                 } else {
                     session.setAttribute("msg", "삭제 실패했습니다.");
@@ -231,7 +226,6 @@ public class AdminController {
             } else if (reporttype.equals("wantedcomment")) {
                 int WCresult = mapper.deleteWantedComment(targetid);
                 if (WCresult > 0) {
-                    System.out.println("파티 모집 댓글 삭제 완료");
                     return "redirect:/admin/report";
                 } else {
                     session.setAttribute("msg", "삭제 실패했습니다.");
@@ -240,7 +234,6 @@ public class AdminController {
             } else if (reporttype.equals("pp")) {
                 int Presult = mapper.deletePP(targetid);
                 if (Presult > 0) {
-                    System.out.println("포트폴리오 삭제 완료");
                     return "redirect:/admin/report";
                 } else {
                     session.setAttribute("msg", "삭제 실패했습니다.");
@@ -249,7 +242,6 @@ public class AdminController {
             }else if(reporttype.equals("subject")){
                 int Sresult = mapper.deleteSubject(targetid);
                 if(Sresult>0){
-                    System.out.println("제출한 과제 삭제 완료");
                     return "redirect:/admin/report";
                 } else {
                     session.setAttribute("msg", "삭제 실패했습니다.");
@@ -267,7 +259,6 @@ public class AdminController {
     @GetMapping("/report/delete/user") // 탈퇴 - 리포트 테이블에서 userid 뽑고, 리포트 앤드 보드 삭제 -> user테이블에서 삭제
     public String reportDeleteUser(HttpSession session, int target_id, String reporttype) {
         String userid = mapper.reporterUser(target_id);
-        System.out.println(reporttype);
         int Rresult = mapper.deleteReport(target_id);
         if (Rresult > 0) {
             if (reporttype.equals("board")) {
@@ -275,7 +266,6 @@ public class AdminController {
                 if (Bresult > 0) {
                     int Uresult = mapper.deleteUser(userid);
                     if (Uresult > 0) {
-                        System.out.println("회원 탈퇴 완료");
                         return "redirect:/admin/report";
                     } else {
                         session.setAttribute("msg", "회원 삭제 실패했습니다.");
@@ -287,7 +277,6 @@ public class AdminController {
                 if (Cresult > 0) {
                     int Uresult = mapper.deleteUser(userid);
                     if (Uresult > 0) {
-                        System.out.println("회원 탈퇴 완료");
                         return "redirect:/admin/report";
                     } else {
                         session.setAttribute("msg", "회원 삭제 실패했습니다.");
@@ -299,7 +288,6 @@ public class AdminController {
                 if (Wresult > 0) {
                     int Uresult = mapper.deleteUser(userid);
                     if (Uresult > 0) {
-                        System.out.println("회원 탈퇴 완료");
                         return "redirect:/admin/report";
                     } else {
                         session.setAttribute("msg", "회원 삭제 실패했습니다.");
@@ -311,7 +299,6 @@ public class AdminController {
                 if (WCresult > 0) {
                     int Uresult = mapper.deleteUser(userid);
                     if (Uresult > 0) {
-                        System.out.println("회원 탈퇴 완료");
                         return "redirect:/admin/report";
                     } else {
                         session.setAttribute("msg", "회원 삭제 실패했습니다.");
@@ -323,7 +310,6 @@ public class AdminController {
                 if (Presult > 0) {
                     int Uresult = mapper.deleteUser(userid);
                     if (Uresult > 0) {
-                        System.out.println("회원 탈퇴 완료");
                         return "redirect:/admin/report";
                     } else {
                         session.setAttribute("msg", "회원 삭제 실패했습니다.");
@@ -466,7 +452,6 @@ public class AdminController {
                 bannerimg.transferTo(new File(path.toString()));
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("파일저장실패");
                 return "404pages";
             }
             // 파일저장 끝
@@ -486,7 +471,6 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
 
         String bannerimg = mapper.getBannerImg(bannerid);
-        System.out.println(bannerimg);
 
         mav.addObject("imgsrc", bannerimg);
         mav.setViewName("/admin/image_popup");

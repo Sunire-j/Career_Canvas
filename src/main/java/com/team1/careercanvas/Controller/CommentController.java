@@ -52,7 +52,6 @@ public class CommentController {
                           @RequestParam(required = false, defaultValue = "0") int target_parent) {
 
         String logStatus = (String) session.getAttribute("LogStatus");
-        System.out.println(logStatus);
 
         if(logStatus==null || !logStatus.equals("Y")){
             return -1;
@@ -66,10 +65,7 @@ public class CommentController {
             vo.setTarget_parent(target_parent);
             vo.setDepth(1);
         }
-        System.out.println("before");
         int result = commentMapper.replyInsert(vo);
-        System.out.println("after");
-        System.out.println(vo.getDepth()+"!!!!");
         if (vo.getDepth() == 0) {
             commentMapper.replyInsertTP(vo);
         }

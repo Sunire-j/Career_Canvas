@@ -317,8 +317,6 @@
 
             // stompClient의 메소드를 이용하여 서버와 통신한다
             stompClient.connect({}, function (frame) {
-                console.log('frame->', frame);
-                console.log('------connected-------');
 
                 var target = $(".chat_list");
                 $.ajax({
@@ -328,10 +326,8 @@
                     },
                     type: 'post',
                     success: function (result) {
-                        console.log(result);
                         result.map(function (item, index) {
-                            if (item.user_userid == "${LogId}") {//보낸거
-                                console.log("동일함");
+                            if (item.user_userid == "${LogId}") {
                                 var tag = `
                                <li class="myMsg">
                                    <div class="myMsg_content">
@@ -341,7 +337,6 @@
                                </li>`;
                                 $(".chat_list").append(tag);
                             } else {//받은거
-                                console.log("다름");
                                 var tag = `
                        <li class="otherMsg">
                 <img src="${pageContext.servletContext.contextPath}/upload` + item.profileimg + `"/>
@@ -355,9 +350,6 @@
                             }
                         });
                         $('.chat_list').scrollTop($('.chat_list')[0].scrollHeight);
-                    },
-                    error: function (error) {
-                        console.log(error.responseText);
                     }
                 });
 
@@ -366,10 +358,8 @@
 
                 //지금은 연결 후 접속메세지를 보내주고있지만, 지금은 db에서 정보를 받아오고 뿌려준 뒤 스크롤을 내려줘야함
                 stompClient.subscribe('/topic/' + partyid, function (msg) {
-                    console.log(JSON.parse(msg.body));
                     var message = JSON.parse(msg.body);
                     if (message.user_userid == "${LogId}") {
-                        console.log("동일함");
                         var tag = `
                        <li class="myMsg">
                            <div class="myMsg_content">
@@ -380,7 +370,6 @@
                         $(".chat_list").append(tag);
                         $('.chat_list').scrollTop($('.chat_list')[0].scrollHeight);
                     } else {
-                        console.log("다름");
                         var tag = `
                        <li class="otherMsg">
                 <img src="${pageContext.servletContext.contextPath}/upload` + message.profileimg + `"/>

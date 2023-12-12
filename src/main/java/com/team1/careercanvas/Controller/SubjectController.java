@@ -230,8 +230,6 @@ public class SubjectController {
             @RequestParam(value = "member", required = false) String[] member,
             HttpServletResponse response) throws IOException {
 
-        System.out.println();
-
         String logId = (String) session.getAttribute("LogId");
 
         ApplyVO avo = new ApplyVO();

@@ -294,7 +294,6 @@
 
             $('#name_editFrm').on('submit', function(e){
                 event.preventDefault();
-                console.log("!");
 
                 var no = ${partyvo.partyid};
                 var name = $('.name_edit_box').val();

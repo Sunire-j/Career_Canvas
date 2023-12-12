@@ -200,7 +200,6 @@ public class UserController {
             HttpSession session) {
 
         if (file.isEmpty()) {
-            System.out.println("파일없음");
             return "404pages";
         }
         // 파일저장시작
@@ -228,23 +227,19 @@ public class UserController {
             file.transferTo(new File(path.toString()));
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("파일저장실패");
             return "404pages";
         }
         // 파일저장 끝
 
-        System.out.println(path);
 
         String result = OCR(String.valueOf(path));
 
-        System.out.println(result);
         // 결과 json에서 inferResult가 "FAILURE"면 아닌걸로 취급, "SUCCESS"면 성공
         JsonElement jsonElement = JsonParser.parseString(result);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         String isSuccess = jsonObject.getAsJsonArray("images").get(0).getAsJsonObject().get("inferResult")
                 .getAsString();
-        System.out.println(isSuccess);
         String companyno = "";
         String username = "";
         if (isSuccess.equals("SUCCESS")) {
@@ -299,7 +294,6 @@ public class UserController {
         uvo.setUsertype(1);
 
         mapper.SignupBizFirst(uvo);
-        System.out.println(uvo);
         // temp이미지 처리
         Path source = Paths.get(tempimg);
 
@@ -337,7 +331,6 @@ public class UserController {
                     session.setAttribute("msg", "일치하는 정보가 없습니다.");
                     return "alert_page";
                 }
-                System.out.println(userInDB.getUsersalt());
 
                 if (!Objects.equals(userInDB.getUsersalt(), "dontbreakmysalt")) {
 
@@ -478,7 +471,6 @@ public class UserController {
                 file.transferTo(new File(path.toString()));
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("파일저장실패");
                 return "404pages";
             }
             // 파일저장 끝
@@ -489,11 +481,6 @@ public class UserController {
                 File fileToDelete = new File(directory, oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
                 boolean result = fileToDelete.delete();
 
-                if (result) {
-                    System.out.println("파일 삭제 성공");
-                } else {
-                    System.out.println("파일 삭제 실패");
-                }
             }
 
             // db에 경로넣기
@@ -585,7 +572,6 @@ public class UserController {
 
         int result = mapper.pofolWrite(pvo);
 
-        System.out.println(content);
         if (content.contains("<img src=")) {
             int index = content.indexOf("<img src=");
             String first = content.substring(index + 10);
@@ -644,14 +630,12 @@ public class UserController {
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
-            System.out.println("arr size : " + interestArr.length);
             mav.addObject("interest", interestArr);
         }
         mav.addObject("pVO", pVO);
         mav.addObject("bVO", bVO);
         mav.addObject("uVO", uVO);
         mav.setViewName("users/mypage_post");
-        System.out.println(pVO);
         return mav;
     }
 
@@ -714,7 +698,6 @@ public class UserController {
         mav.addObject("uVO", uVO);
         mav.addObject("pVO", pVO);
         mav.addObject("mVO", mVO);
-        System.out.println(pVO);
 
         mav.setViewName("/users/mypage_sendMsg");
         return mav;
@@ -749,7 +732,6 @@ public class UserController {
         mav.addObject("mVO", mVO);
         mav.addObject("uVO", uVO);
         mav.addObject("pVO", pVO);
-        System.out.println(pVO);
 
         mav.setViewName("/users/mypage_receiveMsg");
         return mav;
@@ -767,7 +749,6 @@ public class UserController {
         pVO.setTotalRecord(mapper.getSubjectSoloAmount(pVO));
 
         List<ApplyVO> sVO = mapper.getSubmitSubjectSolo(pVO);
-        System.out.println(sVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
@@ -777,7 +758,6 @@ public class UserController {
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
 
-        System.out.println(pVO);
         mav.setViewName("/users/mypage_submitSubjectSolo");
         return mav;
     }
@@ -796,7 +776,6 @@ public class UserController {
 
         pVO.setSearchKey((String) session.getAttribute("LogId"));
         List<ApplyVO> sVO = mapper.getSubmitSubjectTeam(pVO);
-        System.out.println(sVO);
         UserVO uVO = mapper.getUserInfo((String) session.getAttribute("LogId"));
         if (uVO.getInterest() != null) {
             String[] interestArr = uVO.getInterest().split(",");
@@ -806,7 +785,7 @@ public class UserController {
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
         mav.setViewName("/users/mypage_submitSubjectTeam");
-        System.out.println(pVO);
+
         return mav;
     }
 
@@ -900,8 +879,6 @@ public class UserController {
             String[] interestArr = uVO.getInterest().split(",");
             mav.addObject("interest", interestArr);
         }
-
-        System.out.println(pVO);
         mav.addObject("pVO", pVO);
         mav.addObject("uVO", uVO);
         mav.addObject("sVO", sVO);
@@ -1004,7 +981,6 @@ public class UserController {
         mav.addObject("mVO", mVO);
         mav.addObject("uVO", uVO);
         mav.addObject("pVO", pVO);
-        System.out.println(pVO);
 
         mav.setViewName("/users/mypage_biz_receiveMsg");
         return mav;

@@ -475,7 +475,8 @@
                         //여기는 완료하는 부분
                         var textarea = $(this).parents('li').find('textarea.reply');
                         if(textarea.val()==""){
-                            console.log("내용 입력 후 시도");
+                            alert("내용을 입력 후 시도해주세요");
+                            return false;
                         }
                         //여기서 ajax처리해주고 commentList다시 실행하면 끝임
                         $.ajax({

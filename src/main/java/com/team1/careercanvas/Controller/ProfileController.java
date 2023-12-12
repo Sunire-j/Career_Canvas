@@ -62,7 +62,6 @@ public class ProfileController {
 		}
 		if(uservo.getInterest()!=null){
 			String[] interestArr = uservo.getInterest().split(",");
-			System.out.println("arr size : "+interestArr.length);
 			mav.addObject("interest", interestArr);
 		}
 		List<PofolVO> pofolvo = pofolmapper.getPofolInfo(pvo);
@@ -117,7 +116,6 @@ public class ProfileController {
 
 		if(uservo.getInterest()!=null){
 			String[] interestArr = uservo.getInterest().split(",");
-			System.out.println("arr size : "+interestArr.length);
 			mav.addObject("interest", interestArr);
 		}
 
@@ -142,7 +140,6 @@ public class ProfileController {
 		pvo.setTotalRecord(subjectmapper.getApplyAmountTeam(userid));
 		pvo.setSearchWord(userid);
 		List<ApplyVO> subjectvo = subjectmapper.getApplyInfoTeam(pvo);
-		System.out.println(subjectvo.size());
 		int subjectamount = subjectmapper.getApplyamountSolo(userid);
 		subjectamount+=subjectmapper.getApplyAmountTeam(userid);
 
@@ -162,7 +159,6 @@ public class ProfileController {
 
 		if(uservo.getInterest()!=null){
 			String[] interestArr = uservo.getInterest().split(",");
-			System.out.println("arr size : "+interestArr.length);
 			mav.addObject("interest", interestArr);
 		}
 

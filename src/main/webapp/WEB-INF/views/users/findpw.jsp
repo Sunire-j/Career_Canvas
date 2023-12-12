@@ -344,7 +344,6 @@
             $("#findidForm").on('change', function () {
                 if ($('input[name="userEmail"]').hasClass('is-valid') && $('input[name="userid"]').hasClass('is-valid')) {
                     var temp = $('input[name="usertype"]:checked').val();
-                    console.log(temp);
                     if(temp==0){
                         $("#submitbtn").prop('disabled', false);
                     }else{

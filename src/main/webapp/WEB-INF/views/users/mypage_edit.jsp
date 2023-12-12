@@ -52,7 +52,6 @@ file="../header_footer/header.jspf" %>
               .then((response) => response.json())
               .then((data) => {
                 // 서버에서 반환된 데이터를 처리하거나 알림을 표시할 수 있습니다.
-                console.log(data);
               })
               .catch((error) => console.error("Error:", error));
 
@@ -692,13 +691,9 @@ file="../header_footer/header.jspf" %>
                 if (rsp == 1) {
                   $("#nicknameResult").html("이미 가입된 닉네임 입니다");
                 }
-              },
-              error: function (e) {
-                console.log(e.responseText);
-              },
+              }
             });
           } else {
-            console.log("!!!!!!!!!!!!!!!" + $this.val());
             if ($this.val() == "") {
               $("#nicknameResult").text("닉네임 입력하세요");
             } else {

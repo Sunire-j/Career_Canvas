@@ -284,15 +284,12 @@
                         memo += "<p>" + r.datetime + "</p></div></div></li>";
                     });
                     $("#memo_list").html(memo);
-                }, error: function (error) {
-                    console.log(error.responseText);
                 }
             });
         }
         $(function () {
             var no=${tempno};
             loadMemo(no);
-            console.log(${tempno});
             $(".party_list_btn").click(function () {
                 no = $(this).attr('title');
                 $.ajax({
@@ -302,14 +299,11 @@
                         no: no
                     },
                     success: function (r) {
-                        console.log(r);
                         $("#party_name").html(r.partyname)
                         $("#salutation_content").html(r.partygoal)
                         $("#comment_content").html(r.partycomment)
 
                         //$(".teamView").append(partyInfo);
-                    }, error: function (error) {
-                        console.log(error.responseText);
                     }
                 });
                 $.ajax({
@@ -325,8 +319,6 @@
                             member += "<div class='member_name'>" + result.username+ "</div></li>";
                         });
                         $("#member_list").html(member);
-                    }, error: function (error) {
-                        console.log(error.responseText);
                     }
                 });
                 loadMemo(no);
@@ -364,8 +356,6 @@
                     }, success: function (result) {
                         loadMemo(no);
                         event.preventDefault();
-                    }, error: function (error) {
-                        console.log(error.responseText);
                     }
                 });
             });
@@ -380,29 +370,24 @@
                         },success: function (result) {
                             loadMemo(no);
                             event.preventDefault();
-                        }, error: function (error) {
-                            console.log(error.responseText);
                         }
                     });
                 }
             });
 
             $('.partysetbtn').click(function (){
-                console.log(no);
                 window.location.href = '${pageContext.servletContext.contextPath}/party/edit?no='+no;
                 $('.partysetbtn').removeClass('btn-outline-secondary').addClass('btn-secondary');
                 $('.partysetbtn').prop('disable', true);
             });
 
             $('.chatbtn').click(function (){
-                console.log(no);
                 window.location.href = '${pageContext.servletContext.contextPath}/myteam/chat?no='+no;
                 $('.chatbtn').removeClass('btn-outline-secondary').addClass('btn-secondary');
                 $('.chatbtn').prop('disable', true);
             });
 
             $('.portpoliobtn').click(function (){
-                console.log(no);
                 window.location.href = '${pageContext.servletContext.contextPath}/party/portpolio?no='+no;
                 $('.portpoliobtn').removeClass('btn-outline-secondary').addClass('btn-secondary');
                 $('.portpoliobtn').prop('disable', true);

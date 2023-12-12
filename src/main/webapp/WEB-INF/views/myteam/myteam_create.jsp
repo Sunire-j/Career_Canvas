@@ -254,7 +254,6 @@
                       name : name
                   },type : "post",
                    success:function (result){
-                      console.log(result);
                       if(result==0){
 
                         tag.prop("disabled", true);
@@ -265,8 +264,6 @@
                           alert("이미 사용중입니다. 다른 파티명을 입력해주세요.");
                           tag.val("");
                       }
-                   },error:function (e){
-                      console.log(e.responseText);
                    }
 
                });

@@ -266,8 +266,6 @@
                         });
                         $(".membername").append(tag1);
                         $(".memberList").append(tag);
-                    }, error : function (e){
-                       console.log(e.responseText);
                     }
                 });
 

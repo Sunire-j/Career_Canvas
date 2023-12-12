@@ -126,7 +126,6 @@ public class BoardController {
         session.setAttribute("boardcat", "ask");
         mav.addObject("pVO", pvo);
         mav.addObject("bVO", bvo);
-        System.out.println(bvo);
         mav.setViewName("board/boardList");
         return mav;
     }
@@ -179,7 +178,6 @@ public class BoardController {
         session.setAttribute("boardcat", "tip");
         mav.addObject("pVO", pvo);
         mav.addObject("bVO", bvo);
-        System.out.println(bvo);
         mav.setViewName("board/boardList");
         return mav;
     }
@@ -233,7 +231,6 @@ public class BoardController {
     public String boardwriteOk(HttpSession session, BoardVO vo) {
         vo.setUser_userid((String) session.getAttribute("LogId"));
         mapper.InsertNewPost(vo);
-        System.out.println("완료");
         if (vo.getBoardcategory() == 0) {
             return "redirect:/board/free";
         } else if (vo.getBoardcategory() == 1) {
@@ -285,7 +282,6 @@ public class BoardController {
             mav.addObject("isBack",0);
             return mav;
         }
-        System.out.println(vo.getCategory());
 
         mav.addObject("bvo", vo);
         mav.setViewName("board/boardEdit");
@@ -295,7 +291,6 @@ public class BoardController {
     @PostMapping("/board/editOK")
     public String boardEditOK(HttpSession session, BoardVO vo) {
         vo.setUser_userid((String) session.getAttribute("LogId"));
-        System.out.println(vo.getPostid());
         mapper.UpdatePost(vo);
         if (vo.getBoardcategory() == 0) {
             return "redirect:/board/free";
@@ -312,7 +307,6 @@ public class BoardController {
     public ModelAndView boardView(@RequestParam("no") int postid) {
         ModelAndView mav = new ModelAndView();
         int checkForBoardView = mapper.CheckForBoardView(postid);
-        System.out.println(checkForBoardView);
         if(checkForBoardView==0){
             mav.setViewName("improve_alert");
             mav.addObject("msg","삭제됐거나, 존재하지 않은 게시글입니다.");
@@ -369,7 +363,6 @@ public class BoardController {
         }
         List<SubjectVO> sVO = mapper.getSubjectList(pVO);
 
-        System.out.println(pVO + "!!!!  ");
         mav.addObject("sVO", sVO);
         mav.addObject("pVO", pVO);
         mav.setViewName("/subject/subjectList");
@@ -386,7 +379,6 @@ public class BoardController {
             pVO.setSearchWord("");
         }
         List<ApplyVO> avo = mapper.getSubjectApplyList(pVO);
-        System.out.println(pVO);
         mav.addObject("sVO", avo);
         mav.addObject("pVO", pVO);
         mav.setViewName("/subject/subjectApplyList");
@@ -403,7 +395,6 @@ public class BoardController {
             pVO.setSearchWord("");
         }
         List<ApplyVO> SubjectVO = mapper.getSubjectApplyTeamList(pVO);
-        System.out.println(pVO);
         mav.addObject("sVO", SubjectVO);
         mav.addObject("pVO", pVO);
         mav.setViewName("/subject/subjectApplyTeamList");

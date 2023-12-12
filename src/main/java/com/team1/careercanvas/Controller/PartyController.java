@@ -86,7 +86,6 @@ public class PartyController {
     @PostMapping("/party/wanted/editOk")
     public String wantedEditOk(WantedVO wVO, HttpSession session) {
         wVO.setUser_userid((String) session.getAttribute("LogId"));
-        System.out.println(wVO);
         mapper.UpdateWanted(wVO);
         return "redirect:/party/wanted/view?no="+wVO.getWantedid();
     }
@@ -140,7 +139,6 @@ public class PartyController {
             mav.setViewName("improve_alert");
             return mav;
         }
-        System.out.println(partylist);
         mav.addObject("pVO", partylist);
         mav.setViewName("party/party_wanted_write");
         return mav;
@@ -247,7 +245,6 @@ public class PartyController {
         String uid = (String) session.getAttribute("LogId");
         String status =  mapper.SelectmemberStatus(partyid, uid);
         String logStatus = (String) session.getAttribute("logStatus");
-        System.out.println(status);
         List<PartyVO> vo = mapper.SelectPartyList(uid);
         if(uid==null && logStatus!="Y"){
             return 4;
@@ -378,12 +375,9 @@ public class PartyController {
         if (partyid != 0) {
             temp = -1;
             for (int i = 0; i < vo.size(); i++) {
-                System.out.println(1);
                 if (vo.get(i).getPartyid() == partyid) {
                     List<UserVO> memberList = mapper.SelectMemberList(vo.get(i).getPartyid());
                     for (int j = 0; j < memberList.size(); j++) {
-                        System.out.println(memberList.get(j).getUserid());
-                        System.out.println(logId);
                         if (memberList.get(j).getUserid().equals(logId)) {
                             temp = i;
                             break;
@@ -395,7 +389,6 @@ public class PartyController {
                 if (temp != -1)
                     break;
             }
-            System.out.println(temp);
             if (temp == -1) {
                 mav.addObject("msg", "잘못된 접근입니다.");
                 mav.addObject("isBack", 0);
@@ -578,7 +571,6 @@ public class PartyController {
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mav.addObject("pvo", vo);
         PartyVO pvo = mapper.myteamSelect(partyid);
-        System.out.println(pvo.getUser_userid());
 
         if (!logId.equals(pvo.getUser_userid())) {
             mav.addObject("msg", "파티장만 수정가능합니다.");
@@ -649,7 +641,6 @@ public class PartyController {
                 file.transferTo(new File(path.toString()));
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("파일저장실패");
                 return "404pages";
             }
             // 파일저장 끝
@@ -659,12 +650,6 @@ public class PartyController {
             if (oldFileName != null || oldFileName != "") {
                 File fileToDelete = new File(directory, oldFileName.substring(oldFileName.lastIndexOf('/') + 1));
                 boolean result = fileToDelete.delete();
-
-                if (result) {
-                    System.out.println("파일 삭제 성공");
-                } else {
-                    System.out.println("파일 삭제 실패");
-                }
             }
 
             // db에 경로넣기
@@ -801,7 +786,6 @@ public class PartyController {
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         mav.addObject("pvo", vo);
         pagingvo.setSearchWord(String.valueOf(partyid));
-        System.out.println(pagingvo);
 
         List<PofolVO> pofolvo = mapper.SelectPofolList(pagingvo);
         mav.addObject("Povo", pofolvo);
@@ -866,7 +850,6 @@ public class PartyController {
         pvo.setCategory(category);
         pvo.setUser_userid(logId);
         pvo.setPartyid(partyid);
-        System.out.println(Arrays.toString(member));
 
         int result = mapper.pofolWrite(pvo);
 
@@ -875,7 +858,6 @@ public class PartyController {
             mapper.addPofolMember(pvo.getPortfolioid(), member[i]);
         }
 
-        System.out.println(content);
         if (content.contains("<img src=")) {
             int index = content.indexOf("<img src=");
             String first = content.substring(index + 10);

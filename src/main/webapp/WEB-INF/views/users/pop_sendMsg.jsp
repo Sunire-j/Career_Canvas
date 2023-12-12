@@ -82,7 +82,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       function checkReceiver() {
         const receive_user = document.getElementById("receive_user").value;
-        console.log(receive_user);
         $.ajax({
           type: "POST",
           url: "${pageContext.servletContext.contextPath}/mypage/checkReceiver",

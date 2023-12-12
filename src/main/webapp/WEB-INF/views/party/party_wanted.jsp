@@ -121,7 +121,6 @@
         $(function(){
             $("#postSort").change(function () {
                 var sortvalue = $(this).val();
-                console.log(sortvalue);
                 window.location.href = "${pageContext.servletContext.contextPath}/party/wanted?postSort=" + sortvalue + "&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}";
             });
         });

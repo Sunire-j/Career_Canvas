@@ -52,7 +52,6 @@ file="../header_footer/header.jspf" %>
               .then((response) => response.json())
               .then((data) => {
                 // 서버에서 반환된 데이터를 처리하거나 알림을 표시할 수 있습니다.
-                console.log(data);
               })
               .catch((error) => console.error("Error:", error));
 

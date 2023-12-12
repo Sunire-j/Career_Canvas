@@ -390,8 +390,7 @@
                                     postid: post_id
                                 },
                                 type: 'post',
-                                success: function (result) {//리절트는 결국 들어갔냐 안들어갔냐임
-                                    console.log(result);
+                                success: function (result) {
                                     commentList();
                                 }
                             });
@@ -399,7 +398,6 @@
                     });
 
                     $(".comment_list_real").on('click', '#comment_del', function () {
-                        console.log(123);
                         var del_target = $(this).parent().find('input[type="hidden"]').val();
                         if (confirm("정말 댓글을 삭제하시겠습니까?")) {
                             $.ajax({
@@ -411,9 +409,6 @@
                                 success: function (r) {
                                     alert("삭제되었습니다.");
                                     commentList();
-                                },
-                                error: function (e) {
-                                    console.log(e.responseText);
                                 }
                             });
                         }
@@ -433,16 +428,12 @@
                             },
                             type: 'post',
                             success: function (result) {
-                                console.log(result);
                                 if(result==-1){
                                     alert("로그인 후 이용 가능합니다.");
                                 }
 
                                 commentList();
                                 $(".comment_content").val("");
-                            },
-                            error: function (error) {
-                                console.log(error.responseText);
                             }
                         });
                     });
@@ -470,9 +461,6 @@
                                     }
                                     alert("url");
                                     location.href = "${pageContext.servletContext.contextPath}/board/" + target
-                                },
-                                error: function (error) {
-                                    console.log(error.responseText);
                                 }
                             });
                         }
@@ -489,9 +477,6 @@
                                 type: 'post',
                                 success: function (result) {
                                     alert("신고되었습니다");
-                                },
-                                error: function (error) {
-                                    console.log(error.responseText);
                                 }
 
                             });
@@ -512,11 +497,7 @@
                                 },
                                 type: 'post',
                                 success: function (result) {
-                                    console.log("신고됨");
                                     alert("신고되었습니다.");
-                                },
-                                error: function (error) {
-                                    console.log(error.responseText);
                                 }
                             });
                         }
@@ -532,7 +513,8 @@
                             //여기는 완료하는 부분
                             var textarea = $(this).parents('li').find('textarea.reply');
                             if(textarea.val()==""){
-                                console.log("내용 입력 후 시도");
+                                alert("내용을 입력 후 시도해주세요");
+                                return false;
                             }
                             //여기서 ajax처리해주고 commentList다시 실행하면 끝임
                             $.ajax({
@@ -543,7 +525,6 @@
                                 },
                                 type:'post',
                                 success:function(result){
-                                    console.log(result);
                                     commentList();
                                 }
                             });

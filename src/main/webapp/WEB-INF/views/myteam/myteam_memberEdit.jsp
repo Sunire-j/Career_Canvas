@@ -275,7 +275,6 @@
             $(".member_del_btn").click(function () {
                 var memberId = $(this).data('id');
                 no = ${partyvo.partyid};
-                console.log(memberId, no);
 
                 if (confirm("정말로 "+memberId+"님을 제명하시겠습니까?")) {
                     $.ajax({
@@ -285,11 +284,8 @@
                            no : no,
                            memberId : memberId
                         },success:function (r){
-                           console.log(r);
                            location.reload(true);
 
-                        }, error:function (e){
-                           console.log(e);
                         }
                     });
                 }
@@ -297,7 +293,6 @@
             $(".approve_btn").click(function () {
                 var memberId = $(this).data('approveid');
                 no = ${partyvo.partyid};
-                console.log(memberId, no);
                 if (confirm(memberId+"님의 가입을 승인하시겠습니까?")) {
                     $.ajax({
                         url:"${pageContext.servletContext.contextPath}/party/memberApprove",
@@ -306,10 +301,7 @@
                             no : no,
                             memberId : memberId
                         },success:function (r){
-                            console.log(r);
                             location.reload(true);
-                        }, error:function (e){
-                            console.log(e);
                         }
                     });
                 }
@@ -317,7 +309,6 @@
             $(".refuse_btn").click(function () {
                 var memberId = $(this).data('refuseid');
                 no = ${partyvo.partyid};
-                console.log(memberId, no);
                 if (confirm(memberId+"님의 가입을 거절하시겠습니까?")) {
                     $.ajax({
                         url:"${pageContext.servletContext.contextPath}/party/memberRefuse",
@@ -326,10 +317,7 @@
                             no : no,
                             memberId : memberId
                         },success:function (r){
-                            console.log(r);
                             location.reload(true);
-                        }, error:function (e){
-                            console.log(e);
                         }
                     });
                 }

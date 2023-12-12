@@ -25,20 +25,14 @@
                             id: $(this).val()
                         },
                         success: function (result) {
-                            console.log(result);
                             if (result == 0) {
-                                console.log("here0");
                                 $(this).removeClass('is-invalid').addClass('is-valid');
                                 //사용가능한 아이디입니다 표기
                             } else {
-                                console.log("here1");
                                 $this.removeClass('is-valid').addClass('is-invalid');
                                 $this.siblings('.invalid-feedback').hide();
                                 $this.siblings('[data-feedback="duplicate"]').show();
                             }
-                        },
-                        error: function (error) {
-                            console.log(error.responseText);
                         }
                     });
                 } else {
@@ -104,9 +98,6 @@
                                 $this.siblings('.invalid-feedback').hide();
                                 $this.siblings('[data-feedback="duplicate"]').show();
                             }
-                        },
-                        error: function (error) {
-                            console.log(error.responseText);
                         }
                     });
                 } else {
@@ -179,9 +170,6 @@
                           //시간 지나게 해주기
                           //인증번호 입력칸, 확인버튼 disabled 풀
                       }
-                   },
-                   error:function(error){
-                      console.log(error);
                    }
                });
             });
@@ -210,9 +198,6 @@
                            $("#emailauth").prop('disabled',true);
                            $("#emailauthbtn").prop('disabled',true);
                        }
-                    },
-                    error:function(error){
-                       console.log(error.responseText);
                     }
                 });
             });

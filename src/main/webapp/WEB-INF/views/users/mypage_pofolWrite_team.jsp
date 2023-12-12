@@ -208,7 +208,6 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
               partyid : partyid
             },
             success : function(result){
-              console.log(result);
               $("#teamMember").empty();
               let temp = "";
               for (let i = 0; i < result.length; i++) {
@@ -218,14 +217,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
                 temp += "</div>";
               }
               $("#teamMember").html(temp);
-            },
-            error: function(e){
-              console.log("실패")
             }
-            // <div class="memberList">
-            //   <label class="btn btn-outline-warning" for="${loop.index}">${p.partyname}</label>
-            //   <input type="radio" name="partyname" id="${loop.index}" value="${p.partyid}">
-            // </div>
           });
         });
 
