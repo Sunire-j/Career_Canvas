@@ -2,6 +2,7 @@ package com.team1.careercanvas.mapper;
 
 import com.team1.careercanvas.vo.CompanyVO;
 import com.team1.careercanvas.vo.PagingVO;
+import com.team1.careercanvas.vo.PartyVO;
 import com.team1.careercanvas.vo.PofolVO;
 import com.team1.careercanvas.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -46,7 +47,7 @@ public interface PofolMapper {
 
 	int getTotalTeamPofol(PagingVO pVO);
 
-	//조석훈 작업
+	// 조석훈 작업
 	List<PofolVO> getPortfolioForHome();
 
 	List<PofolVO> getPortfolioForHomeWithCat(int category);
@@ -54,4 +55,6 @@ public interface PofolMapper {
 	// 정인식 작업
 	List<UserVO> getMemberList(int partyid);
 	// 정인식 작업 끝
+
+	List<PartyVO> getPartyList(String logId);
 }

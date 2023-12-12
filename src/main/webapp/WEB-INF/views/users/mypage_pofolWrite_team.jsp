@@ -186,6 +186,49 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
               .addClass("btn-warning");
           }
         });
+
+        // 여기
+        $('.teamList input[type="radio"]').change(function () {
+          // CSS
+          $(".teamList label")
+            .removeClass("btn-warning")
+            .addClass("btn-outline-warning");
+          if ($(this).is(":checked")) {
+            $(this)
+              .parent().find("label")
+              .removeClass("btn-outline-warning")
+              .addClass("btn-warning");
+          }
+          var partyid = $(this).val();
+          // ajax
+          $.ajax({
+            type: "POST",
+            url: "${pageContext.servletContext.contextPath}/getpartymember",
+            data: {
+              partyid : partyid
+            },
+            success : function(result){
+              console.log(result);
+              $("#teamMember").empty();
+              let temp = "";
+              for (let i = 0; i < result.length; i++) {
+                temp += "<div class='memberList'>";
+                temp += "<label class='btn btn-outline-warning' for='" + result[i].username + "'>" + result[i].username + "</label>";
+                temp += "<input type='radio' name='partyname' id='" + result[i].username + "' value='" + result[i].username + "'>";
+                temp += "</div>";
+              }
+              $("#teamMember").html(temp);
+            },
+            error: function(e){
+              console.log("실패")
+            }
+            // <div class="memberList">
+            //   <label class="btn btn-outline-warning" for="${loop.index}">${p.partyname}</label>
+            //   <input type="radio" name="partyname" id="${loop.index}" value="${p.partyid}">
+            // </div>
+          });
+        });
+
         $("#title").on("input blur", function () {
           var title = $(this).val();
           if (title.length > 30) {
@@ -269,6 +312,19 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
               <span>영상음향</span>
             </label>
           </div>
+          <div style="display:flex; margin-top: 20px; gap:10px;">
+            <c:forEach var="p" items="${mList}" varStatus="loop">
+              <div class="teamList">
+                <label class="btn btn-outline-warning" for="${loop.index}">${p.partyname}</label>
+                <input type="radio" name="partyname" id="${loop.index}" value="${p.partyid}">
+              </div>
+            </c:forEach>
+          </div>
+          <div id="teamMember" style="display: flex;">
+            <!--  -->
+          </div>
+        
+        
           </div>
         </div>
 

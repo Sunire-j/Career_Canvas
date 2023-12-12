@@ -8,9 +8,13 @@ import java.util.List;
 @Mapper
 public interface PartyMapper {
     List<PartyVO> SelectPartyList(String logId);
+
     PartyVO myteamSelect(int partyid);
+
     List<UserVO> SelectMemberList(int partyid);
+
     List<MemoVO> SelectMemoListView(int partyid);
+
     int InsertMemo(int partyid, String content, String logid);
 
     int DeleteMemo(int partymemo);
@@ -18,6 +22,7 @@ public interface PartyMapper {
     int InsertCreateTeam(PartyVO temp);
 
     void InsertPartyImg(String imgsrc, int partyid);
+
     void InsertMember(int Partyid, String logId, String temp);
 
     int CheckPartyName(String partyname);
@@ -28,12 +33,13 @@ public interface PartyMapper {
 
     void UpdatePartyIntro(int partyid, String partycomment);
 
-    //조석훈 시작
+    // 조석훈 시작
     List<PartyVO> getMineParty(String userid);
 
     void InsertWanted(WantedVO wVO);
 
     List<WantedVO> GetWantedList(PagingVO pvo);
+
     int getWantedListCount(PagingVO pvo);
 
     WantedVO GetWantedView(int no);
@@ -43,28 +49,37 @@ public interface PartyMapper {
     int replyInsert(CommentVO cvo);
 
     void replyInsertTP(CommentVO cvo);
+
     int DeleteWanted(int wantedid);
+
     int reportWanted(int wantedid, String targetuid, String title, String uid);
+
     String getCommentWriter(int commentid);
+
     String getCommentcontent(int commentid);
 
     int commentReport(ReportVO rvo);
 
     int deleteWantedComment(int commentid);
+
     void increseView(int no);
-    int applyParty(String uid,int partyid);
+
+    int applyParty(String uid, int partyid);
+
     String getPartyName(int partyid);
 
     String getpartyimg(int partyid);
 
     int CheckpartyId(int partyid);
-    //조석훈 끝
+    // 조석훈 끝
 
     // 정인식 작업
     List<UserVO> SelectWaitingList(int partyid);
 
     void DeleteMember(int partyid, String user_userid);
+
     void ApproveMember(int partyid, String user_userid);
+
     void RefuseMember(int partyid, String user_userid);
 
     void UpdatePartyImg(String imgsrc, int partyid);
@@ -77,8 +92,9 @@ public interface PartyMapper {
 
     void addPofolMember(int portfolioid, String userid);
 
-    int insertPofolImg(String pathfordb,int Portfolioid);
+    int insertPofolImg(String pathfordb, int Portfolioid);
 
     String SelectmemberStatus(int partyid, String uid);
     // 정인식 작업 끝
+
 }

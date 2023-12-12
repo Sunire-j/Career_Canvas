@@ -422,14 +422,14 @@
                     <c:if test="${pVO.totalRecord > 0}">
                         <!-- 이전 -->
                         <c:if test="${pVO.page == 1}">
-                            <input type="button" value="<" class="btn btn-outline-primary" disabled>
+                            <input type="button" value="<" class="btn btn-outline-secondary" disabled>
                         </c:if>
                         <c:if test="${pVO.page > 1}">
                             <a
                                     href="${pageContext.servletContext.contextPath}/pofol_preview?page=${pVO.page - 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
                                     <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
                         >
-                        <input type=" button" value="<" class="btn btn-outline-primary"/>
+                        <input type=" button" value="<" class="btn btn-outline-secondary">
                             </a>
                         </c:if>
                     </c:if>
@@ -442,7 +442,7 @@
                         <c:if test="${p <= pVO.totalPage}">
                             <a
                                     href="${pageContext.servletContext.contextPath}/pofol_preview?page=${p}&searchWord=${pVO.searchWord}&category=${pVO.category}&postSort=${pVO.postSort}">
-                                <input type="button" value="${p}" class="btn btn-outline-primary">
+                                <input type="button" value="${p}" class="btn btn-outline-secondary">
                             </a>
                         </c:if>
                     </c:forEach>
@@ -450,17 +450,20 @@
                     <!-- 다음 -->
 
                     <c:if test="${pVO.page == pVO.totalPage}">
-                        <input type="button" value=">" class="btn btn-outline-primary" disabled>
+                        <input type="button" value=">" class="btn btn-outline-secondary" disabled>
                     </c:if>
                     <c:if test="${pVO.page < pVO.totalPage}">
                         <a
                                 href="${pageContext.servletContext.contextPath}/pofol_preview?page=${pVO.page + 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
                         >
-                            <input type="button" value=">" class="btn btn-outline-primary">
+                            <input type="button" value=">" class="btn btn-outline-secondary">
                         </a>
                     </c:if>
+                    <a href="${pageContext.servletContext.contextPath}/mypage/myPofol/write"><input type="button" class="btn btn-secondary" value="글쓰기"></a>
                 </div>
+                
             </div>
+            
 
             <!-- 검색 -->
             <div style="width: 100%; text-align: center;">

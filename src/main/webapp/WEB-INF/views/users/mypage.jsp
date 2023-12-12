@@ -487,6 +487,7 @@
                     </c:if>
                 </div>
             </div>
+            <a href="${pageContext.servletContext.contextPath}/mypage/myPofol/write"><input type="button" value="글쓰기" class="btn btn-secondary"></a>
         </div>
        
        
