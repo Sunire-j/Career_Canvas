@@ -81,7 +81,7 @@
         .board_view {
             width: 70px;
             text-align: center;
-            margin: auto 0 0 auto;
+            margin: 0 0 0 auto;
         }
 
         .board_recommend {
@@ -203,8 +203,11 @@
         </div>
     <div class="board_main">
         <div class="board_info">
-            <div class="board_writer">
-                <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${wvo.user_userid}">${wvo.username}</a>
+            <div style="margin-left: 10px" class="board_writer">
+                글쓴이&nbsp;:&nbsp;<a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${wvo.user_userid}">${wvo.username}</a>
+            </div>
+            <div style="margin-left: 10px" class="board_writer">
+                파티명&nbsp;:&nbsp${wvo.partyname}
             </div>
             <div class="board_date">
                 ${wvo.date}
@@ -212,7 +215,7 @@
             <div class="board_view">
                 조회수
             </div>
-            <div class="board_view_no">
+            <div style="margin-right: 10px" class="board_view_no">
                 ${wvo.view}
             </div>
         </div>
@@ -222,15 +225,16 @@
             </div>
             <div class="content_recommend"
                  style="width: 100%; display : flex; justify-content: space-between; align-items: center">
-                <div></div>
+                <div style="width: 200px"></div>
                 <button type="button" style="color: white" onclick="applyParty()"
                    class="btn btn-primary"><i class="fa-solid fa-hand"></i>&nbsp신청</button>
-                <div class="d-flex" style="margin-right: 10px;">
+                <div class="d-flex" style="margin-right: 10px; width: 200px; justify-content: flex-end">
                     <c:if test="${LogStatus=='Y'}">
                     <a style="height: fit-content; margin-right: 10px" class=" btn btn-outline-danger btn-sm" id="report_post">파티 신고</a>
                     </c:if>
                     <c:if test="${LogId==wvo.user_userid}">
                         <a style="height: fit-content" class=" btn btn-outline-danger btn-sm" id="del_post">삭제</a>
+                        <a href="${pageContext.servletContext.contextPath}/party/wanted/edit?no=${wvo.wantedid}" style="height: fit-content; margin-left: 10px;" class=" btn btn-outline-dark btn-sm">수정</a>
                     </c:if>
                 </div>
             </div>

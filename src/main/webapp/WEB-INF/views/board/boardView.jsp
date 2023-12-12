@@ -39,7 +39,7 @@
 
         .board_category {
             background-color: #ddd;
-            width: 100px;
+            width: 120px;
             text-align: center;
             border-radius: 10px;
         }
@@ -89,7 +89,7 @@
         .board_view {
             width: 70px;
             text-align: center;
-            margin: auto 0 0 auto;
+            margin: 0 0 0 auto;
         }
 
         .board_recommend {
@@ -196,16 +196,30 @@
 <article>
     <div class="board_title">${bvo.posttitle}</div>
     <section style="padding: 20px">
+        <div class="d-flex">
         <div class="board_category" style="margin-bottom: 20px">
             <c:if test="${bvo.boardcategory==0}"> 자유 </c:if>
             <c:if test="${bvo.boardcategory==1}"> 질문 </c:if>
             <c:if test="${bvo.boardcategory==2}"> 노하우 </c:if>
             게시판
         </div>
+        <div style="background: black; width: 90px; margin-left : 10px;text-align: center; color: white; border-radius: 10px; margin-bottom: 20px">
+            <c:if test="${bvo.category==1}">
+                IT/개발
+            </c:if>
+            <c:if test="${bvo.category==2}">
+                디자인
+            </c:if>
+            <c:if test="${bvo.category==3}">
+                영상/음향
+            </c:if>
+        </div>
+        </div>
         <div class="board_main">
             <div class="board_info">
-                <div class="board_writer">
-                    <a style="margin-left: 10px;"
+                <div style="margin-left: 10px;" class="board_writer">
+                    글쓴이&nbsp;:&nbsp;
+                    <a
                             href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}"
                     >${bvo.username}</a>
                 </div>

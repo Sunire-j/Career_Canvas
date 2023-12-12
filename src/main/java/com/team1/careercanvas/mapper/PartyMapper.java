@@ -36,6 +36,8 @@ public interface PartyMapper {
     // 조석훈 시작
     List<PartyVO> getMineParty(String userid);
 
+    void UpdateWanted(WantedVO wvo);
+
     void InsertWanted(WantedVO wVO);
 
     List<WantedVO> GetWantedList(PagingVO pvo);

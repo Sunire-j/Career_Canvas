@@ -166,12 +166,6 @@
                 });
             //
 
-            $('.button-container input[type="radio"]').change(function(){
-                $('.button-container label').removeClass('btn-dark').addClass('btn-outline-dark');
-                if($(this).is(':checked')){
-                    $(this).parent().removeClass('btn-outline-dark').addClass('btn-dark');
-                }
-            });
             $('#title').on('input blur', function() {
                 var title = $(this).val();
                 if(title.length > 30) {
@@ -203,33 +197,31 @@
 <body>
 <div class="content">
     <div class="content-header">
-        <h3>파티홍보 게시판 작성</h3>
+        <h3>파티홍보 게시판 수정</h3>
     </div>
     <div style="background: #D9D9D9">
-    <form method="post" action="${pageContext.servletContext.contextPath}/party/wanted/writeOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F" novalidate>
-        <input type="hidden" id="wantedcontent" name="wantedcontent">
-        <input type="text" style="width: 40%" class="form-control" name="wantedtitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
+    <form method="post" action="${pageContext.servletContext.contextPath}/party/wanted/editOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F" novalidate>
+        <input type="hidden" id="wantedcontent" name="wantedcontent" value="${wvo.wantedcontent}">
+        <input type="hidden" name="wantedid" value="${wvo.wantedid}">
+        <input type="text" style="width: 40%" class="form-control" name="wantedtitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30" value="${wvo.wantedtitle}">
         <div class="invalid-feedback">
             제목을 입력해 주세요. (30자 이내)
         </div>
 
         <div class="button-container">
-            <c:forEach var="pvo" items="${pVO}" varStatus="status">
-                <label class="btn   ${status.index == 0 ? 'btn-dark' : 'btn-outline-dark'}">
-                    <input type="radio" name="party_partyid" value="${pvo.partyid}" ${status.index == 0 ? 'checked' : ''}>
-                    <span>${pvo.partyname}</span>
+                <label class="btn btn-dark">
+                    <input type="radio" name="party_partyid" value="${wvo.party_partyid}" checked readonly>
+                    <span>${wvo.partyname}</span>
                 </label>
-            </c:forEach>
-
         </div>
     </div>
     <div style="padding: 10px">
-        <div id="editor"></div>
+        <div id="editor">${wvo.wantedcontent}</div>
 
         <div id="botContainer">
             <div style="width: 50%" class="botContainer2">
             </div>
-            <input type="submit"  class="btn btn-primary submitbtn" value="글등록" />
+            <input type="submit"  class="btn btn-primary submitbtn" value="글수정" />
         </div>
         </form>
     </div>

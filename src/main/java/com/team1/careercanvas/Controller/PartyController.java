@@ -43,6 +43,55 @@ public class PartyController {
     }
 
     // 조석훈 시작
+
+    @GetMapping("/party/wanted/edit")
+    public ModelAndView partywantedEdit(HttpSession session,
+                                        @RequestParam(required = false, defaultValue = "0") int no) {
+        ModelAndView mav = new ModelAndView();
+
+        if(no==0){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack", 0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
+        if (session.getAttribute("LogStatus") == null || session.getAttribute("LogStatus").equals("N")) {
+            mav.addObject("msg", "로그인 후 이용가능합니다.");
+            mav.addObject("isBack", 1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
+        //글 주인인지 확인
+        String userid = (String) session.getAttribute("LogId");
+
+        WantedVO wvo = mapper.GetWantedView(no);
+
+        if(!wvo.getUser_userid().equals(userid)){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack", 0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
+        wvo.setPartyname(mapper.getPartyName(wvo.getParty_partyid()));
+        mav.addObject("wvo", wvo);
+
+        mav.setViewName("party/party_wanted_edit");
+        return mav;
+    }
+
+    @PostMapping("/party/wanted/editOk")
+    public String wantedEditOk(WantedVO wVO, HttpSession session) {
+        wVO.setUser_userid((String) session.getAttribute("LogId"));
+        System.out.println(wVO);
+        mapper.UpdateWanted(wVO);
+        return "redirect:/party/wanted/view?no="+wVO.getWantedid();
+    }
+
+
     @GetMapping("/party/wanted")
     public ModelAndView partywanted(HttpSession session,
             @RequestParam(required = false, defaultValue = "1") int page,
