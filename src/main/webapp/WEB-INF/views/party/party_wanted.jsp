@@ -170,11 +170,15 @@
         <c:forEach items="${wVO}" var="bvo">
             <div class="board-row">
                 <div style="width: 7%" class="list">${bvo.wantedid}</div>
-                <div style="width: 17%">${bvo.partyname}</div>
+                <div style="width: 17%; overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;">${bvo.partyname}</div>
                 <div style="width: 40%; text-align: left; padding: 0 20px;" class="list"><a
                         href="${pageContext.servletContext.contextPath}/party/wanted/view?no=${bvo.wantedid}">${bvo.wantedtitle}</a>
                 </div>
-                <div style="width: 12%" class="list"><a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}">${bvo.username}</a></div>
+                <div style="width: 12%; overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;" class="list"><a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${bvo.user_userid}">${bvo.username}</a></div>
                 <div style="width: 7%" class="list">${bvo.view}</div>
                 <div style="width: 7%" class="list">${bvo.commentAmount}</div>
                 <div style="width: 20%" class="list">${bvo.date}</div>

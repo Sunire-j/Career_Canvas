@@ -167,10 +167,6 @@ file="../header_footer/header.jspf"%>
         font-size: 14px;
         padding: 2px 4px;
       }
-      .btn-outline-secondary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
       .userIntro p {
         margin: 0px;
       }

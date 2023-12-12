@@ -265,4 +265,15 @@
 		where partymember.party_partyid = #{param1} and partymember.status = 'done';
 	</select>
 	<!-- 정인식 작업 끝 -->
+
+	<select id="getPartyList" resultType="com.team1.careercanvas.vo.PartyVO">
+		select p.partyid as partyid,
+		p.partyname as partyname,
+		p.user_userid as user_userid,
+		p.partyimage as partyimage,
+		u.username 
+		from party p
+		join user u on u.userid = p.user_userid
+		where p.user_userid = #{param1};
+	</select>
 </mapper>

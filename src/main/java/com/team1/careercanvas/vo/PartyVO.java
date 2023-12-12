@@ -14,4 +14,5 @@ public class PartyVO {
     private String partygoal;
     private String user_userid;
     private String partyimage;
+    private String username;
 }
