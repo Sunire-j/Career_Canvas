@@ -175,8 +175,8 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
           });
         //
 
-        $('.button-container input[type="radio"]').change(function () {
-          $(".button-container label")
+        $('.category-container input[type="radio"]').change(function () {
+          $(".category-container label")
             .removeClass("btn-dark")
             .addClass("btn-outline-dark");
           if ($(this).is(":checked")) {
@@ -209,6 +209,11 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         });
         $("form").on("submit", function (e) {
           var editorContent = editor.getData();
+          if(!$("#title").val()){
+            e.preventDefault();
+            alert("제목을 입력해 주세요");
+            return false;
+          }
           if (!editorContent) {
             e.preventDefault();
             alert("글 내용을 입력해 주세요.");
@@ -250,10 +255,12 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
           maxlength="30"
         />
         <div class="invalid-feedback">제목을 입력해 주세요. (30자 이내)</div>
+
+        <!-- 카테고리 -->
         <div>
-          <div class="button-container">
+          <div class="category-container">
             <label class="btn btn-outline-dark">
-              <input type="radio" name="category" value="0" checked />
+              <input type="radio" name="category" value="0" />
               <span>선택안함</span>
             </label>
             <label class="btn btn-outline-dark">

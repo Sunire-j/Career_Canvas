@@ -62,6 +62,10 @@
             color: black;
             text-decoration: none;
         }
+        a:visited, a:link {
+            text-decoration: none;
+            color: black;
+        }
     </style>
 </head>
 <body>

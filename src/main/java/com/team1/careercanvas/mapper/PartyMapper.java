@@ -99,6 +99,7 @@ public interface PartyMapper {
     String SelectmemberStatus(int partyid, String uid);
 
     int getUsertype(String uid);
+
     // 정인식 작업 끝
 
 }

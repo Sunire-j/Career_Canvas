@@ -187,7 +187,7 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
         if (session.getAttribute("LogStatus") == null || session.getAttribute("LogStatus").equals("N")) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.addObject("isBack",1);
+            mav.addObject("isBack", 1);
             mav.addObject("alert_page", "login");
             mav.setViewName("improve_alert");
             return mav;
@@ -202,7 +202,7 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
         if (session.getAttribute("LogStatus") == null || session.getAttribute("LogStatus").equals("N")) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.addObject("isBack",1);
+            mav.addObject("isBack", 1);
             mav.addObject("alert_page", "login");
             mav.setViewName("improve_alert");
             return mav;
@@ -217,7 +217,7 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
         if (session.getAttribute("LogStatus") == null || session.getAttribute("LogStatus").equals("N")) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.addObject("isBack",1);
+            mav.addObject("isBack", 1);
             mav.addObject("alert_page", "login");
             mav.setViewName("improve_alert");
             return mav;
@@ -257,13 +257,13 @@ public class BoardController {
 
     @GetMapping("/board/edit")
     public ModelAndView boardEdit(@RequestParam("no") int postid,
-                                  HttpSession session) {
+            HttpSession session) {
         ModelAndView mav = new ModelAndView();
         String userid = (String) session.getAttribute("LogId");
         int checkForBoardView = mapper.CheckForBoardView(postid);
-        if(checkForBoardView==0){
+        if (checkForBoardView == 0) {
             mav.setViewName("improve_alert");
-            mav.addObject("msg","삭제됐거나, 존재하지 않은 게시글입니다.");
+            mav.addObject("msg", "삭제됐거나, 존재하지 않은 게시글입니다.");
             mav.addObject("isBack", 0);
             return mav;
         }
@@ -276,10 +276,10 @@ public class BoardController {
             return mav;
         }
 
-        if(!vo.getUser_userid().equals(userid)){
+        if (!vo.getUser_userid().equals(userid)) {
             mav.setViewName("improve_alert");
-            mav.addObject("msg","잘못된 접근입니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack", 0);
             return mav;
         }
 
@@ -307,9 +307,9 @@ public class BoardController {
     public ModelAndView boardView(@RequestParam("no") int postid) {
         ModelAndView mav = new ModelAndView();
         int checkForBoardView = mapper.CheckForBoardView(postid);
-        if(checkForBoardView==0){
+        if (checkForBoardView == 0) {
             mav.setViewName("improve_alert");
-            mav.addObject("msg","삭제됐거나, 존재하지 않은 게시글입니다.");
+            mav.addObject("msg", "삭제됐거나, 존재하지 않은 게시글입니다.");
             mav.addObject("isBack", 0);
             return mav;
         }
@@ -336,7 +336,7 @@ public class BoardController {
         int result = mapper.CheckValid(postid, (String) session.getAttribute("LogId"));
         if (result == 1) {
             mav.addObject("msg", "추천은 한번만 가능합니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
             return mav;
         }
@@ -362,7 +362,6 @@ public class BoardController {
             pVO.setSearchWord("");
         }
         List<SubjectVO> sVO = mapper.getSubjectList(pVO);
-
         mav.addObject("sVO", sVO);
         mav.addObject("pVO", pVO);
         mav.setViewName("/subject/subjectList");

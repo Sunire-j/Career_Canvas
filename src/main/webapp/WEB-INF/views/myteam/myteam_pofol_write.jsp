@@ -200,6 +200,37 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         });
         $("form").on("submit", function (e) {
           var editorContent = editor.getData();
+          var category = document.getElementsByName('category');
+          var categoryCheck = false;
+          var member = document.getElementsByName('member');
+          var memberCheck = false;
+
+          if(!$("#title").val()){
+            alert("제목을 입력해 주세요");
+            return false;
+          }
+          // 카테고리 선택 유효성
+          for(var i=0; i<category.length; i++){
+            if(category[i].checked) {
+              categoryCheck = true;
+              break;
+            }
+          }
+          if(!categoryCheck) {
+            alert('카테고리를 선택하세요');
+            return false;
+          }
+          for(var i=0; i<member.length; i++){
+            if(member[i].checked){
+              memberCheck = true;
+              break;
+            }
+          }
+          if(!memberCheck){
+            alert('참여인원을 선택하세요');
+            return false;
+          }
+
           if (!editorContent) {
             e.preventDefault();
             alert("글 내용을 입력해 주세요.");
@@ -236,7 +267,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
           <div style="padding: 20px 0">
             <div class="button-container">
               <label class="btn btn-outline-dark">
-                <input type="radio" name="category" value="0" checked />
+                <input type="radio" name="category" value="0" />
                 <span>선택안함</span>
               </label>
               <label class="btn btn-outline-dark">

@@ -47,12 +47,15 @@ public class SubjectController {
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack", 1);
+            mav.addObject("alert_page", "login");
+            mav.setViewName("improve_alert");
             return mav;
         }
         if (uvo == null) {
             mav.addObject("msg", "기업회원만 작성 가능합니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack", 0);
+            mav.setViewName("improve_alert");
             return mav;
         }
         mav.setViewName("company/subjectWrite");
@@ -118,9 +121,9 @@ public class SubjectController {
         SubjectVO svo = mapper.SelectSubject(subjectid);
         mav.addObject("Svo", svo);
 
-        if(svo==null){
+        if (svo == null) {
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
             return mav;
         }
@@ -137,11 +140,11 @@ public class SubjectController {
         ModelAndView mav = new ModelAndView();
 
         String logId = (String) session.getAttribute("LogId");
-        String logStatus = (String) session.getAttribute("logStatus");
+        String logStatus = (String) session.getAttribute("LogStatus");
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
             return mav;
         }
@@ -150,10 +153,9 @@ public class SubjectController {
         mav.addObject("Svo", svo);
 
         String delid = svo.getUser_userid();
-
-        if(logId != delid){
+        if (logId != delid) {
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
             return mav;
         }
@@ -182,7 +184,7 @@ public class SubjectController {
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.addObject("isBack",1);
+            mav.addObject("isBack", 1);
             mav.addObject("alert_page", "login");
             mav.setViewName("improve_alert");
             return mav;
@@ -192,15 +194,15 @@ public class SubjectController {
         mav.addObject("Svo", svo);
         UserVO uvo = mapper.getUserInfo(logId);
         int usertype = uvo.getUsertype();
-        if(usertype==1){
+        if (usertype == 1) {
             mav.addObject("msg", "일반 회원만 작성 가능합니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
             return mav;
         }
-        if(svo==null){
+        if (svo == null) {
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
             return mav;
         }
@@ -304,9 +306,9 @@ public class SubjectController {
 
         ApplyVO avo = applymapper.SelectApply(applyid);
 
-        if(avo == null){
+        if (avo == null) {
             mav.addObject("msg", "잘못된 접근입니다.");
-            mav.addObject("isBack",0);
+            mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
             return mav;
         }
@@ -328,11 +330,9 @@ public class SubjectController {
 
         mav.addObject("CompanyId", svo.getUser_userid());
 
-
         mav.setViewName("subject/subjectSubmitView");
         return mav;
     }
-
 
     @PostMapping("/subject/applyreport")
     @ResponseBody
