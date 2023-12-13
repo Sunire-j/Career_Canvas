@@ -204,7 +204,7 @@
                     <div id="user" style="width: 12%" class="list">작성자</div>
                     <div id="view" style="width: 7%" class="list"><i class="fa-solid fa-eye" style="color: #0d0d0d;"></i></div>
                     <div id="comment" style="width: 7%" class="list"><i class="fa-regular fa-comment-dots" style="color: #0d0d0d;"></i></div>
-                    <div id="like" style="width: 7%" class="list"><i class="fa-solid fa-heart" style="color: #0d0d0d;"></i></div>
+                    <div id="like" style="width: 7%" class="list"><i class="fa-solid fa-heart" style="color: #e61919;"></i></div>
                     <div id="date" style="width: 10%" class="list">게시일</div>
                 </div>
             </div>

@@ -98,4 +98,6 @@ public interface AdminMapper {
     void denyCompany(String userid);
 
     void reportApply(ReportVO rvo);
+
+    int getUsertype(String logId);
 }

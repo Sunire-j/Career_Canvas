@@ -334,4 +334,10 @@
         insert into report(reporttype, targetid, user_userid, title, userid)
         values('subject', #{targetid}, #{user_userid}, #{title}, #{userid})
     </insert>
+
+    <select id="getUsertype" resultType="Integer">
+        select usertype
+        from user
+        where userid=#{param1}
+    </select>
 </mapper>

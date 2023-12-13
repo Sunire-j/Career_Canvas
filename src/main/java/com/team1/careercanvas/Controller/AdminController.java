@@ -30,6 +30,23 @@ public class AdminController {
     @GetMapping("/admin/home")
     public ModelAndView home(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
         PagingVO pvo = new PagingVO();
         pvo.setOnePageRecord(5);
         pvo.setPage(1);
@@ -63,6 +80,23 @@ public class AdminController {
                                @RequestParam(required = false) String searchWord,
                                @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
         PagingVO pvo = new PagingVO();
         pvo.setSearchKey(searchKey);
         pvo.setSearchWord(searchWord);
@@ -88,6 +122,22 @@ public class AdminController {
                               @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
         pvo.setTotalRecord(mapper.getBoardCount());
@@ -109,6 +159,22 @@ public class AdminController {
     public ModelAndView report(HttpSession session,
                                @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
@@ -132,6 +198,22 @@ public class AdminController {
                                    @RequestParam(required = false, defaultValue = "1") int page) {
         ModelAndView mav = new ModelAndView();
 
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
         PagingVO pvo = new PagingVO();
         pvo.setPage(page);
         pvo.setTotalRecord(mapper.getDeleteCount());
@@ -151,6 +233,20 @@ public class AdminController {
 
     @GetMapping("/subject/delete") // 삭제 신청 과제 삭제
     public String deleteAssignment(HttpSession session, int subjectid) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         mapper.dismissSubject(subjectid);
         int result = mapper.deleteAssignment(subjectid);
         if (result > 0) { // 삭제 성공
@@ -163,6 +259,20 @@ public class AdminController {
 
     @GetMapping("/subject/dismiss") // 삭제 신청 과제 거절
     public String dismissAssignment(HttpSession session, int subjectid) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         int result = mapper.dismissSubject(subjectid);
         if (result > 0) { // 삭제 성공
             return "redirect:/admin/delete";
@@ -174,6 +284,20 @@ public class AdminController {
 
     @GetMapping("/board/delete") // 모니터링 페이지 게시글 삭제
     public String deleteBoard(HttpSession session, int postid) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         int result = mapper.deleteBoard(postid);
         if (result > 0) { // 삭제 성공
             return "redirect:/admin/board";
@@ -185,6 +309,20 @@ public class AdminController {
 
     @GetMapping("/report/dismiss") // 기각해서 리포트 테이블만 삭제
     public String dismissReport(HttpSession session, int targetid) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         int result = mapper.deleteReport(targetid);
         // 보드에 삭제
         if (result > 0) { // 삭제 성공
@@ -197,6 +335,20 @@ public class AdminController {
 
     @GetMapping("/report/delete") // 신고된 글 삭제 버튼 클릭 이벤트
     public String deleteReport(HttpSession session, int targetid, String reporttype) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         int Rresult = mapper.deleteReport(targetid);
         if (Rresult > 0) {
             if (reporttype.equals("board")) {
@@ -258,6 +410,21 @@ public class AdminController {
 
     @GetMapping("/report/delete/user") // 탈퇴 - 리포트 테이블에서 userid 뽑고, 리포트 앤드 보드 삭제 -> user테이블에서 삭제
     public String reportDeleteUser(HttpSession session, int target_id, String reporttype) {
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         String userid = mapper.reporterUser(target_id);
         int Rresult = mapper.deleteReport(target_id);
         if (Rresult > 0) {
@@ -327,6 +494,21 @@ public class AdminController {
 
     @GetMapping("/delete/user") // 강제 탈퇴 - 일반회원관리
     public String deleteUser(HttpSession session, String userid) {
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         int result = mapper.deleteUser(userid);
         if (result > 0) { // 삭제 성공
             return "redirect:/admin/member";
@@ -338,6 +520,21 @@ public class AdminController {
 
     @GetMapping("/board/delete/user") // 강제 탈퇴 - 실시간 모니터링 강제탈퇴
     public String boardDeleteUser(HttpSession session, int postid) {
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         String userid = mapper.getWriterUser(postid);
         int Uresult = mapper.deleteUser(userid);
         mapper.deleteBoard(postid);
@@ -352,6 +549,21 @@ public class AdminController {
 
     @GetMapping("/change/user") // 닉네임 강제 변경
     public String changeUser(HttpSession session, String username) {
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         String changed = "불건전한닉네임" + username;
         int result = mapper.changeUsername(username, changed);
         if (result > 0) { // 삭제 성공
@@ -365,6 +577,24 @@ public class AdminController {
     @GetMapping("/admin/user/stats")
     public ModelAndView userStats(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+
+        String logStatus = (String) session.getAttribute("LogStatus");
+
+        if(logStatus==null|| !logStatus.equals("Y")){
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        String logId = (String) session.getAttribute("LogId");
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
@@ -382,6 +612,22 @@ public class AdminController {
     @GetMapping("/admin/board/stats")
     public ModelAndView boardStats(HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
@@ -401,6 +647,23 @@ public class AdminController {
     @GetMapping("/admin/banner")
     public ModelAndView banner(PagingVO pVO, HttpSession session) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
         List<BannerVO> bVO = mapper.getBannerList();
         pVO.setOnePageRecord(10);
         pVO.setTotalRecord(mapper.getBannerAmount(pVO));
@@ -418,7 +681,22 @@ public class AdminController {
 
     //조석훈 작업
     @GetMapping("/admin/banner/add")
-    public String banner_add() {
+    public String banner_add(HttpSession session) {
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         List<BannerVO> list = mapper.getBannerList();
         if (list.size() >= 10) {
             return "redirect:/admin/banner";
@@ -467,8 +745,24 @@ public class AdminController {
     }
 
     @GetMapping("/admin/banner/check")
-    public ModelAndView checkBanner(int bannerid) {
+    public ModelAndView checkBanner(HttpSession session, int bannerid) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         String bannerimg = mapper.getBannerImg(bannerid);
 
@@ -479,6 +773,20 @@ public class AdminController {
 
     @GetMapping("/admin/banner/delete")
     public String delBanner(int bannerid, HttpSession session) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
         if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
@@ -491,6 +799,23 @@ public class AdminController {
     @GetMapping("/admin/company") // 기업회원관리
     public ModelAndView company(HttpSession session, PagingVO pvo) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+
         String name = mapper.getAdminName((String) session.getAttribute("LogId"));
         mav.addObject("name", name);
 
@@ -511,8 +836,24 @@ public class AdminController {
     }
 
     @GetMapping("/admin/company/check")
-    public ModelAndView checkAuth(String uid) {
+    public ModelAndView checkAuth(HttpSession session, String uid) {
         ModelAndView mav = new ModelAndView();
+
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
+        int usertype = mapper.getUsertype(logId);
+        if ( usertype != 2) {
+            mav.addObject("msg", "잘못된 접근입니다.");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
+            return mav;
+        }
 
         String imgsrc = mapper.getAuthimg(uid);
 
@@ -523,6 +864,20 @@ public class AdminController {
 
     @GetMapping("/admin/company/accept")
     public String acceptCompany(String uid, HttpSession session) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
         if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
@@ -536,6 +891,20 @@ public class AdminController {
 
     @GetMapping("/admin/company/deny")
     public String denyCompany(String uid, HttpSession session) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
         if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
@@ -548,6 +917,20 @@ public class AdminController {
 
     @GetMapping("/admin/company/forceDelete")
     public String forceDelete(String uid, HttpSession session) {
+        String logId = (String) session.getAttribute("LogId");
+        String logStatus = (String) session.getAttribute("LogStatus");
+        if ( logId == null || !logStatus.equals("Y")) {
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+        int usertype = mapper.getUsertype(logId);
+        if(usertype!=2){
+            session.setAttribute("msg", "잘못된 접근입니다.");
+            session.setAttribute("isBack",0);
+            return "improve_alert";
+        }
+
         UserVO uvo = usermapper.getUser((String) session.getAttribute("LogId"));
         if (uvo.getUsertype() != 2) {
             session.setAttribute("msg", "잘못된 접근입니다.");
