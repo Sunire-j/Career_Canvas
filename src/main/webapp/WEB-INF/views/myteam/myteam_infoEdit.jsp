@@ -413,6 +413,7 @@
             $('.partyImg_edit_btn').click(function() {
                 $(this).css('display', 'none');
                 $(".partyImg_edit_btn_ok").css('display','block');
+                $(".edit_guide").css('display','block');
                 $('#ex_file').prop('disabled', false);
             });
 
