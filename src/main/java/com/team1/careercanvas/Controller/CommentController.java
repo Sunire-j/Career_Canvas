@@ -38,9 +38,7 @@ public class CommentController {
     @PostMapping("/subject/comment/load")
     @ResponseBody
     public List<SubjectCommentVO> loadComment(int applyid){
-        System.out.println(applyid);
         List<SubjectCommentVO> scvo = commentMapper.getSubjectComment(applyid);
-        System.out.println(scvo.get(0).toString());
         return scvo;
     }
 
