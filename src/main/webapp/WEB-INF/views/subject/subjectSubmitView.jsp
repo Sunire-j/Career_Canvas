@@ -292,8 +292,23 @@
         과제명 : ${svo.subjecttitle}
     </div>
     <section style="padding: 20px">
-        <div class="board_category" style="margin-bottom: 20px">
-            기업과제 제출 게시판
+        <div style="display: flex">
+            <div class="board_category" style="margin-bottom: 20px">
+                기업과제 제출 게시판
+            </div>
+            <c:if test="${svo.category>0}">
+                <div style="background: black; width: 90px; margin-left : 10px;text-align: center; color: white; border-radius: 10px; margin-bottom: 20px">
+                    <c:if test="${svo.category==1}">
+                        IT/개발
+                    </c:if>
+                    <c:if test="${svo.category==2}">
+                        디자인
+                    </c:if>
+                    <c:if test="${svo.category==3}">
+                        영상/음향
+                    </c:if>
+                </div>
+            </c:if>
         </div>
         <div class="board_main">
             <div class="board_info">
