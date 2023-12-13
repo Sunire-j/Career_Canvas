@@ -200,41 +200,26 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         });
         $("form").on("submit", function (e) {
           var editorContent = editor.getData();
-          var category = document.getElementsByName('category');
-          var categoryCheck = false;
-          var member = document.getElementsByName('member');
-          var memberCheck = false;
+          var categoryChecked = $("input[name='category']:checked");
+          var memberChecked = $("input[name='member']:checked");
 
           if(!$("#title").val()){
             alert("제목을 입력해 주세요");
             return false;
           }
-          // 카테고리 선택 유효성
-          for(var i=0; i<category.length; i++){
-            if(category[i].checked) {
-              categoryCheck = true;
-              break;
-            }
-          }
-          if(!categoryCheck) {
-            alert('카테고리를 선택하세요');
+          if(!editorContent) {
+            alert("내용을 입력하세요");
             return false;
           }
-          for(var i=0; i<member.length; i++){
-            if(member[i].checked){
-              memberCheck = true;
-              break;
-            }
+          if(categoryChecked.length == 0){
+            alert("카테고리를 선택하세요");
+            return false;
           }
-          if(!memberCheck){
-            alert('참여인원을 선택하세요');
+          if(memberChecked.length == 0){
+            alert("팀원을 선택하세요");
             return false;
           }
 
-          if (!editorContent) {
-            e.preventDefault();
-            alert("글 내용을 입력해 주세요.");
-          }
         });
       });
     </script>

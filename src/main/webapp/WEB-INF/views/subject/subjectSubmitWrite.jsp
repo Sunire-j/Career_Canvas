@@ -228,7 +228,7 @@
                     if(partyRadiosReal.length==0){
                         alert('파티를 선택하세요');
                         e.preventDefault();
-                                return false;
+                        return false;
                     }else{
                         var memberCheckReal = $('input[name="member"]:checked');
                         if(memberCheckReal.length==0){
@@ -242,52 +242,6 @@
                     
 
                 }
-
-                // var partyRadios = document.getElementsByName('partyid');
-                // var memberCheck = document.getElementsByName('member');
-                // var memberChecked = false;
-                // var isteamChecked = false;
-                // var partyChecked = false;
-                // // checked여부 확인
-                //     if(isteamRadios[i].checked) {
-                //         isteamChecked = true;
-                //         // 팀일경우
-                //         if(isteamRadios[i].value == "0"){
-                //             for (var j=0; j<partyRadios.length; j++){
-                //                 if(partyRadios[j].checked){
-                //                     partyChecked = true;
-                //                     // 팀원선택여부
-                //                     for(var x=0; x<memberCheck.length; x++){
-                //                         if(memberCheck[x].checked){
-                //                             memberChecked = true;
-                //                         }
-                //                     }
-                //                     if(!memberChecked){
-                //                         e.preventDefault();
-                //                         alert('팀원을 선택하세요');
-                //                         return false;
-                //                     }
-                //                 }
-                //             }
-                //             if(!partyChecked) {
-                //                 e.preventDefault();
-                //                 alert('파티를 선택하세요');
-                //                 return false;
-                //             }
-                //         }
-                //         break;
-                //     }
-                
-                // if(!isteamChecked) {
-                //     e.preventDefault();
-                //     alert('개인&팀 유형을 선택하세요');
-                //     return false;
-                // }
-                // if(!editorContent) {
-                //     e.preventDefault();
-                //     alert('글 내용을 입력해 주세요.');
-                // }
-
             });
             //---------------------------------------------
             $('input[name="isteam"]').on('change', function() {
