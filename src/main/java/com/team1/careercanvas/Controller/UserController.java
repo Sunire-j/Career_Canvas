@@ -344,7 +344,7 @@ public class UserController {
                         session.setAttribute("usertype", userInDB.getUsertype());
                         session.setAttribute("Logusername", userInDB.getUsername());
                         session.setAttribute("LogImg", userInDB.getProfileimg());
-                        return "index";
+                        return "redirect:/";
                     }
                 } else {
                     session.setAttribute("msg", "비밀번호 변경 후 진행해주세요. 메일함을 확인해주세요.");
