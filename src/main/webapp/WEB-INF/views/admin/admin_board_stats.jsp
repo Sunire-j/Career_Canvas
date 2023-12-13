@@ -66,6 +66,8 @@
                         }
                     }
                 });
+                $("#board_chart").css("width",'1000px');
+                $("#board_chart").css("height",'500px');
             }
 
             // 카테고리 별 등록된 게시글 파이 차트
@@ -180,9 +182,17 @@
             <div class="container p-5 my-5 bg-secondary text-white">오늘 업로드 된 게시글 : ${today}</div>
             <div class="container p-5 my-5 bg-secondary text-white">신고 된 게시글 : ${rVO}</div>
         </div>
-        <div style="width: 50%; display: flex;  align-items: center">
-            <canvas id="board_chart"></canvas>
-            <canvas id="board_pie" style="width: 500px; height: 500px; margin-left:100px"></canvas>
+        <div>
+            <div style="display: flex; width: 100%; align-items: center; padding-top: 50px; justify-content: space-evenly;">
+                <div>
+                    <h2 style="text-align: center">한달간 일별 게시글 근황</h2>
+                    <canvas id="board_chart" style="display: block; box-sizing: border-box; height: 500px; width: 1000px;"></canvas>
+                </div>
+                <div>
+                    <h2 style="text-align: center">카테고리별 게시글 근황</h2>
+                    <canvas id="board_pie" style="display: block;box-sizing: border-box;width: 500px;"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>

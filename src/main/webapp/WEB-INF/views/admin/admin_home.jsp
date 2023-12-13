@@ -96,7 +96,8 @@
             <div class="container p-5 my-5 bg-secondary text-white">오늘 신고된 게시글 : ${rToday}</div>
             <div class="container p-5 my-5 bg-secondary text-white">오늘 신규 가입자 : ${newMember}</div>
         </div>
-        <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/report">최근 신고글</a></h5>
+        <div style="margin-bottom: 20px; height: 363px; border: solid 2px;">
+        <h5 style="padding: 15px; text-decoration-line: none;"><a href="${pageContext.servletContext.contextPath}/admin/report">최근 신고글</a></h5>
         <table class="table table-hover">
             <tr>
                 <th>번호</th>
@@ -138,9 +139,10 @@
                 </tr>
             </c:forEach>
         </table>
+        </div>
         <div style="display: flex">
-            <div style="width: 50%">
-                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/board">최신 글</a></h5>
+            <div style="width: 50%; height: 363px; border: solid 2px; margin-right: 20px;">
+                <h5 style="padding: 15px; text-decoration-line: none;"><a href="${pageContext.servletContext.contextPath}/admin/board">최신 글</a></h5>
                 <table class="table table-hover">
                     <tr>
                         <th>글번호</th>
@@ -173,8 +175,8 @@
                 </table>
             </div>
 
-            <div style="width: 50%">
-                <h5 style="padding: 15px;"><a href="${pageContext.servletContext.contextPath}/admin/company">승인 대기중인 기업 목록</a></h5>
+            <div style="width: 50%; height: 363px; border: solid 2px;">
+                <h5 style="padding: 15px; text-decoration-line: none;"><a href="${pageContext.servletContext.contextPath}/admin/company">승인 대기중인 기업 목록</a></h5>
                 <table class="table table-hover">
                     <tr>
                         <th>회원ID</th>
