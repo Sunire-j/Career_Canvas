@@ -326,6 +326,7 @@
                                     $(".name_edit_btn_ok").css('display','none');
                                     $(".name_edit_btn").css('display','block');
                                     $('.name_edit_box').prop('readonly', true);
+                                    location.reload();
                                 },error:function (e){
                                     console.log(e);
                                 }

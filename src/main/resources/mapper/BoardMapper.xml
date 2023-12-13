@@ -250,8 +250,8 @@
         s.subjectid AS subjectid,
         u.username AS user_userid,
         s.imgsrc AS imgsrc,
-        s.category as category,
-        u.profileimg
+        s.category AS category,
+        u.profileimg AS profileimg
     FROM subject s
         JOIN user u ON s.user_userid = u.userid
 		<choose>

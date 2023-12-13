@@ -41,20 +41,20 @@ public class SubjectController {
         ModelAndView mav = new ModelAndView();
 
         String logId = (String) session.getAttribute("LogId");
-        String logStatus = (String) session.getAttribute("logStatus");
+        String logStatus = (String) session.getAttribute("LogStatus");
 
         UserVO uvo = mapper.SelectCompany(logId);
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
-            mav.addObject("isBack", 1);
+            mav.addObject("isBack",1);
             mav.addObject("alert_page", "login");
             mav.setViewName("improve_alert");
             return mav;
         }
         if (uvo == null) {
             mav.addObject("msg", "기업회원만 작성 가능합니다.");
-            mav.addObject("isBack", 0);
+            mav.addObject("isBack",0);
             mav.setViewName("improve_alert");
             return mav;
         }
@@ -142,7 +142,7 @@ public class SubjectController {
         String logId = (String) session.getAttribute("LogId");
         String logStatus = (String) session.getAttribute("LogStatus");
 
-        if (logStatus != "Y" && logId == null) {
+        if (!logStatus.equals("Y") && logId == null) {
             mav.addObject("msg", "잘못된 접근입니다.");
             mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
@@ -153,7 +153,8 @@ public class SubjectController {
         mav.addObject("Svo", svo);
 
         String delid = svo.getUser_userid();
-        if (logId != delid) {
+
+        if(!logId.equals(delid)){
             mav.addObject("msg", "잘못된 접근입니다.");
             mav.addObject("isBack", 0);
             mav.setViewName("improve_alert");
@@ -180,7 +181,7 @@ public class SubjectController {
             @RequestParam("subjectid") int subjectid) {
         ModelAndView mav = new ModelAndView();
         String logId = (String) session.getAttribute("LogId");
-        String logStatus = (String) session.getAttribute("logStatus");
+        String logStatus = (String) session.getAttribute("LogStatus");
 
         if (logStatus != "Y" && logId == null) {
             mav.addObject("msg", "로그인 후 이용가능합니다.");
@@ -313,12 +314,14 @@ public class SubjectController {
             return mav;
         }
 
+
         mav.addObject("avo", avo);
 
         String partyname = applymapper.getPartyname(avo.getParty_partyid());
 
         SubjectVO svo = applymapper.SelectSubject(avo.getSubject_subjectid());
         mav.addObject("svo", svo);
+
 
         UserVO uvo = mapper.getUserInfo(avo.getUser_userid());
         String username = uvo.getUsername();

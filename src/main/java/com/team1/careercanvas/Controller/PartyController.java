@@ -624,7 +624,8 @@ public class PartyController {
     @PostMapping("party/profileUpdate")
     public String profileUpdate(@RequestParam("no") int partyid,
             @RequestParam("ex_file") MultipartFile file) {
-        if (file != null) {
+
+        if (file != null||!file.isEmpty()) {
             // 파일저장시작
             String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));

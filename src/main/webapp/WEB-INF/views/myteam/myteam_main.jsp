@@ -135,16 +135,18 @@
             overflow: auto;
         }
         .member_list li{
-            width: 70px;
+            width: 80px;
             margin-right: 20px;
             float: left;
         }
         .member_img{
+            margin: 0 7.5px;
             width: 70px;
             height: 70px;
             border-radius: 20px;
         }
         .member_name{
+            width: 75px;
             text-align: center;
             font-size: 15px;
             font-weight: bold;
@@ -465,7 +467,7 @@
                             <li style="display: flex; margin-top: 20px">
                                 <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">
                                     <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}" class="member_img">
-                                    <div style="display: flex; align-items:center;text-align: center;margin-left:10px; font-size: 20px" class="member_name" title="${uvo.username}">
+                                    <div style="text-align: center;margin:0 5px; font-size: 20px" class="member_name" title="${uvo.username}">
                                             ${uvo.username}
                                     </div>
                                 </a>

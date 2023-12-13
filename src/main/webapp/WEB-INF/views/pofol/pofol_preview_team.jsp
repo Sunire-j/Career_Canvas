@@ -409,7 +409,7 @@
                                         <div class="iconGroup">
                                             <i class="fa-solid fa-eye" style="color: #0d0d0d;"></i>
                                             <span>${p.view}</span></br>
-                                            <i class="fa-solid fa-heart" style="color: #0d0d0d;"></i>
+                                            <i class="fa-solid fa-heart" style="color: #e61919;"></i>
                                             <span>${p.likeCnt}</span>
                                         </div>
                                     </div>

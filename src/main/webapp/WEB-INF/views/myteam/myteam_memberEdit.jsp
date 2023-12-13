@@ -339,7 +339,10 @@
                 no = ${partyvo.partyid};
                 window.location.href = '${pageContext.servletContext.contextPath}/party/portpolio?no='+ no;
             });
-
+            $(".chatbtn").click(function (){
+                no = ${partyvo.partyid};
+                window.location.href = '${pageContext.servletContext.contextPath}/myteam/chat?no='+ no;
+            });
         });
     </script>
 </head>
@@ -373,7 +376,7 @@
         </ul>
         <div class="choisvalue" style="margin-top: 30px;">
             <input type="button" class="btn btn-outline-secondary mainbtn" value="메인" >
-            <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅" onclick="changeClass(this)">
+            <input type="button" class="btn btn-outline-secondary chatbtn" value="채팅">
             <input type="button" class="btn btn-secondary partysetbtn" value="파티관리" onclick="changeClass(this)">
             <input type="button" class="btn btn-outline-secondary portpoliobtn" value="포트폴리오" >
         </div>
