@@ -181,9 +181,17 @@
             <div class="container p-5 my-5 bg-secondary text-white">일반회원 : ${member}</div>
             <div class="container p-5 my-5 bg-secondary text-white">기업회원 : ${company}</div>
         </div>
-        <div style="width: 50%; display: flex; margin-top:75px">
-            <canvas id="accessor"></canvas>
-            <canvas id="newMember"></canvas>
+        <div>
+            <div style="display: flex; width: 100%; align-items: center; padding-top: 50px; justify-content: space-evenly;">
+                <div>
+                    <h2 style="text-align: center">한달간 일별 접속자</h2>
+                    <canvas id="accessor" style="display: block; box-sizing: border-box; height: 400px; width: 800px;"></canvas>
+                </div>
+                <div>
+                    <h2 style="text-align: center">한달간 일별 신규 가입자</h2>
+                    <canvas id="newMember" style="display: block; box-sizing: border-box; height: 400px; width: 800px;"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
