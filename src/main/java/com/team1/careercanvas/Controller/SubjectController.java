@@ -106,7 +106,7 @@ public class SubjectController {
 
         }
 
-        return "";
+        return "redirect:/subject";
     }
 
     @GetMapping("subject/view")
