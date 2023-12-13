@@ -362,7 +362,7 @@
     <div class="content-header">
         <h3>기업과제 작성</h3> <!-- 이 부분은 세션에 게시판종류 넣어서 처리할 예정 -->
     </div>
-    <form method="post" action="${pageContext.servletContext.contextPath}/subject/submitwriteOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351F" novalidate>
+    <form method="post" action="${pageContext.servletContext.contextPath}/subject/submitwriteOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px;" novalidate>
         <input type="hidden" id="content" name="postcontent">
         <p class="titlename"> 과제명 : ${Svo.subjecttitle}</p>
         <input type="hidden" name="subjectid" value="${Svo.subjectid}">
