@@ -195,7 +195,7 @@
         <div class="headerstyle" style="background: #CFBFA1; display: flex; justify-content: space-between; height: 120px;">
             <!-- Title -->
             <div class="title">
-                <a class="logo" href="${pageContext.servletContext.contextPath}/" style="margin-left: 50px; font-weight: bold">CAREER CANVAS</a>
+                <a class="logo" href="${pageContext.servletContext.contextPath}/" style="margin-left: 60px; font-weight: bold">CAREER CANVAS</a>
             </div>
             <!-- Nav -->
             <nav class="nav_wrapper">
@@ -214,7 +214,7 @@
                 <ul class="infoGroup" >
                     <c:if test="${LogStatus=='Y'}">
                         <li><img style="width: 50px; height: 50px; radius: 50%; object-fit: cover; border-radius: 70%;" src="${pageContext.servletContext.contextPath}/upload${LogImg}"/></li>
-                        <li class="userNickname"  style="font-size: 1.2rem; font-weight: bold">
+                        <li class="userNickname"  style="font-size: 1.2rem; font-weight: bold; margin-right: 60px;">
                                 ${Logusername} ▼
                             <div style="background-color: white">
                                 <ul class="userInfo" >
@@ -226,7 +226,7 @@
                         </li>
                     </c:if>
                     <c:if test="${LogStatus!='Y'}">
-                        <li><a href="${pageContext.servletContext.contextPath}/login">로그인</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/login" style="font-size: 1.2rem; font-weight: bold; margin-right: 60px" >로그인</a></li>
                     </c:if>
                 </ul>
                 </div>
