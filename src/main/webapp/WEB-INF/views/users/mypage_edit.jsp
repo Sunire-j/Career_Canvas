@@ -631,19 +631,6 @@ file="../header_footer/header.jspf" %>
             />
           </label>
         </div>
-
-        <div class="pofol">
-          <span>포트폴리오 공개</span>
-          <div>
-            <input
-              type="checkbox"
-              checked
-              data-toggle="toggle"
-              data-onstyle="primary"
-            />
-          </div>
-        </div>
-
         <div class="comment" style="text-align: left">
           <span>소개글</span>
           <div>

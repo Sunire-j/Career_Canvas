@@ -231,7 +231,6 @@ public class UserController {
         }
         // 파일저장 끝
 
-
         String result = OCR(String.valueOf(path));
 
         // 결과 json에서 inferResult가 "FAILURE"면 아닌걸로 취급, "SUCCESS"면 성공

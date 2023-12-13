@@ -363,7 +363,7 @@
                                         <div style="display: flex; align-items: center;">
                                             <img src="${pageContext.servletContext.contextPath}/upload${svo.profileimg}"
                                                  style="width:20px; height:20px;" alt="">
-                                            <span style="margin-left:10px; width: 118px;white-space: nowrap;
+                                            <span style="margin-left:10px; width: 150px;white-space: nowrap;
                         overflow: hidden; text-overflow: ellipsis;">${svo.user_userid}</span>
                                         </div>
                                     </div>

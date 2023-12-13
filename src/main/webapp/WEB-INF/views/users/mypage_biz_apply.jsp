@@ -180,11 +180,6 @@
             font-size: 14px;
             padding: 2px 4px;
         }
-        .btn-outline-secondary {
-            font-size: 14px;
-            padding: 2px 4px;
-        }
-
         .userIntro p {
             margin: 0px;
         }
@@ -385,7 +380,7 @@
         <div style="margin: 0 auto; margin-top: 30px; ">
             <ul style="width: 1100px; display: flex; flex-wrap: wrap; margin: 0 auto" class="content">
             <c:forEach var="avo" items="${aVO}">
-                <a href="${pageContext.servletContext.contextPath}/mypage/biz/apply?subjectid=${avo.applyid}">
+                <a href="${pageContext.servletContext.contextPath}/subject/applyView?applyid=${avo.applyid}">
                 <div class="img_C">
                     <img src="${pageContext.servletContext.contextPath}/upload${avo.applyimg}" class="portfolio_img">
                     <!-- line 1 -->

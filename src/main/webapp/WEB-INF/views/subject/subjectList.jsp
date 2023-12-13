@@ -371,7 +371,7 @@
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
                                         <div style="display: flex; align-items: center;">
                                             <img src="${pageContext.servletContext.contextPath}/upload${sVO.imgsrc}" style="width:20px; height:20px;" alt="">
-                                            <span style="margin-left:10px; width: 118px;white-space: nowrap;
+                                            <span style="margin-left:10px; width: 150px;white-space: nowrap;
                                         overflow: hidden; text-overflow: ellipsis;">${sVO.user_userid}</span>
                                         </div>
                                     </div>
@@ -381,7 +381,8 @@
                     </c:forEach>
                 </ul>
             </div>
-            <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+            <div class="pagination-container" style="margin: 0 auto; margin-top: 20px;">
+                <div style="width:74px;"></div>
                 <div class="pagination" style="display: flex">
                     <div class="paging">
                         <c:if test="${pVO.page > 1}">
@@ -439,6 +440,12 @@
                         </c:if>
                     </div>
                 </div>
+                <div>
+                    <a href="${pageContext.servletContext.contextPath}/subject/write">
+                        <input class="btn btn-outline-secondary" type="button" value="글쓰기">
+                    </a>
+                </div>
+                
             </div>
           <!-- 검색 -->
           <div style="width: 100%; text-align: center;">
