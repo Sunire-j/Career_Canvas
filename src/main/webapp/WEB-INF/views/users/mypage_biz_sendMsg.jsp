@@ -367,7 +367,7 @@ file="../header_footer/header.jspf"%>
           </tbody>
         </table>
 
-        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+        <div class="pagination-con" style="margin: 0 auto; margin-top: 20px;">
           <div class="pagination" style="display: flex; justify-content: space-between;">
               <div style="width: 106px;"></div>
               <div class="paging">

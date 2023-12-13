@@ -367,8 +367,8 @@ file="../header_footer/header.jspf"%>
         </table>
 
         <div class="pagination-container" style="margin: 0 auto; margin-top: 20px;">
+          <div style="width: 106px;"></div>
           <div class="pagination" style="display: flex; justify-content: space-between;">
-              <div style="width:106px;"></div>
               <div class="paging">
                   <c:if test="${pVO.page > 1}">
                       <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
@@ -424,9 +424,9 @@ file="../header_footer/header.jspf"%>
                       </button>
                   </c:if>
               </div>
-              <div>
-                <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
-              </div>
+          </div>
+          <div>
+            <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
           </div>
       </div>
       </div>
