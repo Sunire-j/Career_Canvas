@@ -195,18 +195,18 @@
         <div class="headerstyle" style="background: #CFBFA1; display: flex; justify-content: space-between; height: 120px;">
             <!-- Title -->
             <div class="title">
-                <a class="logo" href="${pageContext.servletContext.contextPath}/" style="margin-left: 50px; ">CAREER CANVAS</a>
+                <a class="logo" href="${pageContext.servletContext.contextPath}/" style="margin-left: 50px; font-weight: bold">CAREER CANVAS</a>
             </div>
             <!-- Nav -->
             <nav class="nav_wrapper">
                 <div>
                 <ul style="margin-right: 50px; padding-left: 0px !important" class="navBar">
-                    <li><a href="${pageContext.servletContext.contextPath}/party/wanted">파티</a></li>
-                    <li><a href="${pageContext.servletContext.contextPath}/pofol_preview">포트폴리오</a></li>
-                    <li><a href="${pageContext.servletContext.contextPath}/subject">기업과제</a></li>
-                    <li><a href="${pageContext.servletContext.contextPath}/board/free">커뮤니티</a></li>
+                    <li><a style="font-size: 1.2rem; font-weight: bold" href="${pageContext.servletContext.contextPath}/party/wanted">파티</a></li>
+                    <li><a style="font-size: 1.2rem; font-weight: bold" href="${pageContext.servletContext.contextPath}/pofol_preview">포트폴리오</a></li>
+                    <li><a style="font-size: 1.2rem; font-weight: bold" href="${pageContext.servletContext.contextPath}/subject">기업과제</a></li>
+                    <li><a style="font-size: 1.2rem; font-weight: bold" href="${pageContext.servletContext.contextPath}/board/free">커뮤니티</a></li>
                     <c:if test="${usertype==2}">
-                    <li><a href="${pageContext.servletContext.contextPath}/admin/home">관리자 페이지</a></li>
+                    <li><a style="font-size: 1.2rem; font-weight: bold" href="${pageContext.servletContext.contextPath}/admin/home">관리자 페이지</a></li>
                     </c:if>
                 </ul>
                 </div>
@@ -214,7 +214,7 @@
                 <ul class="infoGroup" >
                     <c:if test="${LogStatus=='Y'}">
                         <li><img style="width: 50px; height: 50px; radius: 50%; object-fit: cover; border-radius: 70%;" src="${pageContext.servletContext.contextPath}/upload${LogImg}"/></li>
-                        <li class="userNickname">
+                        <li class="userNickname"  style="font-size: 1.2rem; font-weight: bold">
                                 ${Logusername} ▼
                             <div style="background-color: white">
                                 <ul class="userInfo" >
