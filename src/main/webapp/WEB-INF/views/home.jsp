@@ -366,7 +366,7 @@
                                 <div class="iconGroup">
                                     <i class="fa-solid fa-eye" style="color: #0d0d0d;"></i>
                                     <span>${p.view}</span><br>
-                                    <i class="fa-solid fa-heart" style="color: #0d0d0d;"></i>
+                                    <i class="fa-solid fa-heart" style="color: #e61919;"></i>
                                     <span>${p.likeCnt}</span>
                                 </div>
                             </div>
@@ -608,7 +608,7 @@
                                 <div class="iconGroup">
                                     <i class="fa-solid fa-eye" style="color: #0d0d0d;"></i>
                                     <span>`+r[i].view+`</span><br>
-                                    <i class="fa-solid fa-heart" style="color: #0d0d0d;"></i>
+                                    <i class="fa-solid fa-heart" style="color: #e61919;"></i>
                                     <span>`+r[i].likeCnt+`</span>
                                 </div>
                             </div>
