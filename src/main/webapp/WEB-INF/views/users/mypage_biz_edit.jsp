@@ -216,7 +216,7 @@ file="../header_footer/header.jspf" %>
         height: 150px;
         border-radius: 30%;
       }
-      .btn-primary, .btn-outline-primary, .btn-secondary, .btn-outline-secondary
+      .btn-primary, .btn-outline-primary, .btn-secondary,
       ,.btn-info ,.btn-outline-info, .btn-danger ,.btn-outline-danger{
         font-size: 14px;
         padding: 2px 4px;
@@ -461,18 +461,6 @@ file="../header_footer/header.jspf" %>
               onchange="uploadImage()"
             />
           </label>
-        </div>
-
-        <div class="pofol">
-          <span>포트폴리오 공개</span>
-          <div>
-            <input
-              type="checkbox"
-              checked
-              data-toggle="toggle"
-              data-onstyle="primary"
-            />
-          </div>
         </div>
 
         <div class="comment" style="text-align: left">

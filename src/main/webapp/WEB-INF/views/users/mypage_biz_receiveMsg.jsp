@@ -163,14 +163,6 @@ file="../header_footer/header.jspf"%>
         font-size: 14px;
         padding: 2px 4px;
       }
-      .btn-secondary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
-      .btn-outline-secondary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
       .userIntro p {
         margin: 0px;
       }
@@ -345,9 +337,9 @@ file="../header_footer/header.jspf"%>
       <div style="padding: 10px 40px 40px 40px">
       <div style="width: 900px; margin: 0 auto">
         <div class="mt-3" style="text-align: center">
-          <button class="btn btn-secondary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/biz/sendMsg'">보낸 쪽지함</button>
+          <button class="btn btn-outline-secondary sendMsg" onclick="location.href='${pageContext.servletContext.contextPath}/mypage/biz/sendMsg'">보낸 쪽지함</button>
           <button
-            class="btn btn-outline-secondary receiveMsg"
+            class="btn btn-secondary receiveMsg"
             onclick="location.href='${pageContext.servletContext.contextPath}/mypage/biz/receiveMsg'"
           >
             받은 쪽지함
@@ -374,8 +366,9 @@ file="../header_footer/header.jspf"%>
           </tbody>
         </table>
 
-        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
-          <div class="pagination" style="display: flex">
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px;">
+          <div class="pagination" style="display: flex; justify-content: space-between;">
+              <div style="width:106px;"></div>
               <div class="paging">
                   <c:if test="${pVO.page > 1}">
                       <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
@@ -431,11 +424,14 @@ file="../header_footer/header.jspf"%>
                       </button>
                   </c:if>
               </div>
+              <div>
+                <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
+              </div>
           </div>
       </div>
       </div>
       <div style="width: 60%; text-align: right; margin:0 auto;">
-      <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
+      
           <script>
             $(function(){
               var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

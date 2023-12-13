@@ -247,7 +247,7 @@
             margin-top: 30px;
         }
         .content_info{
-            width: 330px;
+            width: 250px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

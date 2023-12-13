@@ -391,7 +391,7 @@
                                         <div style="display: flex; align-items: center;">
                                             <img src="${pageContext.servletContext.contextPath}/upload${p.profileimg}"
                                                  style="width:20px; height:20px;" alt="">
-                                            <span style="margin-left:10px; width: 118px;white-space: nowrap;
+                                            <span style="margin-left:10px; width: 150px;white-space: nowrap;
                                     overflow: hidden; text-overflow: ellipsis;">${p.username}</span>
                                         </div>
                                         <div class="iconGroup">
@@ -409,52 +409,51 @@
             </div>
             <!-- 페이징 -->
             <div style="text-align: center; width: 100%; margin:20px;">
-                <div>
-                    <c:if test="${pVO.totalRecord == 0}">
-                        작성된 게시글이 없습니다
-                    </c:if>
-                    <c:if test="${pVO.totalRecord > 0}">
-                        <!-- 이전 -->
-                        <c:if test="${pVO.page == 1}">
-                            <input type="button" value="<" class="btn btn-outline-secondary" disabled>
+                    <div>
+                        <c:if test="${pVO.totalRecord == 0}">
+                            작성된 게시글이 없습니다
                         </c:if>
-                        <c:if test="${pVO.page > 1}">
-                            <a
-                                    href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page - 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
-                                    <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
+                        <c:if test="${pVO.totalRecord > 0}">
+                            <!-- 이전 -->
+                            <c:if test="${pVO.page == 1}">
+                                <input type="button" value="<" class="btn btn-outline-secondary" disabled>
+                            </c:if>
+                            <c:if test="${pVO.page > 1}">
+                                <a
+                                        href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page - 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
+                                        <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
+                            >
+                            <input type=" button" value="<" class="btn btn-outline-secondary">
+                                </a>
+                            </c:if>
+                        </c:if>
+                        <!-- 1,2,3,4,5 -->
+                        <c:forEach
+                                var="p"
+                                begin="${pVO.startPage}"
+                                end="${pVO.startPage + pVO.onePageCount - 1}"
                         >
-                        <input type=" button" value="<" class="btn btn-outline-secondary">
+                            <c:if test="${p <= pVO.totalPage}">
+                                <a
+                                        href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${p}&searchWord=${pVO.searchWord}&category=${pVO.category}&postSort=${pVO.postSort}">
+                                    <input type="button" value="${p}" class="btn btn-outline-secondary">
+                                </a>
+                            </c:if>
+                        </c:forEach>
+
+                        <!-- 다음 -->
+
+                        <c:if test="${pVO.page == pVO.totalPage}">
+                            <input type="button" value=">" class="btn btn-outline-secondary" disabled>
+                        </c:if>
+                        <c:if test="${pVO.page < pVO.totalPage}">
+                            <a
+                                    href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page + 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
+                            >
+                                <input type="button" value=">" class="btn btn-outline-secondary">
                             </a>
                         </c:if>
-                    </c:if>
-                    <!-- 1,2,3,4,5 -->
-                    <c:forEach
-                            var="p"
-                            begin="${pVO.startPage}"
-                            end="${pVO.startPage + pVO.onePageCount - 1}"
-                    >
-                        <c:if test="${p <= pVO.totalPage}">
-                            <a
-                                    href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${p}&searchWord=${pVO.searchWord}&category=${pVO.category}&postSort=${pVO.postSort}">
-                                <input type="button" value="${p}" class="btn btn-outline-secondary">
-                            </a>
-                        </c:if>
-                    </c:forEach>
-
-                    <!-- 다음 -->
-
-                    <c:if test="${pVO.page == pVO.totalPage}">
-                        <input type="button" value=">" class="btn btn-outline-secondary" disabled>
-                    </c:if>
-                    <c:if test="${pVO.page < pVO.totalPage}">
-                        <a
-                                href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page + 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
-                        >
-                            <input type="button" value=">" class="btn btn-outline-secondary">
-                        </a>
-                    </c:if>
-                    <a href="${pageContext.servletContext.contextPath}/pofol/write/team"><input type="button" value="글쓰기" class="btn btn-secondary" /></a>
-                </div>
+                    </div>
             </div>
 
             <!-- 검색 -->

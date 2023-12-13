@@ -242,7 +242,7 @@
         </div>
 
         <div style="display: flex; justify-content: space-between">
-            <div></div>
+            <div style="width:80px;"></div>
             <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
                 <div class="pagination" style="display: flex">
                     <div class="paging">

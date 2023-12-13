@@ -188,7 +188,9 @@
         <if test="#{searchWord != ''}">
             <![CDATA[and s.subjecttitle like concat('%', #{searchWord}, '%')]]>
         </if>
-        limit #{onePageRecord} offset #{offsetPoint}
+        order by applyid desc
+        limit #{onePageRecord} offset #{offsetPoint};
+        
     </select>
 
     <select id="getSubjectSoloAmount" resultType="Integer">
@@ -214,7 +216,8 @@
         <if test="#{searchWord != ''}">
             AND subject.subjecttitle LIKE CONCAT('%', #{searchWord}, '%')
         </if>
-        limit #{onePageRecord} offset #{offsetPoint}
+        order by applyid desc
+        limit #{onePageRecord} offset #{offsetPoint};
     </select>
 
     <select id="getSubjectTeamAmount" resultType="Integer">
