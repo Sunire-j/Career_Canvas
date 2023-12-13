@@ -15,6 +15,7 @@
                  left join subject on subject.subjectid = subjectapply.subject_subjectid
         where subjectapply.user_userid = #{searchWord}
           and subjectapply.isteam = 1
+        order by subjectapply.applyid desc
         limit #{onePageRecord} offset #{offsetPoint}
     </select>
     <select id="getApplyamountSolo" resultType="Integer">
@@ -77,6 +78,7 @@
                  left join subjectcontributor sc on subjectapply.applyid = sc.subjectapply_applyid
         where sc.user_userid = #{searchWord}
           and subjectapply.isteam = 0
+        order by subjectapply.applyid desc
         limit #{onePageRecord} offset #{offsetPoint}
     </select>
 
