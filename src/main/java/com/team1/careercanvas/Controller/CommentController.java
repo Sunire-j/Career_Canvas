@@ -3,6 +3,7 @@ package com.team1.careercanvas.Controller;
 import com.team1.careercanvas.mapper.CommentMapper;
 import com.team1.careercanvas.vo.CommentVO;
 import com.team1.careercanvas.vo.ReportVO;
+import com.team1.careercanvas.vo.SubjectCommentVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,27 @@ public class CommentController {
 
     public CommentController(CommentMapper commentMapper) {
         this.commentMapper = commentMapper;
+    }
+
+    @PostMapping("/subject/comment/write")
+    @ResponseBody
+    public int subjectCommentWrite(int applyid, String sccontent, HttpSession session){
+        SubjectCommentVO scvo = new SubjectCommentVO();
+        scvo.setApplyid(applyid);
+        scvo.setSccontent(sccontent);
+        scvo.setUserid((String) session.getAttribute("LogId"));
+        commentMapper.InsertSubjectComment(scvo);
+        return 1;
+    }
+
+
+    @PostMapping("/subject/comment/load")
+    @ResponseBody
+    public List<SubjectCommentVO> loadComment(int applyid){
+        System.out.println(applyid);
+        List<SubjectCommentVO> scvo = commentMapper.getSubjectComment(applyid);
+        System.out.println(scvo.get(0).toString());
+        return scvo;
     }
 
     @PostMapping("/commentLoad")

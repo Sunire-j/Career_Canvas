@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team1.careercanvas.mapper.CommentMapper">
+
+    <insert id="InsertSubjectComment" parameterType="com.team1.careercanvas.vo.SubjectCommentVO">
+        insert into subjectcomment(applyid, userid, sccontent)
+        values(#{applyid}, #{userid}, #{sccontent});
+    </insert>
+
+    <select id="getSubjectComment" resultType="com.team1.careercanvas.vo.SubjectCommentVO">
+        select sc.userid as userid,
+               sc.applyid as applyid,
+               sc.date as date,
+               sc.sccontent as sccontent,
+               u.username as username,
+               u.profileimg as img
+        from subjectcomment sc
+        left join user u on sc.userid=u.userid
+        where sc.applyid=#{param1};
+    </select>
+
     <select id="replySelect" resultType="com.team1.careercanvas.vo.CommentVO">
         SELECT c.commentid      AS 'commentid',
                c.post_postid    AS 'post_postid',

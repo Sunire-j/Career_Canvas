@@ -302,10 +302,7 @@ public class SubjectController {
     public ModelAndView subjectApplyView(@RequestParam("applyid") int applyid) {
         ModelAndView mav = new ModelAndView();
 
-        //int temp = applymapper.
-
         ApplyVO avo = applymapper.SelectApply(applyid);
-
 
         if(avo == null){
             mav.addObject("msg", "잘못된 접근입니다.");
@@ -314,14 +311,12 @@ public class SubjectController {
             return mav;
         }
 
-
         mav.addObject("avo", avo);
 
         String partyname = applymapper.getPartyname(avo.getParty_partyid());
 
         SubjectVO svo = applymapper.SelectSubject(avo.getSubject_subjectid());
         mav.addObject("svo", svo);
-
 
         UserVO uvo = mapper.getUserInfo(avo.getUser_userid());
         String username = uvo.getUsername();
@@ -331,9 +326,13 @@ public class SubjectController {
         mav.addObject("member", member);
         mav.addObject("partyname", partyname);
 
+        mav.addObject("CompanyId", svo.getUser_userid());
+
+
         mav.setViewName("subject/subjectSubmitView");
         return mav;
     }
+
 
     @PostMapping("/subject/applyreport")
     @ResponseBody

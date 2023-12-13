@@ -47,6 +47,9 @@
             width: 100%;
             border-bottom: 3px solid #73351F;
         }
+        .iconGroup{
+            font-size: 0.8rem;
+        }
 
         .space {
             height: 200px;
