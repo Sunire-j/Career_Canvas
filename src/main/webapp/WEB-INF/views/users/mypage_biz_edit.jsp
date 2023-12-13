@@ -364,9 +364,6 @@ file="../header_footer/header.jspf" %>
             </div>
           </div>
           <!-- Interest -->
-
-          <div style="padding: 20px 10px 0px 30px; border-left: 2px solid #73351F">
-          </div>
         </div>
       </div>
     </main>

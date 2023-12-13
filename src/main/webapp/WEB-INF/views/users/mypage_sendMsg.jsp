@@ -163,14 +163,6 @@ file="../header_footer/header.jspf"%>
         font-size: 14px;
         padding: 2px 4px;
       }
-      .btn-secondary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
-      .btn-outline-secondary {
-        font-size: 14px;
-        padding: 2px 4px;
-      }
       .userIntro p {
         margin: 0px;
       }
@@ -393,7 +385,8 @@ file="../header_footer/header.jspf"%>
         </table>
 
         <!-- 페이징 -->
-        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px;">
+          <div style="width: 106px;"></div>
           <div class="pagination" style="display: flex">
               <div class="paging">
                   <c:if test="${pVO.page > 1}">
@@ -451,10 +444,13 @@ file="../header_footer/header.jspf"%>
                   </c:if>
               </div>
           </div>
+          <div>
+            <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
+          </div>
       </div>
       </div>
       <div style="width: 60%; text-align: right; margin:0 auto;">
-      <input type="button" value="쪽지보내기" class="btn btn-outline-secondary" onclick="openPopup()">
+      
           <script>
             $(function(){
               var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

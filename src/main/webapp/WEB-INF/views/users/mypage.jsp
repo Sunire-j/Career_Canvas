@@ -429,7 +429,8 @@
             </c:forEach>
             </ul>
         </div>
-        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px; width: fit-content">
+        <div class="pagination-container" style="margin: 0 auto; margin-top: 20px;">
+            <div style="width:74px;"></div>
             <div class="pagination" style="display: flex">
                 <div class="paging">
                     <c:if test="${pVO.page > 1}">
@@ -487,7 +488,9 @@
                     </c:if>
                 </div>
             </div>
-            <a href="${pageContext.servletContext.contextPath}/mypage/myPofol/write"><input type="button" value="글쓰기" class="btn btn-secondary"></a>
+            <div>
+                <a href="${pageContext.servletContext.contextPath}/mypage/myPofol/write"><input type="button" value="글쓰기" class="btn btn-secondary"></a>
+            </div>
         </div>
        
        
