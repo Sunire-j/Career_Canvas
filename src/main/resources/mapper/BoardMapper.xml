@@ -16,17 +16,17 @@
     </insert>
 
     <select id="getPost" resultType="com.team1.careercanvas.vo.BoardVO">
-        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid,  post.date, post.views, COUNT(postlike.user_userid) AS likeAmount, count(comment.commentid) as commentAmount
+        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid,  post.date, post.views,
+        (SELECT COUNT(*) FROM postlike WHERE post.postid = postlike.post_postid) AS likeAmount,
+        (SELECT COUNT(*) FROM comment WHERE post.postid = comment.post_postid) AS commentAmount
         FROM post
-        LEFT JOIN postlike ON post.postid = postlike.post_postid
-        LEFT JOIN comment ON post.postid = comment.post_postid
         LEFT JOIN user ON post.user_userid = user.userid
         <where>
             boardcategory=#{boardcategory}
             <if test="searchKey == 'all'">
                 AND (post.posttitle LIKE CONCAT('%', #{searchWord}, '%') OR
-        post.user_userid LIKE CONCAT('%', #{searchWord}, '%') or
-        post.postcontent LIKE CONCAT('%', #{searchWord}, '%'))
+                post.user_userid LIKE CONCAT('%', #{searchWord}, '%') or
+                post.postcontent LIKE CONCAT('%', #{searchWord}, '%'))
             </if>
             <if test="searchKey == 'title'">
                 AND post.posttitle LIKE CONCAT('%', #{searchWord}, '%')
@@ -51,8 +51,8 @@
             </when>
         </choose>
         limit #{onePageRecord} offset #{offsetPoint}
-
     </select>
+
 
     <select id="getPostAmount" resultType="Integer">
         SELECT count(postid)
@@ -98,10 +98,10 @@
     </select>
 
     <select id="getPostWithCat" resultType="com.team1.careercanvas.vo.BoardVO">
-        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid, post.date, post.views, COUNT(postlike.user_userid) AS likeAmount, count(comment.commentid) as commentAmount
+        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid, post.date, post.views,
+        (SELECT COUNT(*) FROM postlike WHERE post.postid = postlike.post_postid) AS likeAmount,
+        (SELECT COUNT(*) FROM comment WHERE post.postid = comment.post_postid) AS commentAmount
         FROM post
-        LEFT JOIN postlike ON post.postid = postlike.post_postid
-        LEFT JOIN comment ON post.postid = comment.post_postid
         LEFT JOIN user ON post.user_userid = user.userid
         <where>
             boardcategory=#{boardcategory} and category=#{category}
