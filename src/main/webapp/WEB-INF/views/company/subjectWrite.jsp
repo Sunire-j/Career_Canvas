@@ -215,31 +215,15 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
         });
       });
     </script>
-  </head>
-  <body>
-    <div class="content">
-      <div class="content-header">
-        <h3>기업과제 작성</h3>
-        <!-- 이 부분은 세션에 게시판종류 넣어서 처리할 예정 -->
-      </div>
-      <form
-        method="post"
-        action="${pageContext.servletContext.contextPath}/subject/writeOk"
-        class="needs-validation writeform"
-        style="padding: 20px 20px 10px 20px; border-bottom: 2px solid #73351f"
-        novalidate
-      >
-        <input type="hidden" id="content" name="postcontent" />
-        <input
-          type="text"
-          style="width: 50%; height: 45px"
-          class="form-control"
-          name="posttitle"
-          id="title"
-          placeholder="제목을 입력해 주세요."
-          required
-          maxlength="30"
-        />
+</head>
+<body>
+<div class="content">
+    <div class="content-header">
+        <h3>기업과제 작성</h3> <!-- 이 부분은 세션에 게시판종류 넣어서 처리할 예정 -->
+    </div>
+    <form method="post" action="${pageContext.servletContext.contextPath}/subject/writeOk" class="needs-validation writeform" style="padding: 20px 20px 10px 20px;" novalidate>
+        <input type="hidden" id="content" name="postcontent">
+        <input type="text" style="width: 50%; height: 45px;" class="form-control" name="posttitle" id="title" placeholder="제목을 입력해 주세요." required maxlength="30">
         <span class="invalid-feedback">
           제목을 입력해 주세요. (30자 이내)
         </span>
