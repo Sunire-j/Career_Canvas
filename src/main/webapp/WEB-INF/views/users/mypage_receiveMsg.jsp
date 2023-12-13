@@ -373,8 +373,8 @@ file="../header_footer/header.jspf"%>
             <div class="ajaxContent">
               <c:forEach var="mVO" items="${mVO}">
                 <tr>
-                  <td>${mVO.user_userid1}</td>
-                  <td><a style="display: inline-block; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${mVO.content}</a></td>
+                  <td>${mVO.user_userid}</td>
+                  <td><a style="display: inline-block; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="${mVO.content}">${mVO.content}</a></td>
                   <td>${mVO.date}</td>
                 </tr>
               </c:forEach>
@@ -462,6 +462,21 @@ file="../header_footer/header.jspf"%>
       <div class="container_bottom"></div>
     </div>
     </div>
+    <script>
+      $(function(){
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+      });
+      function openPopup(){
+
+        var left = (window.innerWidth - 700) / 2;
+        var top = (window.innerHeight - 600) / 2;
+        var popSize = `toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,location=no,width=700, height=600, top=${top},left=${left}`;
+        window.open('${pageContext.servletContext.contextPath}/mypage/pop_sendMsg','SendMsg',popSize);
+      }
+    </script>
   </body>
 </html>
 <%@include file="../header_footer/footer.jspf" %>

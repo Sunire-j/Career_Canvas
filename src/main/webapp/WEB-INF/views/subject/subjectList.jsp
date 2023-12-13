@@ -396,7 +396,7 @@
                                      <!-- line 2 -->
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
                                         <div style="display: flex; align-items: center;">
-                                            <img src="${pageContext.servletContext.contextPath}/upload${sVO.imgsrc}" style="width:20px; height:20px;" alt="">
+                                            <img src="${pageContext.servletContext.contextPath}/upload${sVO.profileimg}" style="width:20px; height:20px;" alt="">
                                             <span style="margin-left:10px; width: 150px;white-space: nowrap;
                                         overflow: hidden; text-overflow: ellipsis;">${sVO.user_userid}</span>
                                         </div>

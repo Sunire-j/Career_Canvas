@@ -79,6 +79,11 @@
             margin: 0 10px;
             padding-left: 16px;
         }
+        input[name="member"] {
+            display:none;
+        }
+
+        
     </style>
     <script>
         $(function(){
@@ -178,7 +183,7 @@
                 });
             //
 
-            $('input[name="member"]').change(function() {
+            $('.memberList').on('change', 'input[name="member"]', function() {
                 if ($(this).is(':checked')) {
                     $(this).closest('.memberlisttemp').find('label').removeClass('btn-outline-secondary').addClass('btn-secondary');
                 } else {
@@ -201,10 +206,87 @@
 
             $('form').on('submit', function(e) {
                 var editorContent = editor.getData();
+
                 if(!editorContent) {
                     e.preventDefault();
                     alert('글 내용을 입력해 주세요.');
+                    return false;
                 }
+
+                var TeamRadios = $('input[name="isteam"][value="0"]:checked');
+                var SoloRadios = $('input[name="isteam"][value="1"]:checked');
+                if(TeamRadios.length==0&&SoloRadios.length==0){
+                    e.preventDefault();
+                    alert('개인&팀 유형을 선택하세요');
+                    return false;
+                }
+                if(SoloRadios.length==1){
+                    return true;
+                }else{
+                    //여기 파티인경우 적어줄거임
+                    var partyRadiosReal = $('input[name="partyid"]:checked');
+                    if(partyRadiosReal.length==0){
+                        alert('파티를 선택하세요');
+                        e.preventDefault();
+                                return false;
+                    }else{
+                        var memberCheckReal = $('input[name="member"]:checked');
+                        if(memberCheckReal.length==0){
+                            e.preventDefault();
+                            alert('팀원을 선택하세요');
+                            return false;
+                        }else{
+                            return true;
+                        }
+                    }
+                    
+
+                }
+
+                // var partyRadios = document.getElementsByName('partyid');
+                // var memberCheck = document.getElementsByName('member');
+                // var memberChecked = false;
+                // var isteamChecked = false;
+                // var partyChecked = false;
+                // // checked여부 확인
+                //     if(isteamRadios[i].checked) {
+                //         isteamChecked = true;
+                //         // 팀일경우
+                //         if(isteamRadios[i].value == "0"){
+                //             for (var j=0; j<partyRadios.length; j++){
+                //                 if(partyRadios[j].checked){
+                //                     partyChecked = true;
+                //                     // 팀원선택여부
+                //                     for(var x=0; x<memberCheck.length; x++){
+                //                         if(memberCheck[x].checked){
+                //                             memberChecked = true;
+                //                         }
+                //                     }
+                //                     if(!memberChecked){
+                //                         e.preventDefault();
+                //                         alert('팀원을 선택하세요');
+                //                         return false;
+                //                     }
+                //                 }
+                //             }
+                //             if(!partyChecked) {
+                //                 e.preventDefault();
+                //                 alert('파티를 선택하세요');
+                //                 return false;
+                //             }
+                //         }
+                //         break;
+                //     }
+                
+                // if(!isteamChecked) {
+                //     e.preventDefault();
+                //     alert('개인&팀 유형을 선택하세요');
+                //     return false;
+                // }
+                // if(!editorContent) {
+                //     e.preventDefault();
+                //     alert('글 내용을 입력해 주세요.');
+                // }
 
             });
             //---------------------------------------------
@@ -244,7 +326,7 @@
                         label.removeClass('btn-secondary').addClass('btn-outline-secondary');
                     }
                 });
-
+                
                 var partyid = $('input[name="partyid"]:checked').val();
                 var tag ="";
                 var tag1 ="<div class='memberName'>참여 인원</div>";
