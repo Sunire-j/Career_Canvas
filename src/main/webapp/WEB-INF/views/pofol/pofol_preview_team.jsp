@@ -38,6 +38,14 @@
             margin: 0 auto;
         }
 
+        .main-title{
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.5em;
+            position: relative;
+            margin-top: 20px;
+        }
         .space {
             height: 200px;
             background: white;
@@ -318,13 +326,15 @@
 <body>
 <section>
     <article class="container"
-             style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+             style="margin-top: 70px; border-top: 3px solid #73351F; padding: 0px; background: #d9d9d9">
         <div class="container-head"></div>
-        <div style="padding: 20px 40px 20px 40px">
-            <div class="portfolio">
-                <h1>포트폴리오</h1>
-                <div style="display: flex; padding: 5px 20px 20px 0px; gap:10px;">
-                    <select class="form-select" style="width: fit-content" id="postSort" name="postSort">
+        <div class="portfolio">
+            <div class="container-title" style="background:#F2F2F2 ;height: 80px; border-bottom: 1px solid #73351F; display: flex; align-items: center; justify-content: center">
+                <h1 class="main-title" style="margin-top: 0px; font-weight: bold; font-size: 35px">포트폴리오</h1>
+            </div>
+            <div style="background: #D9D9D9;">
+                <div class="d-flex" style="display: flex; padding: 5px ;height: 50px;display: flex; margin: 10px; justify-content: space-between">
+                    <select class="form-select" style="width: 10% ;border: 1px solid #73351f" id="postSort" name="postSort">
                         <option value="1"
                                 <c:if test="${pVO.postSort==1}">
                                     selected
@@ -340,23 +350,25 @@
                         </c:if>>추천순
                         </option>
                     </select>
-                    <select class="form-select" style="width: fit-content;" name="category" id="category">
+                    <div style="justify-content: center; text-align: center; width: 30%">
+                        <button class="btn btn-outline-secondary" style="margin-right: 20px"
+                                onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview'">개인
+                        </button>
+                        <button class="btn btn-secondary"
+                                onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview/team'">팀
+                        </button>
+                    </div>
+                    <select class="form-select" style="width: 10%; border: 1px solid #73351f" name="category" id="category">
                         <option value="0">카테고리</option>
                         <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
                         <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
                         <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
                     </select>
-                    <button class="btn btn-outline-secondary"
-                            onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview'">개인
-                    </button>
-                    <button class="btn btn-secondary"
-                            onclick="location.href='${pageContext.servletContext.contextPath}/pofol_preview/team'">팀
-                    </button>
                 </div>
             </div>
         </div>
-    </article>
-    <div class="container" style="padding: 0px; border-bottom: 3px solid #73351F;">
+
+        <div style="padding: 0px; border-bottom: 3px solid #73351F; background: #F2F2F2; border-top: 1px solid #73351f">
         <div style="padding: 20px 40px 40px 40px">
             <div class="portfolio_content">
                 <ul class="content">
@@ -478,6 +490,7 @@
         <div class="container_bottom"></div>
     </div>
     </div>
+    </article>
 </section>
 <script>
     $(function () {

@@ -22,13 +22,20 @@
             padding: 0;
             margin: 0;
         }
-
         .container {
             margin: 0 auto;
             border-left: 1px solid #73351F;
             border-right: 1px solid #73351F;
             background: #F2F2F2;
             width:1200px;
+        }
+        .main-title{
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.5em;
+            position: relative;
+            margin-top: 20px;
         }
 
         .space {
@@ -287,53 +294,67 @@
             color: black;
             border-radius: 6px;
         }
-        .container_bottom{
+        .container_bottom {
             display: flex;
             background: #A69668;
             height: 10px;
             margin-top: 10px;
         }
-        .hr-styleset{
+
+        .hr-styleset {
             border: 0;
-            border-top: 2.5px dashed #73351F ;
+            border-top: 2.5px dashed #73351F;
             border-bottom: 1px dashed #D9D9D9;
         }
-        .container-head{
+
+        .container-head {
             display: flex;
             justify-content: center;
             align-items: center;
             background: #A69668;
             height: 10px;
         }
+
+        hr {
+            border-top: 2.5px solid #73351F;
+        }
     </style>
 </head>
 <body>
     <section>
-        <article class="container" style="margin-top: 100px; border-top: 3px solid #73351F; border-bottom: 2px dashed #73351F; padding: 0px">
+        <article class="container" style="margin-top: 70px; border-top: 3px solid #73351F; padding: 0px; background: #d9d9d9">
             <div class="container-head"></div>
-            <div style="padding: 20px 40px 20px 40px">
             <div class="portfolio">
-                <h1>제출과제-개인</h1>
-                <div style="display: flex; padding: 5px 20px 20px 20px; gap: 10px;">
-                <select class="form-select" style="width: fit-content;" name="category" id="category">
-                    <option value="0">카테고리</option>
-                    <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
-                    <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
-                    <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
-                </select>
-                <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject'" >기업과제</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
-                <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
+                <div class="container-title" style="background:#F2F2F2 ;height: 80px; border-bottom: 1px solid #73351F; display: flex; align-items: center; justify-content: center">
+                    <h1 class="main-title" style="margin-top: 0px; font-weight: bold; font-size: 35px">제출과제-개인</h1>
+                </div>
+                <div class="d-flex" style="display: flex; padding: 5px ;height: 50px;display: flex; margin: 10px; justify-content: space-between">
+                    <div style="width: 10%"></div>
+                    <div style="justify-content: center; text-align: center; width: 30%">
+                        <button type="button" class="btn btn-outline-secondary" style="margin-right: 20px" onclick="location.href='${pageContext.servletContext.contextPath}/subject'" >기업과제</button>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">제출과제</button>
+                    </div>
+                    <select class="form-select" style="border: 1px solid #73351f; width: 10%;" name="category" id="category">
+                        <option value="0">카테고리</option>
+                        <option value="1" <c:if test="${pVO.category==1}">selected</c:if>>IT/프로그래밍</option>
+                        <option value="2" <c:if test="${pVO.category==2}">selected</c:if>>디자인</option>
+                        <option value="3" <c:if test="${pVO.category==3}">selected</c:if>>영상음향</option>
+                    </select>
+                </div>
+
         </div>
     </div>
-</article>
         
             
 
     <!-- 리스트 레이아웃 -->
-    <div class="container"  style="padding: 0px; border-bottom: 3px solid #73351F;">
-        <div style="padding: 20px 40px 40px 40px">
+    <div style="padding: 0px; background: #F2F2F2; border-top: 1px solid #73351f; border-bottom: 3px solid #73351F;">
+        <div style="padding: 10px 40px 40px 40px">
+            <div class="d-flex" style="display: flex; padding: 5px ;height: 50px;display: flex; margin: 10px; justify-content: center">
+                <button type="button" class="btn btn-secondary" style="margin-right: 20px" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
+            </div>
+        <div style="padding: 30px 40px 40px 40px"></div>
     <div class="portfolio_content">
         <ul class="content">
             <c:forEach items="${sVO}" var="svo">
@@ -454,7 +475,7 @@
           </div>
           <div class="container_bottom"></div>
           </div>
-        
+        </article>
     </section>
     <script>
         $(function(){

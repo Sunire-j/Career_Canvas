@@ -19,7 +19,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       referrerpolicy="no-referrer"
     ></script>
   </head>
-  <body style="margin: 0 auto;width: 70%;height: 700px;padding: 50px; background: linear-gradient( to bottom, #D9C8A9 20%, #F2F2F2 );">
+  <body style="margin: 0 auto;width: 70%;height: 700px;padding: 50px;">
     <form
       method="post"
       action="${pageContext.servletContext.contextPath}/mypage/pop_sendMsgOk"

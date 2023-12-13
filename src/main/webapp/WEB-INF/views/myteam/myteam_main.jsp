@@ -462,10 +462,10 @@
                 <div class="salutation_content">
                     <ul class="member_list" id="member_list">
                         <c:forEach var="uvo" items="${memberList}">
-                            <li>
+                            <li style="display: flex; margin-top: 20px">
                                 <a href="${pageContext.servletContext.contextPath}/profile/portfolio?uid=${uvo.userid}">
                                     <img src="${pageContext.servletContext.contextPath}/upload${uvo.profileimg}" class="member_img">
-                                    <div class="member_name" title="${uvo.username}">
+                                    <div style="display: flex; align-items:center;text-align: center;margin-left:10px; font-size: 20px" class="member_name" title="${uvo.username}">
                                             ${uvo.username}
                                     </div>
                                 </a>
