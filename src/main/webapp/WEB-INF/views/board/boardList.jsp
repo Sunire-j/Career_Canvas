@@ -305,7 +305,7 @@
                     </div>
                 </div>
             </div>
-            <a style="margin-top: 20px; color: white" href="${pageContext.servletContext.contextPath}/board/${boardcat}/write" class="btn btn-secondary">글 작성</a>
+            <a style="margin-top: 20px; color: white; margin-right: 10px;" href="${pageContext.servletContext.contextPath}/board/${boardcat}/write" class="btn btn-secondary">글 작성</a>
         </div>
 
         <div class="container_bottom"></div>

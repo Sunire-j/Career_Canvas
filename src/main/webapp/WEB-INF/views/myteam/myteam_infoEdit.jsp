@@ -176,7 +176,9 @@
             margin-right: 20px;
             float: left;
         }
-        .member_img{
+        .member_img {
+            display: block;
+            margin: 0 auto;
             width: 70px;
             height: 70px;
             border-radius: 20px;
