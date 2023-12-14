@@ -14,6 +14,10 @@
             rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
     <script>
         $(function () {
             $(".forevent").on("click", "#deletion", function () {
@@ -32,6 +36,9 @@
         });
     </script>
     <style>
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+        }
         #sideBar {
             width: 250px;
             position: fixed;
