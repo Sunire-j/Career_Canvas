@@ -384,7 +384,7 @@
                         <c:set var="matchFound" value="true" />
                     </c:if>
                 </c:forEach>
-            <c:if test="${LogId==svo.user_userid}">
+            <c:if test="${LogId==avo.user_userid}">
                 <c:set var="matchFound" value="true"/>
             </c:if>
             <c:if test="${matchFound || LogId==CompanyId}">
@@ -399,10 +399,10 @@
                     코멘트 등록
                 </button>
             </div>
+    </c:if>
             <div style="height: 30px; margin: 0px; background: #d9c8a9"></div>
         </div>
     </section>
-    </c:if>
     <hr style="border: 2px dashed #73351f"/>
     <!-- 여기서부터 코멘트 리스트영역 -->
     <section>
