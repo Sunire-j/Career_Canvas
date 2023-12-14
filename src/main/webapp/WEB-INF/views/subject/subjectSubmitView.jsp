@@ -384,6 +384,9 @@
                         <c:set var="matchFound" value="true" />
                     </c:if>
                 </c:forEach>
+            <c:if test="${LogId==svo.user_userid}">
+                <c:set var="matchFound" value="true"/>
+            </c:if>
             <c:if test="${matchFound || LogId==CompanyId}">
             <!-- 개인이면 아이디만 비교하면 끝, 팀이면 멤버 다 허용해주기-->
             <p style="font-size: 1.5rem; margin-left: 10px; margin-top:30px; font-weight: bold">과제 코멘트</p>

@@ -167,8 +167,6 @@
                           $("#emailauth").prop('disabled',false);
                           $("#emailauthbtn").prop('disabled',false);
                           $("#emailauthbtn").val("확인");
-                          //시간 지나게 해주기
-                          //인증번호 입력칸, 확인버튼 disabled 풀
                       }
                    }
                });
