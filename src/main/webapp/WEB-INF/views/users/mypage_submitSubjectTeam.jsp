@@ -271,6 +271,7 @@ file="../header_footer/header.jspf"%>
       }
 
       .img_C{
+        margin-bottom: 20px;
         width:235px;
         margin-left: 30px;
       }

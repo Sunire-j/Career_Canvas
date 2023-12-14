@@ -262,6 +262,7 @@
         .img_C{
             width:235px;
             margin-left: 30px;
+            margin-bottom: 20px;
         }
         .content_category, .content_title{
             display: inline;
