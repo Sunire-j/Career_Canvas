@@ -315,8 +315,8 @@ file="../header_footer/header.jspf" %>
                         },
                         type: 'post',
                         success: function (result) {
-                            alert("삭제되었습니다.");
-                            location.href = "${pageContext.servletContext.contextPath}/pofol_preview";
+                          alert("삭제되었습니다.");
+                          window.location.replace(document.referrer);
                         }
                     });
                 }

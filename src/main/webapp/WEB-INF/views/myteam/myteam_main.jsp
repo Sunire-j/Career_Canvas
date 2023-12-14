@@ -74,11 +74,7 @@
             margin-right: 20px;
             float: left;
         }
-        .member_img{
-            width: 70px;
-            height: 70px;
-            border-radius: 20px;
-        }
+
         .party_list_name{
             text-align: center;
             font-size: 15px;
@@ -140,7 +136,8 @@
             float: left;
         }
         .member_img{
-            margin: 0 7.5px;
+            display: block;
+            margin: 0 auto;
             width: 70px;
             height: 70px;
             border-radius: 20px;

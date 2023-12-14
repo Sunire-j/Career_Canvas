@@ -72,7 +72,9 @@
         .party_list li{
             margin-right: 20px;
         }
-        .member_img{
+        .member_img {
+            display: block;
+            margin: 0 auto;
             width: 70px;
             height: 70px;
             border-radius: 20px;
@@ -148,6 +150,7 @@
             overflow-x: hidden;
         }
         .member_edit li {
+            height: 80px;
             margin-left: 30px;
             float: left;
             width: 330px;
