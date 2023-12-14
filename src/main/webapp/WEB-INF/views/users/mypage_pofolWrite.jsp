@@ -214,6 +214,10 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
             alert("제목을 입력해 주세요");
             return false;
           }
+          if (!$('input[name="category"]').is(':checked')) {
+            alert("카테고리를 선택하세요.");
+            return false;
+          }
           if (!editorContent) {
             e.preventDefault();
             alert("글 내용을 입력해 주세요.");
@@ -258,7 +262,7 @@ prefix="c" %> <%@include file="../header_footer/header.jspf" %>
 
         <!-- 카테고리 -->
         <div>
-          <div class="category-container">
+          <div class="category-container" style="margin-top: 10px">
             <label class="btn btn-outline-dark">
               <input type="radio" name="category" value="0" />
               <span>선택안함</span>
