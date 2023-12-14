@@ -86,7 +86,7 @@
         <div style="text-align: center">
             <h4>관리자 ${name}</h4>
             <a
-                    href="${pageContext.servletContext.contextPath}/"
+                    href="${pageContext.servletContext.contextPath}/logout"
                     style="
               color: red;
               text-align: center;

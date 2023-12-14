@@ -159,7 +159,7 @@
     <div id="sideBar">
         <div style="text-align: center;">
             <h4>관리자 ${name}</h4>
-            <a href="${pageContext.servletContext.contextPath}/"
+            <a href="${pageContext.servletContext.contextPath}/logout"
                style="color: red; text-align: center; display: block; margin: 0 auto;">로그아웃</a>
         </div>
         <hr/>
