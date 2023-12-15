@@ -216,6 +216,21 @@
                         </tr>
                     </c:forEach>
                 </table>
+                <script>
+                    function accept(userid) {
+                        var url = "${pageContext.servletContext.contextPath}/admin/company/accept?uid=" + userid+"&ishome=0";
+                        if (confirm("정말 " + userid + "회원가입을 승인하시겠습니까?")) {
+                            location.href = url;
+                        }
+                    }
+
+                    function deny(userid) {
+                        var url = "${pageContext.servletContext.contextPath}/admin/company/deny?uid=" + userid+"&ishome=0";
+                        if (confirm("정말 " + userid + "회원가입을 거절하시겠습니까?")) {
+                            location.href = url;
+                        }
+                    }
+                </script>
             </div>
         </div>
     </div>

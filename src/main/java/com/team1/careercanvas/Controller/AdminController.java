@@ -857,7 +857,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/company/accept")
-    public String acceptCompany(String uid, HttpSession session) {
+    public String acceptCompany(String uid, HttpSession session,
+                                @RequestParam(required = false, defaultValue = "1")int ishome) {
         String logStatus = (String) session.getAttribute("LogStatus");
         if ( logStatus == null || !logStatus.equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
@@ -874,11 +875,17 @@ public class AdminController {
 
         mapper.acceptCompany(uid);
 
-        return "redirect:/admin/company";
+        if(ishome==1){
+            return "redirect:/admin/company";
+        }else{
+            return "redirect:/admin/home";
+        }
+
     }
 
     @GetMapping("/admin/company/deny")
-    public String denyCompany(String uid, HttpSession session) {
+    public String denyCompany(String uid, HttpSession session,
+                              @RequestParam(required = false, defaultValue = "1")int ishome) {
         String logStatus = (String) session.getAttribute("LogStatus");
         if ( logStatus == null || !logStatus.equals("Y")) {
             session.setAttribute("msg", "잘못된 접근입니다.");
@@ -895,7 +902,11 @@ public class AdminController {
 
         mapper.denyCompany(uid);
 
-        return "redirect:/admin/company";
+        if(ishome==1){
+            return "redirect:/admin/company";
+        }else{
+            return "redirect:/admin/home";
+        }
     }
 
     @GetMapping("/admin/company/forceDelete")
