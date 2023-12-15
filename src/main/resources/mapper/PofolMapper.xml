@@ -4,7 +4,7 @@
 	<select id="getPofol" resultType="com.team1.careercanvas.vo.PofolVO">
         select portfoliotitle, imgsrc, category, portfolioid
         from portpolio
-        where user_userid = #{searchKey}
+        where user_userid = #{searchKey} and isteam=1
         <if test="#{searchWord} != ''">
         and portfoliotitle like concat('%',#{searchWord},'%')
         </if>
