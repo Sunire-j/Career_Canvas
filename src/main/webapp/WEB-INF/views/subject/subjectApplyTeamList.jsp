@@ -351,7 +351,7 @@
                     <button type="button" class="btn btn-outline-secondary" style="margin-right: 20px" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply'">개인</button>
                     <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.servletContext.contextPath}/subject/apply/team'">팀</button>
             </div>
-            <div style="padding: 30px 40px 40px 40px"></div>
+
                 <div class="portfolio_content">
                 <ul class="content">
                     <c:forEach items="${sVO}" var="svo">
