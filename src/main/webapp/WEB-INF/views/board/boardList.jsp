@@ -213,7 +213,10 @@
                 <div class="board-row">
                     <div style="width: 7%" class="list">${bvo.postid}</div>
                     <div style="width: 50%; text-align: left; padding: 0 20px;" class="list"><a
-                            href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">${bvo.posttitle}</a>
+                            href="${pageContext.servletContext.contextPath}/board/view?no=${bvo.postid}">
+                                                                                                            <c:if test="${bvo.category == 1}">[IT/프로그래밍]</c:if>
+                                                                                                            <c:if test="${bvo.category == 2}">[디자인]</c:if>
+                                                                                                            <c:if test="${bvo.category == 3}">[영상/음향]</c:if>${bvo.posttitle}</a>
                     </div>
                     <div style="width: 12%; overflow: hidden;
                     text-overflow: ellipsis;
