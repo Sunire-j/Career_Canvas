@@ -29,7 +29,8 @@
     </style>
     <script>
         $(function () {
-            $("#delFrm").on("submit", function (){
+            $("#delFrm").on("submit", function (e){
+                e.preventDefault();
                 if($(".delcontent").val()==""){
                     alert("사유를 입력해주세요.");
                     return false;
@@ -43,6 +44,7 @@
                        subjectid : subjectid,
                        reason : reason
                    }, success: function (r){
+                        e.preventDefault();
                        alert("삭제 신청이 완료되었습니다.");
                        opener.parent.location.reload();
                         window.close();
