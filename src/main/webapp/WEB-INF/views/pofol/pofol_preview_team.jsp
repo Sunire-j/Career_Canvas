@@ -420,52 +420,70 @@
                 </ul>
             </div>
             <!-- 페이징 -->
-            <div style="text-align: center; width: 100%; margin:20px;">
-                    <div>
-                        <c:if test="${pVO.totalRecord == 0}">
-                            작성된 게시글이 없습니다
-                        </c:if>
-                        <c:if test="${pVO.totalRecord > 0}">
-                            <!-- 이전 -->
-                            <c:if test="${pVO.page == 1}">
-                                <input type="button" value="<" class="btn btn-outline-secondary" disabled>
+            <div class="pagination-container" style="margin: 0 auto; margin-top: 20px;">
+                <div style="width:74px;"></div>
+                <div class="pagination" style="display: flex">
+                    <div class="paging">
+                        <c:if test="${pVO.page > 1}">
+                            <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page - 1}'
+                            <c:if test="${pVO.category !=''}">
+                                    +'&category=${pVO.category}'
                             </c:if>
-                            <c:if test="${pVO.page > 1}">
-                                <a
-                                        href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page - 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
-                                        <c:if test='${pVO.searchWord != "" }'>&searchWord=${pVO.searchWord}</c:if>"
-                            >
-                            <input type=" button" value="<" class="btn btn-outline-secondary">
-                                </a>
+                            <c:if test="${pVO.searchWord!=''}">
+                                    +'&searchKey=${pVO.searchKey}'
+                                    +'&searchWord=${pVO.searchWord}'
                             </c:if>
+                            <c:if test="${pVO.postSort!=''}">
+                                    +'&postSort=${pVO.postSort}'
+                            </c:if>
+                                    "><
+                            </button>
                         </c:if>
-                        <!-- 1,2,3,4,5 -->
-                        <c:forEach
-                                var="p"
-                                begin="${pVO.startPage}"
-                                end="${pVO.startPage + pVO.onePageCount - 1}"
-                        >
-                            <c:if test="${p <= pVO.totalPage}">
-                                <a
-                                        href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${p}&searchWord=${pVO.searchWord}&category=${pVO.category}&postSort=${pVO.postSort}">
-                                    <input type="button" value="${p}" class="btn btn-outline-secondary">
-                                </a>
+                        <c:forEach var="i" begin="${pVO.startPage}" end="${pVO.startPage + pVO.onePageCount - 1}">
+                            <c:if test="${i <= pVO.totalPage}">
+                                <c:choose>
+                                    <c:when test="${i != pVO.page}">
+                                        <button class="btn btn-outline-secondary" onclick="location.href='?page=${i}'
+                                        <c:if test="${pVO.category !=''}">
+                                                +'&category=${pVO.category}'
+                                        </c:if>
+                                        <c:if test="${pVO.searchWord!=''}">
+                                                +'&searchKey=${pVO.searchKey}'
+                                                +'&searchWord=${pVO.searchWord}'
+                                        </c:if>
+                                        <c:if test="${pVO.postSort!=''}">
+                                                +'&postSort=${pVO.postSort}'
+                                        </c:if>
+                                                ">${i}</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <strong class="btn btn-outline-secondary" style="font-weight: bold">${i}</strong>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:if>
                         </c:forEach>
-
-                        <!-- 다음 -->
-
-                        <c:if test="${pVO.page == pVO.totalPage}">
-                            <input type="button" value=">" class="btn btn-outline-secondary" disabled>
-                        </c:if>
                         <c:if test="${pVO.page < pVO.totalPage}">
-                            <a
-                                    href="${pageContext.servletContext.contextPath}/pofol_preview/team?page=${pVO.page + 1}&category=${pVO.category}&postSort=${pVO.postSort}&searchWord=${searchWord}"
-                            >
-                                <input type="button" value=">" class="btn btn-outline-secondary">
-                            </a>
+                            <button class="btn btn-outline-secondary" onclick="location.href='?page=${pVO.page + 1}'
+                            <c:if test="${pVO.category !=''}">
+                                    +'&category=${pVO.category}'
+                            </c:if>
+                            <c:if test="${pVO.searchWord!=''}">
+                                    +'&searchKey=${pVO.searchKey}'
+                                    +'&searchWord=${pVO.searchWord}'
+                            </c:if>
+                            <c:if test="${pVO.postSort!=''}">
+                                    +'&postSort=${pVO.postSort}'
+                            </c:if>
+                                    ">>
+                            </button>
                         </c:if>
                     </div>
+                </div>
+                <div>
+                    <a href="${pageContext.servletContext.contextPath}/subject/write">
+                        <input class="btn btn-outline-secondary" type="button" value="글쓰기">
+                    </a>
+                </div>  
             </div>
 
             <!-- 검색 -->
