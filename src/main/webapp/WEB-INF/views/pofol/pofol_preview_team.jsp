@@ -421,7 +421,7 @@
             </div>
             <!-- 페이징 -->
             <div class="pagination-container" style="margin: 0 auto; margin-top: 20px;">
-                <div style="width:74px;"></div>
+                <div></div>
                 <div class="pagination" style="display: flex">
                     <div class="paging">
                         <c:if test="${pVO.page > 1}">
@@ -478,12 +478,8 @@
                             </button>
                         </c:if>
                     </div>
-                </div>
-                <div>
-                    <a href="${pageContext.servletContext.contextPath}/subject/write">
-                        <input class="btn btn-outline-secondary" type="button" value="글쓰기">
-                    </a>
-                </div>  
+                </div> 
+                <div></div>
             </div>
 
             <!-- 검색 -->
