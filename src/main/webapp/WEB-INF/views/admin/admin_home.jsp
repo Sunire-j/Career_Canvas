@@ -92,7 +92,7 @@
         <h3>통계</h3>
         <a href="${pageContext.servletContext.contextPath}/admin/user/stats"> 유저 현황 </a>
         <a href="${pageContext.servletContext.contextPath}/admin/board/stats"> 게시판 현황 </a>
-        <a href="${pageContext.servletContext.contextPath}/" style="position: absolute; bottom: 90px;">메인 페이지 이동</a>
+        <a href="${pageContext.servletContext.contextPath}/" style="position: absolute; bottom: 90px; color: blue">메인 페이지 이동</a>
         <p style="position: absolute; bottom: 50px;">당일 접속 유저 : ${today}명</p>
         <p style="position: absolute; bottom: 20px;">누적 접속 유저 : ${all}명</p>
     </div>

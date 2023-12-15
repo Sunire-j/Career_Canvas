@@ -16,7 +16,7 @@
     </insert>
 
     <select id="getPost" resultType="com.team1.careercanvas.vo.BoardVO">
-        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid,  post.date, post.views,
+        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid,  post.date, post.views, post.category,
         (SELECT COUNT(*) FROM postlike WHERE post.postid = postlike.post_postid) AS likeAmount,
         (SELECT COUNT(*) FROM comment WHERE post.postid = comment.post_postid) AS commentAmount
         FROM post
@@ -98,7 +98,7 @@
     </select>
 
     <select id="getPostWithCat" resultType="com.team1.careercanvas.vo.BoardVO">
-        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid, post.date, post.views,
+        SELECT post.postid, post.posttitle, user.username as username, post.user_userid as user_userid, post.date, post.views, post.category,
         (SELECT COUNT(*) FROM postlike WHERE post.postid = postlike.post_postid) AS likeAmount,
         (SELECT COUNT(*) FROM comment WHERE post.postid = comment.post_postid) AS commentAmount
         FROM post
