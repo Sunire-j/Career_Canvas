@@ -11,6 +11,8 @@ public interface AdminMapper {
 
     List<BoardVO> getBoardList(PagingVO pvo);
 
+    List<CompanyVO> getCompanyListForHome();
+
     List<ReportVO> getReportList(PagingVO pvo);
 
     String getAdminName(String username);

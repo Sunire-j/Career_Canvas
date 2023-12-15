@@ -277,6 +277,20 @@
         where bannerid = #{param1}
     </delete>
 
+    <select id="getCompanyListForHome" resultType="com.team1.careercanvas.vo.CompanyVO">
+        select c.user_userid as user_userid,
+        c.companyno as companyno,
+        c.isaccept as isaccept,
+        c.authimg as authimg,
+        u.username as companyname,
+        u.date as date
+        from company c
+        join user u on u.userid = c.user_userid
+        where usertype= 1 and isaccept = 1
+        order by u.date desc
+        limit 5
+    </select>
+
     <select id="getCompanyList" resultType="com.team1.careercanvas.vo.CompanyVO">
         select c.user_userid as user_userid,
         c.companyno as companyno,

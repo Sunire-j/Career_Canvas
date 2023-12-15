@@ -65,7 +65,7 @@ public class AdminController {
         List<ReportVO> report = mapper.getReportList(pvo);
         mav.addObject("rVO", report);
 
-        List<CompanyVO> company = mapper.getCompanyList(pvo);
+        List<CompanyVO> company = mapper.getCompanyListForHome();
         mav.addObject("cVO", company);
 
         mav.setViewName("/admin/admin_home");
