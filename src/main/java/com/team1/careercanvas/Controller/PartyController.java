@@ -25,7 +25,6 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -462,7 +461,8 @@ public class PartyController {
         List<PartyVO> vo = mapper.SelectPartyList(logId);
         if (vo.size() >= 5) {
             mav.addObject("msg", "파티는 5개 이하로 가입 및 생성 가능합니다.");
-            mav.setViewName("alert_page");
+            mav.addObject("isBack",0);
+            mav.setViewName("improve_alert");
             return mav;
         }
         PartyVO temp = new PartyVO();
