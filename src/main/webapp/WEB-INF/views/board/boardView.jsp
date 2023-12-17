@@ -459,7 +459,6 @@
                                     } else {
                                         target = "tip";
                                     }
-                                    alert("url");
                                     location.href = "${pageContext.servletContext.contextPath}/board/" + target
                                 }
                             });
